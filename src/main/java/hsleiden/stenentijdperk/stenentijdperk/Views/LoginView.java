@@ -2,6 +2,8 @@ package hsleiden.stenentijdperk.stenentijdperk.Views;
 
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.LoginController;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,12 +21,11 @@ public class LoginView {
 	private PlayerModel playermodel;
 	private GridPane view;
 
-	public LoginView(LoginController controller, PlayerModel model) {
+	public LoginView(LoginController controller) {
 		this.controller = controller;
-		this.playermodel = model;
-
 		setupPane();
 	}
+
 	public Parent setScene() {
 		return view;
 	}
@@ -54,15 +55,23 @@ public class LoginView {
 		TextField naamField = new TextField();
 		GridPane.setConstraints(naamField, 6, 1, 15, 3);
 
-
 		Button verderButton = new Button("Verder");
 		verderButton.setMinSize(150, 60);
 		verderButton.setMaxSize(150, 60);
 		verderButton.setStyle("-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
 		GridPane.setConstraints(verderButton, 7, 3, 10, 10);
 
+		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+				// make call to controller.
+				String naam = naamField.getText();
+				controller.onVerderButtonClick(naam);
+			}
+		};
+
+		verderButton.setOnAction(event);
 
 		this.view.getChildren().addAll(naamLabel, naamField, verderButton);
-
 	}
 }
