@@ -1,5 +1,6 @@
 package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 
+import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.SystemInfo;
 import javafx.scene.Scene;
@@ -10,11 +11,7 @@ import javafx.stage.Stage;
 public class LoginController {
 	public void onVerderButtonClick(String naam) {
 		PlayerModel playerModel = generatePlayer(naam);
-<<<<<<< Updated upstream
-		System.out.println("De knop is ingedrukt");
-=======
 		ViewManager.loadLobbyView(playerModel);
->>>>>>> Stashed changes
 	}
 
 	public PlayerModel generatePlayer(String naam) {

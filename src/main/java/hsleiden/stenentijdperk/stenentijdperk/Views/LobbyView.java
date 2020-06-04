@@ -17,13 +17,13 @@ public class LobbyView {
     private PlayerModel playermodel;
     private GridPane view;
 
-    public LobbyView(LobbyController controller, PlayerModel model) {
-        this.controller = controller;
+    public LobbyView(PlayerModel model) {
+        this.controller = new LobbyController();
         this.playermodel = model;
 
         setupPane();
     }
-    public Parent setScene() {
+    public GridPane setScene() {
         return view;
     }
 

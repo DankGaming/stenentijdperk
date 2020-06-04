@@ -21,12 +21,12 @@ public class LoginView {
 	private PlayerModel playermodel;
 	private GridPane view;
 
-	public LoginView(LoginController controller) {
-		this.controller = controller;
+	public LoginView() {
+		this.controller = new LoginController();
 		setupPane();
 	}
 
-	public Parent setScene() {
+	public GridPane setScene() {
 		return view;
 	}
 

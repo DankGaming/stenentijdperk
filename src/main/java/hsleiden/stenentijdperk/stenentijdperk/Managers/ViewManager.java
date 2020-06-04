@@ -1,8 +1,13 @@
 package hsleiden.stenentijdperk.stenentijdperk.Managers;
 
+import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
+import hsleiden.stenentijdperk.stenentijdperk.Views.LobbyView;
+import hsleiden.stenentijdperk.stenentijdperk.Views.LoginView;
+import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+
 public class ViewManager {
-<<<<<<< Updated upstream
-=======
     private static Stage currentStage;
     private static GridPane currentView;
 
@@ -41,5 +46,4 @@ public class ViewManager {
         } catch(Exception e) {
         }
     }
->>>>>>> Stashed changes
 }
