@@ -6,4 +6,8 @@ public class PlayerModel {
     public void setNaam(String naam) {
        this.naam = naam;
     }
+
+    public String getNaam() {
+        return this.naam;
+    }
 }

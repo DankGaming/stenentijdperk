@@ -46,7 +46,7 @@ public class LobbyView {
         }
 
 
-        Label welkomLabel = new Label("Hallo NAAM, je hebt keuze uit deze lobby's");
+        Label welkomLabel = new Label("Hallo " + playermodel.getNaam() + ", je hebt keuze uit deze lobby's");
         welkomLabel.setStyle("-fx-font-size: 20px; ");
         GridPane.setConstraints(welkomLabel, 1, 1, 48, 3);
 

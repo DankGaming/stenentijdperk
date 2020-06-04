@@ -10,7 +10,11 @@ import javafx.stage.Stage;
 public class LoginController {
 	public void onVerderButtonClick(String naam) {
 		PlayerModel playerModel = generatePlayer(naam);
+<<<<<<< Updated upstream
 		System.out.println("De knop is ingedrukt");
+=======
+		ViewManager.loadLobbyView(playerModel);
+>>>>>>> Stashed changes
 	}
 
 	public PlayerModel generatePlayer(String naam) {

@@ -66,7 +66,8 @@ public class LoginView {
 			public void handle(ActionEvent actionEvent) {
 				// make call to controller.
 				String naam = naamField.getText();
-				controller.onVerderButtonClick(naam);
+				if(naam.length() > 0)
+					controller.onVerderButtonClick(naam);
 			}
 		};
 
