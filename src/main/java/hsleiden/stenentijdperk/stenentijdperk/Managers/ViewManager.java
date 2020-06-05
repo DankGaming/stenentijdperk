@@ -8,42 +8,42 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class ViewManager {
+    // The current stage and view.
     private static Stage currentStage;
     private static GridPane currentView;
 
-    public ViewManager() {
-    }
+    // The load view functions. Call these in your controllers and views.
 
     public static void loadLoginView() {
         closeView();
         currentView = new LoginView().setScene();
-        createStageFromView(800, 800, "Login");
-        showView();
+        showView(800, 800, "Login");
     }
 
     public static void loadLobbyView(PlayerModel playerModel) {
         closeView();
         currentView = new LobbyView(playerModel).setScene();
-        createStageFromView(800, 800, "Lobby");
-        showView();
+        showView(800, 800, "Lobby");
     }
 
+    // This function creates a stage from a gridpane.
     public static void createStageFromView(int width, int height, String title) {
         currentStage = new Stage();
-        currentStage.setScene(new Scene(currentView, width, height));
+        if(currentView != null)
+            currentStage.setScene(new Scene(currentView, width, height));
         currentStage.setTitle(title);
     }
 
-    public static void showView() {
-        if(currentStage != null) {
+    // This function shows a view.
+    public static void showView(int width, int height, String title) {
+        createStageFromView(800, 800, "Login");
+        if(currentStage != null)
             currentStage.show();
-        }
     }
 
+    // And this function closes a view.
     public static void closeView() {
-        try {
+        if(currentStage != null)
             currentStage.close();
-        } catch(Exception e) {
-        }
     }
 }
