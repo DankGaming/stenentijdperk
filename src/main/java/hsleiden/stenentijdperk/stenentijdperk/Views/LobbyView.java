@@ -77,19 +77,27 @@ public class LobbyView {
         lobbyButton5.setMinHeight(100);
         lobbyButton5.setStyle("-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
 
+        Button joinLobbyButton = new Button("Join");
+        joinLobbyButton.setMinSize(280, 120);
+        joinLobbyButton.setMaxSize(280, 120);
+        joinLobbyButton.setStyle("-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
+        GridPane.setConstraints(joinLobbyButton, 30, 26, 10, 10);
+
         EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 if(actionEvent.getSource() == lobbyButton1) {
-                    System.out.println("Lobby 1");
+                    controller.setLobbyId(1);
                 }else if(actionEvent.getSource() == lobbyButton2) {
-                    System.out.println("Lobby 2");
+                    controller.setLobbyId(2);
                 }else if(actionEvent.getSource() == lobbyButton3) {
-                    System.out.println("Lobby 3");
+                    controller.setLobbyId(3);
                 }else if(actionEvent.getSource() == lobbyButton4) {
-                    System.out.println("Lobby 4");
+                    controller.setLobbyId(4);
                 }else if(actionEvent.getSource() == lobbyButton5) {
-                    System.out.println("Lobby 5");
+                    controller.setLobbyId(5);
+                } else if(actionEvent.getSource() == joinLobbyButton) {
+                    controller.joinLobby();
                 }
             }
         };
@@ -99,6 +107,7 @@ public class LobbyView {
         lobbyButton3.setOnAction(event);
         lobbyButton4.setOnAction(event);
         lobbyButton5.setOnAction(event);
+        joinLobbyButton.setOnAction(event);
 
         VBox vbox = new VBox(lobbyButton1, lobbyButton2, lobbyButton3, lobbyButton4, lobbyButton5);
 
@@ -113,13 +122,6 @@ public class LobbyView {
         informationScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         GridPane.setConstraints(informationScrollPane, 30, 5, 18, 15);
 
-        Button joinLobbyButton = new Button("Join");
-        joinLobbyButton.setMinSize(280, 120);
-        joinLobbyButton.setMaxSize(280, 120);
-        joinLobbyButton.setStyle("-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
-        GridPane.setConstraints(joinLobbyButton, 30, 26, 10, 10);
-
         this.view.getChildren().addAll(welkomLabel, lobbyScrollPane, informationScrollPane, joinLobbyButton);
-
     }
 }
