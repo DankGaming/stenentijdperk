@@ -2,6 +2,8 @@ package hsleiden.stenentijdperk.stenentijdperk.Views;
 
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.LobbyController;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -75,12 +77,31 @@ public class LobbyView {
         lobbyButton5.setMinHeight(100);
         lobbyButton5.setStyle("-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
 
+        EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if(actionEvent.getSource() == lobbyButton1) {
+                    System.out.println("Lobby 1");
+                }else if(actionEvent.getSource() == lobbyButton2) {
+                    System.out.println("Lobby 2");
+                }else if(actionEvent.getSource() == lobbyButton3) {
+                    System.out.println("Lobby 3");
+                }else if(actionEvent.getSource() == lobbyButton4) {
+                    System.out.println("Lobby 4");
+                }else if(actionEvent.getSource() == lobbyButton5) {
+                    System.out.println("Lobby 5");
+                }
+            }
+        };
 
+        lobbyButton1.setOnAction(event);
+        lobbyButton2.setOnAction(event);
+        lobbyButton3.setOnAction(event);
+        lobbyButton4.setOnAction(event);
+        lobbyButton5.setOnAction(event);
 
         VBox vbox = new VBox(lobbyButton1, lobbyButton2, lobbyButton3, lobbyButton4, lobbyButton5);
 
-        // Set content for ScrollPane
-//        scrollPane.setContent(button);
         ScrollPane lobbyScrollPane = new ScrollPane();
         lobbyScrollPane.setContent(vbox);
         lobbyScrollPane.setStyle("-fx-background-color: black;");
