@@ -1,27 +1,20 @@
 package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 
+import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
+import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
+import hsleiden.stenentijdperk.stenentijdperk.Views.BoardView;
+import java.util.Scanner;
+
 public class BoardController {
+    private BoardModel boardmodel;
+    private BoardView boardview;
     private String[] players;
-    private int food;
-    private int wood;
-    private int clay;
-    private int rock;
-    private int gold;
-    private int tools;
-    private int huts;
 
     public BoardController() {
-        this.players={"Matt","Jake"};
-        this.food = 53;
-        this.wood = 17;
-        this.clay = 17;
-        this.rock = 17;
-        this.gold = 17;
-        this.tools = 18;
-        this.huts = 28;
-
-        for (String i : this.players) {
-
+        boardmodel = new BoardModel();
+        players = boardmodel.getPlayers();
+        for (String i : players) {
+            System.out.println(i);
         }
         /*
          * voedsel op jacht (53) hout op bos leem op leemgroeve steen op steengroeve
@@ -31,6 +24,31 @@ public class BoardController {
          */
 
     }
+
+    public String scanner(String text) {
+        Scanner myObj = new Scanner(System.in); // Create a Scanner object
+        System.out.println(text);
+        String input = myObj.nextLine(); // Read user input
+        return input;
+    }
+
+    public void onVillagerButtonClick() {
+        if (boardmodel.getPlaceable()) {
+            String input;
+            do {
+                input = scanner("Hoeveel stamleden?");
+            } while (Integer.parseInt(input) > boardmodel.getVillagers());
+            System.out.println("placed " + input + " villager(s)");
+        } else {
+            System.out.println("false");
+        }
+    }
+
+    /*
+     * public void endTurn(player){
+     * 
+     * }
+     */
 
     public MainLoop(){
         while(!wincondition){

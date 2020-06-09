@@ -1,7 +1,7 @@
 package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 
-import hsleiden.stenentijdperk.stenentijdperk.Models.SpelbordModel;
+import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;;
 
 public class PlayerController {
-	private SpelbordModel bordmodel;
+	private Boardmodel boardmodel;
 }
