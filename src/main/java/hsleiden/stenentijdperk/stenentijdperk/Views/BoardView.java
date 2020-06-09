@@ -63,7 +63,7 @@ public class BoardView {
 		endTurn.setMaxSize(300, 60);
 		endTurn.setStyle(
 				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
-		GridPane.setConstraints(endTurn, 7, 3, 10, 10);
+		GridPane.setConstraints(endTurn, 7, 6, 15, 15);
 
 		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
 			@Override
@@ -73,16 +73,17 @@ public class BoardView {
 			}
 		};
 
-		/*
-		 * EventHandler<ActionEvent> endTurn = new EventHandler<ActionEvent>() {
-		 * 
-		 * @Override public void handle(ActionEvent actionEvent) { // make call to
-		 * controller. controller.onEndTurnClick(); } };
-		 */
+		EventHandler<ActionEvent> event2 = new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+				// make call to controller.
+				controller.endTurn();
+			}
+		};
 
 		villagerButton.setOnAction(event);
-		// endTurn.setOnAction(endTurn);
+		endTurn.setOnAction(event2);
 
-		this.view.getChildren().addAll(villagerButton);
+		this.view.getChildren().addAll(villagerButton, endTurn);
 	}
 }

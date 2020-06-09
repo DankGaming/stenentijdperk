@@ -14,7 +14,7 @@ public class BoardModel {
     private int gold;
     private int tools;
     private int huts;
-    private int villagers;
+    private int villagersOnBoard; // placeholder voor locatie
     private boolean wincondition;
 
     public BoardModel() {
@@ -26,7 +26,7 @@ public class BoardModel {
         this.gold = 17;
         this.tools = 18;
         this.huts = 28;
-        this.villagers = 5;
+        this.villagersOnBoard = 0;
         this.wincondition = false;
         this.isPlaceable = true;
     }
@@ -44,11 +44,11 @@ public class BoardModel {
     }
 
     // dit moet naar resources
-    public void setVillagers(int villagers) {
-        this.villagers = villagers;
+    public void setVillagersOnBoard(int villagers) {
+        this.villagersOnBoard = villagers;
     }
 
-    public int getVillagers() {
-        return this.villagers;
+    public int getVillagersOnBoard() {
+        return this.villagersOnBoard;
     }
 }
