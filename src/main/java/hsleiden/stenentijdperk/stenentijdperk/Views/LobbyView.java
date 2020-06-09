@@ -2,6 +2,8 @@ package hsleiden.stenentijdperk.stenentijdperk.Views;
 
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.LobbyController;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
+import hsleiden.stenentijdperk.stenentijdperk.observers.LobbyObservable;
+import hsleiden.stenentijdperk.stenentijdperk.observers.LobbyObserver;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -14,7 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 
-public class LobbyView {
+public class LobbyView implements LobbyObserver {
     private LobbyController controller;
     private PlayerModel playermodel;
     private GridPane view;
@@ -22,6 +24,7 @@ public class LobbyView {
     public LobbyView(PlayerModel model) {
         this.controller = new LobbyController();
         this.playermodel = model;
+        this.controller.registerObserver(this);
 
         setupPane();
     }
@@ -123,5 +126,10 @@ public class LobbyView {
         GridPane.setConstraints(informationScrollPane, 30, 5, 18, 15);
 
         this.view.getChildren().addAll(welkomLabel, lobbyScrollPane, informationScrollPane, joinLobbyButton);
+    }
+
+    @Override
+    public void update(LobbyObservable lo) {
+        System.out.println(lo.getId());
     }
 }
