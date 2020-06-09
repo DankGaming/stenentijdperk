@@ -16,10 +16,22 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class LobbyView implements LobbyObserver {
     private LobbyController controller;
     private PlayerModel playermodel;
     private GridPane view;
+
+    private Label lobbyInformation = new Label("");
+    private Label spelers = new Label("");
+    private Label speler1 = new Label("");
+    private Label speler2 = new Label("");
+    private Label speler3 = new Label("");
+    private Label speler4 = new Label("");
+
+    private ArrayList<Label> playerLabels;
 
     public LobbyView(PlayerModel model) {
         this.controller = new LobbyController();
@@ -112,15 +124,20 @@ public class LobbyView implements LobbyObserver {
         lobbyButton5.setOnAction(event);
         joinLobbyButton.setOnAction(event);
 
-        VBox vbox = new VBox(lobbyButton1, lobbyButton2, lobbyButton3, lobbyButton4, lobbyButton5);
+        VBox lobbyVbox = new VBox(lobbyButton1, lobbyButton2, lobbyButton3, lobbyButton4, lobbyButton5);
 
         ScrollPane lobbyScrollPane = new ScrollPane();
-        lobbyScrollPane.setContent(vbox);
+        lobbyScrollPane.setContent(lobbyVbox);
         lobbyScrollPane.setStyle("-fx-background-color: black;");
         lobbyScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         GridPane.setConstraints(lobbyScrollPane, 1, 5, 25, 30);
 
+        VBox informationVbox = new VBox(this.lobbyInformation, this.spelers, this.speler1, this.speler2, this.speler3, this.speler4);
+
+        informationVbox.setPadding(new Insets(0, 0, 0 ,5));
+
         ScrollPane informationScrollPane = new ScrollPane();
+        informationScrollPane.setContent(informationVbox);
         informationScrollPane.setStyle("-fx-background-color: black;");
         informationScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         GridPane.setConstraints(informationScrollPane, 30, 5, 18, 15);
@@ -128,8 +145,41 @@ public class LobbyView implements LobbyObserver {
         this.view.getChildren().addAll(welkomLabel, lobbyScrollPane, informationScrollPane, joinLobbyButton);
     }
 
+    public void selectLobby(int id, ArrayList<PlayerModel> players) {
+        this.lobbyInformation.setText("Lobby " + id);
+        this.lobbyInformation.setStyle("-fx-font-size: 25px; -fx-font-weight: bold; ");
+        updateLabels(players);
+    }
+
+    private void updateLabels(ArrayList<PlayerModel> players) {
+        if(players.size() > 0)
+            this.spelers.setText("Spelers: ");
+            this.spelers.setStyle("-fx-font-size: 22px;");
+
+        try {
+            this.speler1.setText(players.get(0).getNaam());
+            this.speler1.setStyle("-fx-font-size: 15px;");
+        } catch (Exception ignored) {}
+
+        try {
+            this.speler2.setText(players.get(1).getNaam());
+            this.speler2.setStyle("-fx-font-size: 15px;");
+        } catch (Exception ignored) {}
+
+        try {
+            this.speler3.setText(players.get(2).getNaam());
+            this.speler3.setStyle("-fx-font-size: 15px;");
+        } catch (Exception ignored) {}
+
+        try {
+            this.speler4.setText(players.get(3).getNaam());
+            this.speler4.setStyle("-fx-font-size: 15px;");
+        } catch (Exception ignored) {}
+
+    }
+
     @Override
     public void update(LobbyObservable lo) {
-        System.out.println(lo.getId());
+        selectLobby(lo.getId(), lo.getPlayers());
     }
 }
