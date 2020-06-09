@@ -21,6 +21,9 @@ public class LobbyView implements LobbyObserver {
     private PlayerModel playermodel;
     private GridPane view;
 
+    // shit
+    private Label lobbyInformation = new Label("");
+
     public LobbyView(PlayerModel model) {
         this.controller = new LobbyController();
         this.playermodel = model;
@@ -112,15 +115,18 @@ public class LobbyView implements LobbyObserver {
         lobbyButton5.setOnAction(event);
         joinLobbyButton.setOnAction(event);
 
-        VBox vbox = new VBox(lobbyButton1, lobbyButton2, lobbyButton3, lobbyButton4, lobbyButton5);
+        VBox lobbyVbox = new VBox(lobbyButton1, lobbyButton2, lobbyButton3, lobbyButton4, lobbyButton5);
 
         ScrollPane lobbyScrollPane = new ScrollPane();
-        lobbyScrollPane.setContent(vbox);
+        lobbyScrollPane.setContent(lobbyVbox);
         lobbyScrollPane.setStyle("-fx-background-color: black;");
         lobbyScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         GridPane.setConstraints(lobbyScrollPane, 1, 5, 25, 30);
 
+        VBox informationVbox = new VBox(this.lobbyInformation);
+
         ScrollPane informationScrollPane = new ScrollPane();
+        informationScrollPane.setContent(informationVbox);
         informationScrollPane.setStyle("-fx-background-color: black;");
         informationScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         GridPane.setConstraints(informationScrollPane, 30, 5, 18, 15);
@@ -128,8 +134,12 @@ public class LobbyView implements LobbyObserver {
         this.view.getChildren().addAll(welkomLabel, lobbyScrollPane, informationScrollPane, joinLobbyButton);
     }
 
+    public void setLobbyId(int id) {
+        this.lobbyInformation.setText("Lobby " + id);
+    }
+
     @Override
     public void update(LobbyObservable lo) {
-        System.out.println(lo.getId());
+        setLobbyId(lo.getId());
     }
 }

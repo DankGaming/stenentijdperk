@@ -7,9 +7,12 @@ import java.util.ArrayList;
 
 public class LobbyModel implements LobbyObservable {
     private int lobbyId;
+    private ArrayList<PlayerModel> players;
+
     ArrayList<LobbyObserver> observers = new ArrayList<>();
 
     public LobbyModel() {
+        this.players = new ArrayList<>();
     }
 
     public void changeLobbyId(int id) {
