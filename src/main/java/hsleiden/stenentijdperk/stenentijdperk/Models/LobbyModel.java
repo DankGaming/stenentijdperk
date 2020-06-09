@@ -28,4 +28,9 @@ public class LobbyModel implements LobbyObservable {
             lo.update(this);
         }
     }
+
+    @Override
+    public int getId() {
+        return this.lobbyId;
+    }
 }

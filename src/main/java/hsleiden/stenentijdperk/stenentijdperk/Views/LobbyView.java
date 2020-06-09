@@ -130,6 +130,6 @@ public class LobbyView implements LobbyObserver {
 
     @Override
     public void update(LobbyObservable lo) {
-        System.out.println("de class is veranderd!");
+        System.out.println(lo.getId());
     }
 }
