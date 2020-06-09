@@ -8,8 +8,9 @@ public class PlayerModel {
     HashMap<Integer, Integer> toolHashMap = new HashMap<Integer, Integer>();
     HashMap<String, Integer> resourcesHashMap = new HashMap<String, Integer>();
 
-    public PlayerModel() {
+    public PlayerModel(String naam) {
         this.villagers = 5;
+        this.naam = naam;
     }
 
     public void setNaam(String naam) {

@@ -3,21 +3,22 @@ package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Views.BoardView;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BoardController {
     private PlayerController playercontroller;
     private BoardModel boardmodel;
     private BoardView boardview;
-    private String[] players;
+    private ArrayList<PlayerModel> players = new ArrayList<PlayerModel>();
 
     public BoardController() {
+        PlayerModel matt = new PlayerModel("Matt");
+        PlayerModel jake = new PlayerModel("Jake");
+        players.add(matt);
+        players.add(jake);
         playercontroller = new PlayerController();
         boardmodel = new BoardModel();
-        players = boardmodel.getPlayers();
-        for (String i : players) {
-            System.out.println(i);
-        }
         /*
          * voedsel op jacht (53) hout op bos leem op leemgroeve steen op steengroeve
          * goud op rivier (68) gereedschap bij maker (18) vier beschavingskaarten (36)
@@ -39,23 +40,26 @@ public class BoardController {
             String input;
             do {
                 input = scanner("Hoeveel stamleden?");
-            } while (Integer.parseInt(input) <= 0 || Integer.parseInt(input) > playercontroller.getVillagers()
+            } while (Integer.parseInt(input) <= 0
+                    || Integer.parseInt(input) > playercontroller.getVillagers(players.get(0))
                     || Integer.parseInt(input) > (7 - boardmodel.getVillagersOnBoard())); // hoeveel passen op de
                                                                                           // locatie
             System.out.println("placed " + input + " villager(s)");
-            playercontroller.setVillagers(playercontroller.getVillagers() - Integer.parseInt(input));
+            playercontroller.setVillagers(players.get(0),
+                    (playercontroller.getVillagers(players.get(0)) - Integer.parseInt(input)));
             boardmodel.setVillagersOnBoard(boardmodel.getVillagersOnBoard() + Integer.parseInt(input));
-            System.out.println(playercontroller.getVillagers());
+            System.out.println(playercontroller.getVillagers(players.get(0)));
         } else {
             System.out.println("false");
         }
     }
 
     public void endTurn() {
-        for (String i : players) {
-            playercontroller.getVillagers();
+        for (PlayerModel player : players) {
+            System.out.println(playercontroller.getVillagers(player));
+            System.out.println(player.getNaam());
         }
-        if (playercontroller.getVillagers() == 0) {
+        if (playercontroller.getVillagers(players.get(0)) == 0) {
             System.out.println("einde beurt");
         } else {
             System.out.println("plaats villagers");

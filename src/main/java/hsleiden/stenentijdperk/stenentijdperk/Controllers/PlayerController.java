@@ -6,14 +6,13 @@ public class PlayerController {
 	private PlayerModel playermodel;
 
 	public PlayerController() {
-		playermodel = new PlayerModel();
 	}
 
-	public int getVillagers() {
+	public int getVillagers(PlayerModel playermodel) {
 		return playermodel.getVillagers();
 	}
 
-	public void setVillagers(int villagers) {
+	public void setVillagers(PlayerModel playermodel, int villagers) {
 		playermodel.setVillagers(villagers);
 	}
 }
