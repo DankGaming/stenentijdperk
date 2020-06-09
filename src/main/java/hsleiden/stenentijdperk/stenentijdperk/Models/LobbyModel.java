@@ -13,6 +13,12 @@ public class LobbyModel implements LobbyObservable {
 
     public LobbyModel() {
         this.players = new ArrayList<>();
+        PlayerModel playerModel1 = new PlayerModel();
+        playerModel1.setNaam("PotvisHunter5000");
+        PlayerModel playerModel2 = new PlayerModel();
+        playerModel2.setNaam("IkBenEenPotvis");
+        this.players.add(playerModel1);
+        this.players.add(playerModel2);
     }
 
     public void changeLobbyId(int id) {
@@ -35,5 +41,10 @@ public class LobbyModel implements LobbyObservable {
     @Override
     public int getId() {
         return this.lobbyId;
+    }
+
+    @Override
+    public ArrayList<PlayerModel> getPlayers() {
+        return this.players;
     }
 }

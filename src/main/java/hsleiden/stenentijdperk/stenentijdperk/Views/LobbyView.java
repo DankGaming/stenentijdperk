@@ -16,13 +16,22 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class LobbyView implements LobbyObserver {
     private LobbyController controller;
     private PlayerModel playermodel;
     private GridPane view;
 
-    // shit
     private Label lobbyInformation = new Label("");
+    private Label spelers = new Label("");
+    private Label speler1 = new Label("");
+    private Label speler2 = new Label("");
+    private Label speler3 = new Label("");
+    private Label speler4 = new Label("");
+
+    private ArrayList<Label> playerLabels;
 
     public LobbyView(PlayerModel model) {
         this.controller = new LobbyController();
@@ -123,7 +132,7 @@ public class LobbyView implements LobbyObserver {
         lobbyScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         GridPane.setConstraints(lobbyScrollPane, 1, 5, 25, 30);
 
-        VBox informationVbox = new VBox(this.lobbyInformation);
+        VBox informationVbox = new VBox(this.lobbyInformation, this.spelers, this.speler1, this.speler2, this.speler3, this.speler4);
 
         ScrollPane informationScrollPane = new ScrollPane();
         informationScrollPane.setContent(informationVbox);
@@ -134,12 +143,35 @@ public class LobbyView implements LobbyObserver {
         this.view.getChildren().addAll(welkomLabel, lobbyScrollPane, informationScrollPane, joinLobbyButton);
     }
 
-    public void setLobbyId(int id) {
+    public void selectLobby(int id, ArrayList<PlayerModel> players) {
         this.lobbyInformation.setText("Lobby " + id);
+        updateLabels(players);
+    }
+
+    private void updateLabels(ArrayList<PlayerModel> players) {
+        if(players.size() > 0)
+            this.spelers.setText("Spelers: ");
+
+        try {
+            this.speler1.setText(players.get(0).getNaam());
+        } catch (Exception ignored) {}
+
+        try {
+            this.speler2.setText(players.get(1).getNaam());
+        } catch (Exception ignored) {}
+
+        try {
+            this.speler3.setText(players.get(2).getNaam());
+        } catch (Exception ignored) {}
+
+        try {
+            this.speler4.setText(players.get(3).getNaam());
+        } catch (Exception ignored) {}
+
     }
 
     @Override
     public void update(LobbyObservable lo) {
-        setLobbyId(lo.getId());
+        selectLobby(lo.getId(), lo.getPlayers());
     }
 }
