@@ -134,6 +134,8 @@ public class LobbyView implements LobbyObserver {
 
         VBox informationVbox = new VBox(this.lobbyInformation, this.spelers, this.speler1, this.speler2, this.speler3, this.speler4);
 
+        informationVbox.setPadding(new Insets(0, 0, 0 ,5));
+
         ScrollPane informationScrollPane = new ScrollPane();
         informationScrollPane.setContent(informationVbox);
         informationScrollPane.setStyle("-fx-background-color: black;");
@@ -145,27 +147,33 @@ public class LobbyView implements LobbyObserver {
 
     public void selectLobby(int id, ArrayList<PlayerModel> players) {
         this.lobbyInformation.setText("Lobby " + id);
+        this.lobbyInformation.setStyle("-fx-font-size: 25px; -fx-font-weight: bold; ");
         updateLabels(players);
     }
 
     private void updateLabels(ArrayList<PlayerModel> players) {
         if(players.size() > 0)
             this.spelers.setText("Spelers: ");
+            this.spelers.setStyle("-fx-font-size: 22px;");
 
         try {
             this.speler1.setText(players.get(0).getNaam());
+            this.speler1.setStyle("-fx-font-size: 15px;");
         } catch (Exception ignored) {}
 
         try {
             this.speler2.setText(players.get(1).getNaam());
+            this.speler2.setStyle("-fx-font-size: 15px;");
         } catch (Exception ignored) {}
 
         try {
             this.speler3.setText(players.get(2).getNaam());
+            this.speler3.setStyle("-fx-font-size: 15px;");
         } catch (Exception ignored) {}
 
         try {
             this.speler4.setText(players.get(3).getNaam());
+            this.speler4.setStyle("-fx-font-size: 15px;");
         } catch (Exception ignored) {}
 
     }
