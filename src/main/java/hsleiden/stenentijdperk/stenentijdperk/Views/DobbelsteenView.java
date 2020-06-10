@@ -9,26 +9,35 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 public class DobbelsteenView extends Pane {
 
     private ImageView imageView;
-    private String RESOURCE = "file:Images/dobbelsteen.png";
-    private GridPane view;
-
-    public GridPane setScene() {
-        return view;
-    }
+    private String RESOURCE = "./Images/dobbelsteen.png";
 
     public DobbelsteenView() {
+        setupPane();
+    }
 
-        Image image = new Image("file:Images/dobbelsteen.png");
-        imageView = new ImageView(image);
-        imageView.setFitHeight(image.getHeight() * 0.75);
-        imageView.setFitWidth(image.getWidth() * 0.75);
+    public ImageView setScene() {
+        return imageView;
+    }
 
-        this.view = new GridPane();
-        view.getChildren().add(imageView);
+    public void setupPane() {
+        FileInputStream input = null;
+        try {
+            input = new FileInputStream(this.RESOURCE);
+        } catch(FileNotFoundException fileNotFoundException) {
+            System.out.println(fileNotFoundException);
+        }
 
+        assert input != null;
+        Image image = new Image(input);
+        this.imageView = new ImageView(image);
+        this.imageView.setFitHeight(image.getHeight() * 0.75);
+        this.imageView.setFitWidth(image.getWidth() * 0.75);
     }
 
     public void modelChanged(Dobbelsteen model) {
