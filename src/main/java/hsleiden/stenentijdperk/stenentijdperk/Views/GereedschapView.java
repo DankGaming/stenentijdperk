@@ -8,49 +8,43 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-public class GereedschapView extends Stage {
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
-    public GereedschapView(TableauModel tableau) {
+public class GereedschapView extends Stage {
+    private ImageView imageView;
+    private String RESOURCE = "./Images/dobbelsteen.png";
+
+    public GereedschapView() {
+        TableauModel tableau = new TableauModel();
+        setupPane(tableau);
+    }
+
+    public ImageView setScene() {
+        return imageView;
+    }
+
+    public void setupPane(TableauModel tableau) {
         int[] gereedschap = tableau.getGereedschap();
         boolean[] gereedschapGebruikt = tableau.getGereedschapGebruikt();
 
-        HBox view = new HBox();
-
-        for (int i = 0; i < 3; i++) {
-            if (gereedschap[i] == 0) {
-                continue;
-            }
-            // abeelding gereedschap maken
-            Image image = new Image("Gereedschap");
-            ImageView imageView = new ImageView(image);
-
-            imageView.setFitHeight(100);
-            imageView.setFitWidth(100);
-
-            //afbeelding 90 graaden draaien als fiche gebruikt is
-            imageView.setRotate(gereedschapGebruikt[i] ? 90 : 0);
-
-            if (!gereedschapGebruikt[i]) {
-                // hier gereedschap kunnen gebruiken
-                imageView.setOnMouseClicked(e -> {
-                    tableau.gebruikGereedschap();
-                    imageView.setRotate(90);
-                    imageView.setOnMouseClicked(n -> {
-                    });
-                });
-            }
-
-            view.getChildren().add(imageView);
+        FileInputStream input = null;
+        try {
+            input = new FileInputStream(this.RESOURCE);
+        } catch (FileNotFoundException fileNotFoundException) {
+            System.out.println(fileNotFoundException);
         }
 
-        // Aanmaken bevestiging button voor gebruik gereedschap
-        Button bevestigen = new Button("Bevestigen");
-        bevestigen.setPrefSize(100, 100);
-        bevestigen.setOnAction(e -> this.close());
-        view.getChildren().add(bevestigen);
+        assert input != null;
 
-        Scene scene = new Scene(view);
-        this.setScene(scene);
+        // abeelding gereedschap maken
+        Image image = new Image(input);
+        this.imageView = new ImageView(image);
+        this.imageView.setFitHeight(100);
+        this.imageView.setFitWidth(100);
+
+        //afbeelding 90 graaden draaien als fiche gebruikt is
+
 
     }
 }

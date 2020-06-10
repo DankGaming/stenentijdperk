@@ -17,6 +17,7 @@ public class DobbelsteenView extends Pane {
     private ImageView imageView;
     private String RESOURCE = "./Images/dobbelsteen.png";
 
+
     public DobbelsteenView() {
         setupPane();
     }
