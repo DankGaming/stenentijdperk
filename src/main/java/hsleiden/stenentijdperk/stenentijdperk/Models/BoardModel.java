@@ -2,8 +2,12 @@ package hsleiden.stenentijdperk.stenentijdperk.Models;
 
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Views.BoardView;
+import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
+import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
 
-public class BoardModel {
+import java.util.ArrayList;
+
+public class BoardModel implements BoardObservable {
     private Kaart[] kaarten;
     private boolean isPlaceable;
     private String[] players = { "Matt", "Jake" };
@@ -14,8 +18,11 @@ public class BoardModel {
     private int gold;
     private int tools;
     private int huts;
+    private int turn;
     private int villagersOnBoard; // placeholder voor locatie
     private boolean wincondition;
+
+    ArrayList<BoardObserver> observers = new ArrayList<>();
 
     public BoardModel() {
 
@@ -29,6 +36,7 @@ public class BoardModel {
         this.villagersOnBoard = 0;
         this.wincondition = false;
         this.isPlaceable = true;
+        this.turn = 1;
     }
 
     public void setPlaceable(boolean isPlaceable) {
@@ -50,5 +58,26 @@ public class BoardModel {
 
     public int getVillagersOnBoard() {
         return this.villagersOnBoard;
+    }
+
+    @Override
+    public void register(BoardObserver boardobserver) {
+        this.observers.add(boardobserver);
+    }
+
+    @Override
+    public void notifyAllObservers() {
+        for (BoardObserver boardobserver : observers) {
+            boardobserver.update(this);
+        }
+    }
+
+    @Override
+    public int getTurn() {
+        return this.turn;
+    }
+
+    public void setTurn(int turn) {
+        this.turn = turn;
     }
 }

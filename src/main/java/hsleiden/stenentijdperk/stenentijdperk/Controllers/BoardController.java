@@ -1,5 +1,6 @@
 package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 
+import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Views.BoardView;
@@ -33,6 +34,10 @@ public class BoardController {
         System.out.println(text);
         String input = myObj.nextLine(); // Read user input
         return input;
+    }
+
+    public void registerObserver(BoardObserver boardobserver) {
+        this.boardmodel.register(boardobserver);
     }
 
     public void onVillagerButtonClick() {
