@@ -13,6 +13,11 @@ public class TableauModel {
     private int[] gereedschap;
     private boolean[] gereedschapGebruikt;
 
+    public TableauModel(){
+        stamleden = new LinkedList<>();
+        gereedschap = new int[] { 0, 0, 0 };
+    }
+
     public TableauModel(PlayerModel player){
         stamleden = new LinkedList<>();
         gereedschap = new int[] { 0, 0, 0 };
