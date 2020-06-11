@@ -15,28 +15,22 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class FirebaseController {
-    InputStream serviceAccount;
     Firestore db;
 
     public void initializeFirebaseApp() {
-        try {
-            serviceAccount = new FileInputStream("./credentials.json");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
         GoogleCredentials credentials = null;
 
         try {
-            credentials = GoogleCredentials.fromStream(serviceAccount);
+            credentials = GoogleCredentials.fromStream(new FileInputStream("./iipsene-stenentijdperk-firebase-adminsdk-9kdre-d4805147e1.json"));
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("File couldn't be read");
         }
 
         assert credentials != null;
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(credentials)
                 .build();
+
 
         FirebaseApp.initializeApp(options);
         db = FirestoreClient.getFirestore();
