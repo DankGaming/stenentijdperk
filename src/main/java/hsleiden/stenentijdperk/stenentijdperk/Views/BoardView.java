@@ -69,7 +69,7 @@ public class BoardView {
 			@Override
 			public void handle(ActionEvent actionEvent) {
 				// make call to controller.
-				controller.onVillagerButtonClick();
+				controller.onResourceButtonClick();
 			}
 		};
 

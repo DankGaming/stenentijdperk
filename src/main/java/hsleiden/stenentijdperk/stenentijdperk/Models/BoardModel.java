@@ -32,8 +32,7 @@ public class BoardModel {
         this.isPlaceable = true;
         this.placed = false;
     }
-
-    // dit bepaald H
+    
     public void setPlaceable(boolean isPlaceable) {
         this.isPlaceable = isPlaceable;
     }
