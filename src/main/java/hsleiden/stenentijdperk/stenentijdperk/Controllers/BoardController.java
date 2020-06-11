@@ -3,23 +3,27 @@ package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
-import hsleiden.stenentijdperk.stenentijdperk.Views.BoardView;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class BoardController {
     private PlayerController playercontroller;
     private BoardModel boardmodel;
-    private BoardView boardview;
     private ArrayList<PlayerModel> players = new ArrayList<PlayerModel>();
 
     public BoardController() {
         PlayerModel matt = new PlayerModel("Matt");
         PlayerModel jake = new PlayerModel("Jake");
+        PlayerModel lucas = new PlayerModel("Lucas");
+        PlayerModel carlos = new PlayerModel("Carlos");
         players.add(matt);
         players.add(jake);
+        players.add(lucas);
+        players.add(carlos);
         playercontroller = new PlayerController();
         boardmodel = new BoardModel();
+        boardmodel.setPlayer(matt); // Begin van het spel turn eerste speler bepalen.
         /*
          * voedsel op jacht (53) hout op bos leem op leemgroeve steen op steengroeve
          * goud op rivier (68) gereedschap bij maker (18) vier beschavingskaarten (36)
@@ -41,64 +45,98 @@ public class BoardController {
     }
 
     public void onVillagerButtonClick() {
-        if (boardmodel.getPlaceable()) {
-            String input;
-            do {
-                input = scanner("Hoeveel stamleden?");
-            } while (Integer.parseInt(input) <= 0
-                    || Integer.parseInt(input) > playercontroller.getVillagers(players.get(0))
-                    || Integer.parseInt(input) > (7 - boardmodel.getVillagersOnBoard())); // hoeveel passen op de
-                                                                                          // locatie
-            System.out.println("placed " + input + " villager(s)");
-            playercontroller.setVillagers(players.get(0),
-                    (playercontroller.getVillagers(players.get(0)) - Integer.parseInt(input)));
-            boardmodel.setVillagersOnBoard(boardmodel.getVillagersOnBoard() + Integer.parseInt(input));
-            System.out.println(playercontroller.getVillagers(players.get(0)));
-        } else {
-            System.out.println("false");
-        }
+        String input;
+        do {
+            input = scanner("Hoeveel stamleden?");
+        } while (Integer.parseInt(input) <= 0
+                || Integer.parseInt(input) > playercontroller.getVillagers(boardmodel.getPlayer())
+                || Integer.parseInt(input) > (7 - boardmodel.getVillagersOnBoard())); // hoeveel passen op de
+                                                                                      // locatie
+        System.out.println("placed " + input + " villager(s)");
+        playercontroller.setVillagers(boardmodel.getPlayer(),
+                (playercontroller.getVillagers(boardmodel.getPlayer()) - Integer.parseInt(input)));
+        boardmodel.setVillagersOnBoard(boardmodel.getVillagersOnBoard() + Integer.parseInt(input));
+        System.out.println(playercontroller.getVillagers(boardmodel.getPlayer()));
+        boardmodel.setPlaced(true);
     }
 
     public void endTurn() {
-        for (PlayerModel player : players) {
-            System.out.println(playercontroller.getVillagers(player));
-            System.out.println(player.getNaam());
-        }
-        if (playercontroller.getVillagers(players.get(0)) == 0) {
+        if (boardmodel.getPlaced()) { // checkt of de speler stamleden heeft geplaast.
             System.out.println("einde beurt");
+            boolean villagersLeft = true;
+            int i = 0;
+            for (int j = 0; j < 4; j++) {
+                if (boardmodel.getPlayer().equals(players.get(j))) { // Bepaling welke player aan de beurt is
+                    i = j;
+                }
+            }
+            switch (i) { // Verschillede loops bepaalt door welke speler aan de beurt was
+                case 0: // Spelers 1, 2 en 3
+                case 1:
+                case 2:
+                    villagersLeft = loopPlayers(i, players);
+                    System.out.println("Hi");
+                    if (!villagersLeft) { // Als de vorige loop niks gevonden heeft dan komt deze pas
+                        System.out.println("Yo");
+                        villagersLeft = loopPlayers(-1, players.subList(0, i + 1));
+                    }
+                    break;
+                case 3:
+                    villagersLeft = loopPlayers(i - 4, players);
+                    break;
+            }
+            if (!villagersLeft) {
+                System.out.println("Nu komen de acties");
+            }
         } else {
             System.out.println("plaats villagers");
         }
     }
 
-    // public MainLoop(){
-    // while(!wincondition){
-    // stamleden plaatsen
-    // volgende speler aan de beurt
-    // loop totdat stamleden op zijn
-
-    // acties uitvoeren
-    // volgende speler aan de beurt
-    // einde
-
-    // stamleden voeden
-    // speler krijgt voedsel gelijk aan score op voedselspoor
-    // per stamlid -1 voedsel
-    // 1 grondstof = 1 voedsel
-    // if voedsel + grondstoffen < stamleden , -10 punten
-
-    // nieuwe ronden
-    // andere speler begint
-    // beschavingskaarten aanvullen
-    // gereedschap reset
-    // }
-
-    // if beschavinskaarten < 4 , einde spel
-    // if (1 stapel hutten is leeg) , einde spel (na de ronde)
-    // elke grondstof is 1 punt
-    // aantal verschillende groene beschavingskaarten ^2 = aantal punten
-    // aantal symbolen op zandkleurige beschavinskaarten * aantal bezittingen =
-    // aantal punten
-    // }
+    // Methode om door lijsten spelers te loopen.
+    public boolean loopPlayers(int start, List<PlayerModel> player) {
+        boolean found = false;
+        for (int j = start + 1; j < player.size(); j++) {
+            if (playercontroller.getVillagers(player.get(j)) != 0) {
+                boardmodel.setPlayer(player.get(j)); // Veranderd de huidige speler
+                boardmodel.setPlaced(false); // Reset het plaatsten
+                found = true;
+                System.out.println(boardmodel.getPlayer().getNaam() + " is aan de beurt en heeft "
+                        + boardmodel.getPlayer().getVillagers() + " stamleden over.");
+                break;
+            }
+        }
+        return found;
+    }
 
 }
+
+// public MainLoop(){
+// while(!wincondition){
+// stamleden plaatsen
+// volgende speler aan de beurt
+// loop totdat stamleden op zijn
+
+// acties uitvoeren
+// volgende speler aan de beurt
+// einde
+
+// stamleden voeden
+// speler krijgt voedsel gelijk aan score op voedselspoor
+// per stamlid -1 voedsel
+// 1 grondstof = 1 voedsel
+// if voedsel + grondstoffen < stamleden , -10 punten
+
+// nieuwe ronden
+// andere speler begint
+// beschavingskaarten aanvullen
+// gereedschap reset
+// }
+
+// if beschavinskaarten < 4 , einde spel
+// if (1 stapel hutten is leeg) , einde spel (na de ronde)
+// elke grondstof is 1 punt
+// aantal verschillende groene beschavingskaarten ^2 = aantal punten
+// aantal symbolen op zandkleurige beschavinskaarten * aantal bezittingen =
+// aantal punten
+// }

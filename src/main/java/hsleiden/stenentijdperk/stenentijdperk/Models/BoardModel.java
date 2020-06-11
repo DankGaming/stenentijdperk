@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class BoardModel implements BoardObservable {
     private Kaart[] kaarten;
     private boolean isPlaceable;
-    private String[] players = { "Matt", "Jake" };
+    private PlayerModel player;
     private int food;
     private int wood;
     private int clay;
@@ -21,6 +21,7 @@ public class BoardModel implements BoardObservable {
     private int turn;
     private int villagersOnBoard; // placeholder voor locatie
     private boolean wincondition;
+    private boolean placed;
 
     ArrayList<BoardObserver> observers = new ArrayList<>();
 
@@ -37,8 +38,10 @@ public class BoardModel implements BoardObservable {
         this.wincondition = false;
         this.isPlaceable = true;
         this.turn = 1;
+        this.placed = false;
     }
 
+    // dit bepaald H
     public void setPlaceable(boolean isPlaceable) {
         this.isPlaceable = isPlaceable;
     }
@@ -47,8 +50,22 @@ public class BoardModel implements BoardObservable {
         return this.isPlaceable;
     }
 
-    public String[] getPlayers() {
-        return this.players;
+    // Dit verandered wie er aan de beurt is.
+    public void setPlayer(PlayerModel player) {
+        this.player = player;
+    }
+
+    public PlayerModel getPlayer() {
+        return this.player;
+    }
+
+    // Dit houdt bij of de speler als iets heeft geplaast tijdens de beurt.
+    public void setPlaced(boolean placed) {
+        this.placed = placed;
+    }
+
+    public boolean getPlaced() {
+        return this.placed;
     }
 
     // dit moet naar resources
