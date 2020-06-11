@@ -24,7 +24,7 @@ public class App extends Application {
         ViewManager.loadLoginView();
         FirebaseController firebaseController = new FirebaseController();
         firebaseController.initializeFirebaseApp();
-        firebaseController.listenForUpdates("lobby1");
+        firebaseController.listenForUpdates("lobby");
     }
 
     public static void main(String[] args) {
