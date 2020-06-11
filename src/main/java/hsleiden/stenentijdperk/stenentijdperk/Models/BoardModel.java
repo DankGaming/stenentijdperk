@@ -40,8 +40,7 @@ public class BoardModel implements BoardObservable {
         this.turn = 1;
         this.placed = false;
     }
-
-    // dit bepaald H
+    
     public void setPlaceable(boolean isPlaceable) {
         this.isPlaceable = isPlaceable;
     }

@@ -24,6 +24,8 @@ public class BoardController {
         playercontroller = new PlayerController();
         boardmodel = new BoardModel();
         boardmodel.setPlayer(matt); // Begin van het spel turn eerste speler bepalen.
+        System.out.println(boardmodel.getPlayer().getNaam() + " is aan de beurt en heeft "
+                + boardmodel.getPlayer().getVillagers() + ".");
         /*
          * voedsel op jacht (53) hout op bos leem op leemgroeve steen op steengroeve
          * goud op rivier (68) gereedschap bij maker (18) vier beschavingskaarten (36)
@@ -44,21 +46,40 @@ public class BoardController {
         this.boardmodel.register(boardobserver);
     }
 
-    public void onVillagerButtonClick() {
-        String input;
-        do {
-            input = scanner("Hoeveel stamleden?");
-        } while (Integer.parseInt(input) <= 0
-                || Integer.parseInt(input) > playercontroller.getVillagers(boardmodel.getPlayer())
-                || Integer.parseInt(input) > (7 - boardmodel.getVillagersOnBoard())); // hoeveel passen op de
-                                                                                      // locatie
-        System.out.println("placed " + input + " villager(s)");
-        playercontroller.setVillagers(boardmodel.getPlayer(),
-                (playercontroller.getVillagers(boardmodel.getPlayer()) - Integer.parseInt(input)));
-        boardmodel.setVillagersOnBoard(boardmodel.getVillagersOnBoard() + Integer.parseInt(input));
-        System.out.println(playercontroller.getVillagers(boardmodel.getPlayer()));
-        boardmodel.setPlaced(true);
+    public void onResourceButtonClick() {
+        if (!boardmodel.getPlaced()) {
+            String input;
+            do {
+                input = scanner("Hoeveel stamleden?");
+            } while (Integer.parseInt(input) <= 0
+                    || Integer.parseInt(input) > playercontroller.getVillagers(boardmodel.getPlayer())
+                    || Integer.parseInt(input) > (20 - boardmodel.getVillagersOnBoard())); // hoeveel passen op de
+                                                                                           // locatie
+            System.out.println("placed " + input + " villager(s)");
+            playercontroller.setVillagers(boardmodel.getPlayer(),
+                    (playercontroller.getVillagers(boardmodel.getPlayer()) - Integer.parseInt(input)));
+            boardmodel.setVillagersOnBoard(boardmodel.getVillagersOnBoard() + Integer.parseInt(input));
+            System.out.println(playercontroller.getVillagers(boardmodel.getPlayer()));
+            boardmodel.setPlaced(true);
+        }
     }
+
+    /*
+     * public void onKaartButtonClick(int index){ if
+     * (!boardmodel.kaarten.get(index).getStatus() && !boardmodel.getplaced()){ if
+     * (index <4){ boardmodel.kaarten.get(index).setStatus(True);
+     * boardmodel.setPlaced(true); } else {
+     * boardmodel.hutjes.get(index).setStatus(True); boardmodel.setPlaced(true); }
+     * 
+     * }
+     */
+
+    /*
+     * public void onVillageButtonClick(int index){ if
+     * (!boardmodel.kaarten.get(index).getStatus() && !boardmodel.getplaced()){
+     * switch (index){ case 0: do something on agriculture case 1: do something on
+     * increase villagers case 2: do something on increase tools. } }
+     */
 
     public void endTurn() {
         if (boardmodel.getPlaced()) { // checkt of de speler stamleden heeft geplaast.
