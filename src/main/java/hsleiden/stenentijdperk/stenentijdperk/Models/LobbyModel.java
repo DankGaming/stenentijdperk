@@ -13,10 +13,8 @@ public class LobbyModel implements LobbyObservable {
 
     public LobbyModel() {
         this.players = new ArrayList<>();
-        PlayerModel playerModel1 = new PlayerModel();
-        playerModel1.setNaam("PotvisHunter5000");
-        PlayerModel playerModel2 = new PlayerModel();
-        playerModel2.setNaam("IkBenEenPotvis");
+        PlayerModel playerModel1 = new PlayerModel("PotvisHunter5000");
+        PlayerModel playerModel2 = new PlayerModel("IkBenEenPotvis");
         this.players.add(playerModel1);
         this.players.add(playerModel2);
     }
