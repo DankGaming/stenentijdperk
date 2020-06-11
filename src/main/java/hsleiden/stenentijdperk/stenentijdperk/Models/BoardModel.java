@@ -2,8 +2,12 @@ package hsleiden.stenentijdperk.stenentijdperk.Models;
 
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Views.BoardView;
+import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
+import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
 
-public class BoardModel {
+import java.util.ArrayList;
+
+public class BoardModel implements BoardObservable {
     private Kaart[] kaarten;
     private boolean isPlaceable;
     private PlayerModel player;
@@ -14,9 +18,12 @@ public class BoardModel {
     private int gold;
     private int tools;
     private int huts;
+    private int turn;
     private int villagersOnBoard; // placeholder voor locatie
     private boolean wincondition;
     private boolean placed;
+
+    ArrayList<BoardObserver> observers = new ArrayList<>();
 
     public BoardModel() {
 
@@ -30,6 +37,7 @@ public class BoardModel {
         this.villagersOnBoard = 0;
         this.wincondition = false;
         this.isPlaceable = true;
+        this.turn = 1;
         this.placed = false;
     }
     
@@ -42,20 +50,20 @@ public class BoardModel {
     }
 
     // Dit verandered wie er aan de beurt is.
-    public void setPlayer(PlayerModel player){
+    public void setPlayer(PlayerModel player) {
         this.player = player;
     }
 
-    public PlayerModel getPlayer(){
+    public PlayerModel getPlayer() {
         return this.player;
     }
 
     // Dit houdt bij of de speler als iets heeft geplaast tijdens de beurt.
-    public void setPlaced(boolean placed){
+    public void setPlaced(boolean placed) {
         this.placed = placed;
     }
 
-    public boolean getPlaced(){
+    public boolean getPlaced() {
         return this.placed;
     }
 
@@ -66,5 +74,26 @@ public class BoardModel {
 
     public int getVillagersOnBoard() {
         return this.villagersOnBoard;
+    }
+
+    @Override
+    public void register(BoardObserver boardobserver) {
+        this.observers.add(boardobserver);
+    }
+
+    @Override
+    public void notifyAllObservers() {
+        for (BoardObserver boardobserver : observers) {
+            boardobserver.update(this);
+        }
+    }
+
+    @Override
+    public int getTurn() {
+        return this.turn;
+    }
+
+    public void setTurn(int turn) {
+        this.turn = turn;
     }
 }
