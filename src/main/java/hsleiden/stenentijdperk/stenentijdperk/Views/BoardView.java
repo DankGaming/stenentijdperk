@@ -52,6 +52,8 @@ public class BoardView {
 
 		Image image = new Image(input);
 		this.imageView = new ImageView(image);
+		this.imageView.setFitHeight(790);
+		this.imageView.setFitWidth(790);
 		GridPane.setConstraints(imageView, 1, 1, 50 ,50);
 
 
@@ -256,9 +258,9 @@ public class BoardView {
 //		rivierButton.setOnAction(event);
 //		endTurn.setOnAction(event);
 //
-		this.view.getChildren().addAll(hutKaartButton1, hutKaartButton2, hutKaartButton3, hutKaartButton4,
+		this.view.getChildren().addAll(imageView, hutKaartButton1, hutKaartButton2, hutKaartButton3, hutKaartButton4,
 				beschavingsKaartButton1, beschavingsKaartButton2, beschavingsKaartButton3, beschavingsKaartButton4,
 				hutButton, gereedschapButton, akkerbouwButton, jachtButton, bosButton, leemGroeveButton,
-				steenGroeveButton, rivierButton, endTurn, imageView);
+				steenGroeveButton, rivierButton, endTurn);
 	}
 }
