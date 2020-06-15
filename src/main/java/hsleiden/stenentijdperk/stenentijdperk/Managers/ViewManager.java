@@ -1,8 +1,10 @@
 package hsleiden.stenentijdperk.stenentijdperk.Managers;
 
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
+import hsleiden.stenentijdperk.stenentijdperk.Models.TableauModel;
 import hsleiden.stenentijdperk.stenentijdperk.Views.LobbyView;
 import hsleiden.stenentijdperk.stenentijdperk.Views.LoginView;
+import hsleiden.stenentijdperk.stenentijdperk.Views.TableauView;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -13,7 +15,11 @@ public class ViewManager {
     private static GridPane currentView;
 
     // The load view functions. Call these in your controllers and views.
-
+    public static void tableauView() {
+        closeView();
+        currentView = new TableauView().setScene();
+        showView(680, 460, "Tableau");
+    }
     public static void loadLoginView() {
         closeView();
         currentView = new LoginView().setScene();
@@ -36,7 +42,7 @@ public class ViewManager {
 
     // This function shows a view.
     public static void showView(int width, int height, String title) {
-        createStageFromView(800, 800, "Login");
+        createStageFromView(680, 460, "Login");
         if(currentStage != null)
             currentStage.show();
     }

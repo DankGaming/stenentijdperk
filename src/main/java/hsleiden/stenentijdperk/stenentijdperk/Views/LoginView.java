@@ -64,10 +64,6 @@ public class LoginView {
 		GridPane.setConstraints(verderButton, 7, 3, 10, 10);
 
 
-		GereedschapView tool = new GereedschapView();
-		ImageView viewer = tool.setScene();
-		GridPane.setConstraints(viewer, 20, 20, 20, 20);
-
 		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
@@ -80,6 +76,6 @@ public class LoginView {
 
 		verderButton.setOnAction(event);
 
-		this.view.getChildren().addAll(naamLabel, naamField, verderButton, viewer);
+		this.view.getChildren().addAll(naamLabel, naamField, verderButton);
 	}
 }

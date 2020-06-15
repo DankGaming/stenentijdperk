@@ -22,11 +22,6 @@ public class TableauModel {
         gereedschap = new int[] { 0, 0, 0 };
     }
 
-    public TableauModel(PlayerModel player){
-        stamleden = new LinkedList<>();
-        gereedschap = new int[] { 0, 0, 0 };
-    }
-
     public void ontvangStamlid(Stamlid stamlid) {
         stamleden.add(stamlid);
     }

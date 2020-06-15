@@ -20,7 +20,7 @@ public class App extends Application {
 	private Stage primaryStage;
     @Override
     public void start(Stage primaryStage) {
-        ViewManager.loadLoginView();
+        ViewManager.tableauView();
     }
 
     public static void main(String[] args) {

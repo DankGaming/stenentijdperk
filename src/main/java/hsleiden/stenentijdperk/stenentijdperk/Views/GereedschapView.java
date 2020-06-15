@@ -13,7 +13,7 @@ import java.io.FileNotFoundException;
 
 public class GereedschapView extends Stage {
     private ImageView imageView;
-    private String RESOURCE = "./Images/dobbelsteen.png";
+    private String RESOURCE = "./Images/Tool1.png";
 
     public GereedschapView() {
         TableauModel tableau = new TableauModel();
@@ -37,13 +37,15 @@ public class GereedschapView extends Stage {
 
         assert input != null;
 
-        // abeelding gereedschap maken
         Image image = new Image(input);
         this.imageView = new ImageView(image);
         this.imageView.setFitHeight(100);
         this.imageView.setFitWidth(100);
 
-        //afbeelding 90 graaden draaien als fiche gebruikt is
+        imageView.setOnMouseClicked(e -> {
+            imageView.setRotate(45);
+            imageView.setOnMouseClicked(n -> { });
+        });
 
 
     }
