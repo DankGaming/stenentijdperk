@@ -21,10 +21,9 @@ import java.io.FileNotFoundException;
 
 public class BoardView {
 	private BoardController controller;
-	private GridPane view;
+	private GridPane view = new GridPane();
 	private String spelbordImage = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Achtergronden/spelbord2.jpg";
 	private ImageView imageView;
-
 
 
 	public BoardView() {
@@ -38,7 +37,6 @@ public class BoardView {
 
 	private void setupPane() {
 		this.view = new GridPane();
-
 		int amountOfRows = 50;
 		int amountOfColumns = 50;
 
@@ -85,119 +83,119 @@ public class BoardView {
 		// hutKaartButton1.setMaxSize(300, 60);
 		hutKaartButton1.setStyle(
 				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
-		GridPane.setConstraints(hutKaartButton1, 5, 36, 9, 3);
+		GridPane.setConstraints(hutKaartButton1, 5, 36, 5, 3);
 
 		Button hutKaartButton2 = new Button("sta2lid op een hut");
 		// hutKaartButton2.setMinSize(300, 60);
 		// hutKaartButton2.setMaxSize(300, 60);
 		hutKaartButton2.setStyle(
 				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
-		GridPane.setConstraints(hutKaartButton2, 10, 36, 10, 3);
+		GridPane.setConstraints(hutKaartButton2, 10, 36, 5, 3);
 
-		Button hutKaartButton3 = new Button("Plaats stamlid op een hut kaart");
+		Button hutKaartButton3 = new Button("sta3lid op een hut");
 		// hutKaartButton3.setMinSize(300, 60);
 		// hutKaartButton3.setMaxSize(300, 60);
 		hutKaartButton3.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
-		GridPane.setConstraints(hutKaartButton3, 4, 1, 1, 1);
+				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
+		GridPane.setConstraints(hutKaartButton3, 15, 36, 5, 3);
 
-		Button hutKaartButton4 = new Button("Plaats stamlid op een hut kaart");
+		Button hutKaartButton4 = new Button("st4mlid op een hut");
 		// hutKaartButton4.setMinSize(300, 60);
 		// hutKaartButton4.setMaxSize(300, 60);
 		hutKaartButton4.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
-		GridPane.setConstraints(hutKaartButton4, 6, 1, 1, 1);
+				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
+		GridPane.setConstraints(hutKaartButton4, 20, 36, 5, 3);
 
-		Button beschavingsKaartButton1 = new Button("Plaats stamlid op een beschavingskaart");
+		Button beschavingsKaartButton1 = new Button("beschavingskaart1");
 		// beschavingsKaartButton1.setMinSize(300, 60);
 		// beschavingsKaartButton1.setMaxSize(300, 60);
 		beschavingsKaartButton1.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
-		GridPane.setConstraints(beschavingsKaartButton1, 8, 1, 1, 1);
+				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
+		GridPane.setConstraints(beschavingsKaartButton1, 26, 32, 5, 1);
 
-		Button beschavingsKaartButton2 = new Button("Plaats stamlid op een beschavingskaart");
+		Button beschavingsKaartButton2 = new Button("beschavingskaart2");
 		// beschavingsKaartButton2.setMinSize(300, 60);
 		// beschavingsKaartButton2.setMaxSize(300, 60);
 		beschavingsKaartButton2.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
-		GridPane.setConstraints(beschavingsKaartButton2, 10, 1, 1, 1);
+				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
+		GridPane.setConstraints(beschavingsKaartButton2, 32, 32, 5, 1);
 
-		Button beschavingsKaartButton3 = new Button("Plaats stamlid op een beschavingskaart");
+		Button beschavingsKaartButton3 = new Button("beschavingskaart3");
 		// beschavingsKaartButton3.setMinSize(300, 60);
 		// beschavingsKaartButton3.setMaxSize(300, 60);
 		beschavingsKaartButton3.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
-		GridPane.setConstraints(beschavingsKaartButton3, 12, 1, 1, 1);
+				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
+		GridPane.setConstraints(beschavingsKaartButton3, 37, 32, 5, 1);
 
-		Button beschavingsKaartButton4 = new Button("Plaats stamlid op een beschavingskaart");
+		Button beschavingsKaartButton4 = new Button("beschavingskaart4");
 		// beschavingsKaartButton4.setMinSize(300, 60);
 		// beschavingsKaartButton4.setMaxSize(300, 60);
 		beschavingsKaartButton4.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
-		GridPane.setConstraints(beschavingsKaartButton4, 14, 1, 1, 1);
+				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
+		GridPane.setConstraints(beschavingsKaartButton4, 43, 32, 5, 1);
 
-		Button hutButton = new Button("Plaats stamleden bij de hut");
+		Button hutButton = new Button("Stamlid hut");
 		// hutButton.setMinSize(300, 60);
 		// hutButton.setMaxSize(300, 60);
 		hutButton.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
-		GridPane.setConstraints(hutButton, 0, 5, 1, 1);
+				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
+		GridPane.setConstraints(hutButton, 18, 32, 5, 1);
 
-		Button gereedschapButton = new Button("Plaats stamlid bij de gereedschapsmaker");
+		Button gereedschapButton = new Button("gereedschapsmaker");
 		// gereedschapButton.setMinSize(300, 60);
 		// gereedschapButton.setMaxSize(300, 60);
 		gereedschapButton.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
-		GridPane.setConstraints(gereedschapButton, 2, 5, 1, 1);
+				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
+		GridPane.setConstraints(gereedschapButton, 25, 26, 5, 1);
 
-		Button akkerbouwButton = new Button("Plaats stamlid bij de akkerbouw");
+		Button akkerbouwButton = new Button("akkerbouw");
 		// akkerbouwButton.setMinSize(300, 60);
 		// akkerbouwButton.setMaxSize(300, 60);
 		akkerbouwButton.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
-		GridPane.setConstraints(akkerbouwButton, 4, 5, 1, 1);
+				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
+		GridPane.setConstraints(akkerbouwButton, 15, 25, 5, 1);
 
-		Button jachtButton = new Button("Plaats stamlid/leden op jachtvlakte");
+		Button jachtButton = new Button("stamlid jachtvlakte");
 		// jachtButton.setMinSize(300, 60);
 		// jachtButton.setMaxSize(300, 60);
 		jachtButton.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
-		GridPane.setConstraints(jachtButton, 0, 9, 1, 1);
+				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size:10px;");
+		GridPane.setConstraints(jachtButton, 5, 7, 5, 1);
 
-		Button bosButton = new Button("Plaats stamlid/leden bij het bos");
+		Button bosButton = new Button("stamlid bos");
 		// bosButton.setMinSize(300, 60);
 		// bosButton.setMaxSize(300, 60);
 		bosButton.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
-		GridPane.setConstraints(bosButton, 2, 9, 1, 1);
+				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
+		GridPane.setConstraints(bosButton, 21, 15, 5, 1);
 
-		Button leemGroeveButton = new Button("Plaats stamlid/leden bij de leem groeve");
+		Button leemGroeveButton = new Button("stamlid leem");
 		// leemGroeveButton.setMinSize(300, 60);
 		// leemGroeveButton.setMaxSize(300, 60);
 		leemGroeveButton.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
-		GridPane.setConstraints(leemGroeveButton, 4, 9, 1, 1);
+				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px");
+		GridPane.setConstraints(leemGroeveButton, 28, 15, 5, 1);
 
-		Button steenGroeveButton = new Button("Plaats stamlid/leden bij de steen groeve");
+		Button steenGroeveButton = new Button("stamlid steen");
 		// steenGroeveButton.setMinSize(300, 60);
 		// steenGroeveButton.setMaxSize(300, 60);
 		steenGroeveButton.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
-		GridPane.setConstraints(steenGroeveButton, 6, 9, 1, 1);
+				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px");
+		GridPane.setConstraints(steenGroeveButton, 40, 15, 5, 1);
 
-		Button rivierButton = new Button("Plaats stamlid/leden bij de rivier");
+		Button rivierButton = new Button("stamlid rivier");
 		// rivierButton.setMinSize(300, 60);
 		// rivierButton.setMaxSize(300, 60);
 		rivierButton.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
-		GridPane.setConstraints(rivierButton, 8, 9, 1, 1);
+				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px");
+		GridPane.setConstraints(rivierButton, 41, 25, 5, 1);
 
 		Button endTurn = new Button("Beurt eindigen");
-		endTurn.setMinSize(300, 60);
-		endTurn.setMaxSize(300, 60);
+//		endTurn.setMinSize(300, 60);
+//		endTurn.setMaxSize(300, 60);
 		endTurn.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
-		GridPane.setConstraints(endTurn, 7, 6, 15, 15);
+				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 20px");
+		GridPane.setConstraints(endTurn, 22, 5, 15, 1);
 
 //		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
 //			@Override
