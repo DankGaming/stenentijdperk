@@ -2,6 +2,7 @@ package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.WriteResult;
@@ -13,9 +14,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class FirebaseController {
-    Firestore db;
+    static Firestore db;
 
-    public void initializeFirebaseApp() {
+    public static void initializeFirebaseApp() {
         GoogleCredentials credentials = null;
 
         try {
@@ -34,7 +35,7 @@ public class FirebaseController {
         db = FirestoreClient.getFirestore();
     }
 
-    public void listenForUpdates(String lobby){
+    public static void listenForUpdates(String lobby){
         DocumentReference docRef = db.collection("stenentijdperk").document(lobby);
         System.out.println("listener");
         // De listener
@@ -54,35 +55,46 @@ public class FirebaseController {
 
     }
 
-    public void updateDocument(String document, String field, String value) {
+    public static void updateDocument(String document, String field, String value) {
         try {
-            db.collection("test").document(document).get();
+            db.collection("stenentijdperk").document(document).get();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        DocumentReference docRef = db.collection("test").document(document);
+        DocumentReference docRef = db.collection("stenentijdperk").document(document);
 
         ApiFuture<WriteResult> future = docRef.update(field, value);
     }
 
-    public void updateDocument(String document, String field, int value) {
+    public static void updateDocument(String document, String field, int value) {
         try {
-            db.collection("test").document(document).get();
+            db.collection("stenentijdperk").document(document).get();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        DocumentReference docRef = db.collection("test").document(document);
+        DocumentReference docRef = db.collection("stenentijdperk").document(document);
 
         ApiFuture<WriteResult> future = docRef.update(field, value);
     }
 
-    public void updateDocument(String document, String field, float value) {
+    public static void updateDocument(String document, String field, float value) {
         try {
-            db.collection("test").document(document).get();
+            db.collection("stenentijdperk").document(document).get();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        DocumentReference docRef = db.collection("test").document(document);
+        DocumentReference docRef = db.collection("stenentijdperk").document(document);
+
+        ApiFuture<WriteResult> future = docRef.update(field, value);
+    }
+
+    public static void updateDocument(String document, String field, boolean value) {
+        try {
+            db.collection("stenentijdperk").document(document).get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        DocumentReference docRef = db.collection("stenentijdperk").document(document);
 
         ApiFuture<WriteResult> future = docRef.update(field, value);
     }
