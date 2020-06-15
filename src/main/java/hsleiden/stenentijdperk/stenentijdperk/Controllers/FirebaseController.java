@@ -10,9 +10,7 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 
 public class FirebaseController {
     Firestore db;
@@ -38,22 +36,22 @@ public class FirebaseController {
 
     public void listenForUpdates(String lobby){
         DocumentReference docRef = db.collection("stenentijdperk").document(lobby);
-
+        System.out.println("listener");
         // De listener
-        docRef.addSnapshotListener((snapshot, error) -> {
-            if (error != null) {
-                System.err.println("Listen failed: " + error);
+        docRef.addSnapshotListener((snapshot, e) -> {
+            System.out.println("Listening");
+            if (e != null) {
+                System.err.println("Listen failed: " + e);
                 return;
             }
 
             if (snapshot != null && snapshot.exists()) {
-
                 System.out.println("Current data: " + snapshot.getData());
             } else {
                 System.out.print("Current data: null");
             }
-
         });
+
     }
 
     public void updateDocument(String document, String field, String value) {

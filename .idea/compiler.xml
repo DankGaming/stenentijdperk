@@ -10,6 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="lib" target="1.5" />
       <module name="stenentijdperk" target="11" />
     </bytecodeTargetLevel>
   </component>
