@@ -7,46 +7,42 @@ public class Kaart {
 	private int punten;
 	private ArrayList<Resource> resources;
 	private Resource tool;
-	private Resource graan; 
+	private Resource graan;
 	private String treasure;
-	private HashMap multiplier;
-	
-	public Kaart(int punten, 
-			ArrayList<Resource> resources,
-			Resource tool,
-			Resource graan, 
-			String treasure,
-			HashMap multiplier) 
-	{
+	private HashMap<Integer, Integer> multiplier;
+
+	public Kaart(int punten/*
+							 * , ArrayList<Resource> resources, Resource tool, Resource graan, String
+							 * treasure, HashMap<Integer, Integer> multiplier
+							 */) {
 		this.punten = punten;
 		this.resources = resources;
 		this.graan = graan;
 		this.treasure = treasure;
 		this.multiplier = multiplier;
 	}
-	
-	public int getPunten(){
+
+	public int getPunten() {
 		return this.punten;
 	}
-	
-	public ArrayList<Resource> getResources(){
+
+	public ArrayList<Resource> getResources() {
 		return this.resources;
 	}
-	
+
 	public Resource getTool() {
 		return this.tool;
 	}
-	
+
 	public Resource getGraan() {
 		return this.graan;
 	}
-	
+
 	public String getTreasure() {
 		return this.treasure;
 	}
-	
-	public HashMap getMultiplier() {
+
+	public HashMap<Integer, Integer> getMultiplier() {
 		return this.multiplier;
 	}
 }
-
