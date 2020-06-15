@@ -101,6 +101,7 @@ public class LobbyView implements LobbyObserver {
         EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+
                 if(actionEvent.getSource() == lobbyButton1) {
                     controller.setLobbyId(1);
                 }else if(actionEvent.getSource() == lobbyButton2) {
