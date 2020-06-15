@@ -18,7 +18,7 @@ public class ViewManager {
     public static void loadLoginView() {
         closeView();
         currentView = new LoginView().setScene();
-        showView(800, 800, "Login");
+        showView(1200, 800, "Login");
     }
 
     public static void loadLobbyView(PlayerModel playerModel) {
@@ -30,7 +30,7 @@ public class ViewManager {
     public static void loadBoardView() {
         closeView();
         currentView = new BoardView().setScene();
-        showView(800, 800, "Board");
+        showView(1200, 1200, "Board");
     }
 
     // This function creates a stage from a gridpane.
@@ -43,7 +43,7 @@ public class ViewManager {
 
     // This function shows a view.
     public static void showView(int width, int height, String title) {
-        createStageFromView(800, 800, "Login");
+        createStageFromView(1200, 800, "Login");
         if (currentStage != null)
             currentStage.show();
     }

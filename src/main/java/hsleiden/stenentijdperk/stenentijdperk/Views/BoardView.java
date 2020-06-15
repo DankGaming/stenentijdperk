@@ -1,5 +1,6 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
+import hsleiden.stenentijdperk.stenentijdperk.App;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import javafx.event.ActionEvent;
@@ -21,7 +22,7 @@ import java.io.FileNotFoundException;
 public class BoardView {
 	private BoardController controller;
 	private GridPane view;
-	private String spelbordImage = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Achtergronden/stenen02.jpg";
+	private String spelbordImage = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Achtergronden/spelbord2.jpg";
 	private ImageView imageView;
 
 
@@ -37,25 +38,9 @@ public class BoardView {
 
 	private void setupPane() {
 		this.view = new GridPane();
-		this.view.setPadding(new Insets(10, 10, 10, 10));
+
 		int amountOfRows = 50;
 		int amountOfColumns = 50;
-
-		FileInputStream input = null;
-		try {
-			input = new FileInputStream(this.spelbordImage);
-		} catch (FileNotFoundException fileNotFoundException) {
-			System.out.println(fileNotFoundException);
-		}
-
-		assert input != null;
-
-		Image image = new Image(input);
-		this.imageView = new ImageView(image);
-		this.imageView.setFitHeight(790);
-		this.imageView.setFitWidth(790);
-		GridPane.setConstraints(imageView, 1, 1, 50 ,50);
-
 
 		for (int i = 0; i < amountOfColumns; i++) {
 			ColumnConstraints columnConstraints = new ColumnConstraints();
@@ -67,6 +52,20 @@ public class BoardView {
 			rowConstraints.setPercentHeight(100 / amountOfRows);
 			this.view.getRowConstraints().add(rowConstraints);
 		}
+
+		FileInputStream input = null;
+		try {
+			input = new FileInputStream(this.spelbordImage);
+		} catch (FileNotFoundException fileNotFoundException) {
+			System.out.println(fileNotFoundException);
+		}
+
+		assert input != null;
+		Image image = new Image(input);
+		this.imageView = new ImageView(image);
+		this.imageView.setFitHeight(800);
+		this.imageView.setFitWidth(1200);
+		GridPane.setConstraints(imageView, 0, 0, 50 ,50);
 
 
 		Label amountLabel = new Label("Hoeveel:");
@@ -81,19 +80,19 @@ public class BoardView {
 		 * 1 akkerbouw: 1 steen, leem, goud, hout: 7
 		 */
 
-		Button hutKaartButton1 = new Button("Plaats stamlid op een hut kaart");
+		Button hutKaartButton1 = new Button("stamlid op een hut");
 		// hutKaartButton1.setMinSize(300, 60);
 		// hutKaartButton1.setMaxSize(300, 60);
 		hutKaartButton1.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
-		GridPane.setConstraints(hutKaartButton1, 0, 1, 1, 1);
+				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
+		GridPane.setConstraints(hutKaartButton1, 5, 36, 9, 3);
 
-		Button hutKaartButton2 = new Button("Plaats stamlid op een hut kaart");
+		Button hutKaartButton2 = new Button("sta2lid op een hut");
 		// hutKaartButton2.setMinSize(300, 60);
 		// hutKaartButton2.setMaxSize(300, 60);
 		hutKaartButton2.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
-		GridPane.setConstraints(hutKaartButton2, 2, 1, 1, 1);
+				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
+		GridPane.setConstraints(hutKaartButton2, 10, 36, 10, 3);
 
 		Button hutKaartButton3 = new Button("Plaats stamlid op een hut kaart");
 		// hutKaartButton3.setMinSize(300, 60);
