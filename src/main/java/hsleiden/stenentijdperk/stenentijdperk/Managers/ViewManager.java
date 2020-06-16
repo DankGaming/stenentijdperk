@@ -1,5 +1,6 @@
 package hsleiden.stenentijdperk.stenentijdperk.Managers;
 
+import hsleiden.stenentijdperk.stenentijdperk.Controllers.FirebaseController;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.Views.LobbyView;
 import hsleiden.stenentijdperk.stenentijdperk.Views.LoginView;
@@ -12,7 +13,11 @@ public class ViewManager {
     // The current stage and view.
     private static Stage currentStage;
     private static GridPane currentView;
+    private static FirebaseController firebaseController;
 
+    public static void setFirebase(FirebaseController f) {
+        firebaseController = f;
+    }
     // The load view functions. Call these in your controllers and views.
 
     public static void loadLoginView() {
@@ -53,4 +58,5 @@ public class ViewManager {
         if (currentStage != null)
             currentStage.close();
     }
+
 }

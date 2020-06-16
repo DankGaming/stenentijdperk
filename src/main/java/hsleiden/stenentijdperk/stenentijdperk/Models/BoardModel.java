@@ -35,7 +35,6 @@ public class BoardModel implements BoardObservable {
         locaties.add(stone);
         locaties.add(gold);
 
-      
         this.kaarten = new Kaart[10];
         for (int i = 0; i < 10; i++) {
             this.kaarten[i] = new Kaart(i);
@@ -85,6 +84,7 @@ public class BoardModel implements BoardObservable {
     public int requestCap(int index) {
         return this.locaties.get(index).getMaxCap();
     }
+
     // dit is voor het toevoegen of weghalen van resources per locatie
     public void changeHoeveelheid(int index, int amount) {
         this.locaties.get(index).setHoeveelheid(amount + this.locaties.get(index).getHoeveelheid());
@@ -111,12 +111,11 @@ public class BoardModel implements BoardObservable {
         this.turn = turn;
     }
 
-    /*// temp methode bepalen of de kaart al bezet is. Dit moet naar het kaart object.
-    public boolean getStatus(int index){
-        return kaarten.get(index);
-    }
-
-    public void setStatus(int index, boolean status){
-        kaarten.set(index, status);
-    } */
+    /*
+     * // temp methode bepalen of de kaart al bezet is. Dit moet naar het kaart
+     * object. public boolean getStatus(int index){ return kaarten.get(index); }
+     * 
+     * public void setStatus(int index, boolean status){ kaarten.set(index, status);
+     * }
+     */
 }
