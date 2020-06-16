@@ -1,11 +1,11 @@
 package hsleiden.stenentijdperk.stenentijdperk.Models;
 
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
-import hsleiden.stenentijdperk.stenentijdperk.Views.BoardView;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
 
 import java.util.ArrayList;
+import java.util.*;
 
 public class BoardModel implements BoardObservable {
     private Kaart[] kaarten;
@@ -26,7 +26,6 @@ public class BoardModel implements BoardObservable {
     ArrayList<BoardObserver> observers = new ArrayList<>();
 
     public BoardModel() {
-
         this.food = 53;
         this.wood = 17;
         this.clay = 17;
@@ -39,8 +38,17 @@ public class BoardModel implements BoardObservable {
         this.isPlaceable = true;
         this.turn = 1;
         this.placed = false;
+        this.kaarten = new Kaart[10];
+        for (int i = 0; i < 10; i++) {
+            this.kaarten[i] = new Kaart(i);
+        }
+        Collections.shuffle(Arrays.asList(this.kaarten));
     }
-    
+
+    public Kaart getKaart(int index) {
+        return this.kaarten[index];
+    }
+
     public void setPlaceable(boolean isPlaceable) {
         this.isPlaceable = isPlaceable;
     }
