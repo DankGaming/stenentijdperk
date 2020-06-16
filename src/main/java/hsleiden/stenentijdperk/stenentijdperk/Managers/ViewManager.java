@@ -23,7 +23,7 @@ public class ViewManager {
     public static void loadLoginView() {
         closeView();
         currentView = new LoginView().setScene();
-        showView(1200, 800, "Login");
+        showView(800, 800, "Login");
     }
 
     public static void loadLobbyView(PlayerModel playerModel) {
@@ -49,7 +49,7 @@ public class ViewManager {
 
     // This function shows a view.
     public static void showView(int width, int height, String title) {
-        createStageFromView(800, 800, "Login");
+        createStageFromView(1200, 800, "Login");
         if (currentStage != null)
             currentStage.show();
     }

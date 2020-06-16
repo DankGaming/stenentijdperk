@@ -26,8 +26,8 @@ public class BoardView {
 	private ImageView imageView;
 	private String Speler1 = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Spelers/Speler1.png";
 	private String Speler2 = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Spelers/Speler2.png";
-	private String Speler3 = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Spelers/Speler2.png";
-	private String Speler4 = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Spelers/Speler2.png";
+	private String Speler3 = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Spelers/Speler3.png";
+	private String Speler4 = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Spelers/Speler4.png";
 
 
 	public BoardView() {
@@ -55,6 +55,8 @@ public class BoardView {
 			this.view.getRowConstraints().add(rowConstraints);
 		}
 
+		// Spelbord Image
+
 		FileInputStream input = null;
 		try {
 			input = new FileInputStream(this.spelbordImage);
@@ -69,6 +71,8 @@ public class BoardView {
 		this.imageView.setFitWidth(1200);
 		GridPane.setConstraints(imageView, 0, 0, 50 ,50);
 
+		// Speler stamleden
+
 		FileInputStream speler1 = null;
 		try {
 			speler1 = new FileInputStream(this.Speler1);
@@ -81,8 +85,8 @@ public class BoardView {
 		ImageView Speler1Image = new ImageView(Speler1);
 		Speler1Image.setFitHeight(30);
 		Speler1Image.setFitWidth(30);
-		Speler1Image.setVisible(false);
-		GridPane.setConstraints(Speler1Image, 23, 2, 2 ,2);
+		Speler1Image.setVisible(true);
+		GridPane.setConstraints(Speler1Image, 24, 11, 2 ,2);
 
 
 
@@ -96,10 +100,10 @@ public class BoardView {
 		assert speler2 != null;
 		Image Speler2 = new Image(speler2);
 		ImageView Speler2Image = new ImageView(Speler2);
-		Speler1Image.setFitHeight(30);
-		Speler1Image.setFitWidth(30);
-		Speler1Image.setVisible(true);
-		GridPane.setConstraints(Speler2Image, 25, 2, 2 ,2);
+		Speler2Image.setFitHeight(30);
+		Speler2Image.setFitWidth(30);
+		Speler2Image.setVisible(true);
+		GridPane.setConstraints(Speler2Image, 26, 11, 2 ,2);
 
 		FileInputStream speler3 = null;
 		try {
@@ -114,7 +118,7 @@ public class BoardView {
 		Speler3Image.setFitHeight(30);
 		Speler3Image.setFitWidth(30);
 		Speler3Image.setVisible(true);
-		GridPane.setConstraints(Speler3Image, 26, 2, 2 ,2);
+		GridPane.setConstraints(Speler3Image, 28, 11, 2 ,2);
 
 
 		FileInputStream speler4 = null;
@@ -125,12 +129,34 @@ public class BoardView {
 		}
 
 		assert speler4 != null;
-		Image Speler4 = new Image(speler2);
+		Image Speler4 = new Image(speler4);
 		ImageView Speler4Image = new ImageView(Speler4);
 		Speler4Image.setFitHeight(30);
 		Speler4Image.setFitWidth(30);
 		Speler4Image.setVisible(true);
-		GridPane.setConstraints(Speler4Image, 28, 2, 2 ,2);
+		GridPane.setConstraints(Speler4Image, 30, 11, 2 ,2);
+
+// 		Stamleden hoeveelheden
+
+		Label speler1Label = new Label("  1");
+		speler1Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
+		speler1Label.setVisible(true);
+		GridPane.setConstraints(speler1Label, 24, 11, 2 ,2);
+
+		Label speler2Label = new Label("  1");
+		speler2Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
+		speler2Label.setVisible(true);
+		GridPane.setConstraints(speler2Label, 26, 11, 2 ,2);
+
+		Label speler3Label = new Label("  1");
+		speler3Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
+		speler3Label.setVisible(true);
+		GridPane.setConstraints(speler3Label, 28, 11, 2 ,2);
+
+		Label speler4Label = new Label("  1");
+		speler4Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
+		speler4Label.setVisible(true);
+		GridPane.setConstraints(speler4Label, 30, 11, 2 ,2);
 
 
 
@@ -145,6 +171,8 @@ public class BoardView {
 		 * locaties jacht: onbeperkt hut: 2 hutkaart: 1 beschavingskaart: 1 gereedschap:
 		 * 1 akkerbouw: 1 steen, leem, goud, hout: 7
 		 */
+
+		// Buttons
 
 		Button hutKaartButton1 = new Button("stamlid op een hut");
 		hutKaartButton1.setStyle(
@@ -292,6 +320,6 @@ public class BoardView {
 		this.view.getChildren().addAll(imageView, hutKaartButton1, hutKaartButton2, hutKaartButton3, hutKaartButton4,
 				beschavingsKaartButton1, beschavingsKaartButton2, beschavingsKaartButton3, beschavingsKaartButton4,
 				hutButton, gereedschapButton, akkerbouwButton, jachtButton, bosButton, leemGroeveButton,
-				steenGroeveButton, rivierButton, endTurn, Speler1Image, Speler2Image, Speler3Image, Speler4Image);
+				steenGroeveButton, rivierButton, endTurn, Speler1Image, Speler2Image, Speler3Image, Speler4Image, speler1Label);
 	}
 }
