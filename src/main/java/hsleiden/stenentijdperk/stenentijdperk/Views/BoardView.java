@@ -136,6 +136,8 @@ public class BoardView {
 		Speler4Image.setVisible(true);
 		GridPane.setConstraints(Speler4Image, 30, 11, 2 ,2);
 
+
+
 // 		Stamleden hoeveelheden
 
 		Label speler1Label = new Label("  1");
