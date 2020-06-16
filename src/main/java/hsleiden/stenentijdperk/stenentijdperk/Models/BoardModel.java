@@ -6,7 +6,7 @@ import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class BoardModel implements BoardObservable {
     private List<Boolean> kaarten = new ArrayList<Boolean>(); // temp made public en dit moet datatype Kaart worden
@@ -28,19 +28,29 @@ public class BoardModel implements BoardObservable {
         Resource wood = new Resource("Wood", 28, 3, 7);
         Resource leem = new Resource("Leem", 18, 4, 7);
         Resource stone = new Resource("Stone", 12, 5, 7);
-		Resource gold = new Resource("Gold", 10, 6, 7);
-		locaties.add(food);
-		locaties.add(wood);
-		locaties.add(leem);
-		locaties.add(stone);
+        Resource gold = new Resource("Gold", 10, 6, 7);
+        locaties.add(food);
+        locaties.add(wood);
+        locaties.add(leem);
+        locaties.add(stone);
         locaties.add(gold);
         // temp voor aanmaken kaarten.
         kaarten.add(false);
         kaarten.add(true);
         kaarten.add(false);
         kaarten.add(true);
+      
+        this.kaarten = new Kaart[10];
+        for (int i = 0; i < 10; i++) {
+            this.kaarten[i] = new Kaart(i);
+        }
+        Collections.shuffle(Arrays.asList(this.kaarten));
     }
-    
+
+    public Kaart getKaart(int index) {
+        return this.kaarten[index];
+    }
+
     public void setPlaceable(boolean isPlaceable) {
         this.isPlaceable = isPlaceable;
     }
