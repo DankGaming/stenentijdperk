@@ -1,14 +1,12 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
-import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;

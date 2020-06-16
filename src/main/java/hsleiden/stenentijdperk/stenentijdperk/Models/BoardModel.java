@@ -1,7 +1,6 @@
 package hsleiden.stenentijdperk.stenentijdperk.Models;
 
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
-import hsleiden.stenentijdperk.stenentijdperk.Views.BoardView;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
 
