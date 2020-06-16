@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BoardModel implements BoardObservable {
-    private List<Boolean> kaarten = new ArrayList<Boolean>(); // temp made public en dit moet datatype Kaart worden
+    private Kaart[] kaarten; // temp made public en dit moet datatype Kaart worden
     private boolean isPlaceable;
     private PlayerModel player;
     private int turn;
@@ -34,11 +34,6 @@ public class BoardModel implements BoardObservable {
 		locaties.add(leem);
 		locaties.add(stone);
         locaties.add(gold);
-        // temp voor aanmaken kaarten.
-        kaarten.add(false);
-        kaarten.add(true);
-        kaarten.add(false);
-        kaarten.add(true);
     }
     
     public void setPlaceable(boolean isPlaceable) {
@@ -105,12 +100,12 @@ public class BoardModel implements BoardObservable {
         this.turn = turn;
     }
 
-    // temp methode bepalen of de kaart al bezet is. Dit moet naar het kaart object.
+    /*// temp methode bepalen of de kaart al bezet is. Dit moet naar het kaart object.
     public boolean getStatus(int index){
         return kaarten.get(index);
     }
 
     public void setStatus(int index, boolean status){
         kaarten.set(index, status);
-    }
+    } */
 }

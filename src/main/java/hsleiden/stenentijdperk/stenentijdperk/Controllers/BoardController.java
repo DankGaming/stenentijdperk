@@ -65,8 +65,8 @@ public class BoardController {
     // methode om de onderste buttons af te handelen. maakt de kaart/hut bezet en zorgt dat je niet meer kan plaatsen.
     public void onKaartButtonClick(int index){
          if (!boardmodel.getPlaced()){
-            if (index >= 4  && !boardmodel.getStatus(index-4)/*.getStatus()*/){
-                boardmodel.setStatus(index-4, true);
+            if (index >= 4){  //&& !boardmodel.getStatus(index-4)){
+                //boardmodel.setStatus(index-4, true);
                 boardmodel.setPlaced(true);
                 playercontroller.setVillagers(boardmodel.getPlayer(),(playercontroller.getVillagers(boardmodel.getPlayer()) - 1));
             } /*else if (!boardmodel.getStatus(index-4)){  ook tijdelijk hutjes bestaat nog niet
