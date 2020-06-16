@@ -5,7 +5,7 @@ import hsleiden.stenentijdperk.stenentijdperk.Interfaces.Status;
 public class Kaart implements Status {
 	private int punten;
 	private Resource tool;
-	private Resource graan; 
+	private Resource graan;
 	private String treasure;
 	private boolean status;
  
@@ -13,19 +13,19 @@ public class Kaart implements Status {
 	public Kaart(int punten) {
 		this.punten = punten;	
 	}
-	
-	public int getPunten(){
+
+	public int getPunten() {
 		return this.punten;
 	}
-	
+  
 	public Resource getTool() {
 		return this.tool;
 	}
-	
+
 	public Resource getGraan() {
 		return this.graan;
 	}
-	
+
 	public String getTreasure() {
 		return this.treasure;
 	}
@@ -44,4 +44,3 @@ public class Kaart implements Status {
 
 	
 }
-
