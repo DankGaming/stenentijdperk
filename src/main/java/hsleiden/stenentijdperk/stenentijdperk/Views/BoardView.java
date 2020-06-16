@@ -178,43 +178,44 @@ public class BoardView {
 		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
-				if (actionEvent.getSource() == hutKaartButton1) {
-					controller.onKaartButtonClick(1);
+				/*if (actionEvent.getSource() == hutKaartButton1) {
+					controller.onKaartButtonClick(0);
 				} else if (actionEvent.getSource() == hutKaartButton2) {
-					controller.onKaartButtonClick(2);
+					controller.onKaartButtonClick(1);
 				} else if (actionEvent.getSource() == hutKaartButton3) {
-					controller.onKaartButtonClick(3);
+					controller.onKaartButtonClick(2);
 				} else if (actionEvent.getSource() == hutKaartButton4) {
+					controller.onKaartButtonClick(3);
+				} else*/ if (actionEvent.getSource() == beschavingsKaartButton1) {
 					controller.onKaartButtonClick(4);
-				} else if (actionEvent.getSource() == beschavingsKaartButton1) {
-					controller.onKaartButtonClick(5);
 				} else if (actionEvent.getSource() == beschavingsKaartButton2) {
-					controller.onKaartButtonClick(6);
+					controller.onKaartButtonClick(5);
 				} else if (actionEvent.getSource() == beschavingsKaartButton3) {
-					controller.onKaartButtonClick(7);
+					controller.onKaartButtonClick(6);
 				} else if (actionEvent.getSource() == beschavingsKaartButton4) {
-					controller.onKaartButtonClick(8);
-				} else if (actionEvent.getSource() == hutButton) {
-					controller.onVillageButtonClick(1);
+					controller.onKaartButtonClick(7);
+				/*} else if (actionEvent.getSource() == hutButton) {
+					controller.onVillageButtonClick(0);
 				} else if (actionEvent.getSource() == gereedschapButton) {
-					controller.onVillageButtonClick(2);
+					controller.onVillageButtonClick(1);
 				} else if (actionEvent.getSource() == akkerbouwButton) {
-					controller.onVillageButtonClick(3);
-				} else if (actionEvent.getSource() == jachtButton) {
-					controller.onResourceButtonClick(1);
+					controller.onVillageButtonClick(2); */
+				} else if(actionEvent.getSource() == jachtButton) {
+					controller.onResourceButtonClick(0);
 				} else if (actionEvent.getSource() == bosButton) {
-					controller.onResourceButtonClick(2);
+					controller.onResourceButtonClick(1);
 				} else if (actionEvent.getSource() == leemGroeveButton) {
-					controller.onResourceButtonClick(3);
+					controller.onResourceButtonClick(2);
 				} else if (actionEvent.getSource() == steenGroeveButton) {
-					controller.onResourceButtonClick(4);
+					controller.onResourceButtonClick(3);
 				} else if (actionEvent.getSource() == rivierButton) {
-					controller.onResourceButtonClick(5);
+					controller.onResourceButtonClick(4);
 				} else if (actionEvent.getSource() == endTurn) {
 					controller.endTurn();
 				}
 			}
 		};
+
 		hutKaartButton1.setOnAction(event);
 		hutKaartButton2.setOnAction(event);
 		hutKaartButton3.setOnAction(event);
