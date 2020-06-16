@@ -320,6 +320,7 @@ public class BoardView {
 		this.view.getChildren().addAll(imageView, hutKaartButton1, hutKaartButton2, hutKaartButton3, hutKaartButton4,
 				beschavingsKaartButton1, beschavingsKaartButton2, beschavingsKaartButton3, beschavingsKaartButton4,
 				hutButton, gereedschapButton, akkerbouwButton, jachtButton, bosButton, leemGroeveButton,
-				steenGroeveButton, rivierButton, endTurn, Speler1Image, Speler2Image, Speler3Image, Speler4Image, speler1Label);
+				steenGroeveButton, rivierButton, endTurn, Speler1Image, Speler2Image, Speler3Image, Speler4Image, speler1Label,
+				speler2Label, speler3Label, speler4Label);
 	}
 }
