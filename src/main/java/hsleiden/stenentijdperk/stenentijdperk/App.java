@@ -1,5 +1,6 @@
 package hsleiden.stenentijdperk.stenentijdperk;
 
+import hsleiden.stenentijdperk.stenentijdperk.Controllers.FirebaseController;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.LobbyController;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.LoginController;
 import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
@@ -20,6 +21,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        FirebaseController.initializeFirebaseApp();
         ViewManager.loadLoginView();
     }
 
