@@ -38,7 +38,6 @@ public class LoginView {
 		this.view.setStyle("-fx-background-color: d0c9b5");
 		int amountOfRows = 50;
 		int amountOfColumns = 50;
-
 		for(int i = 0; i < amountOfColumns; i++) {
 			ColumnConstraints columnConstraints = new ColumnConstraints();
 			columnConstraints.setPercentWidth(100 / amountOfColumns);
@@ -49,6 +48,7 @@ public class LoginView {
 			rowConstraints.setPercentHeight(100 / amountOfRows);
 			this.view.getRowConstraints().add(rowConstraints);
 		}
+
 
 		Label naamLabel = new Label("Naam:");
 		naamLabel.setStyle("-fx-font-size: 20px;");
