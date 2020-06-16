@@ -25,6 +25,7 @@ public class BoardView {
 	private String spelbordImage = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Achtergronden/spelbord2.jpg";
 	private ImageView imageView;
 	private String Speler1 = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Spelers/Speler1.png";
+	private String Speler2 = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Spelers/Speler2.png";
 
 
 	public BoardView() {
@@ -73,13 +74,30 @@ public class BoardView {
 			System.out.println(fileNotFoundException);
 		}
 
-		assert input != null;
+		assert speler1 != null;
 		Image Speler1 = new Image(speler1);
 		ImageView Speler1Image = new ImageView(Speler1);
 		Speler1Image.setFitHeight(30);
 		Speler1Image.setFitWidth(30);
 		Speler1Image.setVisible(false);
 		GridPane.setConstraints(Speler1Image, 23, 2, 2 ,2);
+
+
+
+		FileInputStream speler2 = null;
+		try {
+			speler2 = new FileInputStream(this.Speler2);
+		} catch (FileNotFoundException fileNotFoundException) {
+			System.out.println(fileNotFoundException);
+		}
+
+		assert input != null;
+		Image Speler2 = new Image(speler2);
+		ImageView Speler2Image = new ImageView(Speler2);
+		Speler1Image.setFitHeight(30);
+		Speler1Image.setFitWidth(30);
+		Speler1Image.setVisible(true);
+		GridPane.setConstraints(Speler1Image, 24, 2, 2 ,2);
 
 
 
