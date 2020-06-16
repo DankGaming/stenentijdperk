@@ -1,7 +1,5 @@
 package hsleiden.stenentijdperk.stenentijdperk.Managers;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.core.view.View;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.FirebaseController;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.Views.LobbyView;
