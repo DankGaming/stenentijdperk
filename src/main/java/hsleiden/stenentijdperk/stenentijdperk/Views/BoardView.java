@@ -26,6 +26,8 @@ public class BoardView {
 	private ImageView imageView;
 	private String Speler1 = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Spelers/Speler1.png";
 	private String Speler2 = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Spelers/Speler2.png";
+	private String Speler3 = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Spelers/Speler2.png";
+	private String Speler4 = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Spelers/Speler2.png";
 
 
 	public BoardView() {
@@ -91,13 +93,44 @@ public class BoardView {
 			System.out.println(fileNotFoundException);
 		}
 
-		assert input != null;
+		assert speler2 != null;
 		Image Speler2 = new Image(speler2);
 		ImageView Speler2Image = new ImageView(Speler2);
 		Speler1Image.setFitHeight(30);
 		Speler1Image.setFitWidth(30);
 		Speler1Image.setVisible(true);
-		GridPane.setConstraints(Speler1Image, 24, 2, 2 ,2);
+		GridPane.setConstraints(Speler2Image, 25, 2, 2 ,2);
+
+		FileInputStream speler3 = null;
+		try {
+			speler3 = new FileInputStream(this.Speler3);
+		} catch (FileNotFoundException fileNotFoundException) {
+			System.out.println(fileNotFoundException);
+		}
+
+		assert speler3 != null;
+		Image Speler3 = new Image(speler3);
+		ImageView Speler3Image = new ImageView(Speler3);
+		Speler3Image.setFitHeight(30);
+		Speler3Image.setFitWidth(30);
+		Speler3Image.setVisible(true);
+		GridPane.setConstraints(Speler3Image, 26, 2, 2 ,2);
+
+
+		FileInputStream speler4 = null;
+		try {
+			speler4 = new FileInputStream(this.Speler4);
+		} catch (FileNotFoundException fileNotFoundException) {
+			System.out.println(fileNotFoundException);
+		}
+
+		assert speler4 != null;
+		Image Speler4 = new Image(speler2);
+		ImageView Speler4Image = new ImageView(Speler4);
+		Speler4Image.setFitHeight(30);
+		Speler4Image.setFitWidth(30);
+		Speler4Image.setVisible(true);
+		GridPane.setConstraints(Speler4Image, 28, 2, 2 ,2);
 
 
 
@@ -259,6 +292,6 @@ public class BoardView {
 		this.view.getChildren().addAll(imageView, hutKaartButton1, hutKaartButton2, hutKaartButton3, hutKaartButton4,
 				beschavingsKaartButton1, beschavingsKaartButton2, beschavingsKaartButton3, beschavingsKaartButton4,
 				hutButton, gereedschapButton, akkerbouwButton, jachtButton, bosButton, leemGroeveButton,
-				steenGroeveButton, rivierButton, endTurn, Speler1Image);
+				steenGroeveButton, rivierButton, endTurn, Speler1Image, Speler2Image, Speler3Image, Speler4Image);
 	}
 }
