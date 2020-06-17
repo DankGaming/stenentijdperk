@@ -55,28 +55,19 @@ public class BoardController {
             String input;
             do {
                 input = scanner("Hoeveel stamleden?");
+                // hoeveel passen op de locatie
             } while (Integer.parseInt(input) <= 0
                     || Integer.parseInt(input) > playercontroller.getVillagers(boardmodel.getPlayer())
                     || Integer.parseInt(
-                            input) > (boardmodel.requestCap(location) - boardmodel.requestVillagers(location))); // hoeveel
-                                                                                                                 // passen
-                                                                                                                 // op
-                                                                                                                 // de
-            // locatie
+                            input) > (boardmodel.requestCap(location) - boardmodel.requestVillagers(location)));
+            // Dit veranderd de hoeveelheid stamleden van een speler
             playercontroller.setVillagers(boardmodel.getPlayer(),
-                    (playercontroller.getVillagers(boardmodel.getPlayer()) - Integer.parseInt(input))); // Dit veranderd
-                                                                                                        // de
-                                                                                                        // hoeveelheid
-                                                                                                        // stamleden van
-                                                                                                        // een speler
-            boardmodel.changeVillagers(location, Integer.parseInt(input)); // Hier wordt in het object Resource
-                                                                           // aangepast hoeveel villagers er staan.
+                    (playercontroller.getVillagers(boardmodel.getPlayer()) - Integer.parseInt(input)));
+            // Hier wordt in het object Resource aangepast hoeveel villagers er staan.
+            boardmodel.changeVillagers(location, Integer.parseInt(input));
             boardmodel.setPlaced(true);
-            playercontroller.setPosities(boardmodel.getPlayer(), location, Integer.parseInt(input)); // slaat de
-                                                                                                     // geplaatse
-                                                                                                     // stamleden op in
-                                                                                                     // de player
-                                                                                                     // objecten.
+            // slaat de geplaatse stamleden op in de player objecten.
+            playercontroller.setPosities(boardmodel.getPlayer(), location, Integer.parseInt(input));
         }
     }
 
@@ -123,6 +114,8 @@ public class BoardController {
                 int dobbel = random.nextInt(6);
                 roll += dobbel;
             }
+//            int resources = roll / boardmodel.get...;
+//            boardmodel.getPlayer().addResources(index,;
         }
     }
 

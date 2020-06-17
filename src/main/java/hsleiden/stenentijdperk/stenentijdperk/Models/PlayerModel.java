@@ -53,6 +53,10 @@ public class PlayerModel {
         this.resources[index] = resources;
     }
 
+    public int addResources(int index, int resources) {
+        this.resources[index] += resources;
+    }
+
     public int getPosities(int index) {
         return posities[index];
     }
