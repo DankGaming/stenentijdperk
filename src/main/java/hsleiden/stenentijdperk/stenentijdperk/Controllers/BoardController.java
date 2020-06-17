@@ -115,12 +115,16 @@ public class BoardController {
                 roll += dobbel;
             }
             int resources = roll / boardmodel.getResource(index).getWaarde();
-//          TODO useTools(); 
+//          if 
             boardmodel.getPlayer().addResources(index, resources);
             boardmodel.getResource(index).reduceHoeveelheid(resources);
             playercontroller.setPosities(boardmodel.getPlayer(), index, 0);
         }
     } 
+
+    public void toolGebruiken(){
+        //TODO
+    }
 
     public void endTurn() {
         if (boardmodel.getPlaced()) { // checkt of de speler stamleden heeft geplaast.
@@ -174,11 +178,7 @@ public class BoardController {
             }
         }
         return found;
-    }
-
-    public void toolGebruiken(){
-        //TODO
-    }
+    }    
 }
 
 // public MainLoop(){
