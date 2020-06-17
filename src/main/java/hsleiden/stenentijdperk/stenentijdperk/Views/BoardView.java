@@ -266,36 +266,6 @@ public class BoardView {
 			public void handle(ActionEvent actionEvent) {
 				if (actionEvent.getSource() == hutKaartButton1) {
 					controller.onKaartButtonClick(1);
-					// } else if (actionEvent.getSource() == hutKaartButton2) {
-					// controller.onKaartButtonClick(2);
-					// } else if (actionEvent.getSource() == hutKaartButton3) {
-					// controller.onKaartButtonClick(3);
-					// } else if (actionEvent.getSource() == hutKaartButton4) {
-					// controller.onKaartButtonClick(4);
-					// } else if (actionEvent.getSource() == beschavingsKaartButtons.get(0)) {
-					// controller.onKaartButtonClick(5);
-					// } else if (actionEvent.getSource() == beschavingsKaartButtons.get(1)) {
-					// controller.onKaartButtonClick(6);
-					// } else if (actionEvent.getSource() == beschavingsKaartButtons.get(2)) {
-					// controller.onKaartButtonClick(7);
-					// } else if (actionEvent.getSource() == beschavingsKaartButtons.get(3)) {
-					// controller.onKaartButtonClick(8);
-					// } else if (actionEvent.getSource() == hutButton) {
-					// controller.onVillageButtonClick(1);
-					// } else if (actionEvent.getSource() == gereedschapButton) {
-					// controller.onVillageButtonClick(2);
-					// } else if (actionEvent.getSource() == akkerbouwButton) {
-					// controller.onVillageButtonClick(3);
-					// } else if (actionEvent.getSource() == jachtButton) {
-					// controller.onResourceButtonClick(1);
-					// } else if (actionEvent.getSource() == bosButton) {
-					// controller.onResourceButtonClick(2);
-					// } else if (actionEvent.getSource() == leemGroeveButton) {
-					// controller.onResourceButtonClick(3);
-					// } else if (actionEvent.getSource() == steenGroeveButton) {
-					// controller.onResourceButtonClick(4);
-					// } else if (actionEvent.getSource() == rivierButton) {
-					// controller.onResourceButtonClick(5);
 					Speler1Image.setVisible(true);
 					GridPane.setConstraints(Speler1Image, 5, 40, 2, 2);
 					speler1Label.setVisible(true);
