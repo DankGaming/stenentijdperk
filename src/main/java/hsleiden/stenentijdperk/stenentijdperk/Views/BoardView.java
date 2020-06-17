@@ -2,6 +2,7 @@ package hsleiden.stenentijdperk.stenentijdperk.Views;
 
 import hsleiden.stenentijdperk.stenentijdperk.App;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
+import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,6 +22,7 @@ import java.io.FileNotFoundException;
 
 public class BoardView {
 	private BoardController controller;
+	private BoardModel boardModel;
 	private GridPane view = new GridPane();
 	private String spelbordImage = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Achtergronden/spelbord2.jpg";
 	private ImageView imageView;
@@ -28,7 +30,10 @@ public class BoardView {
 	private String Speler2 = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Spelers/Speler2.png";
 	private String Speler3 = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Spelers/Speler3.png";
 	private String Speler4 = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Spelers/Speler4.png";
-
+	Label speler1Label;
+	Label speler2Label;
+	Label speler3Label;
+	Label speler4Label;
 
 	public BoardView() {
 		this.controller = new BoardController();
@@ -86,7 +91,6 @@ public class BoardView {
 		Speler1Image.setFitHeight(30);
 		Speler1Image.setFitWidth(30);
 		Speler1Image.setVisible(false);
-		//GridPane.setConstraints(Speler1Image, 24, 11, 2 ,2);
 
 
 
@@ -103,7 +107,6 @@ public class BoardView {
 		Speler2Image.setFitHeight(30);
 		Speler2Image.setFitWidth(30);
 		Speler2Image.setVisible(false);
-		//GridPane.setConstraints(Speler2Image, 26, 11, 2 ,2);
 
 		FileInputStream speler3 = null;
 		try {
@@ -118,7 +121,6 @@ public class BoardView {
 		Speler3Image.setFitHeight(30);
 		Speler3Image.setFitWidth(30);
 		Speler3Image.setVisible(false);
-		//GridPane.setConstraints(Speler3Image, 28, 11, 2 ,2);
 
 
 		FileInputStream speler4 = null;
@@ -134,31 +136,28 @@ public class BoardView {
 		Speler4Image.setFitHeight(30);
 		Speler4Image.setFitWidth(30);
 		Speler4Image.setVisible(false);
-		//GridPane.setConstraints(Speler4Image, 30, 11, 2 ,2);
 
 
 
 // 		Stamleden hoeveelheden
 
-		Label speler1Label = new Label("  1");
+		Label speler1Label = new Label("  " + boardModel.getVillagersOnBoard());
 		speler1Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
 		speler1Label.setVisible(false);
-		//GridPane.setConstraints(speler1Label, 24, 11, 2 ,2);
 
 		Label speler2Label = new Label("  1");
 		speler2Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
 		speler2Label.setVisible(false);
-		//GridPane.setConstraints(speler2Label, 26, 11, 2 ,2);
 
 		Label speler3Label = new Label("  1");
 		speler3Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
 		speler3Label.setVisible(false);
-		//GridPane.setConstraints(speler3Label, 28, 11, 2 ,2);
+
 
 		Label speler4Label = new Label("  1");
 		speler4Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
 		speler4Label.setVisible(false);
-		//GridPane.setConstraints(speler4Label, 30, 11, 2 ,2);
+
 
 
 

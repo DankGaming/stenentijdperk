@@ -62,6 +62,7 @@ public class BoardController {
             System.out.println(playercontroller.getVillagers(boardmodel.getPlayer()));
             boardmodel.setPlaced(true);
         }
+
     }
 
     public void onKaartButtonClick(int index) {
