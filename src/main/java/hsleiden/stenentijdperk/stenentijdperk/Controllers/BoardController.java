@@ -49,6 +49,10 @@ public class BoardController {
         this.boardmodel.register(boardobserver);
     }
 
+    public String getKaartPath(int index) {
+        return this.boardmodel.getKaartPath(index);
+    }
+
     public void onResourceButtonClick(int location) {
         if (!boardmodel.getPlaced() && boardmodel.requestCap(location) - boardmodel.requestVillagers(location) != 0
                 && playercontroller.getPosities(boardmodel.getPlayer(), location) == 0) {
@@ -109,24 +113,24 @@ public class BoardController {
     public void afhandelenResource(int index) {
         if (playercontroller.getPosities(boardmodel.getPlayer(), index) != 0) {
             int roll = 0;
-            Random random = new Random(); 
+            Random random = new Random();
             for (int i = 0; i < playercontroller.getPosities(boardmodel.getPlayer(), index); i++) {
                 int dobbel = random.nextInt(6);
                 roll += dobbel;
             }
             int resources = roll / boardmodel.getResource(index).getWaarde();
-//          TODO useTools(); 
+            // TODO useTools();
             boardmodel.getPlayer().addResources(index, resources);
             boardmodel.getResource(index).reduceHoeveelheid(resources);
             playercontroller.setPosities(boardmodel.getPlayer(), index, 0);
         }
-    } 
+    }
 
     public void endTurn() {
         if (boardmodel.getPlaced()) { // checkt of de speler stamleden heeft geplaast.
             System.out.println("einde beurt");
             boolean villagersLeft = true;
-            for (int k = 0; k < 16; k++){
+            for (int k = 0; k < 16; k++) {
                 System.out.println(playercontroller.getPosities(boardmodel.getPlayer(), k));
             }
             afhandelenResource(0);
@@ -157,7 +161,7 @@ public class BoardController {
         } else {
             System.out.println("plaats villagers");
         }
-        
+
     }
 
     // Methode om door lijsten spelers te loopen.
@@ -176,8 +180,8 @@ public class BoardController {
         return found;
     }
 
-    public void toolGebruiken(){
-        //TODO
+    public void toolGebruiken() {
+        // TODO
     }
 }
 
