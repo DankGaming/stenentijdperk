@@ -11,7 +11,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="lib" target="1.5" />
-      <module name="stenentijdperk" target="11" />
+      <module name="stenentijdperk" target="14" />
     </bytecodeTargetLevel>
   </component>
 </project>
