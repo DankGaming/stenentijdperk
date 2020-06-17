@@ -15,12 +15,19 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import java.util.ArrayList;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class BoardView {
 	private BoardController controller;
+	private ArrayList<Button> beschavingsKaartButtons;
 	private GridPane view = new GridPane();
 	private String spelbordImage = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Achtergronden/spelbord2.jpg";
 	private ImageView imageView;
@@ -30,6 +37,7 @@ public class BoardView {
 	private String Speler4 = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Spelers/Speler4.png";
 
 	public BoardView() {
+		this.beschavingsKaartButtons = new ArrayList<Button>();
 		this.controller = new BoardController();
 		setupPane();
 	}
@@ -166,7 +174,27 @@ public class BoardView {
 		 * 1 akkerbouw: 1 steen, leem, goud, hout: 7
 		 */
 
-		// Buttons
+		for (int i = 0; i < 4; i++) { // maakt 4 beschavingskaart buttons
+			FileInputStream input2 = null;
+			try {
+				input2 = new FileInputStream(this.controller.getKaartPath(i));
+			} catch (FileNotFoundException fileNotFoundException) {
+				System.out.println(fileNotFoundException);
+			}
+
+			assert input2 != null;
+			Image image2 = new Image(input2);
+			ImageView imageView = new ImageView(image2);
+			imageView.setFitHeight(160);
+			imageView.setPreserveRatio(true);
+			Button beschavingsKaartButton = new Button("", imageView);
+			beschavingsKaartButtons.add(beschavingsKaartButton);
+		}
+
+		GridPane.setConstraints(beschavingsKaartButtons.get(0), 26, 40, 1, 1);
+		GridPane.setConstraints(beschavingsKaartButtons.get(1), 31, 40, 1, 1);
+		GridPane.setConstraints(beschavingsKaartButtons.get(2), 37, 40, 1, 1);
+		GridPane.setConstraints(beschavingsKaartButtons.get(3), 42, 40, 1, 1);
 
 		Button hutKaartButton1 = new Button("stamlid op een hut");
 		hutKaartButton1.setStyle(
@@ -187,26 +215,6 @@ public class BoardView {
 		hutKaartButton4.setStyle(
 				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
 		GridPane.setConstraints(hutKaartButton4, 20, 36, 5, 3);
-
-		Button beschavingsKaartButton1 = new Button("beschavingskaart1");
-		beschavingsKaartButton1.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
-		GridPane.setConstraints(beschavingsKaartButton1, 26, 32, 5, 1);
-
-		Button beschavingsKaartButton2 = new Button("beschavingskaart2");
-		beschavingsKaartButton2.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
-		GridPane.setConstraints(beschavingsKaartButton2, 32, 32, 5, 1);
-
-		Button beschavingsKaartButton3 = new Button("beschavingskaart3");
-		beschavingsKaartButton3.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
-		GridPane.setConstraints(beschavingsKaartButton3, 37, 32, 5, 1);
-
-		Button beschavingsKaartButton4 = new Button("beschavingskaart4");
-		beschavingsKaartButton4.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
-		GridPane.setConstraints(beschavingsKaartButton4, 43, 32, 5, 1);
 
 		Button hutButton = new Button("Stamlid hut");
 		hutButton.setStyle(
@@ -311,8 +319,6 @@ public class BoardView {
 					speler4Label.setVisible(true);
 					GridPane.setConstraints(speler4Label, 17, 42, 1, 1);
 				} else if (actionEvent.getSource() == hutKaartButton4) {
-					controller.onKaartButtonClick(3);
-				} else if (actionEvent.getSource() == beschavingsKaartButton1) {
 					controller.onKaartButtonClick(4);
 					Speler1Image.setVisible(true);
 					GridPane.setConstraints(Speler1Image, 20, 40, 2, 2);
@@ -330,7 +336,7 @@ public class BoardView {
 					GridPane.setConstraints(Speler4Image, 22, 42, 2, 2);
 					speler4Label.setVisible(true);
 					GridPane.setConstraints(speler4Label, 22, 42, 1, 1);
-				} else if (actionEvent.getSource() == beschavingsKaartButton1) {
+				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(0)) {
 					controller.onKaartButtonClick(5);
 					Speler1Image.setVisible(true);
 					GridPane.setConstraints(Speler1Image, 27, 36, 2, 2);
@@ -348,7 +354,7 @@ public class BoardView {
 					GridPane.setConstraints(Speler4Image, 29, 38, 2, 2);
 					speler4Label.setVisible(true);
 					GridPane.setConstraints(speler4Label, 29, 38, 1, 1);
-				} else if (actionEvent.getSource() == beschavingsKaartButton2) {
+				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(1)) {
 					controller.onKaartButtonClick(6);
 					Speler1Image.setVisible(true);
 					GridPane.setConstraints(Speler1Image, 32, 36, 2, 2);
@@ -366,7 +372,7 @@ public class BoardView {
 					GridPane.setConstraints(Speler4Image, 34, 38, 2, 2);
 					speler4Label.setVisible(true);
 					GridPane.setConstraints(speler4Label, 34, 38, 1, 1);
-				} else if (actionEvent.getSource() == beschavingsKaartButton3) {
+				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(2)) {
 					controller.onKaartButtonClick(7);
 					Speler1Image.setVisible(true);
 					GridPane.setConstraints(Speler1Image, 37, 36, 2, 2);
@@ -384,7 +390,7 @@ public class BoardView {
 					GridPane.setConstraints(Speler4Image, 39, 38, 2, 2);
 					speler4Label.setVisible(true);
 					GridPane.setConstraints(speler4Label, 39, 38, 1, 1);
-				} else if (actionEvent.getSource() == beschavingsKaartButton4) {
+				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(3)) {
 					controller.onKaartButtonClick(8);
 					Speler1Image.setVisible(true);
 					GridPane.setConstraints(Speler1Image, 43, 36, 2, 2);
@@ -552,15 +558,14 @@ public class BoardView {
 			}
 
 		};
-
 		hutKaartButton1.setOnAction(event);
 		hutKaartButton2.setOnAction(event);
 		hutKaartButton3.setOnAction(event);
 		hutKaartButton4.setOnAction(event);
-		beschavingsKaartButton1.setOnAction(event);
-		beschavingsKaartButton2.setOnAction(event);
-		beschavingsKaartButton3.setOnAction(event);
-		beschavingsKaartButton4.setOnAction(event);
+		beschavingsKaartButtons.get(0).setOnAction(event);
+		beschavingsKaartButtons.get(1).setOnAction(event);
+		beschavingsKaartButtons.get(2).setOnAction(event);
+		beschavingsKaartButtons.get(3).setOnAction(event);
 		hutButton.setOnAction(event);
 		gereedschapButton.setOnAction(event);
 		akkerbouwButton.setOnAction(event);
@@ -572,9 +577,9 @@ public class BoardView {
 		endTurn.setOnAction(event);
 
 		this.view.getChildren().addAll(imageView, hutKaartButton1, hutKaartButton2, hutKaartButton3, hutKaartButton4,
-				beschavingsKaartButton1, beschavingsKaartButton2, beschavingsKaartButton3, beschavingsKaartButton4,
-				hutButton, gereedschapButton, akkerbouwButton, jachtButton, bosButton, leemGroeveButton,
-				steenGroeveButton, rivierButton, endTurn, Speler1Image, Speler2Image, Speler3Image, Speler4Image,
-				speler1Label, speler2Label, speler3Label, speler4Label);
+				beschavingsKaartButtons.get(0), beschavingsKaartButtons.get(1), beschavingsKaartButtons.get(2),
+				beschavingsKaartButtons.get(3), hutButton, gereedschapButton, akkerbouwButton, jachtButton, bosButton,
+				leemGroeveButton, steenGroeveButton, rivierButton, endTurn, Speler1Image, Speler2Image, Speler3Image,
+				Speler4Image, speler1Label, speler2Label, speler3Label, speler4Label);
 	}
 }
