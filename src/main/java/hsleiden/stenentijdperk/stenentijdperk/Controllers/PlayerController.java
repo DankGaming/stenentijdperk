@@ -1,6 +1,6 @@
 package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 
-import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;;
+import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 
 public class PlayerController {
 	private PlayerModel playermodel;
@@ -14,5 +14,21 @@ public class PlayerController {
 
 	public void setVillagers(PlayerModel playermodel, int villagers) {
 		playermodel.setVillagers(villagers);
+	}
+
+	public int getTools(PlayerModel playermodel, int index){
+		return playermodel.getTools(index);
+	}
+
+	public void setTools(PlayerModel playermodel, int index, int tools){
+		playermodel.setTools(index, tools);
+	}
+
+	public int getPosities(PlayerModel playerModel, int index){
+		return playerModel.getPosities(index);
+	}
+
+	public void setPosities(PlayerModel playerModel, int index, int stamleden){
+		playerModel.setPosities(index, stamleden);
 	}
 }
