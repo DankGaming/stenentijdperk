@@ -14,12 +14,12 @@ public class ViewManager {
     private static Stage currentStage;
     private static GridPane currentView;
 
+    // tableau popup
+    private static Stage currentPopupStage;
+    private static GridPane currentPopupView;
+
     // The load view functions. Call these in your controllers and views.
-    public static void tableauView() {
-        closeView();
-        currentView = new TableauView().setScene();
-        showView(680, 460, "Tableau");
-    }
+
     public static void loadLoginView() {
         closeView();
         currentView = new LoginView().setScene();
@@ -30,6 +30,14 @@ public class ViewManager {
         closeView();
         currentView = new LobbyView(playerModel).setScene();
         showView(800, 800, "Lobby");
+    }
+
+    // Popup window functions
+
+    public static void loadPopupWindow(GridPane tableauView) {
+        closePopupWindow();
+        currentPopupView = tableauView;
+        openPopupWindow();
     }
 
     // This function creates a stage from a gridpane.
@@ -51,5 +59,26 @@ public class ViewManager {
     public static void closeView() {
         if(currentStage != null)
             currentStage.close();
+    }
+
+    // This function creates a stage from a gridpane.
+    public static void createPopupFromView(int width, int height, String title) {
+        currentPopupStage = new Stage();
+        if(currentPopupView != null)
+            currentPopupStage.setScene(new Scene(currentPopupView, width, height));
+        currentPopupStage.setTitle(title);
+    }
+
+    // Function that opens popup window
+    public static void openPopupWindow() {
+        createPopupFromView(680, 460, "tableau");
+        if(currentPopupStage != null)
+            currentPopupStage.show();
+    }
+
+    // Function that closes popup window
+    public static void closePopupWindow() {
+        if(currentPopupStage != null)
+            currentPopupStage.close();
     }
 }
