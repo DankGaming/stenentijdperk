@@ -11,7 +11,8 @@ public class Kaart implements Status {
  
 
 	public Kaart(int punten) {
-		this.punten = punten;	
+		this.punten = punten;
+		this.status = false;	
 	}
 
 	public int getPunten() {

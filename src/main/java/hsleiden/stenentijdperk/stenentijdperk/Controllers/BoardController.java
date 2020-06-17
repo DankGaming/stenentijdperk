@@ -14,6 +14,7 @@ public class BoardController {
     private ArrayList<PlayerModel> players = new ArrayList<PlayerModel>();
 
     public BoardController() {
+        // temp players
         PlayerModel matt = new PlayerModel("Matt");
         PlayerModel jake = new PlayerModel("Jake");
         PlayerModel lucas = new PlayerModel("Lucas");
@@ -24,7 +25,7 @@ public class BoardController {
         players.add(carlos);
         playercontroller = new PlayerController();
         boardmodel = new BoardModel();
-        boardmodel.setPlayer(matt); // Begin van het spel turn eerste speler bepalen.
+        boardmodel.setPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
         System.out.println(boardmodel.getPlayer().getNaam() + " is aan de beurt en heeft "
                 + boardmodel.getPlayer().getVillagers() + ".");
         /*
@@ -136,6 +137,10 @@ public class BoardController {
             }
         }
         return found;
+    }
+
+    public void toolGebruiken(){
+
     }
 
 }

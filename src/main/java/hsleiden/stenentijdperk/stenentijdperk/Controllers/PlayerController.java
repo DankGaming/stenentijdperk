@@ -15,4 +15,12 @@ public class PlayerController {
 	public void setVillagers(PlayerModel playermodel, int villagers) {
 		playermodel.setVillagers(villagers);
 	}
+
+	public int getTools(PlayerModel playermodel, int index){
+		return playermodel.getTools(index);
+	}
+
+	public void setTools(PlayerModel playermodel, int index, int tools){
+		playermodel.setTools(index, tools);
+	}
 }
