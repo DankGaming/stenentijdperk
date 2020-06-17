@@ -300,6 +300,22 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label,22,34, 1, 1);
 				} else if (actionEvent.getSource() == gereedschapButton) {
 					controller.onVillageButtonClick(2);
+					Speler1Image.setVisible(true);
+					GridPane.setConstraints(Speler1Image, 26, 21, 2, 2);
+					speler1Label.setVisible(true);
+					GridPane.setConstraints(speler1Label,26,21, 1, 1);
+					Speler2Image.setVisible(true);
+					GridPane.setConstraints(Speler2Image, 28, 21, 2, 2);
+					speler2Label.setVisible(true);
+					GridPane.setConstraints(speler2Label,28,21, 1, 1);
+					Speler3Image.setVisible(true);
+					GridPane.setConstraints(Speler3Image, 26, 23, 2, 2);
+					speler3Label.setVisible(true);
+					GridPane.setConstraints(speler3Label,26,23, 1, 1);
+					Speler4Image.setVisible(true);
+					GridPane.setConstraints(Speler4Image, 28, 23, 2, 2);
+					speler4Label.setVisible(true);
+					GridPane.setConstraints(speler4Label,28,23, 1, 1);
 				} else if (actionEvent.getSource() == akkerbouwButton) {
 					controller.onVillageButtonClick(3);
 					Speler1Image.setVisible(true);
