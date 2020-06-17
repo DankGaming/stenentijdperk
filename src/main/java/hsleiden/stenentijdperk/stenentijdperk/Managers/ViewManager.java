@@ -45,6 +45,14 @@ public class ViewManager {
         showView(1200, 800, "Board");
     }
 
+    // Popup window functions
+
+    public static void loadPopupWindow(GridPane tableauView) {
+        closePopupWindow();
+        currentPopupView = tableauView;
+        openPopupWindow();
+    }
+
     // This function creates a stage from a gridpane.
     public static void createStageFromView(int width, int height, String title) {
         currentStage = new Stage();
