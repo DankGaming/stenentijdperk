@@ -20,9 +20,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class TableauView implements TableauObserver {
+    GereedschapView gereedschapview = new GereedschapView(1);
+    GereedschapView gereedschapview1 = new GereedschapView(1);
+    GereedschapView gereedschapview2 = new GereedschapView(1);
     private ImageView tableau;
-    private ImageView gereedschap;
-    private GereedschapView gereedschapview;
     private String RESOURCE = "./Images/tableau.png";
     private GridPane view;
     private Label voedsel;
@@ -96,20 +97,17 @@ public class TableauView implements TableauObserver {
         GridPane.setConstraints(goud, 30, 18, 1, 1);
 
 
-        GereedschapView gereedschapview = new GereedschapView(2);
-
         ImageView imageviewgereedschap = gereedschapview.setScene();
-
         GridPane.setConstraints(imageviewgereedschap, 2, 1, 10, 10);
 
-        Button button = new Button();
-        GridPane.setConstraints(button, 20, 20, 10, 10);
+        ImageView imageviewgereedschap1 = gereedschapview1.setScene();
+        GridPane.setConstraints(imageviewgereedschap1, 2, 11, 10, 10);
 
-        button.setOnMouseClicked(e -> {
-            gereedschapview.resetGereedschap();
-        });
+        ImageView imageviewgereedschap2 = gereedschapview2.setScene();
+        GridPane.setConstraints(imageviewgereedschap2, 2, 21, 10, 10);
 
-        this.view.getChildren().addAll(tableau, stamleden , voedsel, hout, leem, steen, goud, imageviewgereedschap , button);
+        this.view.getChildren().addAll(tableau, stamleden , voedsel, hout, leem, steen, goud, imageviewgereedschap,
+                imageviewgereedschap1, imageviewgereedschap2);
 
     }
 

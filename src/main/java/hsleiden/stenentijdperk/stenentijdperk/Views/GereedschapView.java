@@ -48,8 +48,8 @@ public class GereedschapView extends Stage {
 
         Image image = new Image(input);
         this.imageView = new ImageView(image);
-        this.imageView.setFitHeight(100);
-        this.imageView.setFitWidth(100);
+        this.imageView.setFitHeight(70);
+        this.imageView.setFitWidth(70);
 
         imageView.setOnMouseClicked(e -> {
             if(canclick){
