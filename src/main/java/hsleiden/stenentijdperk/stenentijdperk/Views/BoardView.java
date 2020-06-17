@@ -57,6 +57,7 @@ public class BoardView {
 		Button hutKaartButton1 = new Button("Plaats stamlid op een hut kaart");
 		// hutKaartButton1.setMinSize(300, 60);
 		// hutKaartButton1.setMaxSize(300, 60);
+		//TODO maybe make this a single variable
 		hutKaartButton1.setStyle(
 				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
 		GridPane.setConstraints(hutKaartButton1, 0, 1, 1, 1);
