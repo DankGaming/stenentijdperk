@@ -1,52 +1,47 @@
 package hsleiden.stenentijdperk.stenentijdperk.Helpers;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import hsleiden.stenentijdperk.stenentijdperk.Interfaces.Status;
 
-public class Kaart {
+public class Kaart implements Status {
 	private int punten;
-	private ArrayList<Resource> resources;
 	private Resource tool;
-	private Resource graan; 
+	private Resource graan;
 	private String treasure;
-	private HashMap multiplier;
-	
-	public Kaart(int punten, 
-			ArrayList<Resource> resources,
-			Resource tool,
-			Resource graan, 
-			String treasure,
-			HashMap multiplier) 
-	{
+	private boolean status;
+ 
+
+	public Kaart(int punten) {
 		this.punten = punten;
-		this.resources = resources;
-		this.graan = graan;
-		this.treasure = treasure;
-		this.multiplier = multiplier;
+		this.status = false;	
 	}
-	
-	public int getPunten(){
+
+	public int getPunten() {
 		return this.punten;
 	}
-	
-	public ArrayList<Resource> getResources(){
-		return this.resources;
-	}
-	
+  
 	public Resource getTool() {
 		return this.tool;
 	}
-	
+
 	public Resource getGraan() {
 		return this.graan;
 	}
-	
+
 	public String getTreasure() {
 		return this.treasure;
 	}
-	
-	public HashMap getMultiplier() {
-		return this.multiplier;
-	}
-}
 
+	@Override
+	public boolean getStatus() {
+		return this.status;
+
+	}
+
+	@Override
+	public void setStatus(boolean status) {
+		this.status = status;
+
+	}
+
+	
+}

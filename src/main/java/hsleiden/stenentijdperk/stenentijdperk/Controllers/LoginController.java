@@ -10,8 +10,7 @@ public class LoginController {
 	}
 
 	public PlayerModel generatePlayer(String naam) {
-		PlayerModel playerModel = new PlayerModel();
-		playerModel.setNaam(naam);
+		PlayerModel playerModel = new PlayerModel(naam);
 		return playerModel;
 	}
 }
