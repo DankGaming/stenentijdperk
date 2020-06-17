@@ -114,10 +114,13 @@ public class BoardController {
                 int dobbel = random.nextInt(6);
                 roll += dobbel;
             }
-//            int resources = roll / boardmodel.get...;
-//            boardmodel.getPlayer().addResources(index,;
+            int resources = roll / boardmodel.getResource(index).getWaarde();
+//          TODO useTools(); 
+            boardmodel.getPlayer().addResources(index, resources);
+            boardmodel.getResource(index).reduceHoeveelheid(resources);
+            playercontroller.setPosities(boardmodel.getPlayer(), index, 0);
         }
-    }
+    } 
 
     public void endTurn() {
         if (boardmodel.getPlaced()) { // checkt of de speler stamleden heeft geplaast.

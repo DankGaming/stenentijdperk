@@ -28,6 +28,14 @@ public class Resource {
 	public void setHoeveelheid(int amount) {
 		this.hoeveelheid = amount;
 	}
+
+	public void reduceHoeveelheid(int amount) {
+		this.hoeveelheid -= amount;
+	}
+
+	public void addHoeveelheid(int amount) {
+		this.hoeveelheid += amount;
+	}
 	
 	public int getWaarde() {
 		return this.waarde;
