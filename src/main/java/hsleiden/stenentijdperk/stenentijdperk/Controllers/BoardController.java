@@ -6,6 +6,7 @@ import hsleiden.stenentijdperk.stenentijdperk.Helpers.Resource;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class BoardController {
@@ -47,35 +48,58 @@ public class BoardController {
     public void registerObserver(BoardObserver boardobserver) {
         this.boardmodel.register(boardobserver);
     }
-    
+
     public void onResourceButtonClick(int location) {
-        if (!boardmodel.getPlaced() && boardmodel.requestCap(location) - boardmodel.requestVillagers(location) != 0){
+        if (!boardmodel.getPlaced() && boardmodel.requestCap(location) - boardmodel.requestVillagers(location) != 0
+                && playercontroller.getPosities(boardmodel.getPlayer(), location) == 0) {
             String input;
             do {
                 input = scanner("Hoeveel stamleden?");
-            } while (Integer.parseInt(input) <= 0 || Integer.parseInt(input) > playercontroller.getVillagers(boardmodel.getPlayer())
-                    || Integer.parseInt(input) > (boardmodel.requestCap(location) - boardmodel.requestVillagers(location))); // hoeveel passen op de
-                                                                                        // locatie
+            } while (Integer.parseInt(input) <= 0
+                    || Integer.parseInt(input) > playercontroller.getVillagers(boardmodel.getPlayer())
+                    || Integer.parseInt(
+                            input) > (boardmodel.requestCap(location) - boardmodel.requestVillagers(location))); // hoeveel
+                                                                                                                 // passen
+                                                                                                                 // op
+                                                                                                                 // de
+            // locatie
             playercontroller.setVillagers(boardmodel.getPlayer(),
-                    (playercontroller.getVillagers(boardmodel.getPlayer()) - Integer.parseInt(input))); // Dit veranderd de hoeveelheid stamleden van een speler
-            boardmodel.changeVillagers(location, Integer.parseInt(input)); // Hier wordt in het object Resource aangepast hoeveel villagers er staan.
+                    (playercontroller.getVillagers(boardmodel.getPlayer()) - Integer.parseInt(input))); // Dit veranderd
+                                                                                                        // de
+                                                                                                        // hoeveelheid
+                                                                                                        // stamleden van
+                                                                                                        // een speler
+            boardmodel.changeVillagers(location, Integer.parseInt(input)); // Hier wordt in het object Resource
+                                                                           // aangepast hoeveel villagers er staan.
             boardmodel.setPlaced(true);
-            
+            playercontroller.setPosities(boardmodel.getPlayer(), location, Integer.parseInt(input)); // slaat de
+                                                                                                     // geplaatse
+                                                                                                     // stamleden op in
+                                                                                                     // de player
+                                                                                                     // objecten.
         }
     }
-    
-    // methode om de onderste buttons af te handelen. maakt de kaart/hut bezet en zorgt dat je niet meer kan plaatsen.
-    public void onKaartButtonClick(int index){
-         if (!boardmodel.getPlaced()){
-            if (index >= 4){  //&& !boardmodel.getStatus(index-4)){
-                //boardmodel.setStatus(index-4, true);
+
+    // methode om de onderste buttons af te handelen. maakt de kaart/hut bezet en
+    // zorgt dat je niet meer kan plaatsen.
+    public void onKaartButtonClick(int index) {
+        if (!boardmodel.getPlaced()) {
+            if (index >= 4 && !boardmodel.getKaart(index - 4).getStatus()) {
+                boardmodel.getKaart(index - 4).setStatus(true);
                 boardmodel.setPlaced(true);
-                playercontroller.setVillagers(boardmodel.getPlayer(),(playercontroller.getVillagers(boardmodel.getPlayer()) - 1));
-            } /*else if (!boardmodel.getStatus(index-4)){  ook tijdelijk hutjes bestaat nog niet
-                //boardmodel.hutjes.get(index).setStatus(true);
-                boardmodel.setPlaced(true);
-            } */
-         }
+                playercontroller.setVillagers(boardmodel.getPlayer(),
+                        (playercontroller.getVillagers(boardmodel.getPlayer()) - 1));
+
+            } /*
+               * else if (!boardmodel.getStatus(index-4)){ ook tijdelijk hutjes bestaat nog
+               * niet //boardmodel.hutjes.get(index).setStatus(true);
+               * boardmodel.setPlaced(true); }
+               */
+            if (boardmodel.getPlaced()) {
+                playercontroller.setPosities(boardmodel.getPlayer(), index + 8, 1);
+            }
+
+        }
     }
 
     public void onVillageButtonClick(int index) {
@@ -90,10 +114,26 @@ public class BoardController {
         // }
     }
 
+    // Hier is het rollen voor resources.
+    public void afhandelenResource(int index) {
+        if (playercontroller.getPosities(boardmodel.getPlayer(), index) != 0) {
+            int roll = 0;
+            Random random = new Random(); 
+            for (int i = 0; i < playercontroller.getPosities(boardmodel.getPlayer(), index); i++) {
+                int dobbel = random.nextInt(6);
+                roll += dobbel;
+            }
+        }
+    }
+
     public void endTurn() {
         if (boardmodel.getPlaced()) { // checkt of de speler stamleden heeft geplaast.
             System.out.println("einde beurt");
             boolean villagersLeft = true;
+            for (int k = 0; k < 16; k++){
+                System.out.println(playercontroller.getPosities(boardmodel.getPlayer(), k));
+            }
+            afhandelenResource(0);
             int i = 0;
             for (int j = 0; j < 4; j++) {
                 if (boardmodel.getPlayer().equals(players.get(j))) { // Bepaling welke player aan de beurt is
@@ -121,6 +161,7 @@ public class BoardController {
         } else {
             System.out.println("plaats villagers");
         }
+        
     }
 
     // Methode om door lijsten spelers te loopen.
@@ -140,9 +181,8 @@ public class BoardController {
     }
 
     public void toolGebruiken(){
-
+        //TODO
     }
-
 }
 
 // public MainLoop(){

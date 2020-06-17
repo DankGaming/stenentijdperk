@@ -23,4 +23,12 @@ public class PlayerController {
 	public void setTools(PlayerModel playermodel, int index, int tools){
 		playermodel.setTools(index, tools);
 	}
+
+	public int getPosities(PlayerModel playerModel, int index){
+		return playerModel.getPosities(index);
+	}
+
+	public void setPosities(PlayerModel playerModel, int index, int stamleden){
+		playerModel.setPosities(index, stamleden);
+	}
 }
