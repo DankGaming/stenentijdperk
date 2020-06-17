@@ -2,13 +2,14 @@ package hsleiden.stenentijdperk.stenentijdperk.Models;
 
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 
 import java.util.ArrayList;
 
 public class PlayerModel {
     private String naam;
     private int villagers; 
-    private int[] tools = new int[3];
+    private Tool[] tools = new Tool[3];
     private int[] resources = {10,0,0,0,0};
     private int[] posities = new int[16];
     private ArrayList<Kaart> kaarten = new ArrayList<Kaart>();
@@ -35,12 +36,16 @@ public class PlayerModel {
         return this.villagers;
     }
 
-    public int getTools(int index){
+    public Tool[] getTools() {
+        return tools;
+    }
+
+    public Tool getTool(int index) {
         return tools[index];
     }
 
-    public void setTools(int index, int change){
-        this.tools[index] = change;
+    public void setTools(int index, Tool tool) {
+        this.tools[index] = tool;
     }
 
     public int getResources(int index) {
