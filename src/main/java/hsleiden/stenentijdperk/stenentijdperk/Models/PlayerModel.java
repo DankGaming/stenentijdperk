@@ -1,5 +1,7 @@
 package hsleiden.stenentijdperk.stenentijdperk.Models;
 
+import hsleiden.stenentijdperk.stenentijdperk.observers.LobbyObserver;
+import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObserver;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 
@@ -7,6 +9,7 @@ import java.util.ArrayList;
 
 public class PlayerModel {
     private String naam;
+    private TableauModel tableauModal;
     private int villagers;
     private int[] tools = new int[4];
     private int[] resources = {10,0,0,0,0};
@@ -63,5 +66,7 @@ public class PlayerModel {
         this.posities[index] = posities;
     }
 
-    
+    public void registerObserver(TableauObserver to) {
+        this.tableauModal.register(to);
+    }
 }
