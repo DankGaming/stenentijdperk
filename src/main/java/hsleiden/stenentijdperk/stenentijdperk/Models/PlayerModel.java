@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class PlayerModel {
     private String naam;
-    private int villagers;
-    private int[] tools = new int[4];
+    private int villagers; 
+    private int[] tools = new int[3];
     private int[] resources = {10,0,0,0,0};
     private int[] posities = new int[16];
     private ArrayList<Kaart> kaarten = new ArrayList<Kaart>();
