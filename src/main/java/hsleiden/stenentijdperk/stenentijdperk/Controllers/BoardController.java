@@ -1,9 +1,9 @@
 package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 
-import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
-import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.Resource;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
+import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
+import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

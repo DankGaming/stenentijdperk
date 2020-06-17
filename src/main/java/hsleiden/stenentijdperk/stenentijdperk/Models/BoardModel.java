@@ -6,7 +6,8 @@ import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
 
 import java.util.ArrayList;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class BoardModel implements BoardObservable {
     private Kaart[] kaarten; // temp made public en dit moet datatype Kaart worden

@@ -1,11 +1,9 @@
 package hsleiden.stenentijdperk.stenentijdperk.Models;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
+
+import java.util.ArrayList;
 
 public class PlayerModel {
     private String naam;

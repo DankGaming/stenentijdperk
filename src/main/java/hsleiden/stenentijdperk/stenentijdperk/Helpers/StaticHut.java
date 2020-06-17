@@ -1,7 +1,6 @@
 package hsleiden.stenentijdperk.stenentijdperk.Helpers;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class StaticHut {
