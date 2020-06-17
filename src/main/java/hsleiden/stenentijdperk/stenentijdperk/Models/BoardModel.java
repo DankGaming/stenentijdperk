@@ -6,7 +6,8 @@ import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
 
 import java.util.ArrayList;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class BoardModel implements BoardObservable {
     private Kaart[] kaarten; // temp made public en dit moet datatype Kaart worden
@@ -111,6 +112,9 @@ public class BoardModel implements BoardObservable {
         this.turn = turn;
     }
 
+    public Resource getResource(int index){
+        return this.locaties.get(index);
+    }
     /*
      * // temp methode bepalen of de kaart al bezet is. Dit moet naar het kaart
      * object. public boolean getStatus(int index){ return kaarten.get(index); }

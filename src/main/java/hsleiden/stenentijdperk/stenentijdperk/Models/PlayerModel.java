@@ -1,14 +1,15 @@
 package hsleiden.stenentijdperk.stenentijdperk.Models;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
+import hsleiden.stenentijdperk.stenentijdperk.observers.LobbyObserver;
+import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObserver;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 
+import java.util.ArrayList;
+
 public class PlayerModel {
     private String naam;
+    private TableauModel tableauModal;
     private int villagers;
     private int[] tools = new int[4];
     private int[] resources = {10,0,0,0,0};
@@ -53,6 +54,10 @@ public class PlayerModel {
         this.resources[index] = resources;
     }
 
+    public void addResources(int index, int resources) {
+        this.resources[index] += resources;
+    }
+
     public int getPosities(int index) {
         return posities[index];
     }
@@ -61,5 +66,7 @@ public class PlayerModel {
         this.posities[index] = posities;
     }
 
-    
+    public void registerObserver(TableauObserver to) {
+        this.tableauModal.register(to);
+    }
 }
