@@ -125,3 +125,7 @@ hs_err_pid*
 /.idea
 /target
 /out
+.idea/
+.target/
+.idea/compiler.xml
+.idea/stenentijdperk.iml
