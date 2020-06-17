@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class TableauModel {
+public class TableauModel implements TableauObservable{
     private List<Stamlid> stamleden;
     private PlayerModel player;
     private int[] gereedschap;
@@ -34,9 +34,15 @@ public class TableauModel {
         return stamleden;
     }
 
+    @Override
+    public void register(TableauObserver lo) {
+        this.observers.add(lo);
+    }
+
+    @Override
     public void notifyAllObservers() {
         for(TableauObserver lo : observers) {
-            lo.update((TableauObservable) this);
+            lo.update(this);
         }
     }
 

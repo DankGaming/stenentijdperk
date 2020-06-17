@@ -2,7 +2,10 @@ package hsleiden.stenentijdperk.stenentijdperk.Views;
 
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.LoginController;
 import hsleiden.stenentijdperk.stenentijdperk.Models.TableauModel;
+import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObservable;
+import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObserver;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
@@ -16,9 +19,10 @@ import javafx.scene.text.Font;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class TableauView {
+public class TableauView implements TableauObserver {
     private ImageView tableau;
     private ImageView gereedschap;
+    private GereedschapView gereedschapview;
     private String RESOURCE = "./Images/tableau.png";
     private GridPane view;
     private Label voedsel;
@@ -91,19 +95,26 @@ public class TableauView {
         goud.setStyle("-fx-font-size: 25px;");
         GridPane.setConstraints(goud, 30, 18, 1, 1);
 
-        FileInputStream imagetool = null;
-            try {
-                imagetool = new FileInputStream("./Images/Tool1.png");
-            } catch (FileNotFoundException fileNotFoundException) {
-                System.out.println(fileNotFoundException);
-            }
-            assert imagetool != null;
-            Image image2 = new Image(imagetool);
-            this.gereedschap = new ImageView(image2);
-            this.gereedschap.setFitHeight(80);
-            this.gereedschap.setFitWidth(80);
-            GridPane.setConstraints(gereedschap, 2, 1, 10, 10);
 
-        this.view.getChildren().addAll(tableau, stamleden , voedsel, hout, leem, steen, goud, gereedschap);
+        GereedschapView gereedschapview = new GereedschapView(2);
+
+        ImageView imageviewgereedschap = gereedschapview.setScene();
+
+        GridPane.setConstraints(imageviewgereedschap, 2, 1, 10, 10);
+
+        Button button = new Button();
+        GridPane.setConstraints(button, 20, 20, 10, 10);
+
+        button.setOnMouseClicked(e -> {
+            gereedschapview.resetGereedschap();
+        });
+
+        this.view.getChildren().addAll(tableau, stamleden , voedsel, hout, leem, steen, goud, imageviewgereedschap , button);
+
+    }
+
+    @Override
+    public void update(TableauObservable lo) {
+
     }
 }

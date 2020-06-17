@@ -14,14 +14,23 @@ import java.io.FileNotFoundException;
 public class GereedschapView extends Stage {
     private ImageView imageView;
     private String RESOURCE = "./Images/Tool1.png";
+    private boolean canclick = true;
 
-    public GereedschapView() {
+    public GereedschapView(int toolnummer) {
         TableauModel tableau = new TableauModel();
+        this.RESOURCE = "./Images/Tool" + toolnummer + ".png";
         setupPane(tableau);
     }
 
     public ImageView setScene() {
         return imageView;
+    }
+
+    public void resetGereedschap(){
+        if(!canclick){
+            imageView.setRotate(0);
+            canclick = true;
+        }
     }
 
     public void setupPane(TableauModel tableau) {
@@ -43,10 +52,10 @@ public class GereedschapView extends Stage {
         this.imageView.setFitWidth(100);
 
         imageView.setOnMouseClicked(e -> {
-            imageView.setRotate(45);
-            imageView.setOnMouseClicked(n -> { });
+            if(canclick){
+                imageView.setRotate(90);
+                this.canclick = false;
+            }
         });
-
-
     }
 }
