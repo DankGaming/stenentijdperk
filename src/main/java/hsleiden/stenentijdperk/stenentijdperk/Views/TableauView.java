@@ -23,6 +23,7 @@ public class TableauView implements TableauObserver {
     GereedschapView gereedschapview = new GereedschapView(1);
     GereedschapView gereedschapview1 = new GereedschapView(1);
     GereedschapView gereedschapview2 = new GereedschapView(1);
+
     private ImageView tableau;
     private String RESOURCE = "./Images/tableau.png";
     private GridPane view;
