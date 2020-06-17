@@ -53,7 +53,7 @@ public class PlayerModel {
         this.resources[index] = resources;
     }
 
-    public int addResources(int index, int resources) {
+    public void addResources(int index, int resources) {
         this.resources[index] += resources;
     }
 
