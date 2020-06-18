@@ -1,5 +1,6 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
+import hsleiden.stenentijdperk.stenentijdperk.Controllers.FirebaseController;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.LobbyController;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.LobbyObservable;
@@ -189,6 +190,6 @@ public class LobbyView implements LobbyObserver {
 
     @Override
     public void update(LobbyObservable lo) {
-        selectLobby(lo.getId(), lo.getPlayers());
+        selectLobby(lo.getId(), FirebaseController.getPlayersInLobby(lo.getId()));
     }
 }

@@ -22,8 +22,31 @@ public class LobbyController {
 
     public void joinLobby() {
         if(this.lobbyId > 0)
-            FirebaseController.updateDocument(String.valueOf(lobbyId), "user1", p.getNaam());
-            System.out.println("Player selected lobby " + this.lobbyId);
+            if(FirebaseController.getAmountofPlayersInLobby(this.lobbyId) < 4) {
+                FirebaseController.addPlayers(this.lobbyId, setPlayerNumber(), this.p.getNaam());
+                FirebaseController.getPlayersInLobby(this.lobbyId);
+                System.out.println("Player selected lobby " + this.lobbyId);
+            }
+    }
+
+    private String setPlayerNumber() {
+        int players = FirebaseController.getAmountofPlayersInLobby(this.lobbyId);
+        String playerNumber = "";
+        switch (players){
+            case 0:
+                playerNumber = "speler1";
+                break;
+            case 1:
+                playerNumber = "speler2";
+                break;
+            case 2:
+                playerNumber = "speler3";
+                break;
+            case 3:
+                playerNumber = "speler4";
+                break;
+        }
+        return playerNumber;
     }
 
     public void registerObserver(LobbyObserver lo) {

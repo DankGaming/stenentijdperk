@@ -10,4 +10,6 @@ module hsleiden.stenentijdperk.stenentijdperk {
     requires com.google.auth;
     requires google.cloud.core;
     exports hsleiden.stenentijdperk.stenentijdperk;
+
+    opens hsleiden.stenentijdperk.stenentijdperk.Models to google.cloud.firestore;
 }
