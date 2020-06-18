@@ -265,7 +265,7 @@ public class BoardView {
 			@Override
 			public void handle(ActionEvent actionEvent) {
 				if (actionEvent.getSource() == hutKaartButton1) {
-					controller.onKaartButtonClick(1);
+					controller.onButtonClick(8);
 					Speler1Image.setVisible(true);
 					GridPane.setConstraints(Speler1Image, 5, 40, 2, 2);
 					speler1Label.setVisible(true);
@@ -283,7 +283,7 @@ public class BoardView {
 					speler4Label.setVisible(true);
 					GridPane.setConstraints(speler4Label, 7, 42, 1, 1);
 				} else if (actionEvent.getSource() == hutKaartButton2) {
-					controller.onKaartButtonClick(2);
+					controller.onButtonClick(9);
 					Speler1Image.setVisible(true);
 					GridPane.setConstraints(Speler1Image, 10, 40, 2, 2);
 					speler1Label.setVisible(true);
@@ -301,7 +301,7 @@ public class BoardView {
 					speler4Label.setVisible(true);
 					GridPane.setConstraints(speler4Label, 12, 42, 1, 1);
 				} else if (actionEvent.getSource() == hutKaartButton3) {
-					controller.onKaartButtonClick(3);
+					controller.onButtonClick(10);
 					Speler1Image.setVisible(true);
 					GridPane.setConstraints(Speler1Image, 15, 40, 2, 2);
 					speler1Label.setVisible(true);
@@ -319,7 +319,7 @@ public class BoardView {
 					speler4Label.setVisible(true);
 					GridPane.setConstraints(speler4Label, 17, 42, 1, 1);
 				} else if (actionEvent.getSource() == hutKaartButton4) {
-					controller.onKaartButtonClick(4);
+					controller.onButtonClick(11);
 					Speler1Image.setVisible(true);
 					GridPane.setConstraints(Speler1Image, 20, 40, 2, 2);
 					speler1Label.setVisible(true);
@@ -337,7 +337,7 @@ public class BoardView {
 					speler4Label.setVisible(true);
 					GridPane.setConstraints(speler4Label, 22, 42, 1, 1);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(0)) {
-					controller.onKaartButtonClick(5);
+					controller.onButtonClick(12);
 					Speler1Image.setVisible(true);
 					GridPane.setConstraints(Speler1Image, 27, 36, 2, 2);
 					speler1Label.setVisible(true);
@@ -355,7 +355,7 @@ public class BoardView {
 					speler4Label.setVisible(true);
 					GridPane.setConstraints(speler4Label, 29, 38, 1, 1);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(1)) {
-					controller.onKaartButtonClick(6);
+					controller.onButtonClick(13);
 					Speler1Image.setVisible(true);
 					GridPane.setConstraints(Speler1Image, 32, 36, 2, 2);
 					speler1Label.setVisible(true);
@@ -373,7 +373,7 @@ public class BoardView {
 					speler4Label.setVisible(true);
 					GridPane.setConstraints(speler4Label, 34, 38, 1, 1);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(2)) {
-					controller.onKaartButtonClick(7);
+					controller.onButtonClick(14);
 					Speler1Image.setVisible(true);
 					GridPane.setConstraints(Speler1Image, 37, 36, 2, 2);
 					speler1Label.setVisible(true);
@@ -391,7 +391,7 @@ public class BoardView {
 					speler4Label.setVisible(true);
 					GridPane.setConstraints(speler4Label, 39, 38, 1, 1);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(3)) {
-					controller.onKaartButtonClick(8);
+					controller.onButtonClick(15);
 					Speler1Image.setVisible(true);
 					GridPane.setConstraints(Speler1Image, 43, 36, 2, 2);
 					speler1Label.setVisible(true);
@@ -409,7 +409,7 @@ public class BoardView {
 					speler4Label.setVisible(true);
 					GridPane.setConstraints(speler4Label, 45, 38, 1, 1);
 				} else if (actionEvent.getSource() == hutButton) {
-					controller.onVillageButtonClick(1);
+					controller.onButtonClick(6);
 					Speler1Image.setVisible(true);
 					GridPane.setConstraints(Speler1Image, 16, 34, 2, 2);
 					speler1Label.setVisible(true);
@@ -427,7 +427,7 @@ public class BoardView {
 					speler4Label.setVisible(true);
 					GridPane.setConstraints(speler4Label, 22, 34, 1, 1);
 				} else if (actionEvent.getSource() == gereedschapButton) {
-					controller.onVillageButtonClick(2);
+					controller.onButtonClick(7);
 					Speler1Image.setVisible(true);
 					GridPane.setConstraints(Speler1Image, 26, 21, 2, 2);
 					speler1Label.setVisible(true);
@@ -445,7 +445,7 @@ public class BoardView {
 					speler4Label.setVisible(true);
 					GridPane.setConstraints(speler4Label, 28, 23, 1, 1);
 				} else if (actionEvent.getSource() == akkerbouwButton) {
-					controller.onVillageButtonClick(3);
+					controller.onButtonClick(5);
 					Speler1Image.setVisible(true);
 					GridPane.setConstraints(Speler1Image, 13, 27, 2, 2);
 					speler1Label.setVisible(true);
@@ -463,7 +463,7 @@ public class BoardView {
 					speler4Label.setVisible(true);
 					GridPane.setConstraints(speler4Label, 19, 27, 1, 1);
 				} else if (actionEvent.getSource() == jachtButton) {
-					controller.onResourceButtonClick(1);
+					controller.onResourceButtonClick(0);
 					Speler1Image.setVisible(true);
 					GridPane.setConstraints(Speler1Image, 5, 11, 2, 2);
 					speler1Label.setVisible(true);
@@ -481,7 +481,7 @@ public class BoardView {
 					speler4Label.setVisible(true);
 					GridPane.setConstraints(speler4Label, 11, 11, 1, 1);
 				} else if (actionEvent.getSource() == bosButton) {
-					controller.onResourceButtonClick(2);
+					controller.onResourceButtonClick(1);
 					Speler1Image.setVisible(true);
 					GridPane.setConstraints(Speler1Image, 17, 11, 2, 2);
 					speler1Label.setVisible(true);
@@ -499,7 +499,7 @@ public class BoardView {
 					speler4Label.setVisible(true);
 					GridPane.setConstraints(speler4Label, 19, 13, 1, 1);
 				} else if (actionEvent.getSource() == leemGroeveButton) {
-					controller.onResourceButtonClick(3);
+					controller.onResourceButtonClick(2);
 					Speler1Image.setVisible(true);
 					GridPane.setConstraints(Speler1Image, 24, 11, 2, 2);
 					speler1Label.setVisible(true);
@@ -517,7 +517,7 @@ public class BoardView {
 					speler4Label.setVisible(true);
 					GridPane.setConstraints(speler4Label, 30, 11, 1, 1);
 				} else if (actionEvent.getSource() == steenGroeveButton) {
-					controller.onResourceButtonClick(4);
+					controller.onResourceButtonClick(3);
 					Speler1Image.setVisible(true);
 					GridPane.setConstraints(Speler1Image, 42, 11, 2, 2);
 					speler1Label.setVisible(true);
@@ -535,7 +535,7 @@ public class BoardView {
 					speler4Label.setVisible(true);
 					GridPane.setConstraints(speler4Label, 44, 13, 1, 1);
 				} else if (actionEvent.getSource() == rivierButton) {
-					controller.onResourceButtonClick(5);
+					controller.onResourceButtonClick(4);
 					Speler1Image.setVisible(true);
 					GridPane.setConstraints(Speler1Image, 37, 21, 2, 2);
 					speler1Label.setVisible(true);

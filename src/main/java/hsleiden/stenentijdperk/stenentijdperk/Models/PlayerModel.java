@@ -4,14 +4,16 @@ import hsleiden.stenentijdperk.stenentijdperk.observers.LobbyObserver;
 import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObserver;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 
 import java.util.ArrayList;
 
 public class PlayerModel {
     private String naam;
+    private int maxVillagers;
+    private int villagers; 
+    private Tool[] tools = new Tool[3];
     private TableauModel tableauModal;
-    private int villagers;
-    private int[] tools = new int[4];
     private int[] resources = {10,0,0,0,0};
     private int[] posities = new int[16];
     private ArrayList<Kaart> kaarten = new ArrayList<Kaart>();
@@ -19,6 +21,7 @@ public class PlayerModel {
 
     public PlayerModel(String naam) {
         this.villagers = 5;
+        this.maxVillagers = 5;
         this.naam = naam;
     }
 
@@ -38,12 +41,16 @@ public class PlayerModel {
         return this.villagers;
     }
 
-    public int getTools(int index){
+    public Tool[] getTools() {
+        return tools;
+    }
+
+    public Tool getTool(int index) {
         return tools[index];
     }
 
-    public void setTools(int index, int change){
-        this.tools[index] = change;
+    public void setTools(int index, Tool tool) {
+        this.tools[index] = tool;
     }
 
     public int getResources(int index) {
@@ -66,6 +73,15 @@ public class PlayerModel {
         this.posities[index] = posities;
     }
 
+    public int getMaxVillagers() {
+        return maxVillagers;
+    }
+
+    public void setMaxVillagers(int maxVillagers) {
+        this.maxVillagers = maxVillagers;
+    }
+
+    
     public void registerObserver(TableauObserver to) {
         this.tableauModal.register(to);
     }

@@ -18,6 +18,7 @@ public class BoardModel implements BoardObservable {
     private int turn;
     private boolean wincondition;
     private boolean placed;
+    private int phase;
     private ArrayList<String> kaartPaths = new ArrayList<String>();
     private ArrayList<Resource> locaties = new ArrayList<>();
 
@@ -28,6 +29,7 @@ public class BoardModel implements BoardObservable {
         this.isPlaceable = true;
         this.turn = 1;
         this.placed = false;
+        this.phase = 1;
         Resource food = new Resource("Food", 500, 2, 40);
         Resource wood = new Resource("Wood", 28, 3, 7);
         Resource leem = new Resource("Leem", 18, 4, 7);
@@ -129,11 +131,12 @@ public class BoardModel implements BoardObservable {
     public Resource getResource(int index){
         return this.locaties.get(index);
     }
-    /*
-     * // temp methode bepalen of de kaart al bezet is. Dit moet naar het kaart
-     * object. public boolean getStatus(int index){ return kaarten.get(index); }
-     * 
-     * public void setStatus(int index, boolean status){ kaarten.set(index, status);
-     * }
-     */
+
+    public int getPhase() {
+        return phase;
+    }
+
+    public void setPhase(int phase) {
+        this.phase = phase;
+    }
 }
