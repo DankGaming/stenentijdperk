@@ -48,28 +48,58 @@ public class BoardController {
     }
 
     public void onResourceButtonClick(int location) {
-        if (!boardmodel.getPlaced() && boardmodel.requestCap(location) - boardmodel.requestVillagers(location) != 0
-                && playercontroller.getPosities(boardmodel.getPlayer(), location) == 0) {
-            String input;
-            do {
-                input = scanner("Hoeveel stamleden?");
-                // hoeveel passen op de locatie
-            } while (Integer.parseInt(input) <= 0
-                    || Integer.parseInt(input) > playercontroller.getVillagers(boardmodel.getPlayer())
-                    || Integer.parseInt(
-                            input) > (boardmodel.requestCap(location) - boardmodel.requestVillagers(location)));
-            // Dit veranderd de hoeveelheid stamleden van een speler
-            boardmodel.changeVillagers(location, Integer.parseInt(input));
-            plaatsenStamleden(location, Integer.parseInt(input));
+        if (vraagPhase() == 1) {
+            if (!boardmodel.getPlaced() && boardmodel.requestCap(location) - boardmodel.requestVillagers(location) != 0
+                    && playercontroller.getPosities(boardmodel.getPlayer(), location) == 0) {
+                String input;
+                do {
+                    input = scanner("Hoeveel stamleden?");
+                    // hoeveel passen op de locatie
+                } while (Integer.parseInt(input) <= 0
+                        || Integer.parseInt(input) > playercontroller.getVillagers(boardmodel.getPlayer())
+                        || Integer.parseInt(
+                                input) > (boardmodel.requestCap(location) - boardmodel.requestVillagers(location)));
+                // Dit veranderd de hoeveelheid stamleden van een speler
+                boardmodel.changeVillagers(location, Integer.parseInt(input));
+                plaatsenStamleden(location, Integer.parseInt(input));
+            }
+        } else {
+            afhandelenResource(location);
         }
     }
 
     public void onButtonClick(int index){
-        if (locatieVrij(index) && !boardmodel.getPlaced()){
-            if (index == 6) {
-                plaatsenStamleden(index, 2);
-            } else {
-                plaatsenStamleden(index, 1);
+        if (vraagPhase() == 1){
+            if (locatieVrij(index) && !boardmodel.getPlaced()){
+                if (index == 6) {
+                    plaatsenStamleden(index, 2);
+                } else {
+                    plaatsenStamleden(index, 1);
+                }
+            }
+        } else{
+            switch (index){
+                case 5:
+                    // TODO akkerbouw
+                    break;
+                case 6:
+                    // TODO stamleden krijgen
+                    break;
+                case 7:
+                    // TODO tools krijgen
+                    break;
+                case 8:
+                case 9:
+                case 10:
+                case 11:
+                    // TODO hutje actie logica
+                    break;
+                case 12:
+                case 13:
+                case 14:
+                case 15:
+                    // TODO kaarten actie logica
+                    break;
             }
         }
     }
