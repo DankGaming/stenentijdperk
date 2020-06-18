@@ -16,6 +16,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import java.util.ArrayList;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -23,6 +29,7 @@ import java.io.FileNotFoundException;
 public class BoardView {
 	private BoardController controller;
 	private BoardModel boardModel;
+	private ArrayList<Button> beschavingsKaartButtons;
 	private GridPane view = new GridPane();
 	private String spelbordImage = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Achtergronden/spelbord2.jpg";
 	private ImageView imageView;
@@ -40,6 +47,7 @@ public class BoardView {
 	private ImageView speler4Image;
 
 	public BoardView() {
+		this.beschavingsKaartButtons = new ArrayList<Button>();
 		this.controller = new BoardController();
 		setupPane();
 	}
@@ -78,7 +86,7 @@ public class BoardView {
 		this.imageView = new ImageView(image);
 		this.imageView.setFitHeight(800);
 		this.imageView.setFitWidth(1200);
-		GridPane.setConstraints(imageView, 0, 0, 50 ,50);
+		GridPane.setConstraints(imageView, 0, 0, 50, 50);
 
 		// Speler stamleden
 
@@ -152,18 +160,18 @@ public class BoardView {
 		speler2Label = new Label("  1");
 		speler2Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
 		speler2Label.setVisible(false);
+		// GridPane.setConstraints(speler2Label, 26, 11, 2 ,2);
 
 		speler3Label = new Label("  1");
 		speler3Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
 		speler3Label.setVisible(false);
+		// GridPane.setConstraints(speler3Label, 28, 11, 2 ,2);
 
 
 		speler4Label = new Label("  1");
 		speler4Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
 		speler4Label.setVisible(false);
-
-
-
+		// GridPane.setConstraints(speler4Label, 30, 11, 2 ,2);
 
 		Label amountLabel = new Label("Hoeveel:");
 		amountLabel.setStyle("-fx-font-size: 20px;");
@@ -179,6 +187,28 @@ public class BoardView {
 
 		// Buttons
 		String style = "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;";
+		for (int i = 0; i < 4; i++) { // maakt 4 beschavingskaart buttons
+			FileInputStream input2 = null;
+			try {
+				input2 = new FileInputStream(this.controller.getKaartPath(i));
+			} catch (FileNotFoundException fileNotFoundException) {
+				System.out.println(fileNotFoundException);
+			}
+
+			assert input2 != null;
+			Image image2 = new Image(input2);
+			ImageView imageView = new ImageView(image2);
+			imageView.setFitHeight(160);
+			imageView.setPreserveRatio(true);
+			Button beschavingsKaartButton = new Button("", imageView);
+			beschavingsKaartButtons.add(beschavingsKaartButton);
+		}
+
+		GridPane.setConstraints(beschavingsKaartButtons.get(0), 26, 40, 1, 1);
+		GridPane.setConstraints(beschavingsKaartButtons.get(1), 31, 40, 1, 1);
+		GridPane.setConstraints(beschavingsKaartButtons.get(2), 37, 40, 1, 1);
+		GridPane.setConstraints(beschavingsKaartButtons.get(3), 42, 40, 1, 1);
+
 		Button hutKaartButton1 = new Button("stamlid op een hut");
 		hutKaartButton1.setStyle(style);
 		GridPane.setConstraints(hutKaartButton1, 5, 36, 5, 3);
@@ -500,10 +530,10 @@ public class BoardView {
 		hutKaartButton2.setOnAction(event);
 		hutKaartButton3.setOnAction(event);
 		hutKaartButton4.setOnAction(event);
-		beschavingsKaartButton1.setOnAction(event);
-		beschavingsKaartButton2.setOnAction(event);
-		beschavingsKaartButton3.setOnAction(event);
-		beschavingsKaartButton4.setOnAction(event);
+		beschavingsKaartButtons.get(0).setOnAction(event);
+		beschavingsKaartButtons.get(1).setOnAction(event);
+		beschavingsKaartButtons.get(2).setOnAction(event);
+		beschavingsKaartButtons.get(3).setOnAction(event);
 		hutButton.setOnAction(event);
 		gereedschapButton.setOnAction(event);
 		akkerbouwButton.setOnAction(event);

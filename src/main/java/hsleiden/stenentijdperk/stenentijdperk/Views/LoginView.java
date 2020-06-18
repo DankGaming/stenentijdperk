@@ -2,6 +2,7 @@ package hsleiden.stenentijdperk.stenentijdperk.Views;
 
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.LoginController;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
+import hsleiden.stenentijdperk.stenentijdperk.Models.TableauModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -43,7 +44,6 @@ public class LoginView {
 		//this.view.setStyle("-fx-background-color: d0c9b5");
 		int amountOfRows = 50;
 		int amountOfColumns = 50;
-
 		for(int i = 0; i < amountOfColumns; i++) {
 			ColumnConstraints columnConstraints = new ColumnConstraints();
 			columnConstraints.setPercentWidth(100 / amountOfColumns);
@@ -80,6 +80,7 @@ public class LoginView {
 		verderButton.setMaxSize(150, 60);
 		verderButton.setStyle("-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
 		GridPane.setConstraints(verderButton, 26, 23, 10, 10);
+
 
 		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
 			@Override

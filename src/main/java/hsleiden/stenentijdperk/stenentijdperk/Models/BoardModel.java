@@ -3,54 +3,67 @@ package hsleiden.stenentijdperk.stenentijdperk.Models;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.PlayerController;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Resource;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 
 import java.util.ArrayList;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+
+import java.io.File;
 
 public class BoardModel implements BoardObservable {
-    private Kaart[] kaarten;
+    private Kaart[] kaarten; // temp made public en dit moet datatype Kaart worden
     private boolean isPlaceable;
     private PlayerModel player;
-    private int food;
-    private int wood;
-    private int clay;
-    private int rock;
-    private int gold;
-    private int tools;
-    private int huts;
     private int turn;
-    private int villagersOnBoard; // placeholder voor locatie
     private boolean wincondition;
     private boolean placed;
     private BoardController controller;
     private String LabelText;
     private PlayerController playerController;
+    private int phase;
+    private ArrayList<String> kaartPaths = new ArrayList<String>();
+    private ArrayList<Resource> locaties = new ArrayList<>();
 
-
-    ArrayList<BoardObserver> observers = new ArrayList<>();
+    public ArrayList<BoardObserver> observers = new ArrayList<>();
 
     public BoardModel() {
-        this.food = 53;
-        this.wood = 17;
-        this.clay = 17;
-        this.rock = 17;
-        this.gold = 17;
-        this.tools = 18;
-        this.huts = 28;
-        this.villagersOnBoard = 0;
         this.wincondition = false;
         this.isPlaceable = true;
         this.turn = 1;
         this.placed = false;
+        this.phase = 1;
+        Resource food = new Resource("Food", 500, 2, 40);
+        Resource wood = new Resource("Wood", 28, 3, 7);
+        Resource leem = new Resource("Leem", 18, 4, 7);
+        Resource stone = new Resource("Stone", 12, 5, 7);
+        Resource gold = new Resource("Gold", 10, 6, 7);
+        locaties.add(food);
+        locaties.add(wood);
+        locaties.add(leem);
+        locaties.add(stone);
+        locaties.add(gold);
+        File folder = new File("./Resources/Kaarten");
+        File[] listOfFiles = folder.listFiles();
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+            this.kaartPaths.add("./Resources/Kaarten/" + listOfFiles[i].getName());
+        }
+
         this.kaarten = new Kaart[10];
         for (int i = 0; i < 10; i++) {
             this.kaarten[i] = new Kaart(i);
         }
         Collections.shuffle(Arrays.asList(this.kaarten));
+        Collections.shuffle(this.kaartPaths);
+    }
+
+    public String getKaartPath(int index) {
+        return this.kaartPaths.get(index);
     }
 
     public Kaart getKaart(int index) {
@@ -83,14 +96,27 @@ public class BoardModel implements BoardObservable {
         return this.placed;
     }
 
-    // dit moet naar resources
-    public void setVillagersOnBoard(int villagers) {
-        this.villagersOnBoard = villagers;
+    // dit handelt all het veranderen van de hoeveelheid villagers
+    public void changeVillagers(int index, int amount) {
+        this.locaties.get(index).setVillager(amount + this.locaties.get(index).getVillagers());
+    }
+
+    public int requestVillagers(int index) {
+        return this.locaties.get(index).getVillagers();
     }
 
 
     public int getVillagersOnBoard() {
         return this.villagersOnBoard;
+    }
+    
+    public int requestCap(int index) {
+        return this.locaties.get(index).getMaxCap();
+    }
+
+    // dit is voor het toevoegen of weghalen van resources per locatie
+    public void changeHoeveelheid(int index, int amount) {
+        this.locaties.get(index).setHoeveelheid(amount + this.locaties.get(index).getHoeveelheid());
     }
 
     @Override
@@ -114,34 +140,15 @@ public class BoardModel implements BoardObservable {
         this.turn = turn;
     }
 
-//    EventHandler eventHandler = new EventHandler() {
-//        @Override
-//        public void handle(Event event) {
-//        if (getPlayer(playerController.getVillagers())) != null) {
-//            LabelText = 5 - playerController.getVillagers();
-//            System.out.println(LabelText);
-//            }
-//
-//        }
-//    }
-//    EventHandler eventHandler = new EventHandler() {
-//        @Override
-//        public void handle(Event event) {
-//        if (getVillagersOnBoard() != 0){
-//            LabelText = 5 - getVillagersOnBoard(setVillagersOnBoard(int villagers));
-//            System.out.println(LabelText);
-//            }
-//
-//        }
-//    }
-//    EventHandler eventHandler = new EventHandler() {
-//        @Override
-//        public void handle(Event event) {
-//        if (controller.scanner(text) != null){
-//            LabelText = text;
-//            System.out.println(LabelText);
-//            }
-//
-//        }
-//    }
+    public Resource getResource(int index){
+        return this.locaties.get(index);
+    }
+
+    public int getPhase() {
+        return phase;
+    }
+
+    public void setPhase(int phase) {
+        this.phase = phase;
+    }
 }
