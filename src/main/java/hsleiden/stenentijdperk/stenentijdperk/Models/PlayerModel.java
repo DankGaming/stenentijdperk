@@ -1,5 +1,7 @@
 package hsleiden.stenentijdperk.stenentijdperk.Models;
 
+import hsleiden.stenentijdperk.stenentijdperk.observers.LobbyObserver;
+import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObserver;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
@@ -11,6 +13,7 @@ public class PlayerModel {
     private int maxVillagers;
     private int villagers; 
     private Tool[] tools = new Tool[3];
+    private TableauModel tableauModal;
     private int[] resources = {10,0,0,0,0};
     private int[] posities = new int[16];
     private ArrayList<Kaart> kaarten = new ArrayList<Kaart>();
@@ -79,4 +82,7 @@ public class PlayerModel {
     }
 
     
+    public void registerObserver(TableauObserver to) {
+        this.tableauModal.register(to);
+    }
 }
