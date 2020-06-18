@@ -294,7 +294,7 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label,7,42, 1, 1);
 
 					setSpelersVisable(true);
-					controller.onKaartButtonClick(1);
+					controller.onButtonClick(8);
 				} else if (actionEvent.getSource() == hutKaartButton2) {
 					GridPane.setConstraints(speler1Image, 10, 40, 2, 2);
 					GridPane.setConstraints(speler1Label,10,40, 1, 1);
@@ -309,7 +309,7 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label,12,42, 1, 1);
 
 					setSpelersVisable(true);
-					controller.onKaartButtonClick(2);
+					controller.onButtonClick(9);
 				} else if (actionEvent.getSource() == hutKaartButton3) {
 					GridPane.setConstraints(speler1Image, 15, 40, 2, 2);
 					GridPane.setConstraints(speler1Label,15,40, 1, 1);
@@ -324,7 +324,7 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label,17,42, 1, 1);
 
 					setSpelersVisable(true);
-					controller.onKaartButtonClick(3);
+					controller.onButtonClick(10);
 				} else if (actionEvent.getSource() == hutKaartButton4) {
 					GridPane.setConstraints(speler1Image, 20, 40, 2, 2);
 					GridPane.setConstraints(speler1Label,20,40, 1, 1);
@@ -339,7 +339,7 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label,22,42, 1, 1);
 
 					setSpelersVisable(true);
-					controller.onKaartButtonClick(4);
+					controller.onButtonClick(11);
 				} else if (actionEvent.getSource() == beschavingsKaartButton1) {
 					GridPane.setConstraints(speler1Image, 27, 36, 2, 2);
 					GridPane.setConstraints(speler1Label,27,36, 1, 1);
@@ -354,7 +354,7 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label,29,38, 1, 1);
 
 					setSpelersVisable(true);
-					controller.onKaartButtonClick(5);
+					controller.onButtonClick(12);
 				} else if (actionEvent.getSource() == beschavingsKaartButton2) {
 					GridPane.setConstraints(speler1Image, 32, 36, 2, 2);
 					GridPane.setConstraints(speler1Label,32,36, 1, 1);
@@ -369,7 +369,7 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label,34,38, 1, 1);
 
 					setSpelersVisable(true);
-					controller.onKaartButtonClick(6);
+					controller.onButtonClick(13);
 				} else if (actionEvent.getSource() == beschavingsKaartButton3) {
 					GridPane.setConstraints(speler1Image, 37, 36, 2, 2);
 					GridPane.setConstraints(speler1Label,37,36, 1, 1);
@@ -384,7 +384,7 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label,39,38, 1, 1);
 
 					setSpelersVisable(true);
-					controller.onKaartButtonClick(7);
+					controller.onButtonClick(14);
 				} else if (actionEvent.getSource() == beschavingsKaartButton4) {
 					GridPane.setConstraints(speler1Image, 43, 36, 2, 2);
 					GridPane.setConstraints(speler1Label,43,36, 1, 1);
@@ -399,7 +399,7 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label,45,38, 1, 1);
 
 					setSpelersVisable(true);
-					controller.onKaartButtonClick(8);
+					controller.onResourceButtonClick(15);
 				} else if (actionEvent.getSource() == hutButton) {
 					GridPane.setConstraints(speler1Image, 16, 34, 2, 2);
 					GridPane.setConstraints(speler1Label,16,34, 1, 1);
@@ -414,7 +414,7 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label,22,34, 1, 1);
 
 					setSpelersVisable(true);
-					controller.onVillageButtonClick(1);
+					controller.onButtonClick(6);
 				} else if (actionEvent.getSource() == gereedschapButton) {
 					GridPane.setConstraints(speler1Image, 26, 21, 2, 2);
 					GridPane.setConstraints(speler1Label,26,21, 1, 1);
@@ -429,7 +429,7 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label,28,23, 1, 1);
 
 					setSpelersVisable(true);
-					controller.onVillageButtonClick(2);
+					controller.onButtonClick(7);
 				} else if (actionEvent.getSource() == akkerbouwButton) {
 					GridPane.setConstraints(speler1Image, 13, 27, 2, 2);
 					GridPane.setConstraints(speler1Label,13,27, 1, 1);
@@ -444,7 +444,7 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label,19,27, 1, 1);
 
 					setSpelersVisable(true);
-					controller.onVillageButtonClick(3);
+					controller.onButtonClick(5);
 				} else if (actionEvent.getSource() == jachtButton) {
 					GridPane.setConstraints(speler1Image, 5, 11, 2, 2);
 					GridPane.setConstraints(speler1Label,5,11, 1, 1);
@@ -459,7 +459,7 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label,11,11, 1, 1);
 
 					setSpelersVisable(true);
-					controller.onResourceButtonClick(1);
+					controller.onResourceButtonClick(0);
 				} else if (actionEvent.getSource() == bosButton) {
 					GridPane.setConstraints(speler1Image, 17, 11, 2, 2);
 					GridPane.setConstraints(speler1Label,17,11, 1, 1);
@@ -474,7 +474,7 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label,19,13, 1, 1);
 
 					setSpelersVisable(true);
-					controller.onResourceButtonClick(2);
+					controller.onResourceButtonClick(1);
 				} else if (actionEvent.getSource() == leemGroeveButton) {
 					GridPane.setConstraints(speler1Image, 24, 11, 2, 2);
 					GridPane.setConstraints(speler1Label,24,11, 1, 1);
@@ -489,7 +489,7 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label,30,11, 1, 1);
 
 					setSpelersVisable(true);
-					controller.onResourceButtonClick(3);
+					controller.onResourceButtonClick(2);
 				} else if (actionEvent.getSource() == steenGroeveButton) {
 					GridPane.setConstraints(speler1Image, 42, 11, 2, 2);
 					GridPane.setConstraints(speler1Label,42,11, 1, 1);
@@ -504,7 +504,7 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label,44,13, 1, 1);
 
 					setSpelersVisable(true);
-					controller.onResourceButtonClick(4);
+					controller.onResourceButtonClick(3);
 				} else if (actionEvent.getSource() == rivierButton) {
 					GridPane.setConstraints(speler1Image, 37, 21, 2, 2);
 					GridPane.setConstraints(speler1Label,37,21, 1, 1);
@@ -519,7 +519,7 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label,39,23, 1, 1);
 
 					setSpelersVisable(true);
-					controller.onResourceButtonClick(5);
+					controller.onResourceButtonClick(4);
 				} else if (actionEvent.getSource() == endTurn) {
 					controller.endTurn();
 				}
