@@ -40,11 +40,5 @@ public class DobbelsteenView extends Pane {
         this.imageView.setFitHeight(image.getHeight() * 0.75);
         this.imageView.setFitWidth(image.getWidth() * 0.75);
     }
-
-    public void modelChanged(Dobbelsteen model) {
-        Platform.runLater(() -> {
-                Image image = new Image(String.format(RESOURCE, model.getOgen()));
-                imageView.setImage(image);
-        });
-    }
+    
 }

@@ -5,6 +5,7 @@ import hsleiden.stenentijdperk.stenentijdperk.Interfaces.Status;
 public class Tool implements Status {
     private int level;
     private boolean status;
+    
 
     public Tool(){
         this.level = 1;

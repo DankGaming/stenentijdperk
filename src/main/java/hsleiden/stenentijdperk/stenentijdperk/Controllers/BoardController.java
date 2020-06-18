@@ -1,8 +1,6 @@
 package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 
-import hsleiden.stenentijdperk.stenentijdperk.Views.BoardView;
-import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
-import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Dobbelsteen;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
@@ -16,8 +14,6 @@ public class BoardController {
     private PlayerController playercontroller;
     private BoardModel boardmodel;
     private ArrayList<PlayerModel> players = new ArrayList<PlayerModel>();
-    private BoardView boardView;
-
 
     public BoardController() {
         // temp players
@@ -66,7 +62,6 @@ public class BoardController {
             boardmodel.changeVillagers(location, Integer.parseInt(input));
             plaatsenStamleden(location, Integer.parseInt(input));
         }
-
     }
 
     public void onButtonClick(int index){
@@ -82,13 +77,15 @@ public class BoardController {
     // Hier is het rollen voor resources.
     public void afhandelenResource(int index) {
         if (playercontroller.getPosities(boardmodel.getPlayer(), index) != 0) {
-            int roll = 0;
-            Random random = new Random();
-            for (int i = 0; i < playercontroller.getPosities(boardmodel.getPlayer(), index); i++) {
-                int dobbel = random.nextInt(6);
-                roll += dobbel;
-            }
-            int resources = roll / boardmodel.getResource(index).getWaarde();
+            Dobbelsteen roll = new Dobbelsteen(playercontroller.getPosities(boardmodel.getPlayer(), index));
+            roll.worp();
+            roll.berekenTotaal();
+            //Random random = new Random();
+            //for (int i = 0; i < playercontroller.getPosities(boardmodel.getPlayer(), index); i++) {
+            //    int dobbel = random.nextInt(6);
+            //    roll += dobbel;
+            //}
+            int resources = roll.getTotaal() / boardmodel.getResource(index).getWaarde();
             boardmodel.getPlayer().addResources(index, resources);
             boardmodel.getResource(index).reduceHoeveelheid(resources);
             playercontroller.setPosities(boardmodel.getPlayer(), index, 0);
@@ -165,9 +162,13 @@ public class BoardController {
             (playercontroller.getVillagers(boardmodel.getPlayer()) - stamleden));
         playercontroller.setPosities(boardmodel.getPlayer(), index, stamleden);
     }
-    
+
     public void toolGebruiken(){
         // TODO
+    }
+
+    public int vraagPhase(){
+        return boardmodel.getPhase();
     }
 }
 
