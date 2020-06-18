@@ -104,7 +104,6 @@ public class BoardModel implements BoardObservable {
     public int requestVillagers(int index) {
         return this.locaties.get(index).getVillagers();
     }
-
     
     public int requestCap(int index) {
         return this.locaties.get(index).getMaxCap();
@@ -147,5 +146,4 @@ public class BoardModel implements BoardObservable {
     public void setPhase(int phase) {
         this.phase = phase;
     }
-
 }
