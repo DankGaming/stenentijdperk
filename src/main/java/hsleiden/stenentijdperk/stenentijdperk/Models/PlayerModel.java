@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class PlayerModel {
     private String naam;
+    private int maxVillagers;
     private int villagers; 
     private Tool[] tools = new Tool[3];
     private int[] resources = {10,0,0,0,0};
@@ -17,6 +18,7 @@ public class PlayerModel {
 
     public PlayerModel(String naam) {
         this.villagers = 5;
+        this.maxVillagers = 5;
         this.naam = naam;
     }
 
@@ -66,6 +68,14 @@ public class PlayerModel {
 
     public void setPosities(int index,int posities) {
         this.posities[index] = posities;
+    }
+
+    public int getMaxVillagers() {
+        return maxVillagers;
+    }
+
+    public void setMaxVillagers(int maxVillagers) {
+        this.maxVillagers = maxVillagers;
     }
 
     
