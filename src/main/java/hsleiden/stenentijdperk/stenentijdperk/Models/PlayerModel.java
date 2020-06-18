@@ -94,5 +94,4 @@ public class PlayerModel {
     public void registerObserver(TableauObserver to) {
         this.tableauModal.register(to);
     }
-   
 }
