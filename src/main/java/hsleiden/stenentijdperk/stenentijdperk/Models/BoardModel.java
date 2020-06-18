@@ -66,7 +66,7 @@ public class BoardModel implements BoardObservable {
         return this.player;
     }
 
-    // Dit houdt bij of de speler als iets heeft geplaast tijdens de beurt.
+    // Dit houdt bij of de speler als iets heef+t geplaast tijdens de beurt.
     public void setPlaced(boolean placed) {
         this.placed = placed;
     }
@@ -79,6 +79,7 @@ public class BoardModel implements BoardObservable {
     public void setVillagersOnBoard(int villagers) {
         this.villagersOnBoard = villagers;
     }
+
 
     public int getVillagersOnBoard() {
         return this.villagersOnBoard;

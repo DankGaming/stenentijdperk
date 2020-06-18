@@ -1,5 +1,6 @@
 package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 
+import hsleiden.stenentijdperk.stenentijdperk.Views.BoardView;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
@@ -11,6 +12,8 @@ public class BoardController {
     private PlayerController playercontroller;
     private BoardModel boardmodel;
     private ArrayList<PlayerModel> players = new ArrayList<PlayerModel>();
+    private BoardView boardView;
+
 
     public BoardController() {
         PlayerModel matt = new PlayerModel("Matt");
