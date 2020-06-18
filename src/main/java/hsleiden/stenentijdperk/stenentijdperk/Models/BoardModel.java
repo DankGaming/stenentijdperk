@@ -1,9 +1,13 @@
 package hsleiden.stenentijdperk.stenentijdperk.Models;
 
+import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
+import hsleiden.stenentijdperk.stenentijdperk.Controllers.PlayerController;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Resource;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,10 +22,13 @@ public class BoardModel implements BoardObservable {
     private int turn;
     private boolean wincondition;
     private boolean placed;
+    private BoardController controller;
+    private String LabelText;
+    private PlayerController playerController;
     private int phase;
     private ArrayList<String> kaartPaths = new ArrayList<String>();
     private ArrayList<Resource> locaties = new ArrayList<>();
-
+    private String path = "src/main/Resources/Kaarten/";
     public ArrayList<BoardObserver> observers = new ArrayList<>();
 
     public BoardModel() {
@@ -40,11 +47,11 @@ public class BoardModel implements BoardObservable {
         locaties.add(leem);
         locaties.add(stone);
         locaties.add(gold);
-        File folder = new File("./Resources/Kaarten");
+        File folder = new File(path);
         File[] listOfFiles = folder.listFiles();
 
         for (int i = 0; i < listOfFiles.length; i++) {
-            this.kaartPaths.add("./Resources/Kaarten/" + listOfFiles[i].getName());
+            this.kaartPaths.add(path + listOfFiles[i].getName());
         }
 
         this.kaarten = new Kaart[10];
@@ -97,7 +104,7 @@ public class BoardModel implements BoardObservable {
     public int requestVillagers(int index) {
         return this.locaties.get(index).getVillagers();
     }
-
+    
     public int requestCap(int index) {
         return this.locaties.get(index).getMaxCap();
     }
