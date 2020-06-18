@@ -19,7 +19,7 @@ public class TableauModel implements TableauObservable{
 
     public TableauModel(){
         stamleden = new LinkedList<>();
-        gereedschap = new int[] { 2, 1, 1 };
+        gereedschap = new int[] { 0, 0, 0 };
     }
 
     public void ontvangStamlid(Stamlid stamlid) {

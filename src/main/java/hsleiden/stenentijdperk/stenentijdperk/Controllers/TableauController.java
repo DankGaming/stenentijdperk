@@ -10,11 +10,6 @@ public class TableauController {
         this.tableauModel = new TableauModel();
     }
 
-    public void verhoogShit() {
-        System.out.println("test");
-        this.tableauModel.verhoogGereedschap();
-    }
-
     // Register the observer
     public void registerObserver(TableauObserver to) {
         tableauModel.register(to);
