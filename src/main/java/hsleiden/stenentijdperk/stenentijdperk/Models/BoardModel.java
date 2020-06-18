@@ -115,11 +115,4 @@ public class BoardModel implements BoardObservable {
     public Resource getResource(int index){
         return this.locaties.get(index);
     }
-    /*
-     * // temp methode bepalen of de kaart al bezet is. Dit moet naar het kaart
-     * object. public boolean getStatus(int index){ return kaarten.get(index); }
-     * 
-     * public void setStatus(int index, boolean status){ kaarten.set(index, status);
-     * }
-     */
 }
