@@ -122,6 +122,6 @@ hs_err_pid*
 .history
 
 # End of https://www.toptal.com/developers/gitignore/api/java,git,visualstudiocode,eclipse
-/.idea
-/target
+/.idea/
+/target/
 /out
