@@ -320,7 +320,7 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label,17,42, 1, 1);
 				} else if (actionEvent.getSource() == hutKaartButton4) {
 					controller.onKaartButtonClick(3);
-				} else*/ if (actionEvent.getSource() == beschavingsKaartButton1) {
+				} else if (actionEvent.getSource() == beschavingsKaartButton1) {
 					controller.onKaartButtonClick(4);
 					Speler1Image.setVisible(true);
 					GridPane.setConstraints(Speler1Image, 20, 40, 2, 2);

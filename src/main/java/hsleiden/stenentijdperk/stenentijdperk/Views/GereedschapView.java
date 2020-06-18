@@ -8,12 +8,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class GereedschapView extends Stage {
+public class GereedschapView {
     private ImageView imageView;
-    private String RESOURCE = "./Images/Tool1.png";
+    private String RESOURCE;
     private boolean canclick = true;
 
     public GereedschapView(int toolnummer) {

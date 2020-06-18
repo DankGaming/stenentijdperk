@@ -20,10 +20,15 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class TableauView implements TableauObserver {
-    GereedschapView gereedschapview = new GereedschapView(1);
     GereedschapView gereedschapview1 = new GereedschapView(1);
     GereedschapView gereedschapview2 = new GereedschapView(1);
-
+    GereedschapView gereedschapview3 = new GereedschapView(1);
+    Hutview hutview1 = new Hutview(1);
+    Hutview hutview2 = new Hutview(2);
+    Hutview hutview3 = new Hutview(3);
+    Hutview hutview4 = new Hutview(2);
+    Hutview hutview5 = new Hutview(4);
+    private ImageView[] huttegels;
     private ImageView tableau;
     private String RESOURCE = "./Images/tableau.png";
     private GridPane view;
@@ -98,17 +103,34 @@ public class TableauView implements TableauObserver {
         GridPane.setConstraints(goud, 30, 18, 1, 1);
 
 
-        ImageView imageviewgereedschap = gereedschapview.setScene();
-        GridPane.setConstraints(imageviewgereedschap, 2, 1, 10, 10);
-
         ImageView imageviewgereedschap1 = gereedschapview1.setScene();
-        GridPane.setConstraints(imageviewgereedschap1, 2, 11, 10, 10);
+        GridPane.setConstraints(imageviewgereedschap1, 2, 1, 10, 10);
 
         ImageView imageviewgereedschap2 = gereedschapview2.setScene();
-        GridPane.setConstraints(imageviewgereedschap2, 2, 21, 10, 10);
+        GridPane.setConstraints(imageviewgereedschap2, 2, 11, 10, 10);
 
-        this.view.getChildren().addAll(tableau, stamleden , voedsel, hout, leem, steen, goud, imageviewgereedschap,
-                imageviewgereedschap1, imageviewgereedschap2);
+        ImageView imageviewgereedschap3 = gereedschapview3.setScene();
+        GridPane.setConstraints(imageviewgereedschap3, 2, 21, 10, 10);
+
+
+        ImageView imageviewhutkaart1 = hutview1.setScene();
+        GridPane.setConstraints(imageviewhutkaart1, 2, 36, 10, 10);
+
+        ImageView imageviewhutkaart2 = hutview2.setScene();
+        GridPane.setConstraints(imageviewhutkaart2, 12, 36, 10, 10);
+
+        ImageView imageviewhutkaart3 = hutview3.setScene();
+        GridPane.setConstraints(imageviewhutkaart3, 21, 36, 10, 10);
+
+        ImageView imageviewhutkaart4 = hutview4.setScene();
+        GridPane.setConstraints(imageviewhutkaart4, 31, 36, 10, 10);
+
+        ImageView imageviewhutkaart5 = hutview5.setScene();
+        GridPane.setConstraints(imageviewhutkaart5, 40, 36, 10, 10);
+
+        this.view.getChildren().addAll(tableau, stamleden , voedsel, hout, leem, steen, goud, imageviewgereedschap1,
+                imageviewgereedschap2, imageviewgereedschap3, imageviewhutkaart1, imageviewhutkaart2, imageviewhutkaart3,
+                imageviewhutkaart4, imageviewhutkaart5);
 
     }
 

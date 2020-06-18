@@ -45,7 +45,13 @@ public class ViewManager {
         showView(1200, 800, "Board");
     }
 
+    public static void loadtableauView() {
+        closeView();
+        currentView = new TableauView().setScene();
+        showView(500, 500, "tableau");
+    }
     // Popup window functions
+
 
     public static void loadPopupWindow(GridPane tableauView) {
         closePopupWindow();
@@ -63,7 +69,7 @@ public class ViewManager {
 
     // This function shows a view.
     public static void showView(int width, int height, String title) {
-        createStageFromView(1200, 800, "Login");
+        createStageFromView(680, 460, "Login");
         if (currentStage != null)
             currentStage.show();
     }
