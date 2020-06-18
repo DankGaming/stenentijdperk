@@ -1,8 +1,12 @@
 package hsleiden.stenentijdperk.stenentijdperk.Models;
 
+import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
+import hsleiden.stenentijdperk.stenentijdperk.Controllers.PlayerController;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 
 import java.util.ArrayList;
 import java.util.*;
@@ -22,6 +26,10 @@ public class BoardModel implements BoardObservable {
     private int villagersOnBoard; // placeholder voor locatie
     private boolean wincondition;
     private boolean placed;
+    private BoardController controller;
+    private String LabelText;
+    private PlayerController playerController;
+
 
     ArrayList<BoardObserver> observers = new ArrayList<>();
 
@@ -105,4 +113,35 @@ public class BoardModel implements BoardObservable {
     public void setTurn(int turn) {
         this.turn = turn;
     }
+
+//    EventHandler eventHandler = new EventHandler() {
+//        @Override
+//        public void handle(Event event) {
+//        if (getPlayer(playerController.getVillagers())) != null) {
+//            LabelText = 5 - playerController.getVillagers();
+//            System.out.println(LabelText);
+//            }
+//
+//        }
+//    }
+//    EventHandler eventHandler = new EventHandler() {
+//        @Override
+//        public void handle(Event event) {
+//        if (getVillagersOnBoard() != 0){
+//            LabelText = 5 - getVillagersOnBoard(setVillagersOnBoard(int villagers));
+//            System.out.println(LabelText);
+//            }
+//
+//        }
+//    }
+//    EventHandler eventHandler = new EventHandler() {
+//        @Override
+//        public void handle(Event event) {
+//        if (controller.scanner(text) != null){
+//            LabelText = text;
+//            System.out.println(LabelText);
+//            }
+//
+//        }
+//    }
 }
