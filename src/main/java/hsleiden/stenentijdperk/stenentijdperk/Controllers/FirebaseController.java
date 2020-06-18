@@ -179,4 +179,23 @@ public class FirebaseController {
         }
         return false;
     }
+
+    // Do this on game end.
+    public static void resetLobby(int lobby){
+        db.collection("stenentijdperk").document(String.valueOf(lobby)).collection("players").document("speler1").delete();
+        db.collection("stenentijdperk").document(String.valueOf(lobby)).collection("players").document("speler2").delete();
+        db.collection("stenentijdperk").document(String.valueOf(lobby)).collection("players").document("speler3").delete();
+        db.collection("stenentijdperk").document(String.valueOf(lobby)).collection("players").document("speler4").delete();
+
+        setGamestatus(lobby, false);
+    }
+
+    public static void switchLobby(int oldLobby, PlayerModel player){
+        ArrayList<PlayerModel> players = getPlayersInLobby(oldLobby);
+        for(PlayerModel curPlayer : players) {
+            if(curPlayer.getNaam().equals(player.getNaam())) {
+                db.collection("stenentijdperk").document(String.valueOf(oldLobby)).collection("players").document("speler1").delete();
+            }
+        }
+    }
 }
