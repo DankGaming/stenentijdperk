@@ -174,92 +174,78 @@ public class BoardView {
 		 */
 
 		// Buttons
-
+		String style = "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;";
 		Button hutKaartButton1 = new Button("stamlid op een hut");
-		hutKaartButton1.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
+		hutKaartButton1.setStyle(style);
 		GridPane.setConstraints(hutKaartButton1, 5, 36, 5, 3);
 
 		Button hutKaartButton2 = new Button("stamlid op een hut");
-		hutKaartButton2.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
+		hutKaartButton2.setStyle(style);
 		GridPane.setConstraints(hutKaartButton2, 10, 36, 5, 3);
 
 		Button hutKaartButton3 = new Button("stamlid op een hut");
-		hutKaartButton3.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
+		hutKaartButton3.setStyle(style);
 		GridPane.setConstraints(hutKaartButton3, 15, 36, 5, 3);
 
 		Button hutKaartButton4 = new Button("stamlid op een hut");
-		hutKaartButton4.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
+		hutKaartButton4.setStyle(style);
 		GridPane.setConstraints(hutKaartButton4, 20, 36, 5, 3);
 
 		Button beschavingsKaartButton1 = new Button("beschavingskaart1");
-		beschavingsKaartButton1.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
+		beschavingsKaartButton1.setStyle(style);
 		GridPane.setConstraints(beschavingsKaartButton1, 26, 32, 5, 1);
 
 		Button beschavingsKaartButton2 = new Button("beschavingskaart2");
-		beschavingsKaartButton2.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
+		beschavingsKaartButton2.setStyle(style);
 		GridPane.setConstraints(beschavingsKaartButton2, 32, 32, 5, 1);
 
 		Button beschavingsKaartButton3 = new Button("beschavingskaart3");
-		beschavingsKaartButton3.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
+		beschavingsKaartButton3.setStyle(style);
 		GridPane.setConstraints(beschavingsKaartButton3, 37, 32, 5, 1);
 
 		Button beschavingsKaartButton4 = new Button("beschavingskaart4");
-		beschavingsKaartButton4.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
+		beschavingsKaartButton4.setStyle(style);
 		GridPane.setConstraints(beschavingsKaartButton4, 43, 32, 5, 1);
 
 		Button hutButton = new Button("Stamlid hut");
-		hutButton.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
+		hutButton.setStyle(style);
 		GridPane.setConstraints(hutButton, 18, 32, 5, 1);
 
 		Button gereedschapButton = new Button("gereedschapsmaker");
-		gereedschapButton.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
+		gereedschapButton.setStyle(style);
 		GridPane.setConstraints(gereedschapButton, 25, 26, 5, 1);
 
 		Button akkerbouwButton = new Button("akkerbouw");
-		akkerbouwButton.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
+		akkerbouwButton.setStyle(style);
 		GridPane.setConstraints(akkerbouwButton, 15, 25, 5, 1);
 
 		Button jachtButton = new Button("stamlid jachtvlakte");
-		jachtButton.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size:10px;");
+		jachtButton.setStyle(style);
 		GridPane.setConstraints(jachtButton, 5, 7, 5, 1);
 
 		Button bosButton = new Button("stamlid bos");
-		bosButton.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;");
+		bosButton.setStyle(style);
 		GridPane.setConstraints(bosButton, 21, 15, 5, 1);
 
 		Button leemGroeveButton = new Button("stamlid leem");
-		leemGroeveButton.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px");
+		leemGroeveButton.setStyle(style);
 		GridPane.setConstraints(leemGroeveButton, 28, 15, 5, 1);
 
 		Button steenGroeveButton = new Button("stamlid steen");
-		steenGroeveButton.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px");
+		steenGroeveButton.setStyle(style);
 		GridPane.setConstraints(steenGroeveButton, 40, 15, 5, 1);
 
 		Button rivierButton = new Button("stamlid rivier");
-		rivierButton.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px");
+		rivierButton.setStyle(style);
 		GridPane.setConstraints(rivierButton, 41, 25, 5, 1);
 
 		Button endTurn = new Button("Beurt eindigen");
-		endTurn.setStyle(
-				"-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 20px");
+		endTurn.setStyle(style);
 		GridPane.setConstraints(endTurn, 22, 5, 15, 1);
 
+		//TODO onKaartButtonClick() onderaan.
+		//  setVisible functie maken.
+		//  coordinaten samenvoegen.
 		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
