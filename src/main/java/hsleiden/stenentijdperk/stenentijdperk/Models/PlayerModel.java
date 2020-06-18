@@ -18,11 +18,13 @@ public class PlayerModel {
     private int[] posities = new int[16];
     private ArrayList<Kaart> kaarten = new ArrayList<Kaart>();
     private ArrayList<StaticHut> hutjes = new ArrayList<StaticHut>();
+    private int graan;
 
     public PlayerModel(String naam) {
         this.villagers = 5;
         this.maxVillagers = 5;
         this.naam = naam;
+        this.graan = 0;
     }
 
     public void setNaam(String naam) {
@@ -77,12 +79,20 @@ public class PlayerModel {
         return maxVillagers;
     }
 
-    public void setMaxVillagers(int maxVillagers) {
-        this.maxVillagers = maxVillagers;
+    public void addMaxVillagers() {
+        this.maxVillagers += maxVillagers;
     }
 
-    
+    public int getGraan() {
+        return graan;
+    }
+
+    public void increaseGraan() {
+        this.graan += 1;
+    }
+
     public void registerObserver(TableauObserver to) {
         this.tableauModal.register(to);
     }
+   
 }

@@ -17,6 +17,14 @@ public class PlayerController {
 		playermodel.setVillagers(villagers);
 	}
 
+	public int getMaxVillagers(PlayerModel playerModel){
+		return playerModel.getMaxVillagers();
+	}
+
+	public void addMaxVillagers(PlayerModel playerModel) {
+		playerModel.addMaxVillagers();
+	}
+
 	public Tool[] getTools(PlayerModel playermodel){
 		return playermodel.getTools();
 	}
@@ -35,5 +43,13 @@ public class PlayerController {
 
 	public void setPosities(PlayerModel playerModel, int index, int stamleden){
 		playerModel.setPosities(index, stamleden);
+	}
+
+	public void addGraan(PlayerModel playerModel){
+		playerModel.increaseGraan();
+	}
+
+	public int vraagGraan(PlayerModel playerModel){
+		return playerModel.getGraan();
 	}
 }

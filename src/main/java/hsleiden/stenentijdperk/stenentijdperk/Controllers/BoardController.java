@@ -80,10 +80,10 @@ public class BoardController {
         } else{
             switch (index){
                 case 5:
-                    // TODO akkerbouw
+                    akkerBouw();
                     break;
                 case 6:
-                    // TODO stamleden krijgen
+                    stamledenHut();
                     break;
                 case 7:
                     // TODO tools krijgen
@@ -119,6 +119,18 @@ public class BoardController {
             boardmodel.getPlayer().addResources(index, resources);
             boardmodel.getResource(index).reduceHoeveelheid(resources);
             playercontroller.setPosities(boardmodel.getPlayer(), index, 0);
+        }
+    }
+
+    public void akkerBouw(){
+        if (playercontroller.vraagGraan(boardmodel.getPlayer()) != 10){
+            playercontroller.addGraan(boardmodel.getPlayer());
+        }
+    }
+
+    public void stamledenHut(){
+        if (playercontroller.getMaxVillagers(boardmodel.getPlayer()) != 10){
+            playercontroller.addMaxVillagers(boardmodel.getPlayer());
         }
     }
 
