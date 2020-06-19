@@ -17,7 +17,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        ViewManager.loadtableauView();
+        ViewManager.loadPopupWindow(new TableauView(new PlayerModel("henk")).setScene());
         FirebaseController.initializeFirebaseApp();
     }
 
