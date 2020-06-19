@@ -7,7 +7,6 @@ import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 
 public class BoardController {
@@ -110,15 +109,15 @@ public class BoardController {
             Dobbelsteen roll = new Dobbelsteen(playercontroller.getPosities(boardmodel.getPlayer(), index));
             roll.worp();
             roll.berekenTotaal();
-            //Random random = new Random();
-            //for (int i = 0; i < playercontroller.getPosities(boardmodel.getPlayer(), index); i++) {
-            //    int dobbel = random.nextInt(6);
-            //    roll += dobbel;
-            //}
             int resources = roll.getTotaal() / boardmodel.getResource(index).getWaarde();
-            boardmodel.getPlayer().addResources(index, resources);
+            if (resources > boardmodel.getResource(index).getHoeveelheid()){
+                resources = boardmodel.getResource(index).getHoeveelheid();
+            }
             boardmodel.getResource(index).reduceHoeveelheid(resources);
             playercontroller.setPosities(boardmodel.getPlayer(), index, 0);
+            // Test voor krijgen resources
+            boardmodel.getPlayer().addResources(index, resources);
+            System.out.println(boardmodel.getPlayer().getResources(index));
         }
     }
 
@@ -136,15 +135,12 @@ public class BoardController {
             playercontroller.setPosities(boardmodel.getPlayer(), index, 0);
         }
     }
-
+    // TODO endturn aanpasses zodat het in phase 2 werkt.
+    // List.matchAll stream
     public void endTurn() {
         if (boardmodel.getPlaced()) { // checkt of de speler stamleden heeft geplaast.
             System.out.println("einde beurt");
             boolean villagersLeft = true;
-            for (int k = 0; k < 16; k++) {
-                System.out.println(playercontroller.getPosities(boardmodel.getPlayer(), k));
-            }
-            afhandelenResource(0);
             int i = 0;
             for (int j = 0; j < 4; j++) {
                 if (boardmodel.getPlayer().equals(players.get(j))) { // Bepaling welke player aan de beurt is
@@ -168,12 +164,10 @@ public class BoardController {
             }
             if (!villagersLeft) {
                 boardmodel.setPhase(2);
+                // TODO Dit moet een soort pop up worden.
                 System.out.println("Nu komen de acties");
             }
-        } else {
-            System.out.println("plaats villagers");
         }
-
     }
 
     // Methode om door lijsten spelers te loopen.
