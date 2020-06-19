@@ -125,5 +125,6 @@ hs_err_pid*
 /.idea/
 /target/
 /out
-.idea/compiler.xml
-.idea/stenentijdperk.iml
+/.idea/compiler.xml
+/.idea/stenentijdperk.iml
+/.idea/misc.xml

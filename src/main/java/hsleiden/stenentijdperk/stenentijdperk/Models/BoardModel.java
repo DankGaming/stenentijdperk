@@ -19,7 +19,6 @@ public class BoardModel implements BoardObservable {
     private boolean isPlaceable;
     private PlayerModel player;
     private int turn;
-    private boolean wincondition;
     private boolean placed;
     private ArrayList<Kaart> kaarten = new ArrayList<Kaart>();
     private BoardController controller;
@@ -31,7 +30,6 @@ public class BoardModel implements BoardObservable {
     public ArrayList<BoardObserver> observers = new ArrayList<>();
 
     public BoardModel() {
-        this.wincondition = false;
         this.isPlaceable = true;
         this.turn = 1;
         this.placed = false;
@@ -127,6 +125,10 @@ public class BoardModel implements BoardObservable {
 
     public void setTurn(int turn) {
         this.turn = turn;
+    }
+
+    public void addTurn() {
+        this.turn += 1;
     }
 
     public Resource getResource(int index) {

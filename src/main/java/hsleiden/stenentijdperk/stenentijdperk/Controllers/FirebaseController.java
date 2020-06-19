@@ -6,13 +6,16 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
+import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class FirebaseController {
@@ -37,7 +40,7 @@ public class FirebaseController {
         db = FirestoreClient.getFirestore();
     }
 
-    public static void listenForUpdates(String lobby){
+    public static void listenForLobbyUpdates(String lobby){
         DocumentReference docRef = db.collection("stenentijdperk").document(lobby);
         System.out.println("listener");
         // De listener
@@ -54,12 +57,27 @@ public class FirebaseController {
                 System.out.print("Current data: null");
             }
         });
-
     }
 
+    public static void listenForBoardUpdates(String lobby){
+        DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("boardData").document("board");
+        System.out.println("listener");
+        // De listener
+        docRef.addSnapshotListener((snapshot, e) -> {
+            System.out.println("Listening");
+            if (e != null) {
+                System.err.println("Listen failed: " + e);
+                return;
+            }
 
-
-
+            if (snapshot != null && snapshot.exists()) {
+                BoardModel newModel = snapshot.toObject(BoardModel.class);
+            } else {
+                System.out.print("Current data: null");
+            }
+        });
+    }
+    
     public static void setSpeler(String spelerNummer, PlayerModel player){
         System.out.println(player.getNaam());
         System.out.println(player.getVillagers());
@@ -173,7 +191,8 @@ public class FirebaseController {
             DocumentReference f = db.collection("stenentijdperk").document(String.valueOf(lobby));
             ApiFuture<DocumentSnapshot> docRef = f.get();
             DocumentSnapshot data = docRef.get();
-            boolean temp = (boolean) data.get("isActive");
+            Object temp = data.get("isActive");
+            System.out.println(temp);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -198,4 +217,14 @@ public class FirebaseController {
             }
         }
     }
+
+    public static void addBoard(int lobby, BoardModel model){
+        ApiFuture<WriteResult> future = db.collection("stenentijdperk").document(String.valueOf(lobby)).collection("boardData").document("board").set(model);
+        try {
+            System.out.println("Update time : " + future.get().getUpdateTime());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
