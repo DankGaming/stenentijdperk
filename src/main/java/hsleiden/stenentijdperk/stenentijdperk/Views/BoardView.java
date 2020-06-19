@@ -7,6 +7,7 @@ import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -152,7 +153,6 @@ public class BoardView {
 
 
 // 		Stamleden hoeveelheden
-		//+ boardModel.getVillagersOnBoard
 		speler1Label = new Label("  ");
 		speler1Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
 		speler1Label.setVisible(false);
@@ -160,18 +160,15 @@ public class BoardView {
 		speler2Label = new Label("  1");
 		speler2Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
 		speler2Label.setVisible(false);
-		// GridPane.setConstraints(speler2Label, 26, 11, 2 ,2);
 
 		speler3Label = new Label("  1");
 		speler3Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
 		speler3Label.setVisible(false);
-		// GridPane.setConstraints(speler3Label, 28, 11, 2 ,2);
 
 
 		speler4Label = new Label("  1");
 		speler4Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
 		speler4Label.setVisible(false);
-		// GridPane.setConstraints(speler4Label, 30, 11, 2 ,2);
 
 		Label amountLabel = new Label("Hoeveel:");
 		amountLabel.setStyle("-fx-font-size: 20px;");
@@ -508,6 +505,8 @@ public class BoardView {
 				} else if (actionEvent.getSource() == rivierButton) {
 					GridPane.setConstraints(speler1Image, 37, 21, 2, 2);
 					GridPane.setConstraints(speler1Label,37,21, 1, 1);
+//					this.view.add(speler1Image, speler1Label);
+					addGridpane(speler1Image, speler1Label);
 
 					GridPane.setConstraints(speler2Image, 39, 21, 2, 2);
 					GridPane.setConstraints(speler2Label,39,21, 1, 1);
@@ -544,11 +543,12 @@ public class BoardView {
 		rivierButton.setOnAction(event);
 		endTurn.setOnAction(event);
 
+		// if needed  speler1Image, speler2Image, speler3Image, speler4Image, speler1Label,
+		//				speler2Label, speler3Label, speler4Label
 		this.view.getChildren().addAll(imageView, hutKaartButton1, hutKaartButton2, hutKaartButton3, hutKaartButton4,
 				beschavingsKaartButton1, beschavingsKaartButton2, beschavingsKaartButton3, beschavingsKaartButton4,
 				hutButton, gereedschapButton, akkerbouwButton, jachtButton, bosButton, leemGroeveButton,
-				steenGroeveButton, rivierButton, endTurn, speler1Image, speler2Image, speler3Image, speler4Image, speler1Label,
-				speler2Label, speler3Label, speler4Label);
+				steenGroeveButton, rivierButton, endTurn);
 	}
 
 	private void setSpelersVisable(boolean visable) {
@@ -563,5 +563,8 @@ public class BoardView {
 
 		speler4Image.setVisible(visable);
 		speler4Label.setVisible(visable);
+	}
+	private void addGridpane(ImageView image, Node label) {
+		this.view.getChildren().add(image, label);
 	}
 }
