@@ -169,10 +169,14 @@ public class BoardView {
 
 		Label amountLabel = new Label("Hoeveel:");
 		amountLabel.setStyle("-fx-font-size: 20px;");
-		GridPane.setConstraints(amountLabel, 1, 1, 10, 3);
+		amountLabel.setVisible(true);
+		GridPane.setConstraints(amountLabel, 20, 25, 5, 3);
 
 		TextField amountField = new TextField();
-		GridPane.setConstraints(amountField, 6, 1, 15, 3);
+		amountField.setVisible(true);
+		amountField.setEditable(false);
+		GridPane.setConstraints(amountField, 26, 25, 10, 3);
+
 
 		/*
 		 * locaties jacht: onbeperkt hut: 2 hutkaart: 1 beschavingskaart: 1 gereedschap:
@@ -542,7 +546,7 @@ public class BoardView {
 				beschavingsKaartButton1, beschavingsKaartButton2, beschavingsKaartButton3, beschavingsKaartButton4,
 				hutButton, gereedschapButton, akkerbouwButton, jachtButton, bosButton, leemGroeveButton,
 				steenGroeveButton, rivierButton, endTurn, speler1Image, speler2Image, speler3Image, speler4Image,
-				speler1Label, speler2Label, speler3Label, speler4Label);
+				speler1Label, speler2Label, speler3Label, speler4Label, amountField, amountLabel);
 	}
 
 	private void setSpelersVisable(boolean visable) {
