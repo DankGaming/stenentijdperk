@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class FirebaseController {
@@ -173,7 +174,8 @@ public class FirebaseController {
             DocumentReference f = db.collection("stenentijdperk").document(String.valueOf(lobby));
             ApiFuture<DocumentSnapshot> docRef = f.get();
             DocumentSnapshot data = docRef.get();
-            boolean temp = (boolean) data.get("isActive");
+            Object temp = data.get("isActive");
+            System.out.println(temp);
         } catch (Exception e) {
             e.printStackTrace();
         }
