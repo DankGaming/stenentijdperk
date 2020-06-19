@@ -9,7 +9,7 @@ import java.net.URISyntaxException;
 public class DobbelsteenView extends Pane {
 
     private ImageView imageView;
-    private String RESOURCE = "/Dice/dobbelsteen.png";
+    private String resource = "/Dice/dobbelsteen.png";
 
 
     public DobbelsteenView() {
@@ -24,7 +24,7 @@ public class DobbelsteenView extends Pane {
         Image image = null;
 
         try {
-            image = new Image(String.valueOf(App.class.getResource(this.RESOURCE).toURI()));
+            image = new Image(String.valueOf(App.class.getResource(this.resource).toURI()));
         }catch (URISyntaxException e) {
             e.printStackTrace();
         }

@@ -7,10 +7,10 @@ import java.net.URISyntaxException;
 
 public class Hutview {
     private ImageView imageView;
-    private String RESOURCE;
+    private String resource;
 
     public Hutview(int hutkaartnummer) {
-        this.RESOURCE = "/Hutjes/4_" + hutkaartnummer + ".png";
+        this.resource = "/Hutjes/4_" + hutkaartnummer + ".png";
         setupPane();
     }
 
@@ -21,7 +21,7 @@ public class Hutview {
     public void setupPane() {
         Image image = null;
         try {
-            image = new Image(String.valueOf(App.class.getResource(RESOURCE).toURI()));
+            image = new Image(String.valueOf(App.class.getResource(resource).toURI()));
         } catch(URISyntaxException e) {
             e.printStackTrace();
         }

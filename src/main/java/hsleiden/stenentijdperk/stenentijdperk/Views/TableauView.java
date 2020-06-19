@@ -1,27 +1,17 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
 import hsleiden.stenentijdperk.stenentijdperk.App;
-import hsleiden.stenentijdperk.stenentijdperk.Controllers.LoginController;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.TableauController;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
-import hsleiden.stenentijdperk.stenentijdperk.Models.TableauModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObserver;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.text.Font;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 
 public class TableauView implements TableauObserver {
@@ -36,7 +26,7 @@ public class TableauView implements TableauObserver {
     GereedschapView gereedschapview2 = null;
 
     private ImageView tableau;
-    private String RESOURCE = "/Backgrounds/tableau.png";
+    private String resource = "/Backgrounds/tableau.png";
     private GridPane view;
     private Label voedsel;
     private Label hout;
@@ -79,7 +69,7 @@ public class TableauView implements TableauObserver {
         Image image = null;
 
         try {
-            image = new Image(String.valueOf(App.class.getResource(this.RESOURCE).toURI()));
+            image = new Image(String.valueOf(App.class.getResource(this.resource).toURI()));
         }catch(URISyntaxException e) {
             e.printStackTrace();
         }
