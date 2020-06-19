@@ -12,15 +12,12 @@ import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 public class FirebaseController {
     static Firestore db;
-
+    static BoardModel board;
     public static void initializeFirebaseApp() {
         GoogleCredentials credentials = null;
 
@@ -42,10 +39,7 @@ public class FirebaseController {
 
     public static void listenForLobbyUpdates(String lobby){
         DocumentReference docRef = db.collection("stenentijdperk").document(lobby);
-        System.out.println("listener");
-        // De listener
         docRef.addSnapshotListener((snapshot, e) -> {
-            System.out.println("Listening");
             if (e != null) {
                 System.err.println("Listen failed: " + e);
                 return;
@@ -61,10 +55,7 @@ public class FirebaseController {
 
     public static void listenForBoardUpdates(String lobby){
         DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("boardData").document("board");
-        System.out.println("listener");
-        // De listener
         docRef.addSnapshotListener((snapshot, e) -> {
-            System.out.println("Listening");
             if (e != null) {
                 System.err.println("Listen failed: " + e);
                 return;
@@ -77,7 +68,15 @@ public class FirebaseController {
             }
         });
     }
-    
+
+    public void setBoard(BoardModel newBoard){
+        board = newBoard;
+    }
+
+    public static BoardModel getBoard(){
+        return board;
+    }
+
     public static void setSpeler(String spelerNummer, PlayerModel player){
         System.out.println(player.getNaam());
         System.out.println(player.getVillagers());
@@ -219,10 +218,12 @@ public class FirebaseController {
     }
 
     public static void addBoard(int lobby, BoardModel model){
-        ApiFuture<WriteResult> future = db.collection("stenentijdperk").document(String.valueOf(lobby)).collection("boardData").document("board").set(model);
+        ApiFuture<WriteResult> future = db.collection("stenentijdperk").document("1").collection("boardData").document("board").set(model);
+        System.out.println("hello");
         try {
             System.out.println("Update time : " + future.get().getUpdateTime());
         } catch (Exception e) {
+            System.out.println(future);
             e.printStackTrace();
         }
     }
