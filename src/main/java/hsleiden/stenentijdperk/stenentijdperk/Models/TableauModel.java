@@ -2,7 +2,6 @@ package hsleiden.stenentijdperk.stenentijdperk.Models;
 
 
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Stamlid;
-import hsleiden.stenentijdperk.stenentijdperk.observers.LobbyObserver;
 import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObserver;
 
@@ -35,15 +34,21 @@ public class TableauModel implements TableauObservable{
     }
 
     @Override
-    public void register(TableauObserver lo) {
-        this.observers.add(lo);
+    public void register(TableauObserver to) {
+        this.observers.add(to);
+        notifyAllObservers();
     }
 
     @Override
     public void notifyAllObservers() {
-        for(TableauObserver lo : observers) {
-            lo.update(this);
+        for(TableauObserver to : observers) {
+            to.update(this);
         }
+    }
+
+    @Override
+    public int[] getTools() {
+        return this.gereedschap;
     }
 
     public int[] getGereedschap() {
@@ -59,14 +64,14 @@ public class TableauModel implements TableauObservable{
 
     public void verhoogGereedschap() {
         int index = gereedschap.length - 1, totaal = 0;
-            for (int i = gereedschap.length - 1; i >= 0; i--){
-                int aantal = gereedschap[i];
-                totaal += aantal;
-                if (gereedschap[index] >= aantal){
-                    index = i;
-                }
+        for (int i = gereedschap.length - 1; i >= 0; i--){
+            int aantal = gereedschap[i];
+            totaal += aantal;
+            if (gereedschap[index] >= aantal){
+                index = i;
             }
-            gereedschap[index]++;
-            notifyAllObservers();
+        }
+        gereedschap[index]++;
+        notifyAllObservers();
     }
 }

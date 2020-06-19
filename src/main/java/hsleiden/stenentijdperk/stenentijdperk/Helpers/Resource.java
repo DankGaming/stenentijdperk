@@ -6,8 +6,8 @@ public class Resource {
 	private final int maxCap;
 	private int hoeveelheid;
 	private int villagers = 0;
-	private boolean status;
-
+	 
+	
 	public Resource(String naam, int hoeveelheid, int waarde, int maxCap) {
 		this.naam = naam;
 		this.hoeveelheid = hoeveelheid;

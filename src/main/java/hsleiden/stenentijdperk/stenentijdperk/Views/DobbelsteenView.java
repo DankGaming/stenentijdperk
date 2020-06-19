@@ -1,21 +1,15 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.Dobbelsteen;
-import javafx.application.Platform;
-import javafx.geometry.Insets;
+import hsleiden.stenentijdperk.stenentijdperk.App;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
 
 public class DobbelsteenView extends Pane {
 
     private ImageView imageView;
-    private String RESOURCE = "./Images/dobbelsteen.png";
+    private String resource = "/Dice/dobbelsteen.png";
 
 
     public DobbelsteenView() {
@@ -27,24 +21,18 @@ public class DobbelsteenView extends Pane {
     }
 
     public void setupPane() {
-        FileInputStream input = null;
+        Image image = null;
+
         try {
-            input = new FileInputStream(this.RESOURCE);
-        } catch(FileNotFoundException fileNotFoundException) {
-            System.out.println(fileNotFoundException);
+            image = new Image(String.valueOf(App.class.getResource(this.resource).toURI()));
+        }catch (URISyntaxException e) {
+            e.printStackTrace();
         }
 
-        assert input != null;
-        Image image = new Image(input);
+        assert image != null;
         this.imageView = new ImageView(image);
         this.imageView.setFitHeight(image.getHeight() * 0.75);
         this.imageView.setFitWidth(image.getWidth() * 0.75);
     }
-
-    public void modelChanged(Dobbelsteen model) {
-        Platform.runLater(() -> {
-                Image image = new Image(String.format(RESOURCE, model.getOgen()));
-                imageView.setImage(image);
-        });
-    }
+    
 }
