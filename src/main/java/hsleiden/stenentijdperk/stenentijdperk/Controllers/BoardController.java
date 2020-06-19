@@ -12,6 +12,7 @@ import java.util.Scanner;
 public class BoardController {
     private PlayerController playercontroller;
     private BoardModel boardmodel;
+    // TODO naar boardmodel en dan firebase
     private ArrayList<PlayerModel> players = new ArrayList<PlayerModel>();
 
     public BoardController() {
@@ -135,18 +136,11 @@ public class BoardController {
             playercontroller.setPosities(boardmodel.getPlayer(), index, 0);
         }
     }
-    // TODO endturn aanpasses zodat het in phase 2 werkt.
-    // List.matchAll stream
+
     public void endTurn() {
         if (boardmodel.getPlaced()) { // checkt of de speler stamleden heeft geplaast.
             boolean villagersLeft = true;
-            int i = 0;
-            for (int j = 0; j < 4; j++) {
-                if (boardmodel.getPlayer().equals(players.get(j))) { // Bepaling welke player aan de beurt is
-                    i = j;
-                    break;
-                }
-            }
+            int i = checkPlayer();
             switch (i) { // Verschillede loops bepaalt door welke speler aan de beurt was
                 case 0: // Spelers 1, 2 en 3
                 case 1:
@@ -172,7 +166,16 @@ public class BoardController {
 
     public void EndTurnPhase2(){
         if (playercontroller.vraagResources(boardmodel.getPlayer()).stream().allMatch(n-> n == 0)){
-
+            int i = checkPlayer();
+            if (i == 4){
+                boardmodel.setPlayer(players.get(0));
+            } else {
+                i++;
+                boardmodel.setPlayer(players.get(i));
+            }
+        }
+        if (playercontroller.vraagResources(boardmodel.getPlayer()).stream().allMatch(n-> n == 0)){
+            //TODO do voedsel stuff.
         }
     }
 
@@ -187,6 +190,17 @@ public class BoardController {
             }
         }
         return found;
+    }
+
+    public int checkPlayer(){
+        int i = 0;
+            for (int j = 0; j < 4; j++) {
+                if (boardmodel.getPlayer().equals(players.get(j))) { // Bepaling welke player aan de beurt is
+                    i = j;
+                    break;
+                }
+            }
+        return i;
     }
     
     public boolean locatieVrij(int index){
@@ -208,7 +222,7 @@ public class BoardController {
     }
 
     public void toolGebruiken(){
-        // TODO
+        // TODO tools stuff
     }
 
     public int vraagPhase(){
