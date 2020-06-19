@@ -168,14 +168,14 @@ public class BoardView {
 		// GridPane.setConstraints(speler4Label, 30, 11, 2 ,2);
 
 		Label amountLabel = new Label("Hoeveel:");
-		amountLabel.setStyle("-fx-font-size: 20px;");
-		amountLabel.setVisible(true);
-		GridPane.setConstraints(amountLabel, 20, 25, 5, 3);
+		amountLabel.setStyle("-fx-font-size: 25px; -fx-font-weight: bold; -fx-text-fill: #15c4d0;");
+		amountLabel.setVisible(false);
+		GridPane.setConstraints(amountLabel, 17, 18, 5, 3);
 
 		TextField amountField = new TextField();
-		amountField.setVisible(true);
+		amountField.setVisible(false);
 		amountField.setEditable(false);
-		GridPane.setConstraints(amountField, 26, 25, 10, 3);
+		GridPane.setConstraints(amountField, 22, 18, 10, 3);
 
 
 		/*
