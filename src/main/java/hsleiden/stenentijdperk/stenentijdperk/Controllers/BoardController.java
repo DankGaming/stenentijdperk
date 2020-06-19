@@ -64,7 +64,7 @@ public class BoardController {
                 plaatsenStamleden(location, Integer.parseInt(input));
             }
         } else {
-            afhandelenResource(location);
+            resolveResource(location);
         }
     }
 
@@ -80,10 +80,10 @@ public class BoardController {
         } else{
             switch (index){
                 case 5:
-                    akkerBouw(index);
+                    moreAgriculture(index);
                     break;
                 case 6:
-                    stamledenHut(index);
+                    moreVillagerHut(index);
                     break;
                 case 7:
                     // TODO tools krijgen
@@ -105,7 +105,7 @@ public class BoardController {
     }
 
     // Hier is het rollen voor resources.
-    public void afhandelenResource(int index) {
+    public void resolveResource(int index) {
         if (playercontroller.getPosities(boardmodel.getPlayer(), index) != 0) {
             Dobbelsteen roll = new Dobbelsteen(playercontroller.getPosities(boardmodel.getPlayer(), index));
             roll.worp();
@@ -122,7 +122,7 @@ public class BoardController {
         }
     }
 
-    public void akkerBouw(int index){
+    public void moreAgriculture(int index){
         if (playercontroller.getPosities(boardmodel.getPlayer(), index) != 0 && playercontroller.vraagGraan(boardmodel.getPlayer()) != 10){
             playercontroller.addGraan(boardmodel.getPlayer());
             playercontroller.setPosities(boardmodel.getPlayer(), index, 0);
@@ -130,7 +130,7 @@ public class BoardController {
         }
     }
 
-    public void stamledenHut(int index){
+    public void moreVillagerHut(int index){
         if (playercontroller.getPosities(boardmodel.getPlayer(), index) != 0 && playercontroller.getMaxVillagers(boardmodel.getPlayer()) != 10){
             playercontroller.addMaxVillagers(boardmodel.getPlayer());
             playercontroller.setPosities(boardmodel.getPlayer(), index, 0);

@@ -6,7 +6,8 @@ import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerModel {
     private String naam;
