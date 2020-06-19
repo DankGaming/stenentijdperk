@@ -1,12 +1,8 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
 import hsleiden.stenentijdperk.stenentijdperk.App;
-import hsleiden.stenentijdperk.stenentijdperk.Models.TableauModel;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 
 public class Hutview {
@@ -23,16 +19,6 @@ public class Hutview {
     }
 
     public void setupPane() {
-//
-//        FileInputStream input = null;
-//        try {
-//            input = new FileInputStream(this.RESOURCE);
-//        } catch (FileNotFoundException fileNotFoundException) {
-//            System.out.println(fileNotFoundException);
-//        }
-//
-//        assert input != null;
-
         Image image = null;
         try {
             image = new Image(String.valueOf(App.class.getResource(RESOURCE).toURI()));

@@ -1,5 +1,6 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
+import hsleiden.stenentijdperk.stenentijdperk.App;
 import hsleiden.stenentijdperk.stenentijdperk.Models.TableauModel;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,6 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
 
 public class GereedschapView {
     private ImageView imageView;
@@ -19,7 +21,7 @@ public class GereedschapView {
 
     public GereedschapView(int toolnummer) {
         TableauModel tableau = new TableauModel();
-        this.RESOURCE = "./Images/Tool" + toolnummer + ".png";
+        this.RESOURCE = "/Tools/Tool" + toolnummer + ".png";
         setupPane(tableau);
     }
 
@@ -38,16 +40,15 @@ public class GereedschapView {
         int[] gereedschap = tableau.getGereedschap();
         boolean[] gereedschapGebruikt = tableau.getGereedschapGebruikt();
 
-        FileInputStream input = null;
+        Image image = null;
+
         try {
-            input = new FileInputStream(this.RESOURCE);
-        } catch (FileNotFoundException fileNotFoundException) {
-            System.out.println(fileNotFoundException);
+            image = new Image(String.valueOf(App.class.getResource(this.RESOURCE).toURI()));
+        }catch (URISyntaxException e) {
+            e.printStackTrace();
         }
 
-        assert input != null;
-
-        Image image = new Image(input);
+        assert image != null;
         this.imageView = new ImageView(image);
         this.imageView.setFitHeight(70);
         this.imageView.setFitWidth(70);

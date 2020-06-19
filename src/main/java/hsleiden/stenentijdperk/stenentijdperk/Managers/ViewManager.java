@@ -2,13 +2,11 @@ package hsleiden.stenentijdperk.stenentijdperk.Managers;
 
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.FirebaseController;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
-import hsleiden.stenentijdperk.stenentijdperk.Models.TableauModel;
 import hsleiden.stenentijdperk.stenentijdperk.Views.BoardView;
 import hsleiden.stenentijdperk.stenentijdperk.Views.LobbyView;
 import hsleiden.stenentijdperk.stenentijdperk.Views.LoginView;
 import hsleiden.stenentijdperk.stenentijdperk.Views.TableauView;
 import javafx.scene.Scene;
-import javafx.scene.control.Tab;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -46,12 +44,7 @@ public class ViewManager {
         showView(1200, 800, "Board");
     }
 
-    // TODO remove this function
-    public static void loadtableauView() {
-        loadPopupWindow(new TableauView(new PlayerModel("hek")).setScene());
-    }
     // Popup window functions
-
 
     public static void loadPopupWindow(GridPane tableauView) {
         closePopupWindow();
