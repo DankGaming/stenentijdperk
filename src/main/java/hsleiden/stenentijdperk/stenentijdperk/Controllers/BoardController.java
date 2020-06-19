@@ -52,6 +52,8 @@ public class BoardController {
         if (vraagPhase() == 1) {
             if (!boardmodel.getPlaced() && boardmodel.requestCap(location) - boardmodel.requestVillagers(location) != 0
                     && playercontroller.getPositie(boardmodel.getPlayer(), location) == 0) {
+                //TODO functie op input te checken! Dit moet een functie worden
+
                 String input;
                 do {
                     input = scanner("Hoeveel stamleden?");

@@ -168,7 +168,7 @@ public class BoardView {
 		// GridPane.setConstraints(speler4Label, 30, 11, 2 ,2);
 
 		Label amountLabel = new Label("Hoeveel:");
-		amountLabel.setStyle("-fx-font-size: 25px; -fx-font-weight: bold; -fx-text-fill: #15c4d0;");
+		amountLabel.setStyle("-fx-font-size: 25px; -fx-font-weight: bold; -fx-text-fill: #f6e5b6; -fx-background-color: #dfa231;");
 		amountLabel.setVisible(false);
 		GridPane.setConstraints(amountLabel, 17, 18, 5, 3);
 
@@ -507,6 +507,7 @@ public class BoardView {
 					GridPane.setConstraints(speler1Image, 37, 21, 2, 2);
 					GridPane.setConstraints(speler1Label, 37, 21, 1, 1);
 
+
 					GridPane.setConstraints(speler2Image, 39, 21, 2, 2);
 					GridPane.setConstraints(speler2Label, 39, 21, 1, 1);
 
@@ -542,11 +543,12 @@ public class BoardView {
 		rivierButton.setOnAction(event);
 		endTurn.setOnAction(event);
 
+		// speler1Image, speler2Image, speler3Image, speler4Image,
+		//				speler1Label, speler2Label, speler3Label, speler4Label,
 		this.view.getChildren().addAll(imageView, hutKaartButton1, hutKaartButton2, hutKaartButton3, hutKaartButton4,
 				beschavingsKaartButton1, beschavingsKaartButton2, beschavingsKaartButton3, beschavingsKaartButton4,
 				hutButton, gereedschapButton, akkerbouwButton, jachtButton, bosButton, leemGroeveButton,
-				steenGroeveButton, rivierButton, endTurn, speler1Image, speler2Image, speler3Image, speler4Image,
-				speler1Label, speler2Label, speler3Label, speler4Label, amountField, amountLabel);
+				steenGroeveButton, rivierButton, endTurn, amountField, amountLabel);
 	}
 
 	private void setSpelersVisable(boolean visable) {
@@ -562,7 +564,8 @@ public class BoardView {
 		speler4Image.setVisible(visable);
 		speler4Label.setVisible(visable);
 	}
-//	private void addGridpane(ImageView image, Label label) {
-//		this.view.getChildren().add(image, label);
+	//TODO functie op input te checken!
+//	private void setLabelText() {
+//		this.speler1Label.setText(controller.scanner());
 //	}
 }
