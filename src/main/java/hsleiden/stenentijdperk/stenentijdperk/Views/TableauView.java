@@ -36,12 +36,13 @@ public class TableauView implements TableauObserver {
     private Label steen;
     private Label goud;
     private Label stamleden;
-
     private Label punt;
     private PlayerModel playerModel;
     private TableauController tableauController;
-
-    int positie = 2;
+    private Label multiplier1;
+    private Label multiplier2;
+    private Label multiplier3;
+    private Label multiplier4;
 
     public TableauView(PlayerModel playermodel) {
         this.playerModel = playermodel;
@@ -109,6 +110,22 @@ public class TableauView implements TableauObserver {
         goud.setStyle("-fx-font-size: 25px;");
         GridPane.setConstraints(goud, 30, 18, 1, 1);
 
+        multiplier1 = new Label("0");
+        multiplier1.setStyle("-fx-font-size: 25px;");
+        GridPane.setConstraints(multiplier1, 42, 7, 1, 1);
+
+        multiplier2 = new Label("0");
+        multiplier2.setStyle("-fx-font-size: 25px;");
+        GridPane.setConstraints(multiplier2, 42, 13, 1, 1);
+
+        multiplier3 = new Label("0");
+        multiplier3.setStyle("-fx-font-size: 25px;");
+        GridPane.setConstraints(multiplier3, 42, 19, 1, 1);
+
+        multiplier4 = new Label("0");
+        multiplier4.setStyle("-fx-font-size: 25px;");
+        GridPane.setConstraints(multiplier4, 42, 25, 1, 1);
+
         ImageView imageviewhutkaart1 = hutview1.setScene();
         GridPane.setConstraints(imageviewhutkaart1, 2, 36, 10, 10);
 
@@ -131,7 +148,8 @@ public class TableauView implements TableauObserver {
         GridPane.setConstraints(this.punt, 37, 6, 5, 5);
 
         this.view.getChildren().addAll(tableau, stamleden, voedsel, hout, leem, steen, goud, imageviewhutkaart1, imageviewhutkaart2,
-                imageviewhutkaart3, imageviewhutkaart4, imageviewhutkaart5, punt);
+                imageviewhutkaart3, imageviewhutkaart4, imageviewhutkaart5, punt, multiplier1, multiplier2, multiplier3,
+                multiplier4);
     }
 
     public void setPoint(int height) {
