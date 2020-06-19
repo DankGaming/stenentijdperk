@@ -27,7 +27,7 @@ public class PlayerController {
 		playerModel.addMaxVillagers();
 	}
 
-	public Tool[] getTools(PlayerModel playermodel){
+	public ArrayList<Tool> getTools(PlayerModel playermodel){
 		return playermodel.getTools();
 	}
 
@@ -39,12 +39,12 @@ public class PlayerController {
 		playermodel.setTools(index, tool);
 	}
 
-	public int getPosities(PlayerModel playerModel, int index){
-		return playerModel.getPosities(index);
+	public int getPositie(PlayerModel playerModel, int index){
+		return playerModel.getPositie(index);
 	}
 
-	public void setPosities(PlayerModel playerModel, int index, int stamleden){
-		playerModel.setPosities(index, stamleden);
+	public void setPositie(PlayerModel playerModel, int index, int stamleden){
+		playerModel.setPositie(index, stamleden);
 	}
 
 	public void addGraan(PlayerModel playerModel){
@@ -56,6 +56,6 @@ public class PlayerController {
 	}
 
 	public List<Integer> vraagResources(PlayerModel playerModel){
-		return playerModel.getAllResources();
+		return playerModel.getPosities();
 	}
 }

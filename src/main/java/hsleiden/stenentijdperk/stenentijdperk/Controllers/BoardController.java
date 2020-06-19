@@ -27,6 +27,7 @@ public class BoardController {
         players.add(carlos);
         playercontroller = new PlayerController();
         boardmodel = new BoardModel();
+        FirebaseController.addBoard(1, boardmodel);
         boardmodel.setPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
         System.out.println(boardmodel.getPlayer().getNaam() + " is aan de beurt en heeft "
                 + boardmodel.getPlayer().getVillagers() + ".");
@@ -50,7 +51,7 @@ public class BoardController {
     public void onResourceButtonClick(int location) {
         if (vraagPhase() == 1) {
             if (!boardmodel.getPlaced() && boardmodel.requestCap(location) - boardmodel.requestVillagers(location) != 0
-                    && playercontroller.getPosities(boardmodel.getPlayer(), location) == 0) {
+                    && playercontroller.getPositie(boardmodel.getPlayer(), location) == 0) {
                 String input;
                 do {
                     input = scanner("Hoeveel stamleden?");
@@ -106,8 +107,8 @@ public class BoardController {
 
     // Hier is het rollen voor resources.
     public void resolveResource(int index) {
-        if (playercontroller.getPosities(boardmodel.getPlayer(), index) != 0) {
-            Dobbelsteen roll = new Dobbelsteen(playercontroller.getPosities(boardmodel.getPlayer(), index));
+        if (playercontroller.getPositie(boardmodel.getPlayer(), index) != 0) {
+            Dobbelsteen roll = new Dobbelsteen(playercontroller.getPositie(boardmodel.getPlayer(), index));
             roll.worp();
             roll.berekenTotaal();
             int resources = roll.getTotaal() / boardmodel.getResource(index).getWaarde();
@@ -115,25 +116,25 @@ public class BoardController {
                 resources = boardmodel.getResource(index).getHoeveelheid();
             }
             boardmodel.getResource(index).reduceHoeveelheid(resources);
-            playercontroller.setPosities(boardmodel.getPlayer(), index, 0);
+            playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
             // Test voor krijgen resources
             boardmodel.getPlayer().addResources(index, resources);
-            System.out.println(boardmodel.getPlayer().getResources(index));
+            System.out.println(boardmodel.getPlayer().getResource(index));
         }
     }
 
     public void moreAgriculture(int index){
-        if (playercontroller.getPosities(boardmodel.getPlayer(), index) != 0 && playercontroller.vraagGraan(boardmodel.getPlayer()) != 10){
+        if (playercontroller.getPositie(boardmodel.getPlayer(), index) != 0 && playercontroller.vraagGraan(boardmodel.getPlayer()) != 10){
             playercontroller.addGraan(boardmodel.getPlayer());
-            playercontroller.setPosities(boardmodel.getPlayer(), index, 0);
+            playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
 
         }
     }
 
     public void moreVillagerHut(int index){
-        if (playercontroller.getPosities(boardmodel.getPlayer(), index) != 0 && playercontroller.getMaxVillagers(boardmodel.getPlayer()) != 10){
+        if (playercontroller.getPositie(boardmodel.getPlayer(), index) != 0 && playercontroller.getMaxVillagers(boardmodel.getPlayer()) != 10){
             playercontroller.addMaxVillagers(boardmodel.getPlayer());
-            playercontroller.setPosities(boardmodel.getPlayer(), index, 0);
+            playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
         }
     }
 
@@ -206,7 +207,7 @@ public class BoardController {
     public boolean locatieVrij(int index){
         boolean status = true;
         for (PlayerModel player: players){
-            if(player.getPosities(index) != 0){
+            if(player.getPositie(index) != 0){
                 status = false;
             }
         }
@@ -218,7 +219,7 @@ public class BoardController {
         boardmodel.setPlaced(true);
         playercontroller.setVillagers(boardmodel.getPlayer(),
             (playercontroller.getVillagers(boardmodel.getPlayer()) - stamleden));
-        playercontroller.setPosities(boardmodel.getPlayer(), index, stamleden);
+        playercontroller.setPositie(boardmodel.getPlayer(), index, stamleden);
     }
 
     public void toolGebruiken(){
