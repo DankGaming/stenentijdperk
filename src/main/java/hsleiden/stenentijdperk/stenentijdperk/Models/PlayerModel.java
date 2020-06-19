@@ -20,6 +20,8 @@ public class PlayerModel {
     private ArrayList<StaticHut> hutjes = new ArrayList<StaticHut>();
     private int graan;
 
+    public PlayerModel(){}
+
     public PlayerModel(String naam) {
         this.villagers = 5;
         this.maxVillagers = 5;
