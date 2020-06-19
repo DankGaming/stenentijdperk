@@ -67,31 +67,31 @@ public class LobbyView implements LobbyObserver {
         GridPane.setConstraints(welkomLabel, 1, 1, 48, 3);
 
         Button lobbyButton1 = new Button("Lobby 1");
-        lobbyButton1.setMinWidth(575);
+        lobbyButton1.setMinWidth(373);
         lobbyButton1.setMinHeight(100);
         lobbyButton1.setStyle(
                 "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
 
         Button lobbyButton2 = new Button("Lobby 2");
-        lobbyButton2.setMinWidth(575);
+        lobbyButton2.setMinWidth(373);
         lobbyButton2.setMinHeight(100);
         lobbyButton2.setStyle(
                 "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
 
         Button lobbyButton3 = new Button("Lobby 3");
-        lobbyButton3.setMinWidth(575);
+        lobbyButton3.setMinWidth(373);
         lobbyButton3.setMinHeight(100);
         lobbyButton3.setStyle(
                 "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
 
         Button lobbyButton4 = new Button("Lobby 4");
-        lobbyButton4.setMinWidth(575);
+        lobbyButton4.setMinWidth(373);
         lobbyButton4.setMinHeight(100);
         lobbyButton4.setStyle(
                 "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
 
         Button lobbyButton5 = new Button("Lobby 5");
-        lobbyButton5.setMinWidth(575);
+        lobbyButton5.setMinWidth(373);
         lobbyButton5.setMinHeight(100);
         lobbyButton5.setStyle(
                 "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
