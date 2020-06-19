@@ -6,6 +6,7 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
+import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 
 import java.io.FileInputStream;
@@ -200,4 +201,14 @@ public class FirebaseController {
             }
         }
     }
+
+    public static void addBoard(int lobby, BoardModel model){
+        ApiFuture<WriteResult> future = db.collection("stenentijdperk").document(String.valueOf(lobby)).collection("boardData").document("board").set(model);
+        try {
+            System.out.println("Update time : " + future.get().getUpdateTime());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
