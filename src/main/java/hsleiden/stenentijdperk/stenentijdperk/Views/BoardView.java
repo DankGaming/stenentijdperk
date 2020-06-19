@@ -558,4 +558,7 @@ public class BoardView {
 		speler4Image.setVisible(visable);
 		speler4Label.setVisible(visable);
 	}
+//	private void addGridpane(ImageView image, Label label) {
+//		this.view.getChildren().add(image, label);
+//	}
 }
