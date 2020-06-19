@@ -144,6 +144,7 @@ public class BoardController {
             for (int j = 0; j < 4; j++) {
                 if (boardmodel.getPlayer().equals(players.get(j))) { // Bepaling welke player aan de beurt is
                     i = j;
+                    break;
                 }
             }
             switch (i) { // Verschillede loops bepaalt door welke speler aan de beurt was
