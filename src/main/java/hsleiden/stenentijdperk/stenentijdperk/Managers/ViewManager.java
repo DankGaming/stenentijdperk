@@ -47,7 +47,7 @@ public class ViewManager {
 
     public static void loadtableauView() {
         closeView();
-        currentView = new TableauView().setScene();
+        currentView = new TableauView(new PlayerModel("joost")).setScene();
         showView(500, 500, "tableau");
     }
     // Popup window functions

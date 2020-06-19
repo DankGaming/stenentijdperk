@@ -114,14 +114,7 @@ public class TableauView implements TableauObserver {
 
         this.view.getChildren().addAll(tableau, stamleden, voedsel, hout, leem, steen, goud);
 
-        ImageView imageviewgereedschap1 = gereedschapview1.setScene();
-        GridPane.setConstraints(imageviewgereedschap1, 2, 1, 10, 10);
 
-        ImageView imageviewgereedschap2 = gereedschapview2.setScene();
-        GridPane.setConstraints(imageviewgereedschap2, 2, 11, 10, 10);
-
-        ImageView imageviewgereedschap3 = gereedschapview3.setScene();
-        GridPane.setConstraints(imageviewgereedschap3, 2, 21, 10, 10);
 
         ImageView imageviewhutkaart1 = hutview1.setScene();
         GridPane.setConstraints(imageviewhutkaart1, 2, 36, 10, 10);
@@ -138,8 +131,7 @@ public class TableauView implements TableauObserver {
         ImageView imageviewhutkaart5 = hutview5.setScene();
         GridPane.setConstraints(imageviewhutkaart5, 40, 36, 10, 10);
 
-        this.view.getChildren().addAll(tableau, stamleden, voedsel, hout, leem, steen, goud, imageviewgereedschap1,
-                imageviewgereedschap2, imageviewgereedschap3, imageviewhutkaart1, imageviewhutkaart2,
+        this.view.getChildren().addAll(tableau, stamleden, voedsel, hout, leem, steen, goud, imageviewhutkaart1, imageviewhutkaart2,
                 imageviewhutkaart3, imageviewhutkaart4, imageviewhutkaart5);
     }
 
