@@ -1,5 +1,6 @@
 package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
@@ -49,8 +50,8 @@ public class BoardController {
         this.boardmodel.register(boardobserver);
     }
 
-    public String getKaartPath(int index) {
-        return this.boardmodel.getKaartPath(index);
+    public Kaart getKaart(int index) {
+        return this.boardmodel.getKaart(index);
     }
 
     public void onResourceButtonClick(int location) {
@@ -77,24 +78,25 @@ public class BoardController {
 
     // methode om de onderste buttons af te handelen. maakt de kaart/hut bezet en
     // zorgt dat je niet meer kan plaatsen.
-    public void onKaartButtonClick(int index) {
-        if (!boardmodel.getPlaced()) {
-            if (index >= 4 && !boardmodel.getKaart(index - 4).getStatus()) {
-                boardmodel.getKaart(index - 4).setStatus(true);
-                boardmodel.setPlaced(true);
-                playercontroller.setVillagers(boardmodel.getPlayer(),
-                        (playercontroller.getVillagers(boardmodel.getPlayer()) - 1));
+    public ArrayList<Kaart> onKaartButtonClick(int index) {
+        return (boardmodel.removeKaart(index));
+        // if (!boardmodel.getPlaced()) {
+        // if (index >= 4 && !boardmodel.getKaart(index - 4).getStatus()) {
+        // boardmodel.getKaart(index - 4).setStatus(true);
+        // boardmodel.setPlaced(true);
+        // playercontroller.setVillagers(boardmodel.getPlayer(),
+        // (playercontroller.getVillagers(boardmodel.getPlayer()) - 1));
 
-            } /*
-               * else if (!boardmodel.getStatus(index-4)){ ook tijdelijk hutjes bestaat nog
-               * niet //boardmodel.hutjes.get(index).setStatus(true);
-               * boardmodel.setPlaced(true); }
-               */
-            if (boardmodel.getPlaced()) {
-                playercontroller.setPosities(boardmodel.getPlayer(), index + 8, 1);
-            }
+        // } /*
+        // * else if (!boardmodel.getStatus(index-4)){ ook tijdelijk hutjes bestaat nog
+        // * niet //boardmodel.hutjes.get(index).setStatus(true);
+        // * boardmodel.setPlaced(true); }
+        // */
+        // if (boardmodel.getPlaced()) {
+        // playercontroller.setPosities(boardmodel.getPlayer(), index + 8, 1);
+        // }
 
-        }
+        // }
     }
 
     public void onVillageButtonClick(int index) {
