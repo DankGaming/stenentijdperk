@@ -13,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -39,7 +40,7 @@ public class FirebaseController {
         db = FirestoreClient.getFirestore();
     }
 
-    public static void listenForUpdates(String lobby){
+    public static void listenForLobbyUpdates(String lobby){
         DocumentReference docRef = db.collection("stenentijdperk").document(lobby);
         System.out.println("listener");
         // De listener
@@ -56,12 +57,27 @@ public class FirebaseController {
                 System.out.print("Current data: null");
             }
         });
-
     }
 
+    public static void listenForBoardUpdates(String lobby){
+        DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("boardData").document("board");
+        System.out.println("listener");
+        // De listener
+        docRef.addSnapshotListener((snapshot, e) -> {
+            System.out.println("Listening");
+            if (e != null) {
+                System.err.println("Listen failed: " + e);
+                return;
+            }
 
-
-
+            if (snapshot != null && snapshot.exists()) {
+                BoardModel newModel = snapshot.toObject(BoardModel.class);
+            } else {
+                System.out.print("Current data: null");
+            }
+        });
+    }
+    
     public static void setSpeler(String spelerNummer, PlayerModel player){
         System.out.println(player.getNaam());
         System.out.println(player.getVillagers());
