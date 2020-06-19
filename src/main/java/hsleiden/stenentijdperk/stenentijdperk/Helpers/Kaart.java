@@ -8,17 +8,22 @@ public class Kaart implements Status {
 	private Resource graan;
 	private String treasure;
 	private boolean status;
- 
+	private String path;
 
-	public Kaart(int punten) {
+	public Kaart(int punten, String path) {
+		this.path = path;
 		this.punten = punten;
-		this.status = false;	
+		this.status = false;
+	}
+
+	public String getPath() {
+		return this.path;
 	}
 
 	public int getPunten() {
 		return this.punten;
 	}
-  
+
 	public Resource getTool() {
 		return this.tool;
 	}
@@ -43,5 +48,4 @@ public class Kaart implements Status {
 
 	}
 
-	
 }
