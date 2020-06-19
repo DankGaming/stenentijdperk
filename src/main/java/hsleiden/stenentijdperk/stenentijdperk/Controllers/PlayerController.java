@@ -1,5 +1,6 @@
 package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 
 public class PlayerController {
@@ -16,12 +17,16 @@ public class PlayerController {
 		playermodel.setVillagers(villagers);
 	}
 
-	public int getTools(PlayerModel playermodel, int index){
-		return playermodel.getTools(index);
+	public Tool[] getTools(PlayerModel playermodel){
+		return playermodel.getTools();
 	}
 
-	public void setTools(PlayerModel playermodel, int index, int tools){
-		playermodel.setTools(index, tools);
+	public Tool getTool(PlayerModel playerModel, int index) {
+		return playerModel.getTool(index);
+	}
+
+	public void setTool(PlayerModel playermodel, int index, Tool tool){
+		playermodel.setTools(index, tool);
 	}
 
 	public int getPosities(PlayerModel playerModel, int index){

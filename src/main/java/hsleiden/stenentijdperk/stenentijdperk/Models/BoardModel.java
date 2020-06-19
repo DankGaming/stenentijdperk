@@ -1,13 +1,19 @@
 package hsleiden.stenentijdperk.stenentijdperk.Models;
 
+import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
+import hsleiden.stenentijdperk.stenentijdperk.Controllers.PlayerController;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Resource;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+
+import java.io.File;
 
 public class BoardModel implements BoardObservable {
     private Kaart[] kaarten; // temp made public en dit moet datatype Kaart worden
@@ -16,8 +22,13 @@ public class BoardModel implements BoardObservable {
     private int turn;
     private boolean wincondition;
     private boolean placed;
+    private BoardController controller;
+    private String LabelText;
+    private PlayerController playerController;
+    private int phase;
+    private ArrayList<String> kaartPaths = new ArrayList<String>();
     private ArrayList<Resource> locaties = new ArrayList<>();
-
+    private String path = "src/main/Resources/Kaarten/";
     public ArrayList<BoardObserver> observers = new ArrayList<>();
 
     public BoardModel() {
@@ -25,6 +36,7 @@ public class BoardModel implements BoardObservable {
         this.isPlaceable = true;
         this.turn = 1;
         this.placed = false;
+        this.phase = 1;
         Resource food = new Resource("Food", 500, 2, 40);
         Resource wood = new Resource("Wood", 28, 3, 7);
         Resource leem = new Resource("Leem", 18, 4, 7);
@@ -35,12 +47,23 @@ public class BoardModel implements BoardObservable {
         locaties.add(leem);
         locaties.add(stone);
         locaties.add(gold);
+        File folder = new File(path);
+        File[] listOfFiles = folder.listFiles();
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+            this.kaartPaths.add(path + listOfFiles[i].getName());
+        }
 
         this.kaarten = new Kaart[10];
         for (int i = 0; i < 10; i++) {
             this.kaarten[i] = new Kaart(i);
         }
         Collections.shuffle(Arrays.asList(this.kaarten));
+        Collections.shuffle(this.kaartPaths);
+    }
+
+    public String getKaartPath(int index) {
+        return this.kaartPaths.get(index);
     }
 
     public Kaart getKaart(int index) {
@@ -81,7 +104,7 @@ public class BoardModel implements BoardObservable {
     public int requestVillagers(int index) {
         return this.locaties.get(index).getVillagers();
     }
-
+    
     public int requestCap(int index) {
         return this.locaties.get(index).getMaxCap();
     }
@@ -115,11 +138,12 @@ public class BoardModel implements BoardObservable {
     public Resource getResource(int index){
         return this.locaties.get(index);
     }
-    /*
-     * // temp methode bepalen of de kaart al bezet is. Dit moet naar het kaart
-     * object. public boolean getStatus(int index){ return kaarten.get(index); }
-     * 
-     * public void setStatus(int index, boolean status){ kaarten.set(index, status);
-     * }
-     */
+
+    public int getPhase() {
+        return phase;
+    }
+
+    public void setPhase(int phase) {
+        this.phase = phase;
+    }
 }

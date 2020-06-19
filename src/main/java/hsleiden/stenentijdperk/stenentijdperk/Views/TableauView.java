@@ -1,10 +1,13 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.LoginController;
+import hsleiden.stenentijdperk.stenentijdperk.Controllers.TableauController;
+import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.TableauModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObserver;
 import javafx.geometry.Insets;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -20,15 +23,16 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class TableauView implements TableauObserver {
-    GereedschapView gereedschapview1 = new GereedschapView(1);
-    GereedschapView gereedschapview2 = new GereedschapView(1);
-    GereedschapView gereedschapview3 = new GereedschapView(1);
     Hutview hutview1 = new Hutview(1);
     Hutview hutview2 = new Hutview(2);
     Hutview hutview3 = new Hutview(3);
     Hutview hutview4 = new Hutview(2);
     Hutview hutview5 = new Hutview(4);
     private ImageView[] huttegels;
+    GereedschapView gereedschapview = null;
+    GereedschapView gereedschapview1 = null;
+    GereedschapView gereedschapview2 = null;
+
     private ImageView tableau;
     private String RESOURCE = "./Images/tableau.png";
     private GridPane view;
@@ -39,8 +43,14 @@ public class TableauView implements TableauObserver {
     private Label goud;
     private Label stamleden;
 
-    public TableauView() {
+    private PlayerModel playerModel;
+    private TableauController tableauController;
+
+    public TableauView(PlayerModel playermodel) {
+        this.playerModel = playermodel;
         setupPane();
+        this.tableauController = new TableauController();
+        this.tableauController.registerObserver(this);
     }
 
     public GridPane setScene() {
@@ -49,6 +59,7 @@ public class TableauView implements TableauObserver {
 
     public void setupPane() {
         this.view = new GridPane();
+
         int amountOfRows = 50;
         int amountOfColumns = 50;
 
@@ -75,8 +86,7 @@ public class TableauView implements TableauObserver {
         this.tableau = new ImageView(image);
         this.tableau.setFitWidth(680);
         this.tableau.setFitHeight(460);
-        GridPane.setConstraints(tableau, 0, 0, 50 ,50);
-
+        GridPane.setConstraints(tableau, 0, 0, 50, 50);
 
         stamleden = new Label("Aantal stamleden: 0");
         stamleden.setStyle("-fx-font-size: 22px;");
@@ -102,6 +112,7 @@ public class TableauView implements TableauObserver {
         goud.setStyle("-fx-font-size: 25px;");
         GridPane.setConstraints(goud, 30, 18, 1, 1);
 
+        this.view.getChildren().addAll(tableau, stamleden, voedsel, hout, leem, steen, goud);
 
         ImageView imageviewgereedschap1 = gereedschapview1.setScene();
         GridPane.setConstraints(imageviewgereedschap1, 2, 1, 10, 10);
@@ -111,7 +122,6 @@ public class TableauView implements TableauObserver {
 
         ImageView imageviewgereedschap3 = gereedschapview3.setScene();
         GridPane.setConstraints(imageviewgereedschap3, 2, 21, 10, 10);
-
 
         ImageView imageviewhutkaart1 = hutview1.setScene();
         GridPane.setConstraints(imageviewhutkaart1, 2, 36, 10, 10);
@@ -128,14 +138,47 @@ public class TableauView implements TableauObserver {
         ImageView imageviewhutkaart5 = hutview5.setScene();
         GridPane.setConstraints(imageviewhutkaart5, 40, 36, 10, 10);
 
-        this.view.getChildren().addAll(tableau, stamleden , voedsel, hout, leem, steen, goud, imageviewgereedschap1,
-                imageviewgereedschap2, imageviewgereedschap3, imageviewhutkaart1, imageviewhutkaart2, imageviewhutkaart3,
-                imageviewhutkaart4, imageviewhutkaart5);
+        this.view.getChildren().addAll(tableau, stamleden, voedsel, hout, leem, steen, goud, imageviewgereedschap1,
+                imageviewgereedschap2, imageviewgereedschap3, imageviewhutkaart1, imageviewhutkaart2,
+                imageviewhutkaart3, imageviewhutkaart4, imageviewhutkaart5);
+    }
 
+    public void addImageViewToView(int positie, ImageView imageView) {
+        int[][] allConstraints = new int[][] { { 2, 1 }, { 2, 11 }, { 2, 21 } };
+
+        int[] constraints = allConstraints[positie - 1];
+
+        GridPane.setConstraints(imageView, constraints[0], constraints[1], 10, 10);
+        ;
+        this.view.getChildren().add(imageView);
+    }
+
+    public void createGereedschap(int positie, int waarde) {
+        ImageView imageView = null;
+        if (waarde > 0) {
+            switch (positie) {
+                case 1:
+                    this.gereedschapview = new GereedschapView(waarde);
+                    imageView = this.gereedschapview.setScene();
+                    break;
+                case 2:
+                    this.gereedschapview1 = new GereedschapView(waarde);
+                    imageView = this.gereedschapview1.setScene();
+                    break;
+                case 3:
+                    this.gereedschapview2 = new GereedschapView(waarde);
+                    imageView = this.gereedschapview2.setScene();
+                    break;
+            }
+            addImageViewToView(positie, imageView);
+        }
     }
 
     @Override
-    public void update(TableauObservable lo) {
-
+    public void update(TableauObservable to) {
+        int[] gereedschap = to.getTools();
+        for (int i = 0; i < gereedschap.length; i++) {
+            createGereedschap(i + 1, gereedschap[i]);
+        }
     }
 }
