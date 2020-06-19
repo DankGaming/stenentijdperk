@@ -17,7 +17,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        ViewManager.loadtableauView();
+        ViewManager.loadBoardView();
         FirebaseController.initializeFirebaseApp();
     }
 
