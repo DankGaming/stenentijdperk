@@ -27,8 +27,8 @@ public class BoardController {
         players.add(carlos);
         playercontroller = new PlayerController();
         boardmodel = new BoardModel();
-        FirebaseController.addBoard(1, boardmodel);
         boardmodel.setPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
+        FirebaseController.addBoard(1, boardmodel);
         System.out.println(boardmodel.getPlayer().getNaam() + " is aan de beurt en heeft "
                 + boardmodel.getPlayer().getVillagers() + ".");
     }
