@@ -14,9 +14,8 @@ public class GereedschapView {
     private boolean canclick = true;
 
     public GereedschapView(int toolnummer) {
-        TableauModel tableau = new TableauModel();
         this.resource = "/Tools/Tool" + toolnummer + ".png";
-        setupPane(tableau);
+        setupPane();
     }
 
     public ImageView setScene() {
@@ -30,9 +29,7 @@ public class GereedschapView {
         }
     }
 
-    public void setupPane(TableauModel tableau) {
-        int[] gereedschap = tableau.getGereedschap();
-        boolean[] gereedschapGebruikt = tableau.getGereedschapGebruikt();
+    public void setupPane() {
 
         Image image = null;
 

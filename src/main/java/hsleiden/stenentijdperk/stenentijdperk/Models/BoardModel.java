@@ -16,16 +16,15 @@ import java.util.Collections;
 import java.io.File;
 
 public class BoardModel implements BoardObservable {
-    private Kaart[] kaarten; // temp made public en dit moet datatype Kaart worden
     private boolean isPlaceable;
     private PlayerModel player;
     private int turn;
     private boolean placed;
+    private ArrayList<Kaart> kaarten = new ArrayList<Kaart>();
     private BoardController controller;
     private String LabelText;
     private PlayerController playerController;
     private int phase;
-    private ArrayList<String> kaartPaths = new ArrayList<String>();
     private ArrayList<Resource> locaties = new ArrayList<>();
     private String path = "src/main/Resources/Kaarten/";
     public ArrayList<BoardObserver> observers = new ArrayList<>();
@@ -49,23 +48,18 @@ public class BoardModel implements BoardObservable {
         File[] listOfFiles = folder.listFiles();
 
         for (int i = 0; i < listOfFiles.length; i++) {
-            this.kaartPaths.add(path + listOfFiles[i].getName());
+            this.kaarten.add(i, new Kaart(i, path + listOfFiles[i].getName()));
         }
-
-        this.kaarten = new Kaart[10];
-        for (int i = 0; i < 10; i++) {
-            this.kaarten[i] = new Kaart(i);
-        }
-        Collections.shuffle(Arrays.asList(this.kaarten));
-        Collections.shuffle(this.kaartPaths);
+        Collections.shuffle(this.kaarten);
     }
 
-    public String getKaartPath(int index) {
-        return this.kaartPaths.get(index);
+    public ArrayList<Kaart> removeKaart(int index) {
+        this.kaarten.remove(index);
+        return this.kaarten;
     }
 
     public Kaart getKaart(int index) {
-        return this.kaarten[index];
+        return this.kaarten.get(index);
     }
 
     public void setPlaceable(boolean isPlaceable) {
@@ -102,7 +96,7 @@ public class BoardModel implements BoardObservable {
     public int requestVillagers(int index) {
         return this.locaties.get(index).getVillagers();
     }
-    
+
     public int requestCap(int index) {
         return this.locaties.get(index).getMaxCap();
     }
@@ -148,4 +142,5 @@ public class BoardModel implements BoardObservable {
     public void setPhase(int phase) {
         this.phase = phase;
     }
+
 }
