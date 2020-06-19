@@ -75,15 +75,6 @@ public class TableauView implements TableauObserver {
             rowConstraints.setPercentHeight(100 / amountOfRows);
             this.view.getRowConstraints().add(rowConstraints);
         }
-//
-//        FileInputStream input = null;
-//        try {
-//            input = new FileInputStream(this.RESOURCE);
-//        } catch (FileNotFoundException fileNotFoundException) {
-//            System.out.println(fileNotFoundException);
-//        }
-//
-//        assert input != null;
 
         Image image = null;
 
@@ -100,8 +91,8 @@ public class TableauView implements TableauObserver {
         GridPane.setConstraints(tableau, 0, 0, 50, 50);
 
         stamleden = new Label("Aantal stamleden: 0");
-        stamleden.setStyle("-fx-font-size: 22px;");
-        GridPane.setConstraints(stamleden, 15, 9, 18, 1);
+        stamleden.setStyle("-fx-font-size: 30px;");
+        GridPane.setConstraints(stamleden, 11, 9, 22, 1);
 
         voedsel = new Label("0");
         voedsel.setStyle("-fx-font-size: 25px;");
