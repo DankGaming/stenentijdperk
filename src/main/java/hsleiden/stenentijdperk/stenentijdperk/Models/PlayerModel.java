@@ -6,7 +6,7 @@ import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class PlayerModel {
     private String naam;
@@ -15,7 +15,7 @@ public class PlayerModel {
     private Tool[] tools = new Tool[3];
     private TableauModel tableauModal;
     private int[] resources = {10,0,0,0,0};
-    private int[] posities = new int[16];
+    private List<Integer> posities = new ArrayList<Integer>();
     private ArrayList<Kaart> kaarten = new ArrayList<Kaart>();
     private ArrayList<StaticHut> hutjes = new ArrayList<StaticHut>();
     private int graan;
@@ -27,6 +27,9 @@ public class PlayerModel {
         this.maxVillagers = 5;
         this.naam = naam;
         this.graan = 0;
+        for (int i = 0; i < 16; i++) {
+            posities.add(0);
+          }
     }
 
     public void setNaam(String naam) {
@@ -70,11 +73,11 @@ public class PlayerModel {
     }
 
     public int getPosities(int index) {
-        return posities[index];
+        return posities.get(index);
     }
 
     public void setPosities(int index,int posities) {
-        this.posities[index] = posities;
+        this.posities.set(index, posities);
     }
 
     public int getMaxVillagers() {
@@ -95,5 +98,9 @@ public class PlayerModel {
 
     public void registerObserver(TableauObserver to) {
         this.tableauModal.register(to);
+    }
+
+    public List<Integer> getAllResources(){
+        return this.posities;
     }
 }

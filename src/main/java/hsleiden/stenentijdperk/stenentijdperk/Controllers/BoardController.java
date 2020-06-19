@@ -139,7 +139,6 @@ public class BoardController {
     // List.matchAll stream
     public void endTurn() {
         if (boardmodel.getPlaced()) { // checkt of de speler stamleden heeft geplaast.
-            System.out.println("einde beurt");
             boolean villagersLeft = true;
             int i = 0;
             for (int j = 0; j < 4; j++) {
@@ -152,14 +151,14 @@ public class BoardController {
                 case 1:
                 case 2:
                     villagersLeft = loopPlayers(i, players);
-                    System.out.println("Hi");
+                    boardmodel.setPlaced(false);
                     if (!villagersLeft) { // Als de vorige loop niks gevonden heeft dan komt deze pas
-                        System.out.println("Yo");
                         villagersLeft = loopPlayers(-1, players.subList(0, i + 1));
                     }
                     break;
                 case 3:
                     villagersLeft = loopPlayers(i - 4, players);
+                    boardmodel.setPlaced(false);
                     break;
             }
             if (!villagersLeft) {
@@ -170,13 +169,18 @@ public class BoardController {
         }
     }
 
+    public void EndTurnPhase2(){
+        if (playercontroller.vraagResources(boardmodel.getPlayer()).stream().allMatch(n-> n == 0)){
+
+        }
+    }
+
     // Methode om door lijsten spelers te loopen.
     public boolean loopPlayers(int start, List<PlayerModel> player) {
         boolean found = false;
         for (int j = start + 1; j < player.size(); j++) {
             if (playercontroller.getVillagers(player.get(j)) != 0) {
                 boardmodel.setPlayer(player.get(j)); // Veranderd de huidige speler
-                boardmodel.setPlaced(false); // Reset het plaatsten
                 found = true;
                 break;
             }

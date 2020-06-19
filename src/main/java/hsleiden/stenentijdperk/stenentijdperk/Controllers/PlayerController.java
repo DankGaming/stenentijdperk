@@ -3,6 +3,8 @@ package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 
+import java.util.*;
+
 public class PlayerController {
 	private PlayerModel playermodel;
 
@@ -51,5 +53,9 @@ public class PlayerController {
 
 	public int vraagGraan(PlayerModel playerModel){
 		return playerModel.getGraan();
+	}
+
+	public List<Integer> vraagResources(PlayerModel playerModel){
+		return playerModel.getAllResources();
 	}
 }
