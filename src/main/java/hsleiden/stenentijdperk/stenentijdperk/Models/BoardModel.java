@@ -12,12 +12,12 @@ import java.util.Collections;
 import java.io.File;
 
 public class BoardModel implements BoardObservable {
-    private Kaart[] kaarten; // temp made public en dit moet datatype Kaart worden
     private boolean isPlaceable;
     private PlayerModel player;
     private int turn;
     private boolean wincondition;
     private boolean placed;
+    private ArrayList<Kaart> kaarten = new ArrayList<Kaart>();
     private ArrayList<String> kaartPaths = new ArrayList<String>();
     private ArrayList<Resource> locaties = new ArrayList<>();
 
@@ -45,20 +45,19 @@ public class BoardModel implements BoardObservable {
             this.kaartPaths.add("./Resources/Kaarten/" + listOfFiles[i].getName());
         }
 
-        this.kaarten = new Kaart[10];
         for (int i = 0; i < 10; i++) {
-            this.kaarten[i] = new Kaart(i);
+            this.kaarten.add(i, new Kaart(i, this.kaartPaths.get(i)));
         }
-        Collections.shuffle(Arrays.asList(this.kaarten));
-        Collections.shuffle(this.kaartPaths);
+        Collections.shuffle(this.kaarten);
     }
 
-    public String getKaartPath(int index) {
-        return this.kaartPaths.get(index);
+    public ArrayList<Kaart> removeKaart(int index) {
+        this.kaarten.remove(index);
+        return this.kaarten;
     }
 
     public Kaart getKaart(int index) {
-        return this.kaarten[index];
+        return this.kaarten.get(index);
     }
 
     public void setPlaceable(boolean isPlaceable) {
@@ -126,7 +125,7 @@ public class BoardModel implements BoardObservable {
         this.turn = turn;
     }
 
-    public Resource getResource(int index){
+    public Resource getResource(int index) {
         return this.locaties.get(index);
     }
     /*
