@@ -1,5 +1,6 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
+import hsleiden.stenentijdperk.stenentijdperk.App;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.LoginController;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.TableauController;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
@@ -21,6 +22,7 @@ import javafx.scene.text.Font;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
 
 public class TableauView implements TableauObserver {
     Hutview hutview1 = new Hutview(1);
@@ -34,7 +36,7 @@ public class TableauView implements TableauObserver {
     GereedschapView gereedschapview2 = null;
 
     private ImageView tableau;
-    private String RESOURCE = "./Images/tableau.png";
+    private String RESOURCE = "/Backgrounds/tableau.png";
     private GridPane view;
     private Label voedsel;
     private Label hout;
@@ -73,16 +75,25 @@ public class TableauView implements TableauObserver {
             rowConstraints.setPercentHeight(100 / amountOfRows);
             this.view.getRowConstraints().add(rowConstraints);
         }
+//
+//        FileInputStream input = null;
+//        try {
+//            input = new FileInputStream(this.RESOURCE);
+//        } catch (FileNotFoundException fileNotFoundException) {
+//            System.out.println(fileNotFoundException);
+//        }
+//
+//        assert input != null;
 
-        FileInputStream input = null;
+        Image image = null;
+
         try {
-            input = new FileInputStream(this.RESOURCE);
-        } catch (FileNotFoundException fileNotFoundException) {
-            System.out.println(fileNotFoundException);
+            image = new Image(String.valueOf(App.class.getResource(this.RESOURCE).toURI()));
+        }catch(URISyntaxException e) {
+            e.printStackTrace();
         }
 
-        assert input != null;
-        Image image = new Image(input);
+        assert image != null;
         this.tableau = new ImageView(image);
         this.tableau.setFitWidth(680);
         this.tableau.setFitHeight(460);
@@ -111,10 +122,6 @@ public class TableauView implements TableauObserver {
         goud = new Label("0");
         goud.setStyle("-fx-font-size: 25px;");
         GridPane.setConstraints(goud, 30, 18, 1, 1);
-
-        this.view.getChildren().addAll(tableau, stamleden, voedsel, hout, leem, steen, goud);
-
-
 
         ImageView imageviewhutkaart1 = hutview1.setScene();
         GridPane.setConstraints(imageviewhutkaart1, 2, 36, 10, 10);
