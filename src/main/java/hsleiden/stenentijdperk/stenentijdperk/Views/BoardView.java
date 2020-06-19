@@ -393,7 +393,7 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label, 45, 38, 1, 1);
 
 					setSpelersVisable(true);
-					controller.onResourceButtonClick(15);
+					controller.onButtonClick(15);
 				} else if (actionEvent.getSource() == hutButton) {
 					GridPane.setConstraints(speler1Image, 16, 34, 2, 2);
 					GridPane.setConstraints(speler1Label, 16, 34, 1, 1);

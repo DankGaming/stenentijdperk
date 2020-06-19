@@ -11,13 +11,7 @@ public class LobbyModel implements LobbyObservable {
 
     ArrayList<LobbyObserver> observers = new ArrayList<>();
 
-    public LobbyModel() {
-        this.players = new ArrayList<>();
-        PlayerModel playerModel1 = new PlayerModel("PotvisHunter5000");
-        PlayerModel playerModel2 = new PlayerModel("IkBenEenPotvis");
-        this.players.add(playerModel1);
-        this.players.add(playerModel2);
-    }
+    public LobbyModel() { }
 
     public void changeLobbyId(int id) {
         this.lobbyId = id;

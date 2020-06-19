@@ -3,6 +3,8 @@ package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 
+import java.util.*;
+
 public class PlayerController {
 	private PlayerModel playermodel;
 
@@ -17,7 +19,15 @@ public class PlayerController {
 		playermodel.setVillagers(villagers);
 	}
 
-	public Tool[] getTools(PlayerModel playermodel){
+	public int getMaxVillagers(PlayerModel playerModel){
+		return playerModel.getMaxVillagers();
+	}
+
+	public void addMaxVillagers(PlayerModel playerModel) {
+		playerModel.addMaxVillagers();
+	}
+
+	public ArrayList<Tool> getTools(PlayerModel playermodel){
 		return playermodel.getTools();
 	}
 
@@ -29,11 +39,23 @@ public class PlayerController {
 		playermodel.setTools(index, tool);
 	}
 
-	public int getPosities(PlayerModel playerModel, int index){
-		return playerModel.getPosities(index);
+	public int getPositie(PlayerModel playerModel, int index){
+		return playerModel.getPositie(index);
 	}
 
-	public void setPosities(PlayerModel playerModel, int index, int stamleden){
-		playerModel.setPosities(index, stamleden);
+	public void setPositie(PlayerModel playerModel, int index, int stamleden){
+		playerModel.setPositie(index, stamleden);
+	}
+
+	public void addGraan(PlayerModel playerModel){
+		playerModel.increaseGraan();
+	}
+
+	public int vraagGraan(PlayerModel playerModel){
+		return playerModel.getGraan();
+	}
+
+	public List<Integer> vraagResources(PlayerModel playerModel){
+		return playerModel.getPosities();
 	}
 }
