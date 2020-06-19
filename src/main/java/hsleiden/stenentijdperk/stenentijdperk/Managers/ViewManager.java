@@ -2,7 +2,6 @@ package hsleiden.stenentijdperk.stenentijdperk.Managers;
 
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.FirebaseController;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
-import hsleiden.stenentijdperk.stenentijdperk.Models.TableauModel;
 import hsleiden.stenentijdperk.stenentijdperk.Views.BoardView;
 import hsleiden.stenentijdperk.stenentijdperk.Views.LobbyView;
 import hsleiden.stenentijdperk.stenentijdperk.Views.LoginView;
@@ -63,7 +62,7 @@ public class ViewManager {
 
     // This function shows a view.
     public static void showView(int width, int height, String title) {
-        createStageFromView(1200, 800, "Login");
+        createStageFromView(680, 460, "Login");
         if (currentStage != null)
             currentStage.show();
     }
@@ -80,6 +79,7 @@ public class ViewManager {
         if(currentPopupView != null)
             currentPopupStage.setScene(new Scene(currentPopupView, width, height));
         currentPopupStage.setTitle(title);
+        currentPopupStage.setResizable(false);
     }
 
     // Function that opens popup window

@@ -19,6 +19,8 @@ public class PlayerModel {
     private ArrayList<Kaart> kaarten = new ArrayList<Kaart>();
     private ArrayList<StaticHut> hutjes = new ArrayList<StaticHut>();
 
+    public PlayerModel(){}
+
     public PlayerModel(String naam) {
         this.villagers = 5;
         this.maxVillagers = 5;

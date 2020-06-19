@@ -2,7 +2,6 @@ package hsleiden.stenentijdperk.stenentijdperk.Models;
 
 
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Stamlid;
-import hsleiden.stenentijdperk.stenentijdperk.observers.LobbyObserver;
 import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObserver;
 
