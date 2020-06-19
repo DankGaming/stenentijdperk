@@ -7,20 +7,18 @@ public class Resource {
 	private int hoeveelheid;
 	private int villagers = 0;
 	private boolean status;
-	
-	 
-	
+
 	public Resource(String naam, int hoeveelheid, int waarde, int maxCap) {
 		this.naam = naam;
 		this.hoeveelheid = hoeveelheid;
 		this.waarde = waarde;
-		this.maxCap = maxCap;	
+		this.maxCap = maxCap;
 	}
-	
+
 	public String getNaam() {
 		return this.naam;
 	}
-	
+
 	public int getHoeveelheid() {
 		return this.hoeveelheid;
 	}
@@ -36,7 +34,7 @@ public class Resource {
 	public void addHoeveelheid(int amount) {
 		this.hoeveelheid += amount;
 	}
-	
+
 	public int getWaarde() {
 		return this.waarde;
 	}
