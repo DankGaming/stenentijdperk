@@ -349,9 +349,7 @@ public class BoardView {
 					setSpelersVisable(true);
 					controller.onButtonClick(11);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons[0]) {
-					ArrayList<Kaart> array = controller.onKaartButtonClick(0); // kaarten worden verwijderd onclick, dit
-																				// moet veranderd worden als de actie
-																				// fase werkt
+					ArrayList<Kaart> array = controller.onKaartButtonClick(0); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
 
 					GridPane.setConstraints(speler1Image, 43, 36, 2, 2);
@@ -369,7 +367,7 @@ public class BoardView {
 					setSpelersVisable(true);
 					controller.onButtonClick(12);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons[1]) {
-					ArrayList<Kaart> array = controller.onKaartButtonClick(1);
+					ArrayList<Kaart> array = controller.onKaartButtonClick(1); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
 
 					GridPane.setConstraints(speler1Image, 37, 36, 2, 2);
@@ -387,7 +385,7 @@ public class BoardView {
 					setSpelersVisable(true);
 					controller.onButtonClick(13);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons[2]) {
-					ArrayList<Kaart> array = controller.onKaartButtonClick(2);
+					ArrayList<Kaart> array = controller.onKaartButtonClick(2); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
 
 					GridPane.setConstraints(speler1Image, 32, 36, 2, 2);
@@ -405,7 +403,7 @@ public class BoardView {
 					setSpelersVisable(true);
 					controller.onButtonClick(14);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons[3]) {
-					ArrayList<Kaart> array = controller.onKaartButtonClick(3);
+					ArrayList<Kaart> array = controller.onKaartButtonClick(3); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
 
 					GridPane.setConstraints(speler1Image, 27, 36, 2, 2);
