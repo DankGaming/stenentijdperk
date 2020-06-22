@@ -26,7 +26,7 @@ public class LoginView {
 	private LoginController controller;
 	private PlayerModel playermodel;
 	private GridPane view;
-	private String loginImage = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Achtergronden/menu2.jpg";
+	private String loginImage = "src/main/Resources/Backgrounds/menu2.jpg";
 	private ImageView imageView;
 
 	public LoginView() {
@@ -66,7 +66,7 @@ public class LoginView {
 		assert input != null;
 		Image loginImage = new Image(input);
 		this.imageView = new ImageView(loginImage);
-		this.imageView.setFitWidth(1200);
+		this.imageView.setFitWidth(800);
 		this.imageView.setFitHeight(800);
 		GridPane.setConstraints(imageView, 0, 0, 50 ,50);
 

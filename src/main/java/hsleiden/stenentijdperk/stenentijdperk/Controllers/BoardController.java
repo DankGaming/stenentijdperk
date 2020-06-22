@@ -29,8 +29,8 @@ public class BoardController {
         players.add(carlos);
         playercontroller = new PlayerController();
         boardmodel = new BoardModel();
-        // FirebaseController.addBoard(1, boardmodel);
         boardmodel.setPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
+<<<<<<< HEAD
         System.out.println(boardmodel.getPlayer().getNaam() + " is aan de beurt en heeft "
                 + boardmodel.getPlayer().getVillagers() + ".");
         matt.getMaxVillagers();
@@ -56,6 +56,8 @@ public class BoardController {
         moreVillagerHut(6);
         moreVillagerHut(6);
     }           
+=======
+    }
 
     public String scanner(String text) {
         Scanner myObj = new Scanner(System.in); // Create a Scanner object
@@ -72,25 +74,23 @@ public class BoardController {
         return this.boardmodel.getKaart(index);
     }
 
-    public void onResourceButtonClick(int location) {
+    public void onResourceButtonClick(int location, int input) {
         if (vraagPhase() == 1) {
             if (!boardmodel.getPlaced() && boardmodel.requestCap(location) - boardmodel.requestVillagers(location) != 0
                     && playercontroller.getPositie(boardmodel.getPlayer(), location) == 0) {
-                String input;
-                do {
-                    input = scanner("Hoeveel stamleden?");
-                    // hoeveel passen op de locatie
-                } while (Integer.parseInt(input) <= 0
-                        || Integer.parseInt(input) > playercontroller.getVillagers(boardmodel.getPlayer())
-                        || Integer.parseInt(
-                                input) > (boardmodel.requestCap(location) - boardmodel.requestVillagers(location)));
                 // Dit veranderd de hoeveelheid stamleden van een speler
-                boardmodel.changeVillagers(location, Integer.parseInt(input));
-                plaatsenStamleden(location, Integer.parseInt(input));
+                boardmodel.changeVillagers(location, input);
+                plaatsenStamleden(location, input);
             }
         } else {
             resolveResource(location);
         }
+    }
+
+    public boolean stamledenCheck(int location, int input) {
+         return (input > 0
+                && input <= playercontroller.getVillagers(boardmodel.getPlayer())
+                && input <= (boardmodel.requestCap(location) - boardmodel.requestVillagers(location)));
     }
 
     // methode om de onderste buttons af te handelen. maakt de kaart/hut bezet en

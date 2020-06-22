@@ -18,6 +18,7 @@ public class LobbyController {
         this.p = player;
         lobbyModel.changeLobbyId(id);
         FirebaseController.listenForLobbyUpdates(String.valueOf(id));
+        FirebaseController.listenForPlayerUpdates(String.valueOf(id));
     }
 
     public void joinLobby() {
