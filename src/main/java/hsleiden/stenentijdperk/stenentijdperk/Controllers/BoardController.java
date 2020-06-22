@@ -47,21 +47,13 @@ public class BoardController {
         return this.boardmodel.getKaart(index);
     }
 
-    public void onResourceButtonClick(int location) {
+    public void onResourceButtonClick(int location, int input) {
         if (vraagPhase() == 1) {
             if (!boardmodel.getPlaced() && boardmodel.requestCap(location) - boardmodel.requestVillagers(location) != 0
                     && playercontroller.getPositie(boardmodel.getPlayer(), location) == 0) {
-                String input;
-                do {
-                    input = scanner("Hoeveel stamleden?");
-                    // hoeveel passen op de locatie
-                } while (Integer.parseInt(input) <= 0
-                        || Integer.parseInt(input) > playercontroller.getVillagers(boardmodel.getPlayer())
-                        || Integer.parseInt(
-                                input) > (boardmodel.requestCap(location) - boardmodel.requestVillagers(location)));
                 // Dit veranderd de hoeveelheid stamleden van een speler
-                boardmodel.changeVillagers(location, Integer.parseInt(input));
-                plaatsenStamleden(location, Integer.parseInt(input));
+                boardmodel.changeVillagers(location, input);
+                plaatsenStamleden(location, input);
             }
         } else {
             resolveResource(location);
