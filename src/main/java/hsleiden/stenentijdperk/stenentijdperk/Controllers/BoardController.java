@@ -5,6 +5,7 @@ import hsleiden.stenentijdperk.stenentijdperk.Helpers.Dobbelsteen;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +90,7 @@ public class BoardController {
                     moreVillagerHut(index);
                     break;
                 case 7:
-                    // TODO tools krijgen
+                    gainTools(index);
                     break;
                 case 8:
                 case 9:
@@ -140,6 +141,24 @@ public class BoardController {
             playercontroller.addMaxVillagers(boardmodel.getPlayer());
             playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
         }
+    }
+
+    public void gainTools(int index) {
+        if((playercontroller.getPositie(boardmodel.getPlayer(), index) != 0)){
+            ArrayList<Tool> tools = playercontroller.getTools(boardmodel.getPlayer());  
+            if (tools.size() < 3) {
+                playercontroller.addTool(boardmodel.getPlayer());
+            } else if (tools.get(2).getLevel() != 4) {
+                for (int i = 0; i < 3; i++){
+                    if (tools.get(i).getLevel() == tools.get(2).getLevel()) {
+                        tools.get(i).increaseLevel();
+                        playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
+                        break;
+                    }
+                }
+            }
+        }
+
     }
 
     public void endTurn() {

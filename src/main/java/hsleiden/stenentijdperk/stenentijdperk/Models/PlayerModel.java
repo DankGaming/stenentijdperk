@@ -58,12 +58,16 @@ public class PlayerModel {
         return tools;
     }
 
-    public Tool getTool(int index) {
-        return this.tools.get(index);
+    public void setTools(ArrayList<Tool> tools) {
+        this.tools = tools;
     }
 
-    public void setTools(int index, Tool tool) {
-        this.tools.set(index,tool);
+    public int getToolLevel(int index) {
+        return this.tools.get(index).getLevel();
+    }
+
+    public void  increaseToolLevel(int index){
+        this.tools.get(index).increaseLevel();
     }
 
     public int getResource(int index) {
@@ -99,7 +103,7 @@ public class PlayerModel {
     }
 
     public void addMaxVillagers() {
-        this.maxVillagers += maxVillagers;
+        this.maxVillagers += 1;
     }
 
     public int getGraan() {
@@ -144,5 +148,10 @@ public class PlayerModel {
 
     public void setMulitplier(List<Integer> mulitplier) {
         this.multiplier = mulitplier;
+    }
+
+    public void addTool(){
+        Tool tool = new Tool();
+        tools.add(tool);
     }
 }
