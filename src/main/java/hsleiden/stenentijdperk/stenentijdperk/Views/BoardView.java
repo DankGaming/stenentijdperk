@@ -24,12 +24,12 @@ public class BoardView {
 	private ArrayList<Button> beschavingsKaartButtons = new ArrayList<Button>();
 	private BoardModel boardModel;
 	private GridPane view = new GridPane();
-	private String spelbordImage = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Achtergronden/spelbord2.jpg";
+	private String spelbordImage = "src/main/Resources/Backgrounds/spelbord2.jpg";
 	private ImageView imageView;
-	private String Speler1 = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Spelers/Speler1.png";
-	private String Speler2 = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Spelers/Speler2.png";
-	private String Speler3 = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Spelers/Speler3.png";
-	private String Speler4 = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Spelers/Speler4.png";
+	private String Speler1 = "src/main/Resources/Spelers/Speler1.png";
+	private String Speler2 = "src/main/Resources/Spelers/Speler2.png";
+	private String Speler3 = "src/main/Resources/Spelers/Speler3.png";
+	private String Speler4 = "src/main/Resources/Spelers/Speler4.png";
 	private Label speler1Label;
 	private Label speler2Label;
 	private Label speler3Label;

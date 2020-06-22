@@ -26,7 +26,7 @@ public class LoginView {
 	private LoginController controller;
 	private PlayerModel playermodel;
 	private GridPane view;
-	private String loginImage = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Achtergronden/menu2.jpg";
+	private String loginImage = "src/main/Resources/Backgrounds/menu2.jpg";
 	private ImageView imageView;
 
 	public LoginView() {
