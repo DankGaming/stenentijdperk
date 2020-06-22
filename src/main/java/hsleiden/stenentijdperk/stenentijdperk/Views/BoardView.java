@@ -1,35 +1,28 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
-import hsleiden.stenentijdperk.stenentijdperk.App;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import java.util.ArrayList;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class BoardView {
 	private BoardController controller;
+	private Button[] beschavingsKaartButtons;
 	private BoardModel boardModel;
-	private ArrayList<Button> beschavingsKaartButtons;
 	private GridPane view = new GridPane();
 	private String spelbordImage = "src/main/java/hsleiden/stenentijdperk/stenentijdperk/Resources/Achtergronden/spelbord2.jpg";
 	private ImageView imageView;
@@ -47,13 +40,49 @@ public class BoardView {
 	private ImageView speler4Image;
 
 	public BoardView() {
-		this.beschavingsKaartButtons = new ArrayList<Button>();
+		this.beschavingsKaartButtons = new Button[4];
 		this.controller = new BoardController();
 		setupPane();
 	}
 
 	public GridPane setScene() {
 		return view;
+	}
+
+	private void createKaartButtons() {
+		for (int i = 0; i < 4; i++) { // maakt 4 beschavingskaart buttons
+			FileInputStream input = null;
+			try {
+				input = new FileInputStream(this.controller.getKaart(i).getPath());
+			} catch (FileNotFoundException fileNotFoundException) {
+				System.out.println(fileNotFoundException);
+			}
+
+			assert input != null;
+			Image image = new Image(input);
+			ImageView imageView = new ImageView(image);
+			imageView.setFitHeight(160);
+			imageView.setPreserveRatio(true);
+			this.beschavingsKaartButtons[i] = new Button("", imageView);
+		}
+	}
+
+	private void renderNewKaarten(ArrayList<Kaart> array) {
+		for (int i = 0; i < 4; i++) { // maakt 4 beschavingskaart buttons
+			FileInputStream input = null;
+			try {
+				input = new FileInputStream(array.get(i).getPath());
+			} catch (FileNotFoundException fileNotFoundException) {
+				System.out.println(fileNotFoundException);
+			}
+
+			assert input != null;
+			Image image = new Image(input);
+			ImageView imageView = new ImageView(image);
+			imageView.setFitHeight(160);
+			imageView.setPreserveRatio(true);
+			this.beschavingsKaartButtons[i].setGraphic(imageView);
+		}
 	}
 
 	private void setupPane() {
@@ -168,44 +197,25 @@ public class BoardView {
 		// GridPane.setConstraints(speler4Label, 30, 11, 2 ,2);
 
 		Label amountLabel = new Label("Hoeveel:");
-		amountLabel.setStyle("-fx-font-size: 25px; -fx-font-weight: bold; -fx-text-fill: #f6e5b6; -fx-background-color: #dfa231;");
-		amountLabel.setVisible(false);
-		GridPane.setConstraints(amountLabel, 17, 18, 5, 3);
+		amountLabel.setStyle("-fx-font-size: 20px;");
+		GridPane.setConstraints(amountLabel, 1, 1, 10, 3);
 
 		TextField amountField = new TextField();
-		amountField.setVisible(false);
-		amountField.setEditable(false);
-		GridPane.setConstraints(amountField, 22, 18, 10, 3);
-
+		GridPane.setConstraints(amountField, 6, 1, 15, 3);
 
 		/*
 		 * locaties jacht: onbeperkt hut: 2 hutkaart: 1 beschavingskaart: 1 gereedschap:
 		 * 1 akkerbouw: 1 steen, leem, goud, hout: 7
 		 */
 
+		this.createKaartButtons();
 		// Buttons
 		String style = "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;";
-		for (int i = 0; i < 4; i++) { // maakt 4 beschavingskaart buttons
-			FileInputStream input2 = null;
-			try {
-				input2 = new FileInputStream(this.controller.getKaartPath(i));
-			} catch (FileNotFoundException fileNotFoundException) {
-				System.out.println(fileNotFoundException);
-			}
 
-			assert input2 != null;
-			Image image2 = new Image(input2);
-			ImageView imageView = new ImageView(image2);
-			imageView.setFitHeight(160);
-			imageView.setPreserveRatio(true);
-			Button beschavingsKaartButton = new Button("", imageView);
-			beschavingsKaartButtons.add(beschavingsKaartButton);
-		}
-
-		GridPane.setConstraints(beschavingsKaartButtons.get(0), 26, 40, 1, 1);
-		GridPane.setConstraints(beschavingsKaartButtons.get(1), 31, 40, 1, 1);
-		GridPane.setConstraints(beschavingsKaartButtons.get(2), 37, 40, 1, 1);
-		GridPane.setConstraints(beschavingsKaartButtons.get(3), 42, 40, 1, 1);
+		GridPane.setConstraints(this.beschavingsKaartButtons[0], 42, 40, 1, 1);
+		GridPane.setConstraints(this.beschavingsKaartButtons[1], 37, 40, 1, 1);
+		GridPane.setConstraints(this.beschavingsKaartButtons[2], 31, 40, 1, 1);
+		GridPane.setConstraints(this.beschavingsKaartButtons[3], 26, 40, 1, 1);
 
 		Button hutKaartButton1 = new Button("stamlid op een hut");
 		hutKaartButton1.setStyle(style);
@@ -338,37 +348,28 @@ public class BoardView {
 
 					setSpelersVisable(true);
 					controller.onButtonClick(11);
-				} else if (actionEvent.getSource() == beschavingsKaartButton1) {
-					GridPane.setConstraints(speler1Image, 27, 36, 2, 2);
-					GridPane.setConstraints(speler1Label, 27, 36, 1, 1);
+				} else if (actionEvent.getSource() == beschavingsKaartButtons[0]) {
+					ArrayList<Kaart> array = controller.onKaartButtonClick(0); // TODO verplaatsen naar acties
+					renderNewKaarten(array);
 
-					GridPane.setConstraints(speler2Image, 29, 36, 2, 2);
-					GridPane.setConstraints(speler2Label, 29, 36, 1, 1);
+					GridPane.setConstraints(speler1Image, 43, 36, 2, 2);
+					GridPane.setConstraints(speler1Label, 43, 36, 1, 1);
 
-					GridPane.setConstraints(speler3Image, 27, 38, 2, 2);
-					GridPane.setConstraints(speler3Label, 27, 38, 1, 1);
+					GridPane.setConstraints(speler2Image, 45, 36, 2, 2);
+					GridPane.setConstraints(speler2Label, 45, 36, 1, 1);
 
-					GridPane.setConstraints(speler4Image, 29, 38, 2, 2);
-					GridPane.setConstraints(speler4Label, 29, 38, 1, 1);
+					GridPane.setConstraints(speler3Image, 43, 38, 2, 2);
+					GridPane.setConstraints(speler3Label, 43, 38, 1, 1);
+
+					GridPane.setConstraints(speler4Image, 45, 38, 2, 2);
+					GridPane.setConstraints(speler4Label, 45, 38, 1, 1);
 
 					setSpelersVisable(true);
 					controller.onButtonClick(12);
-				} else if (actionEvent.getSource() == beschavingsKaartButton2) {
-					GridPane.setConstraints(speler1Image, 32, 36, 2, 2);
-					GridPane.setConstraints(speler1Label, 32, 36, 1, 1);
+				} else if (actionEvent.getSource() == beschavingsKaartButtons[1]) {
+					ArrayList<Kaart> array = controller.onKaartButtonClick(1); // TODO verplaatsen naar acties
+					renderNewKaarten(array);
 
-					GridPane.setConstraints(speler2Image, 34, 36, 2, 2);
-					GridPane.setConstraints(speler2Label, 34, 36, 1, 1);
-
-					GridPane.setConstraints(speler3Image, 32, 38, 2, 2);
-					GridPane.setConstraints(speler3Label, 32, 38, 1, 1);
-
-					GridPane.setConstraints(speler4Image, 34, 38, 2, 2);
-					GridPane.setConstraints(speler4Label, 34, 38, 1, 1);
-
-					setSpelersVisable(true);
-					controller.onButtonClick(13);
-				} else if (actionEvent.getSource() == beschavingsKaartButton3) {
 					GridPane.setConstraints(speler1Image, 37, 36, 2, 2);
 					GridPane.setConstraints(speler1Label, 37, 36, 1, 1);
 
@@ -382,19 +383,40 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label, 39, 38, 1, 1);
 
 					setSpelersVisable(true);
+					controller.onButtonClick(13);
+				} else if (actionEvent.getSource() == beschavingsKaartButtons[2]) {
+					ArrayList<Kaart> array = controller.onKaartButtonClick(2); // TODO verplaatsen naar acties
+					renderNewKaarten(array);
+
+					GridPane.setConstraints(speler1Image, 32, 36, 2, 2);
+					GridPane.setConstraints(speler1Label, 32, 36, 1, 1);
+
+					GridPane.setConstraints(speler2Image, 34, 36, 2, 2);
+					GridPane.setConstraints(speler2Label, 34, 36, 1, 1);
+
+					GridPane.setConstraints(speler3Image, 32, 38, 2, 2);
+					GridPane.setConstraints(speler3Label, 32, 38, 1, 1);
+
+					GridPane.setConstraints(speler4Image, 34, 38, 2, 2);
+					GridPane.setConstraints(speler4Label, 34, 38, 1, 1);
+
+					setSpelersVisable(true);
 					controller.onButtonClick(14);
-				} else if (actionEvent.getSource() == beschavingsKaartButton4) {
-					GridPane.setConstraints(speler1Image, 43, 36, 2, 2);
-					GridPane.setConstraints(speler1Label, 43, 36, 1, 1);
+				} else if (actionEvent.getSource() == beschavingsKaartButtons[3]) {
+					ArrayList<Kaart> array = controller.onKaartButtonClick(3); // TODO verplaatsen naar acties
+					renderNewKaarten(array);
 
-					GridPane.setConstraints(speler2Image, 45, 36, 2, 2);
-					GridPane.setConstraints(speler2Label, 45, 36, 1, 1);
+					GridPane.setConstraints(speler1Image, 27, 36, 2, 2);
+					GridPane.setConstraints(speler1Label, 27, 36, 1, 1);
 
-					GridPane.setConstraints(speler3Image, 43, 38, 2, 2);
-					GridPane.setConstraints(speler3Label, 43, 38, 1, 1);
+					GridPane.setConstraints(speler2Image, 29, 36, 2, 2);
+					GridPane.setConstraints(speler2Label, 29, 36, 1, 1);
 
-					GridPane.setConstraints(speler4Image, 45, 38, 2, 2);
-					GridPane.setConstraints(speler4Label, 45, 38, 1, 1);
+					GridPane.setConstraints(speler3Image, 27, 38, 2, 2);
+					GridPane.setConstraints(speler3Label, 27, 38, 1, 1);
+
+					GridPane.setConstraints(speler4Image, 29, 38, 2, 2);
+					GridPane.setConstraints(speler4Label, 29, 38, 1, 1);
 
 					setSpelersVisable(true);
 					controller.onButtonClick(15);
@@ -507,7 +529,6 @@ public class BoardView {
 					GridPane.setConstraints(speler1Image, 37, 21, 2, 2);
 					GridPane.setConstraints(speler1Label, 37, 21, 1, 1);
 
-
 					GridPane.setConstraints(speler2Image, 39, 21, 2, 2);
 					GridPane.setConstraints(speler2Label, 39, 21, 1, 1);
 
@@ -529,10 +550,10 @@ public class BoardView {
 		hutKaartButton2.setOnAction(event);
 		hutKaartButton3.setOnAction(event);
 		hutKaartButton4.setOnAction(event);
-		beschavingsKaartButtons.get(0).setOnAction(event);
-		beschavingsKaartButtons.get(1).setOnAction(event);
-		beschavingsKaartButtons.get(2).setOnAction(event);
-		beschavingsKaartButtons.get(3).setOnAction(event);
+		beschavingsKaartButtons[0].setOnAction(event);
+		beschavingsKaartButtons[1].setOnAction(event);
+		beschavingsKaartButtons[2].setOnAction(event);
+		beschavingsKaartButtons[3].setOnAction(event);
 		hutButton.setOnAction(event);
 		gereedschapButton.setOnAction(event);
 		akkerbouwButton.setOnAction(event);
@@ -543,12 +564,11 @@ public class BoardView {
 		rivierButton.setOnAction(event);
 		endTurn.setOnAction(event);
 
-		// speler1Image, speler2Image, speler3Image, speler4Image,
-		//				speler1Label, speler2Label, speler3Label, speler4Label,
 		this.view.getChildren().addAll(imageView, hutKaartButton1, hutKaartButton2, hutKaartButton3, hutKaartButton4,
-				beschavingsKaartButton1, beschavingsKaartButton2, beschavingsKaartButton3, beschavingsKaartButton4,
-				hutButton, gereedschapButton, akkerbouwButton, jachtButton, bosButton, leemGroeveButton,
-				steenGroeveButton, rivierButton, endTurn, amountField, amountLabel);
+				beschavingsKaartButtons[0], beschavingsKaartButtons[1], beschavingsKaartButtons[2],
+				beschavingsKaartButtons[3], hutButton, gereedschapButton, akkerbouwButton, jachtButton, bosButton,
+				leemGroeveButton, steenGroeveButton, rivierButton, endTurn, speler1Image, speler2Image, speler3Image,
+				speler4Image, speler1Label, speler2Label, speler3Label, speler4Label);
 	}
 
 	private void setSpelersVisable(boolean visable) {
@@ -564,8 +584,4 @@ public class BoardView {
 		speler4Image.setVisible(visable);
 		speler4Label.setVisible(visable);
 	}
-	//TODO functie op input te checken!
-//	private void setLabelText() {
-//		this.speler1Label.setText(controller.scanner());
-//	}
 }

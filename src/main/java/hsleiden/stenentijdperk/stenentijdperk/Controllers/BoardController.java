@@ -1,5 +1,6 @@
 package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Dobbelsteen;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
@@ -27,7 +28,7 @@ public class BoardController {
         players.add(carlos);
         playercontroller = new PlayerController();
         boardmodel = new BoardModel();
-//        FirebaseController.addBoard(1, boardmodel);
+        // FirebaseController.addBoard(1, boardmodel);
         boardmodel.setPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
         System.out.println(boardmodel.getPlayer().getNaam() + " is aan de beurt en heeft "
                 + boardmodel.getPlayer().getVillagers() + ".");
@@ -44,16 +45,14 @@ public class BoardController {
         this.boardmodel.register(boardobserver);
     }
 
-    public String getKaartPath(int index) {
-        return this.boardmodel.getKaartPath(index);
+    public Kaart getKaart(int index) {
+        return this.boardmodel.getKaart(index);
     }
 
     public void onResourceButtonClick(int location) {
         if (vraagPhase() == 1) {
             if (!boardmodel.getPlaced() && boardmodel.requestCap(location) - boardmodel.requestVillagers(location) != 0
                     && playercontroller.getPositie(boardmodel.getPlayer(), location) == 0) {
-                //TODO functie op input te checken! Dit moet een functie worden
-
                 String input;
                 do {
                     input = scanner("Hoeveel stamleden?");
@@ -71,17 +70,23 @@ public class BoardController {
         }
     }
 
-    public void onButtonClick(int index){
-        if (vraagPhase() == 1){
-            if (locatieVrij(index) && !boardmodel.getPlaced()){
+    // methode om de onderste buttons af te handelen. maakt de kaart/hut bezet en
+    // zorgt dat je niet meer kan plaatsen.
+    public ArrayList<Kaart> onKaartButtonClick(int index) {
+        return (boardmodel.removeKaart(index)); // dit moet naar acties verplaatst worden
+    }
+
+    public void onButtonClick(int index) {
+        if (vraagPhase() == 1) {
+            if (locatieVrij(index) && !boardmodel.getPlaced()) {
                 if (index == 6) {
                     plaatsenStamleden(index, 2);
                 } else {
                     plaatsenStamleden(index, 1);
                 }
             }
-        } else{
-            switch (index){
+        } else {
+            switch (index) {
                 case 5:
                     moreAgriculture(index);
                     break;
@@ -114,7 +119,7 @@ public class BoardController {
             roll.worp();
             roll.berekenTotaal();
             int resources = roll.getTotaal() / boardmodel.getResource(index).getWaarde();
-            if (resources > boardmodel.getResource(index).getHoeveelheid()){
+            if (resources > boardmodel.getResource(index).getHoeveelheid()) {
                 resources = boardmodel.getResource(index).getHoeveelheid();
             }
             boardmodel.getResource(index).reduceHoeveelheid(resources);
@@ -125,16 +130,18 @@ public class BoardController {
         }
     }
 
-    public void moreAgriculture(int index){
-        if (playercontroller.getPositie(boardmodel.getPlayer(), index) != 0 && playercontroller.vraagGraan(boardmodel.getPlayer()) != 10){
+    public void moreAgriculture(int index) {
+        if (playercontroller.getPositie(boardmodel.getPlayer(), index) != 0
+                && playercontroller.vraagGraan(boardmodel.getPlayer()) != 10) {
             playercontroller.addGraan(boardmodel.getPlayer());
             playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
 
         }
     }
 
-    public void moreVillagerHut(int index){
-        if (playercontroller.getPositie(boardmodel.getPlayer(), index) != 0 && playercontroller.getMaxVillagers(boardmodel.getPlayer()) != 10){
+    public void moreVillagerHut(int index) {
+        if (playercontroller.getPositie(boardmodel.getPlayer(), index) != 0
+                && playercontroller.getMaxVillagers(boardmodel.getPlayer()) != 10) {
             playercontroller.addMaxVillagers(boardmodel.getPlayer());
             playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
         }
@@ -143,6 +150,7 @@ public class BoardController {
     public void endTurn() {
         if (boardmodel.getPlaced()) { // checkt of de speler stamleden heeft geplaast.
             boolean villagersLeft = true;
+            System.out.println("Einde beurt");
             int i = checkPlayer();
             switch (i) { // Verschillede loops bepaalt door welke speler aan de beurt was
                 case 0: // Spelers 1, 2 en 3
@@ -167,18 +175,18 @@ public class BoardController {
         }
     }
 
-    public void EndTurnPhase2(){
-        if (playercontroller.vraagResources(boardmodel.getPlayer()).stream().allMatch(n-> n == 0)){
+    public void EndTurnPhase2() {
+        if (playercontroller.vraagResources(boardmodel.getPlayer()).stream().allMatch(n -> n == 0)) {
             int i = checkPlayer();
-            if (i == 4){
+            if (i == 4) {
                 boardmodel.setPlayer(players.get(0));
             } else {
                 i++;
                 boardmodel.setPlayer(players.get(i));
             }
         }
-        if (playercontroller.vraagResources(boardmodel.getPlayer()).stream().allMatch(n-> n == 0)){
-            //TODO do voedsel stuff.
+        if (playercontroller.vraagResources(boardmodel.getPlayer()).stream().allMatch(n -> n == 0)) {
+            // TODO do voedsel stuff.
         }
     }
 
@@ -195,40 +203,40 @@ public class BoardController {
         return found;
     }
 
-    public int checkPlayer(){
+    public int checkPlayer() {
         int i = 0;
-            for (int j = 0; j < 4; j++) {
-                if (boardmodel.getPlayer().equals(players.get(j))) { // Bepaling welke player aan de beurt is
-                    i = j;
-                    break;
-                }
+        for (int j = 0; j < 4; j++) {
+            if (boardmodel.getPlayer().equals(players.get(j))) { // Bepaling welke player aan de beurt is
+                i = j;
+                break;
             }
+        }
         return i;
     }
-    
-    public boolean locatieVrij(int index){
+
+    public boolean locatieVrij(int index) {
         boolean status = true;
-        for (PlayerModel player: players){
-            if(player.getPositie(index) != 0){
+        for (PlayerModel player : players) {
+            if (player.getPositie(index) != 0) {
                 status = false;
             }
         }
         return status;
-        
+
     }
 
-    public void plaatsenStamleden(int index, int stamleden){
+    public void plaatsenStamleden(int index, int stamleden) {
         boardmodel.setPlaced(true);
         playercontroller.setVillagers(boardmodel.getPlayer(),
-            (playercontroller.getVillagers(boardmodel.getPlayer()) - stamleden));
+                (playercontroller.getVillagers(boardmodel.getPlayer()) - stamleden));
         playercontroller.setPositie(boardmodel.getPlayer(), index, stamleden);
     }
 
-    public void toolGebruiken(){
+    public void toolGebruiken() {
         // TODO tools stuff
     }
 
-    public int vraagPhase(){
+    public int vraagPhase() {
         return boardmodel.getPhase();
     }
 }
