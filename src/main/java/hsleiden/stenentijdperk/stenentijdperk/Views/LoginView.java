@@ -11,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -96,6 +97,10 @@ public class LoginView {
 
 		verderButton.setOnAction(event);
 
-		this.view.getChildren().addAll(imageView, naamLabel, naamField, verderButton);
+		PickerView pickerView = new PickerView();
+		ScrollPane scrollPane = pickerView.setScene();
+		GridPane.setConstraints(scrollPane, 30, 30, 10, 10);
+
+		this.view.getChildren().addAll(imageView, naamLabel, naamField, verderButton, scrollPane);
 	}
 }
