@@ -4,6 +4,7 @@ import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.PlayerController;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Resource;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
 import javafx.event.Event;
@@ -25,6 +26,7 @@ public class BoardModel implements BoardObservable {
     private String LabelText;
     private PlayerController playerController;
     private int phase;
+    private ArrayList<StaticHut> hutjes = new ArrayList<>();
     private ArrayList<Resource> locaties = new ArrayList<>();
     private String path = "src/main/Resources/Kaarten/";
     public ArrayList<BoardObserver> observers = new ArrayList<>();
@@ -62,6 +64,13 @@ public class BoardModel implements BoardObservable {
         return this.kaarten.get(index);
     }
 
+    public void setKaarten(ArrayList<Kaart> kaarten){
+        this.kaarten = kaarten;
+    }
+
+    public ArrayList<Kaart> getKaarten(){
+        return this.kaarten;
+    }
     public void setPlaceable(boolean isPlaceable) {
         this.isPlaceable = isPlaceable;
     }
@@ -143,4 +152,19 @@ public class BoardModel implements BoardObservable {
         this.phase = phase;
     }
 
+    public ArrayList<StaticHut> getHutjes() {
+        return hutjes;
+    }
+
+    public void setHutjes(ArrayList<StaticHut> hutjes) {
+        this.hutjes = hutjes;
+    }
+
+    public ArrayList<Resource> getLocaties(){
+        return this.locaties;
+    }
+
+    public void setLocaties(ArrayList<Resource> res){
+        this.locaties = res;
+    }
 }
