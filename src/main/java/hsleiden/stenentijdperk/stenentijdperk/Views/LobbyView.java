@@ -141,25 +141,29 @@ public class LobbyView implements LobbyObserver {
         try {
             this.speler1.setText(players.get(0).getNaam());
             this.speler1.setStyle("-fx-font-size: 15px;");
-        } catch (Exception ignored) {
+        }
+        catch (Exception ignored) {
         }
 
         try {
             this.speler2.setText(players.get(1).getNaam());
             this.speler2.setStyle("-fx-font-size: 15px;");
-        } catch (Exception ignored) {
+        }
+        catch (Exception ignored) {
         }
 
         try {
             this.speler3.setText(players.get(2).getNaam());
             this.speler3.setStyle("-fx-font-size: 15px;");
-        } catch (Exception ignored) {
+        }
+        catch (Exception ignored) {
         }
 
         try {
             this.speler4.setText(players.get(3).getNaam());
             this.speler4.setStyle("-fx-font-size: 15px;");
-        } catch (Exception ignored) {
+        }
+        catch (Exception ignored) {
         }
 
     }
@@ -175,6 +179,5 @@ public class LobbyView implements LobbyObserver {
     @Override
     public void update(LobbyObservable lo) {
         selectLobby(lo.getId(), FirebaseController.getPlayersInLobby(lo.getId()));
-
     }
 }
