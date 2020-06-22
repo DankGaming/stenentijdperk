@@ -206,7 +206,6 @@ public class BoardView {
 		speler4Image.setVisible(false);
 
 		// Stamleden hoeveelheden
-		// + boardModel.getVillagersOnBoard
 		speler1Label = new Label("  1");
 		speler1Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
 		speler1Label.setVisible(false);
