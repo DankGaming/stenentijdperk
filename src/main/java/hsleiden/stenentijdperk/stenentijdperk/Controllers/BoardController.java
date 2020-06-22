@@ -30,33 +30,6 @@ public class BoardController {
         playercontroller = new PlayerController();
         boardmodel = new BoardModel();
         boardmodel.setPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
-<<<<<<< HEAD
-        System.out.println(boardmodel.getPlayer().getNaam() + " is aan de beurt en heeft "
-                + boardmodel.getPlayer().getVillagers() + ".");
-        matt.getMaxVillagers();
-        matt.setPositie(6,2);
-        moreVillagerHut(6);
-        matt.setPositie(6,2);
-        moreVillagerHut(6);
-        matt.setPositie(6,2);
-        moreVillagerHut(6);
-        matt.setPositie(6,2);
-        moreVillagerHut(6);
-        matt.setPositie(6,2);
-        moreVillagerHut(6);
-        matt.setPositie(6,2);
-        moreVillagerHut(6);
-        matt.setPositie(6,2);
-        moreVillagerHut(6);
-        matt.setPositie(6,2);
-        moreVillagerHut(6);
-        matt.setPositie(6,2);
-        moreVillagerHut(6);
-        matt.setPositie(6,2);
-        moreVillagerHut(6);
-        moreVillagerHut(6);
-    }           
-=======
     }
 
     public String scanner(String text) {
