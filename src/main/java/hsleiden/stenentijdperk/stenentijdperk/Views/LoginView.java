@@ -97,10 +97,6 @@ public class LoginView {
 
 		verderButton.setOnAction(event);
 
-		PickerView pickerView = new PickerView();
-		ScrollPane scrollPane = pickerView.setScene();
-		GridPane.setConstraints(scrollPane, 30, 30, 10, 10);
-
-		this.view.getChildren().addAll(imageView, naamLabel, naamField, verderButton, scrollPane);
+		this.view.getChildren().addAll(imageView, naamLabel, naamField, verderButton);
 	}
 }
