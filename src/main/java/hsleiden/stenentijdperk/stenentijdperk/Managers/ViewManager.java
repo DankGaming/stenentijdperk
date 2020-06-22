@@ -62,7 +62,7 @@ public class ViewManager {
 
     // This function shows a view.
     public static void showView(int width, int height, String title) {
-        createStageFromView(width, height, "Login");
+        createStageFromView(width, height, title);
         if (currentStage != null)
             currentStage.show();
     }
