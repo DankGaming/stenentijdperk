@@ -2,6 +2,7 @@ package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.PlatformInformation;
 import com.google.cloud.firestore.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -18,6 +19,7 @@ import java.util.concurrent.ExecutionException;
 public class FirebaseController {
     static Firestore db;
     static BoardModel board;
+    static ArrayList<PlayerModel> players;
     public static void initializeFirebaseApp() {
         GoogleCredentials credentials = null;
 
@@ -53,6 +55,28 @@ public class FirebaseController {
         });
     }
 
+    public static void listenForPlayerUpdates(String lobby){
+        CollectionReference colRef = db.collection("stenentijdperk")
+                .document(lobby)
+                .collection("players");
+        colRef.addSnapshotListener((queryDocumentSnapshots, e) -> {
+            ArrayList<PlayerModel> updatedPlayers = new ArrayList<>();
+            for(DocumentSnapshot s : Objects.requireNonNull(queryDocumentSnapshots)){
+                players.add(s.toObject(PlayerModel.class));
+            }
+            setPlayers(updatedPlayers);
+        });
+    }
+
+    static ArrayList<PlayerModel> getPlayers()
+    {
+        return players;
+    }
+
+    static void setPlayers(ArrayList<PlayerModel> newPlayers){
+        players = newPlayers;
+    }
+
     public static void listenForBoardUpdates(String lobby){
         DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("boardData").document("board");
         docRef.addSnapshotListener((snapshot, e) -> {
@@ -63,13 +87,15 @@ public class FirebaseController {
 
             if (snapshot != null && snapshot.exists()) {
                 BoardModel newModel = snapshot.toObject(BoardModel.class);
+                setBoard(newModel);
+                System.out.println("updated model");
             } else {
                 System.out.print("Current data: null");
             }
         });
     }
 
-    public void setBoard(BoardModel newBoard){
+    public static void setBoard(BoardModel newBoard){
         board = newBoard;
     }
 
