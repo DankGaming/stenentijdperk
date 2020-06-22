@@ -190,7 +190,7 @@ public class LobbyView implements LobbyObserver {
 
     @Override
     public void update(LobbyObservable lo) {
-        selectLobby(lo.getId(), FirebaseController.getPlayersInLobby(lo.getId()));
+        selectLobby(lo.getId(), lo.getPlayers(lo.getId()));
 
     }
 }

@@ -68,7 +68,7 @@ public class FirebaseController {
         });
     }
 
-    static ArrayList<PlayerModel> getPlayers()
+    public static ArrayList<PlayerModel> getPlayers()
     {
         return players;
     }
