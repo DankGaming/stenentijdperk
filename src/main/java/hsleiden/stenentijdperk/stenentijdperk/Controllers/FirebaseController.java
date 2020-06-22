@@ -2,6 +2,7 @@ package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.PlatformInformation;
 import com.google.cloud.firestore.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -12,15 +13,13 @@ import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 public class FirebaseController {
     static Firestore db;
-
+    static BoardModel board;
+    static ArrayList<PlayerModel> players;
     public static void initializeFirebaseApp() {
         GoogleCredentials credentials = null;
 
@@ -42,10 +41,7 @@ public class FirebaseController {
 
     public static void listenForLobbyUpdates(String lobby){
         DocumentReference docRef = db.collection("stenentijdperk").document(lobby);
-        System.out.println("listener");
-        // De listener
         docRef.addSnapshotListener((snapshot, e) -> {
-            System.out.println("Listening");
             if (e != null) {
                 System.err.println("Listen failed: " + e);
                 return;
@@ -59,12 +55,31 @@ public class FirebaseController {
         });
     }
 
+    public static void listenForPlayerUpdates(String lobby){
+        CollectionReference colRef = db.collection("stenentijdperk")
+                .document(lobby)
+                .collection("players");
+        colRef.addSnapshotListener((queryDocumentSnapshots, e) -> {
+            ArrayList<PlayerModel> updatedPlayers = new ArrayList<>();
+            for(DocumentSnapshot s : Objects.requireNonNull(queryDocumentSnapshots)){
+                players.add(s.toObject(PlayerModel.class));
+            }
+            setPlayers(updatedPlayers);
+        });
+    }
+
+    public static ArrayList<PlayerModel> getPlayers()
+    {
+        return players;
+    }
+
+    static void setPlayers(ArrayList<PlayerModel> newPlayers){
+        players = newPlayers;
+    }
+
     public static void listenForBoardUpdates(String lobby){
         DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("boardData").document("board");
-        System.out.println("listener");
-        // De listener
         docRef.addSnapshotListener((snapshot, e) -> {
-            System.out.println("Listening");
             if (e != null) {
                 System.err.println("Listen failed: " + e);
                 return;
@@ -72,12 +87,22 @@ public class FirebaseController {
 
             if (snapshot != null && snapshot.exists()) {
                 BoardModel newModel = snapshot.toObject(BoardModel.class);
+                setBoard(newModel);
+                System.out.println("updated model");
             } else {
                 System.out.print("Current data: null");
             }
         });
     }
-    
+
+    public static void setBoard(BoardModel newBoard){
+        board = newBoard;
+    }
+
+    public static BoardModel getBoard(){
+        return board;
+    }
+
     public static void setSpeler(String spelerNummer, PlayerModel player){
         System.out.println(player.getNaam());
         System.out.println(player.getVillagers());
@@ -219,10 +244,12 @@ public class FirebaseController {
     }
 
     public static void addBoard(int lobby, BoardModel model){
-        ApiFuture<WriteResult> future = db.collection("stenentijdperk").document(String.valueOf(lobby)).collection("boardData").document("board").set(model);
+        ApiFuture<WriteResult> future = db.collection("stenentijdperk").document("1").collection("boardData").document("board").set(model);
+        System.out.println("hello");
         try {
             System.out.println("Update time : " + future.get().getUpdateTime());
         } catch (Exception e) {
+            System.out.println(future);
             e.printStackTrace();
         }
     }

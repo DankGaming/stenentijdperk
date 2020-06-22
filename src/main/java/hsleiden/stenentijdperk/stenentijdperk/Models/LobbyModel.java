@@ -1,5 +1,6 @@
 package hsleiden.stenentijdperk.stenentijdperk.Models;
 
+import hsleiden.stenentijdperk.stenentijdperk.Controllers.FirebaseController;
 import hsleiden.stenentijdperk.stenentijdperk.observers.LobbyObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.LobbyObserver;
 
@@ -36,7 +37,7 @@ public class LobbyModel implements LobbyObservable {
     }
 
     @Override
-    public ArrayList<PlayerModel> getPlayers() {
-        return this.players;
+    public ArrayList<PlayerModel> getPlayers(int id) {
+        return FirebaseController.getPlayersInLobby(id);
     }
 }
