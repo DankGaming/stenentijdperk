@@ -30,8 +30,6 @@ public class BoardController {
         boardmodel = new BoardModel();
         // FirebaseController.addBoard(1, boardmodel);
         boardmodel.setPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
-        System.out.println(boardmodel.getPlayer().getNaam() + " is aan de beurt en heeft "
-                + boardmodel.getPlayer().getVillagers() + ".");
     }
 
     public String scanner(String text) {
@@ -68,6 +66,12 @@ public class BoardController {
         } else {
             resolveResource(location);
         }
+    }
+
+    public boolean stamledenCheck(int location, int input) {
+         return (input > 0
+                && input <= playercontroller.getVillagers(boardmodel.getPlayer())
+                && input <= (boardmodel.requestCap(location) - boardmodel.requestVillagers(location)));
     }
 
     // methode om de onderste buttons af te handelen. maakt de kaart/hut bezet en

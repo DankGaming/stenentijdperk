@@ -184,24 +184,15 @@ public class BoardView {
 		speler2Label = new Label("  1");
 		speler2Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
 		speler2Label.setVisible(false);
-		// GridPane.setConstraints(speler2Label, 26, 11, 2 ,2);
 
 		speler3Label = new Label("  1");
 		speler3Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
 		speler3Label.setVisible(false);
-		// GridPane.setConstraints(speler3Label, 28, 11, 2 ,2);
 
 		speler4Label = new Label("  1");
 		speler4Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
 		speler4Label.setVisible(false);
-		// GridPane.setConstraints(speler4Label, 30, 11, 2 ,2);
 
-		Label amountLabel = new Label("Hoeveel:");
-		amountLabel.setStyle("-fx-font-size: 20px;");
-		GridPane.setConstraints(amountLabel, 1, 1, 10, 3);
-
-		TextField amountField = new TextField();
-		GridPane.setConstraints(amountField, 6, 1, 15, 3);
 
 		/*
 		 * locaties jacht: onbeperkt hut: 2 hutkaart: 1 beschavingskaart: 1 gereedschap:
@@ -584,4 +575,16 @@ public class BoardView {
 		speler4Image.setVisible(visable);
 		speler4Label.setVisible(visable);
 	}
+ 	// TODO functie afmaken
+	private void inputKrijgen(int location) {
+		Label amountLabel = new Label("Hoeveel: ");
+		amountLabel.setStyle("-fx-font-size: 25px; -fx-text-fill: #f6e5b6; -fx-background-color: #dfa231; ");
+		GridPane.setConstraints(amountLabel, 18, 18, 5, 3);
+
+		TextField amountField = new TextField();
+		GridPane.setConstraints(amountField, 23, 18, 5, 3);
+		amountField.getText();
+		controller.stamledenCheck(location, 1);
+	}
 }
+
