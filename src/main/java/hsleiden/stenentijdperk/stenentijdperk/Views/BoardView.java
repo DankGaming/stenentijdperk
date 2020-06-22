@@ -199,7 +199,6 @@ public class BoardView {
 
 		String style = "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;";
 
-
 		// invoeren aantal stamleden
 		amountLabel = new Label("Hoeveel: ");
 		amountLabel.setStyle("-fx-font-size: 25px; -fx-text-fill: #f6e5b6; -fx-background-color: #dfa231; ");
@@ -216,14 +215,12 @@ public class BoardView {
 		amountButton.setVisible(false);
 		GridPane.setConstraints(amountButton, 30, 18, 5, 3);
 		/*
-
 		 * locaties jacht: onbeperkt hut: 2 hutkaart: 1 beschavingskaart: 1 gereedschap:
 		 * 1 akkerbouw: 1 steen, leem, goud, hout: 7
 		 */
 
 		this.createKaartButtons();
 		// Buttons
-
 		GridPane.setConstraints(this.beschavingsKaartButtons[0], 42, 40, 1, 1);
 		GridPane.setConstraints(this.beschavingsKaartButtons[1], 37, 40, 1, 1);
 		GridPane.setConstraints(this.beschavingsKaartButtons[2], 31, 40, 1, 1);
@@ -564,7 +561,6 @@ public class BoardView {
 		};
 
 		EventHandler<ActionEvent> buttonEvent = new EventHandler<ActionEvent>() {
-
 			@Override
 			public void handle(ActionEvent event) {
 				if (event.getSource() == amountButton) {
