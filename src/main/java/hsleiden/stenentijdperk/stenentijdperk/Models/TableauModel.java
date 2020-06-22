@@ -16,6 +16,7 @@ public class TableauModel implements TableauObservable{
     private boolean[] gereedschapGebruikt;
     ArrayList<TableauObserver> observers = new ArrayList<>();
 
+    // TODO alle info moet uit playermodel
     public TableauModel(){
         stamleden = new LinkedList<>();
         gereedschap = new int[] { 0, 0, 0 };

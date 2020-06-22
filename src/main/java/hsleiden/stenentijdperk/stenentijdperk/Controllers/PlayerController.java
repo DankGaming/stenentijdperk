@@ -31,14 +31,6 @@ public class PlayerController {
 		return playermodel.getTools();
 	}
 
-	public Tool getTool(PlayerModel playerModel, int index) {
-		return playerModel.getTool(index);
-	}
-
-	public void setTool(PlayerModel playermodel, int index, Tool tool){
-		playermodel.setTools(index, tool);
-	}
-
 	public int getPositie(PlayerModel playerModel, int index){
 		return playerModel.getPositie(index);
 	}
@@ -57,5 +49,17 @@ public class PlayerController {
 
 	public List<Integer> vraagResources(PlayerModel playerModel){
 		return playerModel.getPosities();
+	}
+	
+	public void addTool(PlayerModel playerModel){
+		playerModel.addTool();
+	}
+
+	public void increaseToolLevel(PlayerModel playerModel, int index){
+		playerModel.increaseToolLevel(index);
+	}
+
+	public int getToolLevel(PlayerModel playerModel, int index){
+		return playerModel.getToolLevel(index);
 	}
 }

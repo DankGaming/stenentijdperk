@@ -5,6 +5,7 @@ import hsleiden.stenentijdperk.stenentijdperk.Helpers.Dobbelsteen;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,29 @@ public class BoardController {
         boardmodel.setPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
         System.out.println(boardmodel.getPlayer().getNaam() + " is aan de beurt en heeft "
                 + boardmodel.getPlayer().getVillagers() + ".");
-    }
+        matt.getMaxVillagers();
+        matt.setPositie(6,2);
+        moreVillagerHut(6);
+        matt.setPositie(6,2);
+        moreVillagerHut(6);
+        matt.setPositie(6,2);
+        moreVillagerHut(6);
+        matt.setPositie(6,2);
+        moreVillagerHut(6);
+        matt.setPositie(6,2);
+        moreVillagerHut(6);
+        matt.setPositie(6,2);
+        moreVillagerHut(6);
+        matt.setPositie(6,2);
+        moreVillagerHut(6);
+        matt.setPositie(6,2);
+        moreVillagerHut(6);
+        matt.setPositie(6,2);
+        moreVillagerHut(6);
+        matt.setPositie(6,2);
+        moreVillagerHut(6);
+        moreVillagerHut(6);
+    }           
 
     public String scanner(String text) {
         Scanner myObj = new Scanner(System.in); // Create a Scanner object
@@ -94,7 +117,7 @@ public class BoardController {
                     moreVillagerHut(index);
                     break;
                 case 7:
-                    // TODO tools krijgen
+                    gainTools(index);
                     break;
                 case 8:
                 case 9:
@@ -145,6 +168,24 @@ public class BoardController {
             playercontroller.addMaxVillagers(boardmodel.getPlayer());
             playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
         }
+    }
+
+    public void gainTools(int index) {
+        if((playercontroller.getPositie(boardmodel.getPlayer(), index) != 0)){
+            ArrayList<Tool> tools = playercontroller.getTools(boardmodel.getPlayer());  
+            if (tools.size() < 3) {
+                playercontroller.addTool(boardmodel.getPlayer());
+            } else if (tools.get(2).getLevel() != 4) {
+                for (int i = 0; i < 3; i++){
+                    if (tools.get(i).getLevel() == tools.get(2).getLevel()) {
+                        tools.get(i).increaseLevel();
+                        playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
+                        break;
+                    }
+                }
+            }
+        }
+
     }
 
     public void endTurn() {
