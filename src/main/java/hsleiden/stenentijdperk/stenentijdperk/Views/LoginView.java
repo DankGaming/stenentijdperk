@@ -66,7 +66,7 @@ public class LoginView {
 		assert input != null;
 		Image loginImage = new Image(input);
 		this.imageView = new ImageView(loginImage);
-		this.imageView.setFitWidth(1200);
+		this.imageView.setFitWidth(800);
 		this.imageView.setFitHeight(800);
 		GridPane.setConstraints(imageView, 0, 0, 50 ,50);
 
