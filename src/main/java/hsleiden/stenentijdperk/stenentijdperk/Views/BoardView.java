@@ -38,6 +38,10 @@ public class BoardView {
 	private ImageView speler2Image;
 	private ImageView speler3Image;
 	private ImageView speler4Image;
+	private TextField amountField;
+	private Button amountButton;
+	private Label amountLabel;
+	private int location;
 
 	public BoardView() {
 		this.beschavingsKaartButtons = new Button[4];
@@ -177,32 +181,39 @@ public class BoardView {
 
 		// Stamleden hoeveelheden
 		// + boardModel.getVillagersOnBoard
-		speler1Label = new Label("  ");
+		speler1Label = new Label("  1");
 		speler1Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
 		speler1Label.setVisible(false);
 
 		speler2Label = new Label("  1");
 		speler2Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
 		speler2Label.setVisible(false);
-		// GridPane.setConstraints(speler2Label, 26, 11, 2 ,2);
 
 		speler3Label = new Label("  1");
 		speler3Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
 		speler3Label.setVisible(false);
-		// GridPane.setConstraints(speler3Label, 28, 11, 2 ,2);
 
 		speler4Label = new Label("  1");
 		speler4Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
 		speler4Label.setVisible(false);
-		// GridPane.setConstraints(speler4Label, 30, 11, 2 ,2);
 
-		Label amountLabel = new Label("Hoeveel:");
-		amountLabel.setStyle("-fx-font-size: 20px;");
-		GridPane.setConstraints(amountLabel, 1, 1, 10, 3);
+		String style = "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;";
 
-		TextField amountField = new TextField();
-		GridPane.setConstraints(amountField, 6, 1, 15, 3);
+		// invoeren aantal stamleden
+		amountLabel = new Label("Hoeveel: ");
+		amountLabel.setStyle("-fx-font-size: 25px; -fx-text-fill: #f6e5b6; -fx-background-color: #dfa231; ");
+		amountLabel.setVisible(false);
+		GridPane.setConstraints(amountLabel, 18, 18, 5, 3);
 
+		amountField = new TextField();
+		amountField.setVisible(false);
+		amountField.setEditable(false);
+		GridPane.setConstraints(amountField, 23, 18, 6, 3);
+
+		amountButton = new Button("Verder");
+		amountButton.setStyle(style);
+		amountButton.setVisible(false);
+		GridPane.setConstraints(amountButton, 30, 18, 5, 3);
 		/*
 		 * locaties jacht: onbeperkt hut: 2 hutkaart: 1 beschavingskaart: 1 gereedschap:
 		 * 1 akkerbouw: 1 steen, leem, goud, hout: 7
@@ -210,8 +221,6 @@ public class BoardView {
 
 		this.createKaartButtons();
 		// Buttons
-		String style = "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;";
-
 		GridPane.setConstraints(this.beschavingsKaartButtons[0], 42, 40, 1, 1);
 		GridPane.setConstraints(this.beschavingsKaartButtons[1], 37, 40, 1, 1);
 		GridPane.setConstraints(this.beschavingsKaartButtons[2], 31, 40, 1, 1);
@@ -479,7 +488,8 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label, 11, 11, 1, 1);
 
 					setSpelersVisable(true);
-					controller.onResourceButtonClick(0);
+					setInputVisable(true);
+					location = 0;
 				} else if (actionEvent.getSource() == bosButton) {
 					GridPane.setConstraints(speler1Image, 17, 11, 2, 2);
 					GridPane.setConstraints(speler1Label, 17, 11, 1, 1);
@@ -494,7 +504,8 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label, 19, 13, 1, 1);
 
 					setSpelersVisable(true);
-					controller.onResourceButtonClick(1);
+					setInputVisable(true);
+					location = 1;
 				} else if (actionEvent.getSource() == leemGroeveButton) {
 					GridPane.setConstraints(speler1Image, 24, 11, 2, 2);
 					GridPane.setConstraints(speler1Label, 24, 11, 1, 1);
@@ -509,7 +520,8 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label, 30, 11, 1, 1);
 
 					setSpelersVisable(true);
-					controller.onResourceButtonClick(2);
+					setInputVisable(true);
+					location = 2;
 				} else if (actionEvent.getSource() == steenGroeveButton) {
 					GridPane.setConstraints(speler1Image, 42, 11, 2, 2);
 					GridPane.setConstraints(speler1Label, 42, 11, 1, 1);
@@ -524,7 +536,8 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label, 44, 13, 1, 1);
 
 					setSpelersVisable(true);
-					controller.onResourceButtonClick(3);
+					setInputVisable(true);
+					location = 3;
 				} else if (actionEvent.getSource() == rivierButton) {
 					GridPane.setConstraints(speler1Image, 37, 21, 2, 2);
 					GridPane.setConstraints(speler1Label, 37, 21, 1, 1);
@@ -539,13 +552,34 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label, 39, 23, 1, 1);
 
 					setSpelersVisable(true);
-					controller.onResourceButtonClick(4);
+					setInputVisable(true);
+					location = 4;
 				} else if (actionEvent.getSource() == endTurn) {
 					controller.endTurn();
 				}
 			}
-
 		};
+
+		EventHandler<ActionEvent> buttonEvent = new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				if (event.getSource() == amountButton) {
+					int aantalStamleden = 0;
+					try {
+						aantalStamleden = Integer.parseInt(amountField.getText());
+						if (controller.stamledenCheck(location, aantalStamleden)) {
+							controller.onResourceButtonClick(location, aantalStamleden);
+							System.out.println(aantalStamleden);
+							setInputVisable(false);
+						}
+					}
+					catch (Exception e) {
+						System.out.println("test2");
+					}
+				}
+			}
+		};
+
 		hutKaartButton1.setOnAction(event);
 		hutKaartButton2.setOnAction(event);
 		hutKaartButton3.setOnAction(event);
@@ -563,12 +597,13 @@ public class BoardView {
 		steenGroeveButton.setOnAction(event);
 		rivierButton.setOnAction(event);
 		endTurn.setOnAction(event);
+		amountButton.setOnAction(buttonEvent);
 
 		this.view.getChildren().addAll(imageView, hutKaartButton1, hutKaartButton2, hutKaartButton3, hutKaartButton4,
 				beschavingsKaartButtons[0], beschavingsKaartButtons[1], beschavingsKaartButtons[2],
 				beschavingsKaartButtons[3], hutButton, gereedschapButton, akkerbouwButton, jachtButton, bosButton,
 				leemGroeveButton, steenGroeveButton, rivierButton, endTurn, speler1Image, speler2Image, speler3Image,
-				speler4Image, speler1Label, speler2Label, speler3Label, speler4Label);
+				speler4Image, speler1Label, speler2Label, speler3Label, speler4Label, amountField, amountLabel, amountButton);
 	}
 
 	private void setSpelersVisable(boolean visable) {
@@ -584,4 +619,25 @@ public class BoardView {
 		speler4Image.setVisible(visable);
 		speler4Label.setVisible(visable);
 	}
+
+	private void setInputVisable(boolean visable) {
+		amountButton.setVisible(visable);
+
+		amountLabel.setVisible(visable);
+
+		amountField.setEditable(visable);
+		amountField.setVisible(visable);
+	}
+
+
+/*
+		try {
+			int aantalStamleden = Integer.parseInt(amountField.getText());
+			controller.stamledenCheck(location, aantalStamleden);
+			System.out.println(controller.stamledenCheck(location, aantalStamleden));
+		}
+		catch (Exception e) {
+			System.out.println("Error :D");
+		}
+*/
 }
