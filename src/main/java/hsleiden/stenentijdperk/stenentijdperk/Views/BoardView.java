@@ -246,6 +246,7 @@ public class BoardView {
 
 		this.createKaartButtons();
 		// Buttons
+
 		GridPane.setConstraints(this.beschavingsKaartButtons.get(0), 42, 40, 1, 1);
 		GridPane.setConstraints(this.beschavingsKaartButtons.get(1), 37, 40, 1, 1);
 		GridPane.setConstraints(this.beschavingsKaartButtons.get(2), 31, 40, 1, 1);
@@ -410,6 +411,7 @@ public class BoardView {
 					setSpelersVisable(true);
 					setInputVisable(true);
 					location = 0;
+					phaseCheck(0);
 				} else if (actionEvent.getSource() == bosButton) {
 					resetTextLabel();
 
@@ -418,6 +420,7 @@ public class BoardView {
 					setSpelersVisable(true);
 					setInputVisable(true);
 					location = 1;
+					phaseCheck(1);
 				} else if (actionEvent.getSource() == leemGroeveButton) {
 					resetTextLabel();
 
@@ -426,6 +429,7 @@ public class BoardView {
 					setSpelersVisable(true);
 					setInputVisable(true);
 					location = 2;
+					phaseCheck(2);
 				} else if (actionEvent.getSource() == steenGroeveButton) {
 					resetTextLabel();
 
@@ -434,6 +438,7 @@ public class BoardView {
 					setSpelersVisable(true);
 					setInputVisable(true);
 					location = 3;
+					phaseCheck(3);
 				} else if (actionEvent.getSource() == rivierButton) {
 					resetTextLabel();
 
@@ -442,8 +447,13 @@ public class BoardView {
 					setSpelersVisable(true);
 					setInputVisable(true);
 					location = 4;
+					phaseCheck(4);
 				} else if (actionEvent.getSource() == endTurn) {
-					controller.endTurn();
+					if (controller.vraagPhase() == 1){
+						controller.endTurn();
+					} else {
+						controller.EndTurnPhase2();
+					}
 				}
 			}
 		};
@@ -755,5 +765,14 @@ public class BoardView {
 
 		GridPane.setConstraints(speler4Image, 39, 23, 2, 2);
 		GridPane.setConstraints(speler4Label, 39, 23, 1, 1);
+	}
+	private void phaseCheck(int location) {
+		this.location = location;
+		setSpelersVisable(true);
+		if (controller.vraagPhase() == 1){
+			setInputVisable(true);
+		} else {
+			controller.resolveResource(location);
+		}
 	}
 }

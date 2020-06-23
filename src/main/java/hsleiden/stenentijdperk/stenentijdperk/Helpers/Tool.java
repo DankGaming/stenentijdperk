@@ -29,4 +29,8 @@ public class Tool implements Status {
     public void setLevel(int level){
         this.level = level;
     }
+
+    public void increaseLevel(){
+        this.level += 1;
+    }
 }
