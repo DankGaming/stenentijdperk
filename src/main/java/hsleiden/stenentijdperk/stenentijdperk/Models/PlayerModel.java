@@ -88,7 +88,11 @@ public class PlayerModel {
     }
 
     public void addResources(int index, int resources) {
-        this.resources.set(index, resources);
+        this.resources.set(index, this.resources.get(index) + resources);
+    }
+
+    public void reduceResources(int index, int resources){
+        this.resources.set(index, this.resources.get(index) - resources);
     }
 
     public int getPositie(int index) {
