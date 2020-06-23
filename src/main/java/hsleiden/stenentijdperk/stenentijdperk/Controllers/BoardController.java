@@ -1,11 +1,11 @@
 package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Dobbelsteen;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +49,6 @@ public class BoardController {
             plaatsenStamleden(location, input);
         }
     }
-
 
     public boolean stamledenCheck(int location, int input) {
          return (input > 0
@@ -266,33 +265,3 @@ public class BoardController {
         return boardmodel.getPhase();
     }
 }
-
-// public MainLoop(){
-// while(!wincondition){
-// stamleden plaatsen
-// volgende speler aan de beurt
-// loop totdat stamleden op zijn
-
-// acties uitvoeren
-// volgende speler aan de beurt
-// einde
-
-// stamleden voeden
-// speler krijgt voedsel gelijk aan score op voedselspoor
-// per stamlid -1 voedsel
-// 1 grondstof = 1 voedsel
-// if voedsel + grondstoffen < stamleden , -10 punten
-
-// nieuwe ronden
-// andere speler begint
-// beschavingskaarten aanvullen
-// gereedschap reset
-// }
-
-// if beschavinskaarten < 4 , einde spel
-// if (1 stapel hutten is leeg) , einde spel (na de ronde)
-// elke grondstof is 1 punt
-// aantal verschillende groene beschavingskaarten ^2 = aantal punten
-// aantal symbolen op zandkleurige beschavinskaarten * aantal bezittingen =
-// aantal punten
-// }
