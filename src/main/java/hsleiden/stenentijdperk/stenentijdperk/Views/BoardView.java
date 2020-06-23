@@ -562,8 +562,6 @@ public class BoardView {
 
 				} else if (actionEvent.getSource() == endTurn) {
 					if (controller.vraagPhase() == 1){
-						controller.endTurn();
-					} else {
 						controller.EndTurnPhase2();
 					}
 				}
@@ -581,6 +579,7 @@ public class BoardView {
 							controller.onResourceButtonClick(location, aantalStamleden);
 							System.out.println(aantalStamleden);
 							setInputVisable(false);
+							controller.endTurn();
 						}
 					}
 					catch (Exception e) {
