@@ -206,19 +206,19 @@ public class BoardView {
 		speler4Image.setVisible(false);
 
 		// Stamleden hoeveelheden
-		speler1Label = new Label("  1");
+		speler1Label = new Label("  ");
 		speler1Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
 		speler1Label.setVisible(false);
 
-		speler2Label = new Label("  1");
+		speler2Label = new Label("  ");
 		speler2Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
 		speler2Label.setVisible(false);
 
-		speler3Label = new Label("  1");
+		speler3Label = new Label("  ");
 		speler3Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
 		speler3Label.setVisible(false);
 
-		speler4Label = new Label("  1");
+		speler4Label = new Label("  ");
 		speler4Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
 		speler4Label.setVisible(false);
 
@@ -484,6 +484,7 @@ public class BoardView {
 					setSpelersVisable(true);
 					controller.onButtonClick(5);
 				} else if (actionEvent.getSource() == jachtButton) {
+					resetTextLabel();
 					GridPane.setConstraints(speler1Image, 5, 11, 2, 2);
 					GridPane.setConstraints(speler1Label, 5, 11, 1, 1);
 
@@ -500,6 +501,7 @@ public class BoardView {
 					setInputVisable(true);
 					location = 0;
 				} else if (actionEvent.getSource() == bosButton) {
+					resetTextLabel();
 					GridPane.setConstraints(speler1Image, 17, 11, 2, 2);
 					GridPane.setConstraints(speler1Label, 17, 11, 1, 1);
 
@@ -516,6 +518,7 @@ public class BoardView {
 					setInputVisable(true);
 					location = 1;
 				} else if (actionEvent.getSource() == leemGroeveButton) {
+					resetTextLabel();
 					GridPane.setConstraints(speler1Image, 24, 11, 2, 2);
 					GridPane.setConstraints(speler1Label, 24, 11, 1, 1);
 
@@ -532,6 +535,7 @@ public class BoardView {
 					setInputVisable(true);
 					location = 2;
 				} else if (actionEvent.getSource() == steenGroeveButton) {
+					resetTextLabel();
 					GridPane.setConstraints(speler1Image, 42, 11, 2, 2);
 					GridPane.setConstraints(speler1Label, 42, 11, 1, 1);
 
@@ -548,6 +552,7 @@ public class BoardView {
 					setInputVisable(true);
 					location = 3;
 				} else if (actionEvent.getSource() == rivierButton) {
+					resetTextLabel();
 					GridPane.setConstraints(speler1Image, 37, 21, 2, 2);
 					GridPane.setConstraints(speler1Label, 37, 21, 1, 1);
 
@@ -580,6 +585,10 @@ public class BoardView {
 							controller.onResourceButtonClick(location, aantalStamleden);
 							System.out.println(aantalStamleden);
 							setInputVisable(false);
+							speler1Label.setText(" " + aantalStamleden);
+							speler2Label.setText(" " + aantalStamleden);
+							speler3Label.setText(" " + aantalStamleden);
+							speler4Label.setText(" " + aantalStamleden);
 						}
 					}
 					catch (Exception e) {
@@ -636,5 +645,12 @@ public class BoardView {
 
 		amountField.setEditable(visable);
 		amountField.setVisible(visable);
+	}
+
+	private void resetTextLabel() {
+		speler1Label.setText("");
+		speler2Label.setText("");
+		speler3Label.setText("");
+		speler4Label.setText("");
 	}
 }
