@@ -201,7 +201,6 @@ public class BoardView {
 
 		// Stamleden hoeveelheden
 		// + boardModel.getVillagersOnBoard
-
 		String styleSpelers = "-fx-font-size: 20px; -fx-font-weight: bold";
 		speler1Label = new Label("  1");
 		speler1Label.setStyle(styleSpelers);
