@@ -70,10 +70,6 @@ public class BoardView {
 		}
 	}
 
-	private void removeKaartButton(int index) { // dit kan gebruikt worden als de kaarten worden gekocht in een actie fase
-		this.beschavingsKaartButtons.get(index).setVisible(false);
-	}
-
 	private void renderNewKaarten(ArrayList<Kaart> array) {
 		int kaartAmount = 4;
 		if (array.size() < 4) {
@@ -132,7 +128,6 @@ public class BoardView {
 		}
 
 		// Spelbord Image
-
 		FileInputStream input = null;
 		try {
 			input = new FileInputStream(this.spelbordImage);
@@ -148,7 +143,6 @@ public class BoardView {
 		GridPane.setConstraints(imageView, 0, 0, 50, 50);
 
 		// Speler stamleden
-
 		FileInputStream speler1 = null;
 		try {
 			speler1 = new FileInputStream(this.Speler1);
@@ -207,20 +201,22 @@ public class BoardView {
 
 		// Stamleden hoeveelheden
 		// + boardModel.getVillagersOnBoard
+
+		String styleSpelers = "-fx-font-size: 20px; -fx-font-weight: bold";
 		speler1Label = new Label("  1");
-		speler1Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
+		speler1Label.setStyle(styleSpelers);
 		speler1Label.setVisible(false);
 
 		speler2Label = new Label("  1");
-		speler2Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
+		speler2Label.setStyle(styleSpelers);
 		speler2Label.setVisible(false);
 
 		speler3Label = new Label("  1");
-		speler3Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
+		speler3Label.setStyle(styleSpelers);
 		speler3Label.setVisible(false);
 
 		speler4Label = new Label("  1");
-		speler4Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
+		speler4Label.setStyle(styleSpelers);
 		speler4Label.setVisible(false);
 
 		String style = "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;";
@@ -582,7 +578,7 @@ public class BoardView {
 						}
 					}
 					catch (Exception e) {
-						System.out.println("test2");
+						System.out.println(e);
 					}
 				}
 			}
@@ -646,16 +642,4 @@ public class BoardView {
 			controller.resolveResource(location);
 				}
 	}
-
-
-/*
-		try {
-			int aantalStamleden = Integer.parseInt(amountField.getText());
-			controller.stamledenCheck(location, aantalStamleden);
-			System.out.println(controller.stamledenCheck(location, aantalStamleden));
-		}
-		catch (Exception e) {
-			System.out.println("Error :D");
-		}
-*/
 }
