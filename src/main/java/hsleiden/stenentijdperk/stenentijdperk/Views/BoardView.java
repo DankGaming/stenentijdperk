@@ -577,7 +577,6 @@ public class BoardView {
 						aantalStamleden = Integer.parseInt(amountField.getText());
 						if (controller.stamledenCheck(location, aantalStamleden)) {
 							controller.onResourceButtonClick(location, aantalStamleden);
-							System.out.println(aantalStamleden);
 							setInputVisable(false);
 							controller.endTurn();
 						}
