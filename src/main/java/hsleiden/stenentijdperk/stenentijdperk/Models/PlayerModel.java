@@ -12,6 +12,7 @@ import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 import java.util.*;
 
 public class PlayerModel {
+    private int lobby;
     private String naam;
     private int maxVillagers;
     private int villagers;
@@ -153,5 +154,13 @@ public class PlayerModel {
     public void addTool(){
         Tool tool = new Tool();
         tools.add(tool);
+    }
+
+    public int getLobby() {
+        return lobby;
+    }
+
+    public void setLobby(int lobby) {
+        this.lobby = lobby;
     }
 }
