@@ -31,7 +31,7 @@ public class PlayerModel {
         this.villagers = 5;
         this.maxVillagers = 5;
         this.graan = 0;
-        this.resources = Arrays.asList(10, 0, 0, 0, 0);
+        this.resources = Arrays.asList(12, 0, 0, 0, 0);
         this.multiplier = Arrays.asList(0,0,0,0);
         for (int i = 0; i < 16; i++) {
             posities.add(0);

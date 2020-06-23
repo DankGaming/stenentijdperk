@@ -63,9 +63,9 @@ public class BoardController {
     public void onButtonClick(int index) {
         if (vraagPhase() == 1) {
             if (locatieVrij(index) && !boardmodel.getPlaced()) {
-                if (index == 6) {
+                if (index == 6 && playercontroller.getVillagers(boardmodel.getPlayer()) >= 2) {
                     plaatsenStamleden(index, 2);
-                } else {
+                } else if (index == 5 || index == 7) {
                     plaatsenStamleden(index, 1);
                 }
             }
@@ -112,7 +112,7 @@ public class BoardController {
         }
     }
 
-    public void moreAgriculture(int index) {
+    private void moreAgriculture(int index) {
         if (playercontroller.getPositie(boardmodel.getPlayer(), index) != 0
                 && playercontroller.vraagGraan(boardmodel.getPlayer()) != 10) {
             playercontroller.addGraan(boardmodel.getPlayer());
@@ -121,7 +121,7 @@ public class BoardController {
         }
     }
 
-    public void moreVillagerHut(int index) {
+    private void moreVillagerHut(int index) {
         if (playercontroller.getPositie(boardmodel.getPlayer(), index) != 0
                 && playercontroller.getMaxVillagers(boardmodel.getPlayer()) != 10) {
             playercontroller.addMaxVillagers(boardmodel.getPlayer());
@@ -129,7 +129,7 @@ public class BoardController {
         }
     }
 
-    public void gainTools(int index) {
+    private void gainTools(int index) {
         if((playercontroller.getPositie(boardmodel.getPlayer(), index) != 0)){
             ArrayList<Tool> tools = playercontroller.getTools(boardmodel.getPlayer());  
             if (tools.size() < 3) {
@@ -178,7 +178,8 @@ public class BoardController {
     }
 
     public void EndTurnPhase2() {
-        if (playercontroller.vraagResources(boardmodel.getPlayer()).stream().allMatch(n -> n == 0)) {
+        List<Integer> resources = playercontroller.vraagResources(boardmodel.getPlayer());
+        if (resources.stream().allMatch(n -> n == 0)) {
             int i = checkPlayer();
             if (i == 3) {
                 boardmodel.setPlayer(players.get(0));
@@ -187,18 +188,31 @@ public class BoardController {
                 boardmodel.setPlayer(players.get(i));
             }
         }
-        if (playercontroller.vraagResources(boardmodel.getPlayer()).stream().allMatch(n -> n == 0)) {
+        if (resources.stream().allMatch(n -> n == 0)) {
             for (PlayerModel player : players){
-                int voedselNodig = playercontroller.getMaxVillagers(player) - playercontroller.vraagGraan(player);
-                if (playercontroller.vraagResources(player).get(0) > voedselNodig){
-                    //TODO food stuff
-                } 
-            }
+                int remaining = voedselBetalen(player);
+                for (int j = 0; j < resources.size(); j++) {
+                    
+                }
+            } 
         }
+        System.out.println("Hi");
     }
 
+    private int voedselBetalen(PlayerModel player){
+        int remaining = 0;
+        int voedselNodig = playercontroller.getMaxVillagers(player) - playercontroller.vraagGraan(player);
+        int voedselSpeler = playercontroller.vraagResources(player).get(0);
+                if (voedselSpeler > voedselNodig){
+                    playercontroller.reduceResource(player, 0, voedselNodig);
+                } else {
+                    playercontroller.reduceResource(player, 0, voedselSpeler);
+                    remaining = voedselNodig - voedselSpeler;
+                }
+        return remaining;
+    }
     // Methode om door lijsten spelers te loopen.
-    public boolean loopPlayers(int start, List<PlayerModel> player) {
+    private boolean loopPlayers(int start, List<PlayerModel> player) {
         boolean found = false;
         for (int j = start + 1; j < player.size(); j++) {
             if (playercontroller.getVillagers(player.get(j)) != 0) {
@@ -210,7 +224,7 @@ public class BoardController {
         return found;
     }
 
-    public int checkPlayer() {
+    private int checkPlayer() {
         int i = 0;
         for (int j = 0; j < 4; j++) {
             if (boardmodel.getPlayer().equals(players.get(j))) { // Bepaling welke player aan de beurt is
@@ -221,7 +235,7 @@ public class BoardController {
         return i;
     }
 
-    public boolean locatieVrij(int index) {
+    private boolean locatieVrij(int index) {
         boolean status = true;
         for (PlayerModel player : players) {
             if (player.getPositie(index) != 0) {
@@ -232,7 +246,7 @@ public class BoardController {
 
     }
 
-    public void plaatsenStamleden(int index, int stamleden) {
+    private void plaatsenStamleden(int index, int stamleden) {
         boardmodel.setPlaced(true);
         playercontroller.setVillagers(boardmodel.getPlayer(),
                 (playercontroller.getVillagers(boardmodel.getPlayer()) - stamleden));
