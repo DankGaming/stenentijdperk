@@ -561,7 +561,7 @@ public class BoardView {
 					phaseCheck(4);
 
 				} else if (actionEvent.getSource() == endTurn) {
-					if (controller.vraagPhase() == 1){
+					if (controller.vraagPhase() == 2){
 						controller.EndTurnPhase2();
 					}
 				}
