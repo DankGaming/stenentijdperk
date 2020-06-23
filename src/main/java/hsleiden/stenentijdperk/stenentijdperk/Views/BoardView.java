@@ -641,6 +641,6 @@ public class BoardView {
 			setInputVisable(true);
 		} else {
 			controller.resolveResource(location);
-				}
+		}
 	}
 }
