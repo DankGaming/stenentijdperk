@@ -304,7 +304,7 @@ public class BoardView {
 		Button endTurn = new Button("Beurt eindigen");
 		endTurn.setStyle(style);
 		GridPane.setConstraints(endTurn, 22, 5, 15, 1);
-
+		// TODO maak dit nog kleiner
 		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
@@ -409,45 +409,30 @@ public class BoardView {
 
 					jachtKaart();
 
-					setSpelersVisable(true);
-					setInputVisable(true);
-					location = 0;
 					phaseCheck(0);
 				} else if (actionEvent.getSource() == bosButton) {
 					resetTextLabel();
 
 					bosKaart();
 
-					setSpelersVisable(true);
-					setInputVisable(true);
-					location = 1;
 					phaseCheck(1);
 				} else if (actionEvent.getSource() == leemGroeveButton) {
 					resetTextLabel();
 
 					leemKaart();
 
-					setSpelersVisable(true);
-					setInputVisable(true);
-					location = 2;
 					phaseCheck(2);
 				} else if (actionEvent.getSource() == steenGroeveButton) {
 					resetTextLabel();
 
 					steenKaart();
 
-					setSpelersVisable(true);
-					setInputVisable(true);
-					location = 3;
 					phaseCheck(3);
 				} else if (actionEvent.getSource() == rivierButton) {
 					resetTextLabel();
 
 					rivierKaart();
 
-					setSpelersVisable(true);
-					setInputVisable(true);
-					location = 4;
 					phaseCheck(4);
 				} else if (actionEvent.getSource() == endTurn) {
 					if (controller.vraagPhase() == 1){

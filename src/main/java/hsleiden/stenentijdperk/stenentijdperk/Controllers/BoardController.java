@@ -187,16 +187,21 @@ public class BoardController {
                 i++;
                 boardmodel.setPlayer(players.get(i));
             }
+            resources = playercontroller.vraagResources(boardmodel.getPlayer());
         }
         if (resources.stream().allMatch(n -> n == 0)) {
+            System.out.println("Einde Ronde");
+            boardmodel.setPhase(1); 
             for (PlayerModel player : players){
                 int remaining = voedselBetalen(player);
                 for (int j = 0; j < resources.size(); j++) {
                     
                 }
-            } 
+                playercontroller.setVillagers(player, playercontroller.getMaxVillagers(player));
+            }
+            
         }
-        System.out.println("Hi");
+        System.out.println("Eind actie beurt");
     }
 
     private int voedselBetalen(PlayerModel player){
