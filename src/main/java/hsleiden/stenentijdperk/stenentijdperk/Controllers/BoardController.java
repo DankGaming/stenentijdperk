@@ -1,11 +1,11 @@
 package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Dobbelsteen;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +32,6 @@ public class BoardController {
         boardmodel.setPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
     }
 
-    public String scanner(String text) {
-        Scanner myObj = new Scanner(System.in); // Create a Scanner object
-        System.out.println(text);
-        String input = myObj.nextLine(); // Read user input
-        return input;
-    }
 
     public void registerObserver(BoardObserver boardobserver) {
         this.boardmodel.register(boardobserver);
@@ -48,15 +42,11 @@ public class BoardController {
     }
 
     public void onResourceButtonClick(int location, int input) {
-        if (vraagPhase() == 1) {
-            if (!boardmodel.getPlaced() && boardmodel.requestCap(location) - boardmodel.requestVillagers(location) != 0
-                    && playercontroller.getPositie(boardmodel.getPlayer(), location) == 0) {
-                // Dit veranderd de hoeveelheid stamleden van een speler
-                boardmodel.changeVillagers(location, input);
-                plaatsenStamleden(location, input);
-            }
-        } else {
-            resolveResource(location);
+        if (!boardmodel.getPlaced() && boardmodel.requestCap(location) - boardmodel.requestVillagers(location) != 0
+                 && playercontroller.getPositie(boardmodel.getPlayer(), location) == 0) {
+            // Dit veranderd de hoeveelheid stamleden van een speler
+            boardmodel.changeVillagers(location, input);
+            plaatsenStamleden(location, input);
         }
     }
 
@@ -183,6 +173,8 @@ public class BoardController {
             }
             if (!villagersLeft) {
                 boardmodel.setPhase(2);
+                int turnCheck = (boardmodel.getTurn() -1) % 4;
+                boardmodel.setPlayer(players.get(turnCheck));
                 // TODO Dit moet een soort pop up worden.
                 System.out.println("Nu komen de acties");
             }
@@ -192,7 +184,7 @@ public class BoardController {
     public void EndTurnPhase2() {
         if (playercontroller.vraagResources(boardmodel.getPlayer()).stream().allMatch(n -> n == 0)) {
             int i = checkPlayer();
-            if (i == 4) {
+            if (i == 3) {
                 boardmodel.setPlayer(players.get(0));
             } else {
                 i++;
@@ -200,7 +192,12 @@ public class BoardController {
             }
         }
         if (playercontroller.vraagResources(boardmodel.getPlayer()).stream().allMatch(n -> n == 0)) {
-            // TODO do voedsel stuff.
+            for (PlayerModel player : players){
+                int voedselNodig = playercontroller.getMaxVillagers(player) - playercontroller.vraagGraan(player);
+                if (playercontroller.vraagResources(player).get(0) > voedselNodig){
+                    //TODO food stuff
+                } 
+            }
         }
     }
 
@@ -246,41 +243,25 @@ public class BoardController {
         playercontroller.setPositie(boardmodel.getPlayer(), index, stamleden);
     }
 
+    private void betalenResources(List<Integer> kost){
+        int i = 1;
+        for (Integer resources: kost){
+            boardmodel.getPlayer().reduceResources(i, resources);
+            i ++;
+        }
+    }
+
     public void toolGebruiken() {
         // TODO tools stuff
+        ArrayList<Tool> tools = playercontroller.getTools(boardmodel.getPlayer());
+        for (Tool tool: tools){
+            if (tool.getStatus()){
+                // TODO Show tool in the pop up
+            }
+        }
     }
 
     public int vraagPhase() {
         return boardmodel.getPhase();
     }
 }
-
-// public MainLoop(){
-// while(!wincondition){
-// stamleden plaatsen
-// volgende speler aan de beurt
-// loop totdat stamleden op zijn
-
-// acties uitvoeren
-// volgende speler aan de beurt
-// einde
-
-// stamleden voeden
-// speler krijgt voedsel gelijk aan score op voedselspoor
-// per stamlid -1 voedsel
-// 1 grondstof = 1 voedsel
-// if voedsel + grondstoffen < stamleden , -10 punten
-
-// nieuwe ronden
-// andere speler begint
-// beschavingskaarten aanvullen
-// gereedschap reset
-// }
-
-// if beschavinskaarten < 4 , einde spel
-// if (1 stapel hutten is leeg) , einde spel (na de ronde)
-// elke grondstof is 1 punt
-// aantal verschillende groene beschavingskaarten ^2 = aantal punten
-// aantal symbolen op zandkleurige beschavinskaarten * aantal bezittingen =
-// aantal punten
-// }
