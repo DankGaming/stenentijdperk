@@ -241,7 +241,29 @@ public class FirebaseController {
         return false;
     }
 
-    // Do this on game end.
+    public static void setLobbyLeader(int lobby, PlayerModel leader){
+        try {
+            db.collection("stenentijdperk").document(String.valueOf(lobby)).get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        DocumentReference docRef = db.collection("stenentijdperk").document(String.valueOf(lobby));
+        docRef.update("leader", leader.getNaam());
+    }
+
+    public static String getLobbyLeader(int lobby){
+        try {
+            DocumentReference f = db.collection("stenentijdperk").document(String.valueOf(lobby));
+            ApiFuture<DocumentSnapshot> docRef = f.get();
+            DocumentSnapshot data = docRef.get();
+            Object temp = data.get("leader");
+            return temp != null ? temp.toString() : null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void resetLobby(int lobby){
         db.collection("stenentijdperk").document(String.valueOf(lobby)).collection("players").document("speler1").delete();
         db.collection("stenentijdperk").document(String.valueOf(lobby)).collection("players").document("speler2").delete();
