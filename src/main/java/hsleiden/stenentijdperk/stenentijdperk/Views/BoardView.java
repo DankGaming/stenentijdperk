@@ -132,7 +132,6 @@ public class BoardView {
 		}
 
 		// Spelbord Image
-
 		FileInputStream input = null;
 		try {
 			input = new FileInputStream(this.spelbordImage);
@@ -148,7 +147,6 @@ public class BoardView {
 		GridPane.setConstraints(imageView, 0, 0, 50, 50);
 
 		// Speler stamleden
-
 		FileInputStream speler1 = null;
 		try {
 			speler1 = new FileInputStream(this.Speler1);
@@ -205,21 +203,23 @@ public class BoardView {
 		speler4Image.setFitWidth(30);
 		speler4Image.setVisible(false);
 
+		String styleLabel =  "-fx-font-size: 20px; -fx-font-weight: bold";
+		
 		// Stamleden hoeveelheden
 		speler1Label = new Label("  ");
-		speler1Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
+		speler1Label.setStyle(styleLabel);
 		speler1Label.setVisible(false);
 
 		speler2Label = new Label("  ");
-		speler2Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
+		speler2Label.setStyle(styleLabel);
 		speler2Label.setVisible(false);
 
 		speler3Label = new Label("  ");
-		speler3Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
+		speler3Label.setStyle(styleLabel);
 		speler3Label.setVisible(false);
 
 		speler4Label = new Label("  ");
-		speler4Label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
+		speler4Label.setStyle(styleLabel);
 		speler4Label.setVisible(false);
 
 		String style = "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;";
@@ -239,6 +239,7 @@ public class BoardView {
 		amountButton.setStyle(style);
 		amountButton.setVisible(false);
 		GridPane.setConstraints(amountButton, 30, 18, 5, 3);
+		
 		/*
 		 * locaties jacht: onbeperkt hut: 2 hutkaart: 1 beschavingskaart: 1 gereedschap:
 		 * 1 akkerbouw: 1 steen, leem, goud, hout: 7
@@ -558,6 +559,7 @@ public class BoardView {
 		GridPane.setConstraints(speler4Image, 7, 42, 2, 2);
 		GridPane.setConstraints(speler4Label, 7, 42, 1, 1);
 	}
+	
 	private void  hutKaart2() {
 		GridPane.setConstraints(speler1Image, 10, 40, 2, 2);
 		GridPane.setConstraints(speler1Label, 10, 40, 1, 1);
@@ -571,6 +573,7 @@ public class BoardView {
 		GridPane.setConstraints(speler4Image, 12, 42, 2, 2);
 		GridPane.setConstraints(speler4Label, 12, 42, 1, 1);
 	}
+	
 	private void  hutKaart3() {
 		GridPane.setConstraints(speler1Image, 15, 40, 2, 2);
 		GridPane.setConstraints(speler1Label, 15, 40, 1, 1);
