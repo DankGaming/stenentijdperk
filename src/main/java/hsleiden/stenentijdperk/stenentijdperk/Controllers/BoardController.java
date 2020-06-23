@@ -56,7 +56,6 @@ public class BoardController {
         }
     }
 
-
     public boolean stamledenCheck(int location, int input) {
          return (input > 0
                 && input <= playercontroller.getVillagers(boardmodel.getPlayer())
@@ -189,7 +188,6 @@ public class BoardController {
     }
 
     public void EndTurnPhase2() {
-        System.out.println("Hi");
         if (playercontroller.vraagResources(boardmodel.getPlayer()).stream().allMatch(n -> n == 0)) {
             int i = checkPlayer();
             if (i == 3) {
@@ -273,33 +271,3 @@ public class BoardController {
         return boardmodel.getPhase();
     }
 }
-
-// public MainLoop(){
-// while(!wincondition){
-// stamleden plaatsen
-// volgende speler aan de beurt
-// loop totdat stamleden op zijn
-
-// acties uitvoeren
-// volgende speler aan de beurt
-// einde
-
-// stamleden voeden
-// speler krijgt voedsel gelijk aan score op voedselspoor
-// per stamlid -1 voedsel
-// 1 grondstof = 1 voedsel
-// if voedsel + grondstoffen < stamleden , -10 punten
-
-// nieuwe ronden
-// andere speler begint
-// beschavingskaarten aanvullen
-// gereedschap reset
-// }
-
-// if beschavinskaarten < 4 , einde spel
-// if (1 stapel hutten is leeg) , einde spel (na de ronde)
-// elke grondstof is 1 punt
-// aantal verschillende groene beschavingskaarten ^2 = aantal punten
-// aantal symbolen op zandkleurige beschavinskaarten * aantal bezittingen =
-// aantal punten
-// }
