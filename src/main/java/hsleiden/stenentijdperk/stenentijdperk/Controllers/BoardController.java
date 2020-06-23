@@ -110,7 +110,6 @@ public class BoardController {
             }
             boardmodel.getResource(index).reduceHoeveelheid(resources);
             playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
-            // Test voor krijgen resources
             boardmodel.getPlayer().addResources(index, resources);
         }
     }
