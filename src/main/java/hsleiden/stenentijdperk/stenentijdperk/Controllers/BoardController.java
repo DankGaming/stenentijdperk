@@ -9,7 +9,6 @@ import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class BoardController {
     private PlayerController playercontroller;
@@ -31,7 +30,6 @@ public class BoardController {
         boardmodel = new BoardModel();
         boardmodel.setPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
     }
-
 
     public void registerObserver(BoardObserver boardobserver) {
         this.boardmodel.register(boardobserver);
@@ -110,9 +108,7 @@ public class BoardController {
             }
             boardmodel.getResource(index).reduceHoeveelheid(resources);
             playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
-            // Test voor krijgen resources
             boardmodel.getPlayer().addResources(index, resources);
-            System.out.println(boardmodel.getPlayer().getResource(index));
         }
     }
 
