@@ -112,7 +112,6 @@ public class BoardController {
             playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
             // Test voor krijgen resources
             boardmodel.getPlayer().addResources(index, resources);
-            System.out.println(boardmodel.getPlayer().getResource(index));
         }
     }
 
