@@ -1,5 +1,6 @@
-package hsleiden.stenentijdperk.stenentijdperk.Helpers;
+package hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaart;
 
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Resource;
 import hsleiden.stenentijdperk.stenentijdperk.Interfaces.Status;
 
 public class Kaart implements Status {
