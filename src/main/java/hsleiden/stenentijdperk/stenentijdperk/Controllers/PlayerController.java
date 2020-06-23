@@ -50,6 +50,14 @@ public class PlayerController {
 	public List<Integer> vraagResources(PlayerModel playerModel){
 		return playerModel.getPosities();
 	}
+
+	public void reduceResource(PlayerModel playerModel, int index, int amount) {
+		playerModel.reduceResources(index, amount);
+	}
+
+	public void increaseResource(PlayerModel playerModel, int index, int amount) {
+		playerModel.addResources(index, amount);
+	}
 	
 	public void addTool(PlayerModel playerModel){
 		playerModel.addTool();

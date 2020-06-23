@@ -499,8 +499,12 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label, 11, 11, 1, 1);
 
 					setSpelersVisable(true);
-					setInputVisable(true);
-					location = 0;
+					if (controller.vraagPhase() == 1){
+						setInputVisable(true);
+						location = 0;
+					} else {
+						controller.resolveResource(0);
+					}
 				} else if (actionEvent.getSource() == bosButton) {
 					GridPane.setConstraints(speler1Image, 17, 11, 2, 2);
 					GridPane.setConstraints(speler1Label, 17, 11, 1, 1);
@@ -515,8 +519,12 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label, 19, 13, 1, 1);
 
 					setSpelersVisable(true);
-					setInputVisable(true);
-					location = 1;
+					if (controller.vraagPhase() == 1){
+						setInputVisable(true);
+						location = 1;
+					} else {
+						controller.resolveResource(1);
+					}
 				} else if (actionEvent.getSource() == leemGroeveButton) {
 					GridPane.setConstraints(speler1Image, 24, 11, 2, 2);
 					GridPane.setConstraints(speler1Label, 24, 11, 1, 1);
@@ -531,8 +539,12 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label, 30, 11, 1, 1);
 
 					setSpelersVisable(true);
-					setInputVisable(true);
-					location = 2;
+					if (controller.vraagPhase() == 1){
+						setInputVisable(true);
+						location = 2;
+					} else {
+						controller.resolveResource(2);
+					}
 				} else if (actionEvent.getSource() == steenGroeveButton) {
 					GridPane.setConstraints(speler1Image, 42, 11, 2, 2);
 					GridPane.setConstraints(speler1Label, 42, 11, 1, 1);
@@ -547,8 +559,12 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label, 44, 13, 1, 1);
 
 					setSpelersVisable(true);
-					setInputVisable(true);
-					location = 3;
+					if (controller.vraagPhase() == 1){
+						setInputVisable(true);
+						location = 3;
+					} else {
+						controller.resolveResource(3);
+					}
 				} else if (actionEvent.getSource() == rivierButton) {
 					GridPane.setConstraints(speler1Image, 37, 21, 2, 2);
 					GridPane.setConstraints(speler1Label, 37, 21, 1, 1);
@@ -563,10 +579,18 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label, 39, 23, 1, 1);
 
 					setSpelersVisable(true);
-					setInputVisable(true);
-					location = 4;
+					if (controller.vraagPhase() == 1){
+						setInputVisable(true);
+						location = 4;
+					} else {
+						controller.resolveResource(4);
+					}
 				} else if (actionEvent.getSource() == endTurn) {
-					controller.endTurn();
+					if (controller.vraagPhase() == 1){
+						controller.endTurn();
+					} else {
+						controller.EndTurnPhase2();
+					}
 				}
 			}
 		};

@@ -48,17 +48,14 @@ public class BoardController {
     }
 
     public void onResourceButtonClick(int location, int input) {
-        if (vraagPhase() == 1) {
-            if (!boardmodel.getPlaced() && boardmodel.requestCap(location) - boardmodel.requestVillagers(location) != 0
-                    && playercontroller.getPositie(boardmodel.getPlayer(), location) == 0) {
-                // Dit veranderd de hoeveelheid stamleden van een speler
-                boardmodel.changeVillagers(location, input);
-                plaatsenStamleden(location, input);
-            }
-        } else {
-            resolveResource(location);
+        if (!boardmodel.getPlaced() && boardmodel.requestCap(location) - boardmodel.requestVillagers(location) != 0
+                 && playercontroller.getPositie(boardmodel.getPlayer(), location) == 0) {
+            // Dit veranderd de hoeveelheid stamleden van een speler
+             boardmodel.changeVillagers(location, input);
+            plaatsenStamleden(location, input);
         }
     }
+
 
     public boolean stamledenCheck(int location, int input) {
          return (input > 0
@@ -183,6 +180,8 @@ public class BoardController {
             }
             if (!villagersLeft) {
                 boardmodel.setPhase(2);
+                int turnCheck = (boardmodel.getTurn() -1) % 4;
+                boardmodel.setPlayer(players.get(turnCheck));
                 // TODO Dit moet een soort pop up worden.
                 System.out.println("Nu komen de acties");
             }
@@ -190,9 +189,10 @@ public class BoardController {
     }
 
     public void EndTurnPhase2() {
+        System.out.println("Hi");
         if (playercontroller.vraagResources(boardmodel.getPlayer()).stream().allMatch(n -> n == 0)) {
             int i = checkPlayer();
-            if (i == 4) {
+            if (i == 3) {
                 boardmodel.setPlayer(players.get(0));
             } else {
                 i++;
@@ -200,7 +200,12 @@ public class BoardController {
             }
         }
         if (playercontroller.vraagResources(boardmodel.getPlayer()).stream().allMatch(n -> n == 0)) {
-            // TODO do voedsel stuff.
+            for (PlayerModel player : players){
+                int voedselNodig = playercontroller.getMaxVillagers(player) - playercontroller.vraagGraan(player);
+                if (playercontroller.vraagResources(player).get(0) > voedselNodig){
+                    //TODO food stuff
+                } 
+            }
         }
     }
 
@@ -246,8 +251,22 @@ public class BoardController {
         playercontroller.setPositie(boardmodel.getPlayer(), index, stamleden);
     }
 
+    private void betalenResources(List<Integer> kost){
+        int i = 1;
+        for (Integer resources: kost){
+            boardmodel.getPlayer().reduceResources(i, resources);
+            i ++;
+        }
+    }
+
     public void toolGebruiken() {
         // TODO tools stuff
+        ArrayList<Tool> tools = playercontroller.getTools(boardmodel.getPlayer());
+        for (Tool tool: tools){
+            if (tool.getStatus()){
+                // TODO Show tool in the pop up
+            }
+        }
     }
 
     public int vraagPhase() {
