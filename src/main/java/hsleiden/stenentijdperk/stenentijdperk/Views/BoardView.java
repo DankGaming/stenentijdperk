@@ -307,6 +307,7 @@ public class BoardView {
 			@Override
 			public void handle(ActionEvent actionEvent) {
 				if (actionEvent.getSource() == hutKaartButton1) {
+					resetTextLabel();
 					GridPane.setConstraints(speler1Image, 5, 40, 2, 2);
 					GridPane.setConstraints(speler1Label, 5, 40, 1, 1);
 
@@ -320,8 +321,10 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label, 7, 42, 1, 1);
 
 					setSpelersVisable(true);
+					setLabelTo1();
 					controller.onButtonClick(8);
 				} else if (actionEvent.getSource() == hutKaartButton2) {
+					resetTextLabel();
 					GridPane.setConstraints(speler1Image, 10, 40, 2, 2);
 					GridPane.setConstraints(speler1Label, 10, 40, 1, 1);
 
@@ -335,8 +338,10 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label, 12, 42, 1, 1);
 
 					setSpelersVisable(true);
+					setLabelTo1();
 					controller.onButtonClick(9);
 				} else if (actionEvent.getSource() == hutKaartButton3) {
+					resetTextLabel();
 					GridPane.setConstraints(speler1Image, 15, 40, 2, 2);
 					GridPane.setConstraints(speler1Label, 15, 40, 1, 1);
 
@@ -350,8 +355,10 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label, 17, 42, 1, 1);
 
 					setSpelersVisable(true);
+					setLabelTo1();
 					controller.onButtonClick(10);
 				} else if (actionEvent.getSource() == hutKaartButton4) {
+					resetTextLabel();
 					GridPane.setConstraints(speler1Image, 20, 40, 2, 2);
 					GridPane.setConstraints(speler1Label, 20, 40, 1, 1);
 
@@ -365,8 +372,10 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label, 22, 42, 1, 1);
 
 					setSpelersVisable(true);
+					setLabelTo1();
 					controller.onButtonClick(11);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(0)) {
+					resetTextLabel();
 					ArrayList<Kaart> array = controller.onKaartButtonClick(0); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
 
@@ -383,8 +392,10 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label, 45, 38, 1, 1);
 
 					setSpelersVisable(true);
+					setLabelTo1();
 					controller.onButtonClick(12);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(1)) {
+					resetTextLabel();
 					ArrayList<Kaart> array = controller.onKaartButtonClick(1); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
 
@@ -401,8 +412,10 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label, 39, 38, 1, 1);
 
 					setSpelersVisable(true);
+					setLabelTo1();
 					controller.onButtonClick(13);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(2)) {
+					resetTextLabel();
 					ArrayList<Kaart> array = controller.onKaartButtonClick(2); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
 
@@ -419,8 +432,10 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label, 34, 38, 1, 1);
 
 					setSpelersVisable(true);
+					setLabelTo1();
 					controller.onButtonClick(14);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(3)) {
+					resetTextLabel();
 					ArrayList<Kaart> array = controller.onKaartButtonClick(3); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
 
@@ -437,8 +452,10 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label, 29, 38, 1, 1);
 
 					setSpelersVisable(true);
+					setLabelTo1();
 					controller.onButtonClick(15);
 				} else if (actionEvent.getSource() == hutButton) {
+					resetTextLabel();
 					GridPane.setConstraints(speler1Image, 16, 34, 2, 2);
 					GridPane.setConstraints(speler1Label, 16, 34, 1, 1);
 
@@ -452,8 +469,10 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label, 22, 34, 1, 1);
 
 					setSpelersVisable(true);
+					setLabelTo1();
 					controller.onButtonClick(6);
 				} else if (actionEvent.getSource() == gereedschapButton) {
+					resetTextLabel();
 					GridPane.setConstraints(speler1Image, 26, 21, 2, 2);
 					GridPane.setConstraints(speler1Label, 26, 21, 1, 1);
 
@@ -467,8 +486,10 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label, 28, 23, 1, 1);
 
 					setSpelersVisable(true);
+					setLabelTo1();
 					controller.onButtonClick(7);
 				} else if (actionEvent.getSource() == akkerbouwButton) {
+					resetTextLabel();
 					GridPane.setConstraints(speler1Image, 13, 27, 2, 2);
 					GridPane.setConstraints(speler1Label, 13, 27, 1, 1);
 
@@ -482,6 +503,7 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label, 19, 27, 1, 1);
 
 					setSpelersVisable(true);
+					setLabelTo1();
 					controller.onButtonClick(5);
 				} else if (actionEvent.getSource() == jachtButton) {
 					resetTextLabel();
@@ -652,5 +674,12 @@ public class BoardView {
 		speler2Label.setText("");
 		speler3Label.setText("");
 		speler4Label.setText("");
+	}
+
+	private void setLabelTo1() {
+		speler1Label.setText(" 1");
+		speler2Label.setText(" 1");
+		speler3Label.setText(" 1");
+		speler4Label.setText(" 1");
 	}
 }
