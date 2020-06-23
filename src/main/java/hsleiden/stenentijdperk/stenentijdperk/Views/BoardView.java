@@ -498,13 +498,8 @@ public class BoardView {
 					GridPane.setConstraints(speler4Image, 11, 11, 2, 2);
 					GridPane.setConstraints(speler4Label, 11, 11, 1, 1);
 
-					setSpelersVisable(true);
-					if (controller.vraagPhase() == 1){
-						setInputVisable(true);
-						location = 0;
-					} else {
-						controller.resolveResource(0);
-					}
+					phaseCheck(0);
+
 				} else if (actionEvent.getSource() == bosButton) {
 					GridPane.setConstraints(speler1Image, 17, 11, 2, 2);
 					GridPane.setConstraints(speler1Label, 17, 11, 1, 1);
@@ -518,13 +513,8 @@ public class BoardView {
 					GridPane.setConstraints(speler4Image, 19, 13, 2, 2);
 					GridPane.setConstraints(speler4Label, 19, 13, 1, 1);
 
-					setSpelersVisable(true);
-					if (controller.vraagPhase() == 1){
-						setInputVisable(true);
-						location = 1;
-					} else {
-						controller.resolveResource(1);
-					}
+					phaseCheck(1);
+
 				} else if (actionEvent.getSource() == leemGroeveButton) {
 					GridPane.setConstraints(speler1Image, 24, 11, 2, 2);
 					GridPane.setConstraints(speler1Label, 24, 11, 1, 1);
@@ -538,13 +528,8 @@ public class BoardView {
 					GridPane.setConstraints(speler4Image, 30, 11, 2, 2);
 					GridPane.setConstraints(speler4Label, 30, 11, 1, 1);
 
-					setSpelersVisable(true);
-					if (controller.vraagPhase() == 1){
-						setInputVisable(true);
-						location = 2;
-					} else {
-						controller.resolveResource(2);
-					}
+					phaseCheck(2);
+					
 				} else if (actionEvent.getSource() == steenGroeveButton) {
 					GridPane.setConstraints(speler1Image, 42, 11, 2, 2);
 					GridPane.setConstraints(speler1Label, 42, 11, 1, 1);
@@ -558,13 +543,8 @@ public class BoardView {
 					GridPane.setConstraints(speler4Image, 44, 13, 2, 2);
 					GridPane.setConstraints(speler4Label, 44, 13, 1, 1);
 
-					setSpelersVisable(true);
-					if (controller.vraagPhase() == 1){
-						setInputVisable(true);
-						location = 3;
-					} else {
-						controller.resolveResource(3);
-					}
+					phaseCheck(3);
+					
 				} else if (actionEvent.getSource() == rivierButton) {
 					GridPane.setConstraints(speler1Image, 37, 21, 2, 2);
 					GridPane.setConstraints(speler1Label, 37, 21, 1, 1);
@@ -578,13 +558,8 @@ public class BoardView {
 					GridPane.setConstraints(speler4Image, 39, 23, 2, 2);
 					GridPane.setConstraints(speler4Label, 39, 23, 1, 1);
 
-					setSpelersVisable(true);
-					if (controller.vraagPhase() == 1){
-						setInputVisable(true);
-						location = 4;
-					} else {
-						controller.resolveResource(4);
-					}
+					phaseCheck(4);
+
 				} else if (actionEvent.getSource() == endTurn) {
 					if (controller.vraagPhase() == 1){
 						controller.endTurn();
@@ -662,6 +637,16 @@ public class BoardView {
 
 		amountField.setEditable(visable);
 		amountField.setVisible(visable);
+	}
+
+	private void phaseCheck(int location) {
+		this.location = location;
+		setSpelersVisable(true);
+		if (controller.vraagPhase() == 1){
+			setInputVisable(true);
+		} else {
+			controller.resolveResource(location);
+				}
 	}
 
 

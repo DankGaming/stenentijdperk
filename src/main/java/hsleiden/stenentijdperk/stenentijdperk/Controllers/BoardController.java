@@ -32,12 +32,6 @@ public class BoardController {
         boardmodel.setPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
     }
 
-    public String scanner(String text) {
-        Scanner myObj = new Scanner(System.in); // Create a Scanner object
-        System.out.println(text);
-        String input = myObj.nextLine(); // Read user input
-        return input;
-    }
 
     public void registerObserver(BoardObserver boardobserver) {
         this.boardmodel.register(boardobserver);
@@ -51,7 +45,7 @@ public class BoardController {
         if (!boardmodel.getPlaced() && boardmodel.requestCap(location) - boardmodel.requestVillagers(location) != 0
                  && playercontroller.getPositie(boardmodel.getPlayer(), location) == 0) {
             // Dit veranderd de hoeveelheid stamleden van een speler
-             boardmodel.changeVillagers(location, input);
+            boardmodel.changeVillagers(location, input);
             plaatsenStamleden(location, input);
         }
     }
@@ -189,7 +183,6 @@ public class BoardController {
     }
 
     public void EndTurnPhase2() {
-        System.out.println("Hi");
         if (playercontroller.vraagResources(boardmodel.getPlayer()).stream().allMatch(n -> n == 0)) {
             int i = checkPlayer();
             if (i == 3) {
