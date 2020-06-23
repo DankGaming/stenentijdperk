@@ -3,7 +3,7 @@ package hsleiden.stenentijdperk.stenentijdperk.Models;
 import java.util.*;
 
 import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObserver;
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaart.Kaart;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 
