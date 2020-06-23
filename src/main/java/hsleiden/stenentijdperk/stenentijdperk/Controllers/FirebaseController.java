@@ -2,7 +2,6 @@ package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.PlatformInformation;
 import com.google.cloud.firestore.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -12,9 +11,7 @@ import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 
 public class FirebaseController {
     static Firestore db;
@@ -75,6 +72,25 @@ public class FirebaseController {
 
     static void setPlayers(ArrayList<PlayerModel> newPlayers){
         players = newPlayers;
+    }
+
+    public static BoardModel getBoardUpdates(String lobby){
+        final BoardModel[] newModel = new BoardModel[1];
+        DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("boardData").document("board");
+        docRef.addSnapshotListener((snapshot, e) -> {
+            if (e != null) {
+                System.err.println("Listen failed: " + e);
+                return;
+            }
+
+            if (snapshot != null && snapshot.exists()) {
+                newModel[0] = snapshot.toObject(BoardModel.class);
+                System.out.println("updated model");
+            } else {
+                System.out.print("Current data: null");
+            }
+        });
+        return newModel[0];
     }
 
     public static void listenForBoardUpdates(String lobby){
@@ -193,6 +209,7 @@ public class FirebaseController {
 
     public static void addPlayers(int lobby, String speler, String naam){
         PlayerModel player = new PlayerModel(naam);
+        player.setLobby(lobby);
         ApiFuture<WriteResult> future = db.collection("stenentijdperk").document(String.valueOf(lobby)).collection("players").document(speler).set(player);
         try {
             System.out.println("Update time : " + future.get().getUpdateTime());
@@ -224,7 +241,29 @@ public class FirebaseController {
         return false;
     }
 
-    // Do this on game end.
+    public static void setLobbyLeader(int lobby, PlayerModel leader){
+        try {
+            db.collection("stenentijdperk").document(String.valueOf(lobby)).get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        DocumentReference docRef = db.collection("stenentijdperk").document(String.valueOf(lobby));
+        docRef.update("leader", leader.getNaam());
+    }
+
+    public static String getLobbyLeader(int lobby){
+        try {
+            DocumentReference f = db.collection("stenentijdperk").document(String.valueOf(lobby));
+            ApiFuture<DocumentSnapshot> docRef = f.get();
+            DocumentSnapshot data = docRef.get();
+            Object temp = data.get("leader");
+            return temp != null ? temp.toString() : null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void resetLobby(int lobby){
         db.collection("stenentijdperk").document(String.valueOf(lobby)).collection("players").document("speler1").delete();
         db.collection("stenentijdperk").document(String.valueOf(lobby)).collection("players").document("speler2").delete();
@@ -238,7 +277,7 @@ public class FirebaseController {
         ArrayList<PlayerModel> players = getPlayersInLobby(oldLobby);
         for(PlayerModel curPlayer : players) {
             if(curPlayer.getNaam().equals(player.getNaam())) {
-                db.collection("stenentijdperk").document(String.valueOf(oldLobby)).collection("players").document("speler1").delete();
+                db.collection("stenentijdperk").document(String.valueOf(oldLobby)).collection("players").document("speler" + "2").delete();
             }
         }
     }
