@@ -828,16 +828,16 @@ public class BoardView {
 		currentSpeler = boardModel.getPlayer();
 		System.out.println(boardModel.getPlayer());
 		if (currentSpeler = speler1){
-
+			speler1 = speler1Label, speler1Image;
 		}
 		if (currentSpeler = speler2){
-
+			speler2 = speler2Label, speler2Label;
 		}
 		if (currentSpeler = speler3){
-
+			speler3 = speler3Label, speler3Image;
 		}
 		if (currentSpeler = speler4){
-
+			speler4 - speler4Label, speler4Image;
 		}
 	}
 }
