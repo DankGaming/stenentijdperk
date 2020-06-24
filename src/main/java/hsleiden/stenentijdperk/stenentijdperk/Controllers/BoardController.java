@@ -17,7 +17,7 @@ public class BoardController {
     private ArrayList<PlayerModel> players = new ArrayList<PlayerModel>();
 
     public BoardController() {
-        // temp players
+        // TODO all references naar temp players moet naar firebase vragen.
         PlayerModel matt = new PlayerModel("Matt");
         PlayerModel jake = new PlayerModel("Jake");
         PlayerModel lucas = new PlayerModel("Lucas");
@@ -98,17 +98,19 @@ public class BoardController {
 
     // Hier is het rollen voor resources.
     public void resolveResource(int index) {
-        if (playercontroller.getPositie(boardmodel.getPlayer(), index) != 0) {
-            Dobbelsteen roll = new Dobbelsteen(playercontroller.getPositie(boardmodel.getPlayer(), index));
+        int stamleden = playercontroller.getPositie(boardmodel.getPlayer(), index);
+        if (stamleden != 0) {
+            Dobbelsteen roll = new Dobbelsteen(stamleden);
             roll.worp();
             roll.berekenTotaal();
             int resources = roll.getTotaal() / boardmodel.getResource(index).getWaarde();
             if (resources > boardmodel.getResource(index).getHoeveelheid()) {
                 resources = boardmodel.getResource(index).getHoeveelheid();
             }
-            boardmodel.getResource(index).reduceHoeveelheid(resources);
+            boardmodel.reduceResources(index, resources);
             playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
             boardmodel.getPlayer().addResources(index, resources);
+            boardmodel.getLocaties().get(index).reduceVillager(stamleden);
         }
     }
 
@@ -178,8 +180,10 @@ public class BoardController {
     }
 
     public void EndTurnPhase2() {
-        List<Integer> resources = playercontroller.vraagResources(boardmodel.getPlayer());
-        if (resources.stream().allMatch(n -> n == 0)) {
+        List<Integer> posities = playercontroller.vraagPosities(boardmodel.getPlayer());
+        System.out.println(playercontroller.getNaam(boardmodel.getPlayer()));
+        if (posities.stream().allMatch(n -> n == 0)) {
+            System.out.println(playercontroller.getNaam(boardmodel.getPlayer()));
             int i = checkPlayer();
             if (i == 3) {
                 boardmodel.setPlayer(players.get(0));
@@ -187,32 +191,52 @@ public class BoardController {
                 i++;
                 boardmodel.setPlayer(players.get(i));
             }
-            resources = playercontroller.vraagResources(boardmodel.getPlayer());
+            posities = playercontroller.vraagPosities(boardmodel.getPlayer());
+            System.out.println("Eind actie beurt");
+            System.out.println(playercontroller.getNaam(boardmodel.getPlayer()));
         }
-        if (resources.stream().allMatch(n -> n == 0)) {
+        if (posities.stream().allMatch(n -> n == 0)) {
             System.out.println("Einde Ronde");
             boardmodel.setPhase(1); 
             for (PlayerModel player : players){
+                List<Integer> resources = playercontroller.vraagResources(player);
                 int remaining = voedselBetalen(player);
-                for (int j = 0; j < resources.size(); j++) {
-                    
+                for (int j = 1; j < resources.size(); j++) {
+                    if (remaining != 0 && !(resources.stream().allMatch(n -> n == 0))){
+                        for (int k = resources.get(j); k > 0; k --){
+                            if (remaining != 0) {
+                                remaining -= 1;
+                                playercontroller.reduceResource(player, j, 1);
+                                boardmodel.addResources(j, 1);
+                            } else {
+                                break;
+                            }
+                        }
+                    } else if (resources.stream().allMatch(n -> n == 0)){
+                        //TODO punten min 10
+                        break;
+                    } else {
+                        break;
+                    }
                 }
                 playercontroller.setVillagers(player, playercontroller.getMaxVillagers(player));
             }
             
         }
-        System.out.println("Eind actie beurt");
+        
     }
 
     private int voedselBetalen(PlayerModel player){
         int remaining = 0;
         int voedselNodig = playercontroller.getMaxVillagers(player) - playercontroller.vraagGraan(player);
         int voedselSpeler = playercontroller.vraagResources(player).get(0);
-                if (voedselSpeler > voedselNodig){
+                if (voedselSpeler >= voedselNodig){
                     playercontroller.reduceResource(player, 0, voedselNodig);
+                    boardmodel.addResources(0, voedselNodig);
                 } else {
                     playercontroller.reduceResource(player, 0, voedselSpeler);
                     remaining = voedselNodig - voedselSpeler;
+                    boardmodel.addResources(0, voedselSpeler);
                 }
         return remaining;
     }

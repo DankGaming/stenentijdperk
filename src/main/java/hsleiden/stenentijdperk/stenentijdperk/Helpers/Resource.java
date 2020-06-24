@@ -50,4 +50,12 @@ public class Resource {
 	public void setVillager(int villagers) {
 		this.villagers = villagers;
 	}
+
+	public void increaseVillager(int villagers){
+		this.villagers += villagers;
+	}
+
+	public void reduceVillager(int villagers){
+		this.villagers -= villagers;
+	}
 }

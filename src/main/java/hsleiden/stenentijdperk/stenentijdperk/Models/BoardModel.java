@@ -144,6 +144,14 @@ public class BoardModel implements BoardObservable {
         return this.locaties.get(index);
     }
 
+    public void addResources(int index, int amount){
+        this.locaties.get(index).addHoeveelheid(amount);
+    }
+
+    public void reduceResources(int index, int amount){
+        this.locaties.get(index).reduceHoeveelheid(amount);;
+    }
+
     public int getPhase() {
         return phase;
     }
