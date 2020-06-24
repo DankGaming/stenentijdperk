@@ -60,7 +60,7 @@ public class BoardController {
 
     // methode om de onderste buttons af te handelen. maakt de kaart/hut bezet en
     // zorgt dat je niet meer kan plaatsen.
-    public ArrayList<Kaart> onKaartButtonClick(int index) {
+    public List<Kaart> onKaartButtonClick(int index) {
         return (boardmodel.removeKaart(index)); // TODO dit moet naar acties verplaatst worden
     }
 
@@ -269,4 +269,4 @@ public class BoardController {
         return boardmodel.getPhase();
     }
 
-}   
+}

@@ -113,11 +113,12 @@ public class BoardView {
 
 	}
 
-	private void removeKaartButton(int index) { // dit kan gebruikt worden als de kaarten worden gekocht in een actie fase
+	private void removeKaartButton(int index) { // dit kan gebruikt worden als de kaarten worden gekocht in een actie
+												// fase
 		this.beschavingsKaartButtons.get(index).setVisible(false);
 	}
 
-	private void renderNewKaarten(ArrayList<Kaart> array) {
+	private void renderNewKaarten(List<Kaart> array) {
 		int kaartAmount = 4;
 		if (array.size() < 4) {
 			kaartAmount = array.size();
@@ -386,7 +387,7 @@ public class BoardView {
 					controller.onButtonClick(11);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(0)) {
 					resetTextLabel();
-					ArrayList<Kaart> array = controller.onKaartButtonClick(0); // TODO verplaatsen naar acties
+					List<Kaart> array = controller.onKaartButtonClick(0); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
 
 					beschavingsKaart1();
@@ -396,7 +397,7 @@ public class BoardView {
 					controller.onButtonClick(12);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(1)) {
 					resetTextLabel();
-					ArrayList<Kaart> array = controller.onKaartButtonClick(1); // TODO verplaatsen naar acties
+					List<Kaart> array = controller.onKaartButtonClick(1); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
 
 					beschavingsKaart2();
@@ -406,7 +407,7 @@ public class BoardView {
 					controller.onButtonClick(13);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(2)) {
 					resetTextLabel();
-					ArrayList<Kaart> array = controller.onKaartButtonClick(2); // TODO verplaatsen naar acties
+					List<Kaart> array = controller.onKaartButtonClick(2); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
 
 					beschavingsKaart3();
@@ -416,7 +417,7 @@ public class BoardView {
 					controller.onButtonClick(14);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(3)) {
 					resetTextLabel();
-					ArrayList<Kaart> array = controller.onKaartButtonClick(3); // TODO verplaatsen naar acties
+					List<Kaart> array = controller.onKaartButtonClick(3); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
 
 					beschavingsKaart4();

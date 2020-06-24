@@ -5,9 +5,8 @@ import hsleiden.stenentijdperk.stenentijdperk.Interfaces.Status;
 public class Tool implements Status {
     private int level;
     private boolean status;
-    
 
-    public Tool(){
+    public Tool() {
         this.level = 1;
         this.status = false;
     }
@@ -22,15 +21,15 @@ public class Tool implements Status {
         this.status = status;
     }
 
-    public int getLevel(){
+    public int getLevel() {
         return this.level;
     }
 
-    public void setLevel(int level){
+    public void setLevel(int level) {
         this.level = level;
     }
 
-    public void increaseLevel(){
+    public void increaseLevel() {
         this.level += 1;
     }
 }

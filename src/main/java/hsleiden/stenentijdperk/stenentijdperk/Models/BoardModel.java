@@ -5,7 +5,6 @@ import hsleiden.stenentijdperk.stenentijdperk.Controllers.PlayerController;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Resource;
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
 import javafx.event.Event;
@@ -22,8 +21,8 @@ public class BoardModel implements BoardObservable {
     private PlayerModel player;
     private int turn;
     private boolean placed;
-    private ArrayList<Kaart> kaarten = new ArrayList<Kaart>();
-    private ArrayList<StaticHut> hutKaarten = new ArrayList<StaticHut>();
+    private List<Kaart> kaarten = new ArrayList<Kaart>();
+    private List<StaticHut> hutKaarten = new ArrayList<StaticHut>();
     private List<StaticHut> hutStapel1 = new ArrayList<StaticHut>();
     private List<StaticHut> hutStapel2 = new ArrayList<StaticHut>();
     private List<StaticHut> hutStapel3 = new ArrayList<StaticHut>();
@@ -77,7 +76,7 @@ public class BoardModel implements BoardObservable {
         this.hutKaarten.clear();
     }
 
-    public ArrayList<Kaart> removeKaart(int index) {
+    public List<Kaart> removeKaart(int index) {
         this.kaarten.remove(index);
         return this.kaarten;
     }
@@ -124,7 +123,7 @@ public class BoardModel implements BoardObservable {
         this.kaarten = kaarten;
     }
 
-    public ArrayList<Kaart> getKaarten() {
+    public List<Kaart> getKaarten() {
         return this.kaarten;
     }
 
