@@ -12,4 +12,5 @@ module hsleiden.stenentijdperk.stenentijdperk {
     exports hsleiden.stenentijdperk.stenentijdperk;
 
     opens hsleiden.stenentijdperk.stenentijdperk.Models to google.cloud.firestore;
+    opens hsleiden.stenentijdperk.stenentijdperk.Helpers to google.cloud.firestore;
 }

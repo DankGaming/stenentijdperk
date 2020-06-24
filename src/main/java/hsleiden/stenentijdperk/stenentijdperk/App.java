@@ -5,6 +5,7 @@ import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.Views.LobbyView;
 import hsleiden.stenentijdperk.stenentijdperk.Views.LoginView;
+import hsleiden.stenentijdperk.stenentijdperk.Views.SpelregelView;
 import hsleiden.stenentijdperk.stenentijdperk.Views.TableauView;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -17,8 +18,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        ViewManager.loadBoardView();
         FirebaseController.initializeFirebaseApp();
+        ViewManager.loadLoginView();
     }
 
     public static void main(String[] args) {

@@ -41,7 +41,6 @@ public class LoginView {
 
 	private void setupPane() {
 		this.view = new GridPane();
-		//this.view.setStyle("-fx-background-color: d0c9b5");
 		int amountOfRows = 50;
 		int amountOfColumns = 50;
 		for(int i = 0; i < amountOfColumns; i++) {
