@@ -223,6 +223,5 @@ public class BoardModel implements BoardObservable {
 
     public void setLocaties(ArrayList<Resource> res) {
         this.locaties = res;
-    }}
-
-      
+    }
+}
