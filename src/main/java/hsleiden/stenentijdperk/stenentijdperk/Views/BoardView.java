@@ -1,6 +1,8 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.PlatformHelper;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
@@ -15,13 +17,14 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import java.util.ArrayList;
-
+import java.util.List;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class BoardView {
 	private BoardController controller;
 	private ArrayList<Button> beschavingsKaartButtons = new ArrayList<Button>();
+	private ArrayList<Button> hutKaartButtons = new ArrayList<Button>();
 	private BoardModel boardModel;
 	private GridPane view = new GridPane();
 	private String spelbordImage = "src/main/Resources/Backgrounds/spelbord2.jpg";
@@ -70,7 +73,48 @@ public class BoardView {
 		}
 	}
 
-	private void removeKaartButton(int index) { // dit kan gebruikt worden als de kaarten worden gekocht in een actie fase
+	private void createHutStapels() {
+		for (int i = 0; i < 4; i++) { // maakt 4 beschavingskaart buttons
+			FileInputStream input = null;
+			try {
+				input = new FileInputStream(this.controller.getHut(i, 0).getPath());
+			} catch (FileNotFoundException fileNotFoundException) {
+				System.out.println(fileNotFoundException);
+			}
+
+			assert input != null;
+			Image image = new Image(input);
+			ImageView imageView = new ImageView(image);
+			imageView.setFitHeight(100);
+			imageView.setPreserveRatio(true);
+			this.hutKaartButtons.add(new Button("", imageView));
+		}
+	}
+
+	private void renderNewHutten(List<StaticHut> array, int index) {
+		if (array.size() < 1) {
+			this.hutKaartButtons.get(index).setVisible(false);
+		} else {
+			this.hutKaartButtons.get(index).setVisible(true);
+			FileInputStream input = null;
+			try {
+				input = new FileInputStream(array.get(0).getPath());
+			} catch (FileNotFoundException fileNotFoundException) {
+				System.out.println(fileNotFoundException);
+			}
+
+			assert input != null;
+			Image image = new Image(input);
+			ImageView imageView = new ImageView(image);
+			imageView.setFitHeight(100);
+			imageView.setPreserveRatio(true);
+			this.hutKaartButtons.get(index).setGraphic(imageView);
+		}
+
+	}
+
+	private void removeKaartButton(int index) { // dit kan gebruikt worden als de kaarten worden gekocht in een actie
+												// fase
 		this.beschavingsKaartButtons.get(index).setVisible(false);
 	}
 
@@ -246,29 +290,18 @@ public class BoardView {
 		 */
 
 		this.createKaartButtons();
+		this.createHutStapels();
 		// Buttons
-		String style = "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;";
 
 		GridPane.setConstraints(this.beschavingsKaartButtons.get(0), 42, 40, 1, 1);
 		GridPane.setConstraints(this.beschavingsKaartButtons.get(1), 37, 40, 1, 1);
 		GridPane.setConstraints(this.beschavingsKaartButtons.get(2), 31, 40, 1, 1);
 		GridPane.setConstraints(this.beschavingsKaartButtons.get(3), 26, 40, 1, 1);
 
-		Button hutKaartButton1 = new Button("stamlid op een hut");
-		hutKaartButton1.setStyle(style);
-		GridPane.setConstraints(hutKaartButton1, 5, 36, 5, 3);
-
-		Button hutKaartButton2 = new Button("stamlid op een hut");
-		hutKaartButton2.setStyle(style);
-		GridPane.setConstraints(hutKaartButton2, 10, 36, 5, 3);
-
-		Button hutKaartButton3 = new Button("stamlid op een hut");
-		hutKaartButton3.setStyle(style);
-		GridPane.setConstraints(hutKaartButton3, 15, 36, 5, 3);
-
-		Button hutKaartButton4 = new Button("stamlid op een hut");
-		hutKaartButton4.setStyle(style);
-		GridPane.setConstraints(hutKaartButton4, 20, 36, 5, 3);
+		GridPane.setConstraints(this.hutKaartButtons.get(0), 20, 42, 1, 1);
+		GridPane.setConstraints(this.hutKaartButtons.get(1), 15, 42, 1, 1);
+		GridPane.setConstraints(this.hutKaartButtons.get(2), 10, 42, 1, 1);
+		GridPane.setConstraints(this.hutKaartButtons.get(3), 5, 42, 1, 1);
 
 		Button hutButton = new Button("Stamlid hut");
 		hutButton.setStyle(style);
@@ -309,37 +342,26 @@ public class BoardView {
 		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
-				if (actionEvent.getSource() == hutKaartButton1) {
-					GridPane.setConstraints(speler1Image, 5, 40, 2, 2);
-					GridPane.setConstraints(speler1Label, 5, 40, 1, 1);
+				if (actionEvent.getSource() == hutKaartButtons.get(0)) {
+					List<StaticHut> array = controller.onHutButtonClick(0); // TODO verplaatsen naar acties
+					renderNewHutten(array, 0);
+					GridPane.setConstraints(speler1Image, 20, 40, 2, 2);
+					GridPane.setConstraints(speler1Label, 20, 40, 1, 1);
 
-					GridPane.setConstraints(speler2Image, 7, 40, 2, 2);
-					GridPane.setConstraints(speler2Label, 7, 40, 1, 1);
+					GridPane.setConstraints(speler2Image, 22, 40, 2, 2);
+					GridPane.setConstraints(speler2Label, 22, 40, 1, 1);
 
-					GridPane.setConstraints(speler3Image, 5, 42, 2, 2);
-					GridPane.setConstraints(speler3Label, 5, 42, 1, 1);
+					GridPane.setConstraints(speler3Image, 20, 42, 2, 2);
+					GridPane.setConstraints(speler3Label, 20, 42, 1, 1);
 
-					GridPane.setConstraints(speler4Image, 7, 42, 2, 2);
-					GridPane.setConstraints(speler4Label, 7, 42, 1, 1);
+					GridPane.setConstraints(speler4Image, 22, 42, 2, 2);
+					GridPane.setConstraints(speler4Label, 22, 42, 1, 1);
 
 					setSpelersVisable(true);
 					controller.onButtonClick(8);
-				} else if (actionEvent.getSource() == hutKaartButton2) {
-					GridPane.setConstraints(speler1Image, 10, 40, 2, 2);
-					GridPane.setConstraints(speler1Label, 10, 40, 1, 1);
-
-					GridPane.setConstraints(speler2Image, 12, 40, 2, 2);
-					GridPane.setConstraints(speler2Label, 12, 40, 1, 1);
-
-					GridPane.setConstraints(speler3Image, 10, 42, 2, 2);
-					GridPane.setConstraints(speler3Label, 10, 42, 1, 1);
-
-					GridPane.setConstraints(speler4Image, 12, 42, 2, 2);
-					GridPane.setConstraints(speler4Label, 12, 42, 1, 1);
-
-					setSpelersVisable(true);
-					controller.onButtonClick(9);
-				} else if (actionEvent.getSource() == hutKaartButton3) {
+				} else if (actionEvent.getSource() == hutKaartButtons.get(1)) {
+					List<StaticHut> array = controller.onHutButtonClick(1); // TODO verplaatsen naar acties
+					renderNewHutten(array, 1);
 					GridPane.setConstraints(speler1Image, 15, 40, 2, 2);
 					GridPane.setConstraints(speler1Label, 15, 40, 1, 1);
 
@@ -353,19 +375,38 @@ public class BoardView {
 					GridPane.setConstraints(speler4Label, 17, 42, 1, 1);
 
 					setSpelersVisable(true);
+					controller.onButtonClick(9);
+				} else if (actionEvent.getSource() == hutKaartButtons.get(2)) {
+					List<StaticHut> array = controller.onHutButtonClick(2); // TODO verplaatsen naar acties
+					renderNewHutten(array, 2);
+					GridPane.setConstraints(speler1Image, 10, 40, 2, 2);
+					GridPane.setConstraints(speler1Label, 10, 40, 1, 1);
+
+					GridPane.setConstraints(speler2Image, 12, 40, 2, 2);
+					GridPane.setConstraints(speler2Label, 12, 40, 1, 1);
+
+					GridPane.setConstraints(speler3Image, 10, 42, 2, 2);
+					GridPane.setConstraints(speler3Label, 10, 42, 1, 1);
+
+					GridPane.setConstraints(speler4Image, 12, 42, 2, 2);
+					GridPane.setConstraints(speler4Label, 12, 42, 1, 1);
+
+					setSpelersVisable(true);
 					controller.onButtonClick(10);
-				} else if (actionEvent.getSource() == hutKaartButton4) {
-					GridPane.setConstraints(speler1Image, 20, 40, 2, 2);
-					GridPane.setConstraints(speler1Label, 20, 40, 1, 1);
+				} else if (actionEvent.getSource() == hutKaartButtons.get(3)) {
+					List<StaticHut> array = controller.onHutButtonClick(3); // TODO verplaatsen naar acties
+					renderNewHutten(array, 3);
+					GridPane.setConstraints(speler1Image, 5, 40, 2, 2);
+					GridPane.setConstraints(speler1Label, 5, 40, 1, 1);
 
-					GridPane.setConstraints(speler2Image, 22, 40, 2, 2);
-					GridPane.setConstraints(speler2Label, 22, 40, 1, 1);
+					GridPane.setConstraints(speler2Image, 7, 40, 2, 2);
+					GridPane.setConstraints(speler2Label, 7, 40, 1, 1);
 
-					GridPane.setConstraints(speler3Image, 20, 42, 2, 2);
-					GridPane.setConstraints(speler3Label, 20, 42, 1, 1);
+					GridPane.setConstraints(speler3Image, 5, 42, 2, 2);
+					GridPane.setConstraints(speler3Label, 5, 42, 1, 1);
 
-					GridPane.setConstraints(speler4Image, 22, 42, 2, 2);
-					GridPane.setConstraints(speler4Label, 22, 42, 1, 1);
+					GridPane.setConstraints(speler4Image, 7, 42, 2, 2);
+					GridPane.setConstraints(speler4Label, 7, 42, 1, 1);
 
 					setSpelersVisable(true);
 					controller.onButtonClick(11);
@@ -584,18 +625,17 @@ public class BoardView {
 							System.out.println(aantalStamleden);
 							setInputVisable(false);
 						}
-					}
-					catch (Exception e) {
+					} catch (Exception e) {
 						System.out.println("test2");
 					}
 				}
 			}
 		};
 
-		hutKaartButton1.setOnAction(event);
-		hutKaartButton2.setOnAction(event);
-		hutKaartButton3.setOnAction(event);
-		hutKaartButton4.setOnAction(event);
+		hutKaartButtons.get(0).setOnAction(event);
+		hutKaartButtons.get(1).setOnAction(event);
+		hutKaartButtons.get(2).setOnAction(event);
+		hutKaartButtons.get(3).setOnAction(event);
 		beschavingsKaartButtons.get(0).setOnAction(event);
 		beschavingsKaartButtons.get(1).setOnAction(event);
 		beschavingsKaartButtons.get(2).setOnAction(event);
@@ -611,11 +651,12 @@ public class BoardView {
 		endTurn.setOnAction(event);
 		amountButton.setOnAction(buttonEvent);
 
-		this.view.getChildren().addAll(imageView, hutKaartButton1, hutKaartButton2, hutKaartButton3, hutKaartButton4,
-				beschavingsKaartButtons.get(0), beschavingsKaartButtons.get(1), beschavingsKaartButtons.get(2),
-				beschavingsKaartButtons.get(3), hutButton, gereedschapButton, akkerbouwButton, jachtButton, bosButton,
-				leemGroeveButton, steenGroeveButton, rivierButton, endTurn, speler1Image, speler2Image, speler3Image,
-				speler4Image, speler1Label, speler2Label, speler3Label, speler4Label, amountField, amountLabel, amountButton);
+		this.view.getChildren().addAll(imageView, hutKaartButtons.get(0), hutKaartButtons.get(1),
+				hutKaartButtons.get(2), hutKaartButtons.get(3), beschavingsKaartButtons.get(0),
+				beschavingsKaartButtons.get(1), beschavingsKaartButtons.get(2), beschavingsKaartButtons.get(3),
+				hutButton, gereedschapButton, akkerbouwButton, jachtButton, bosButton, leemGroeveButton,
+				steenGroeveButton, rivierButton, endTurn, speler1Image, speler2Image, speler3Image, speler4Image,
+				speler1Label, speler2Label, speler3Label, speler4Label, amountField, amountLabel, amountButton);
 	}
 
 	private void setSpelersVisable(boolean visable) {
@@ -641,15 +682,10 @@ public class BoardView {
 		amountField.setVisible(visable);
 	}
 
-
-/*
-		try {
-			int aantalStamleden = Integer.parseInt(amountField.getText());
-			controller.stamledenCheck(location, aantalStamleden);
-			System.out.println(controller.stamledenCheck(location, aantalStamleden));
-		}
-		catch (Exception e) {
-			System.out.println("Error :D");
-		}
-*/
+	/*
+	 * try { int aantalStamleden = Integer.parseInt(amountField.getText());
+	 * controller.stamledenCheck(location, aantalStamleden);
+	 * System.out.println(controller.stamledenCheck(location, aantalStamleden)); }
+	 * catch (Exception e) { System.out.println("Error :D"); }
+	 */
 }

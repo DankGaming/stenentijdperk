@@ -1,6 +1,7 @@
 package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Dobbelsteen;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
@@ -47,6 +48,10 @@ public class BoardController {
         return this.boardmodel.getKaart(index);
     }
 
+    public StaticHut getHut(int stapel, int index) {
+        return this.boardmodel.getHut(stapel, index);
+    }
+
     public void onResourceButtonClick(int location, int input) {
         if (vraagPhase() == 1) {
             if (!boardmodel.getPlaced() && boardmodel.requestCap(location) - boardmodel.requestVillagers(location) != 0
@@ -61,15 +66,18 @@ public class BoardController {
     }
 
     public boolean stamledenCheck(int location, int input) {
-         return (input > 0
-                && input <= playercontroller.getVillagers(boardmodel.getPlayer())
+        return (input > 0 && input <= playercontroller.getVillagers(boardmodel.getPlayer())
                 && input <= (boardmodel.requestCap(location) - boardmodel.requestVillagers(location)));
     }
 
     // methode om de onderste buttons af te handelen. maakt de kaart/hut bezet en
     // zorgt dat je niet meer kan plaatsen.
     public ArrayList<Kaart> onKaartButtonClick(int index) {
-        return (boardmodel.removeKaart(index)); // dit moet naar acties verplaatst worden
+        return (boardmodel.removeKaart(index)); // TODO dit moet naar acties verplaatst worden
+    }
+
+    public List<StaticHut> onHutButtonClick(int stapel) {
+        return (boardmodel.removeHut(stapel)); // TODO dit moet naar acties verplaatst worden
     }
 
     public void onButtonClick(int index) {
