@@ -1,15 +1,18 @@
 package hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten;
 
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Dobbelsteen;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 
 import java.util.ArrayList;
 
-public class BeschavingskaartPunten extends Kaart {
+public class BeschavingskaartWorpMiddelen extends Kaart{
     private int waarde;
+    private int middel;
 
-    public BeschavingskaartPunten(int kosten, String path, int waarde) {
+    public BeschavingskaartWorpMiddelen(int kosten, String path, int waarde, int middel) {
         super(kosten, path);
         this.waarde = waarde;
+        this.middel = middel;
     }
 
     public int getWaarde() {
@@ -25,12 +28,11 @@ public class BeschavingskaartPunten extends Kaart {
     }
 
     public void uitvoerenActie(PlayerModel player) {
-        // ontvang punten op de kaart
-        player.setPunten(waarde);
+        Dobbelsteen dobbel = new Dobbelsteen(2);
+        dobbel.worp();
+        dobbel.berekenTotaal();
 
-        // Ontvang beschavingskaart (this)
-        ArrayList<Kaart> test = new ArrayList<>();;
-        test.add(this);
-        player.setKaarten(test);
+        player.addResources(middel, dobbel.getTotaal() / waarde);
+
     }
 }

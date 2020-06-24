@@ -1,14 +1,14 @@
 package hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten;
 
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.Enums.Middel;
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.Resource;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
+
+import java.util.ArrayList;
 
 public class BeschavingskaartMiddelen extends Kaart{
     private int waarde;
-    private Middel middel;
+    private int middel;
 
-    public BeschavingskaartMiddelen(int kosten, String path, int waarde, Middel middel) {
+    public BeschavingskaartMiddelen(int kosten, String path, int waarde, int middel) {
         super(kosten, path);
         this.waarde = waarde;
         this.middel = middel;
@@ -21,13 +21,18 @@ public class BeschavingskaartMiddelen extends Kaart{
     public String getPath() {
         return super.getPath();
     }
-    @Override
+
     public int getPunten() {
         return super.getPunten();
     }
 
     public void uitvoerenActie(PlayerModel player) {
-        // Ontvang resource (middel, waarde)
+        // ontvang resource wat op de kaart staat
+        player.addResources(middel, waarde);
+
         // Ontvang beschavingskaart (this)
+        ArrayList<Kaart> test = new ArrayList<>();;
+        test.add(this);
+        player.setKaarten(test);
     }
 }
