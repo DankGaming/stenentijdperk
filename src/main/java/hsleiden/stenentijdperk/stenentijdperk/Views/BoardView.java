@@ -25,7 +25,7 @@ public class BoardView {
 	private BoardController controller;
 	private ArrayList<Button> beschavingsKaartButtons = new ArrayList<Button>();
 	private ArrayList<Button> hutKaartButtons = new ArrayList<Button>();
-	private BoardModel boardModel;
+	private BoardController boardController;
 	private GridPane view = new GridPane();
 	private String spelbordImage = "src/main/Resources/Backgrounds/spelbord2.jpg";
 	private ImageView imageView;
@@ -45,7 +45,7 @@ public class BoardView {
 	private Button amountButton;
 	private Label amountLabel;
 	private int location;
-	private PlayerModel currentSpeler;
+	private int currentSpeler;
 
 	public BoardView() {
 		this.controller = new BoardController();
@@ -489,7 +489,7 @@ public class BoardView {
 					resetTextLabel();
 
 					rivierKaart();
-
+					spelerKrijgen();
 					setSpelersVisable(true);
 					setInputVisable(true);
 					location = 4;
@@ -825,8 +825,8 @@ public class BoardView {
 		}
 	}
 	private void spelerKrijgen() {
-		currentSpeler = boardModel.getPlayer();
-		System.out.println(boardModel.getPlayer());
+		currentSpeler = boardController.checkPlayer();
+		System.out.println(boardController.checkPlayer());
 		if (currentSpeler = speler1){
 			speler1 = speler1Label, speler1Image;
 		}
