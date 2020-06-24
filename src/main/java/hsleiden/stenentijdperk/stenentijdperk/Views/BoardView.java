@@ -45,6 +45,7 @@ public class BoardView {
 	private Button amountButton;
 	private Label amountLabel;
 	private int location;
+	private PlayerModel currentSpeler;
 
 	public BoardView() {
 		this.controller = new BoardController();
@@ -821,6 +822,22 @@ public class BoardView {
 			setInputVisable(true);
 		} else {
 			controller.resolveResource(location);
+		}
+	}
+	private void spelerKrijgen() {
+		currentSpeler = boardModel.getPlayer();
+		System.out.println(boardModel.getPlayer());
+		if (currentSpeler = speler1){
+
+		}
+		if (currentSpeler = speler2){
+
+		}
+		if (currentSpeler = speler3){
+
+		}
+		if (currentSpeler = speler4){
+
 		}
 	}
 }
