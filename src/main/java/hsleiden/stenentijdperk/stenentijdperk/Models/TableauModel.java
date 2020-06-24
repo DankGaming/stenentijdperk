@@ -30,10 +30,6 @@ public class TableauModel implements TableauObservable{
         stamleden.remove(stamlid);
     }
 
-    public List<Stamlid> getStamleden(){
-        return stamleden;
-    }
-
     @Override
     public void register(TableauObserver to) {
         this.observers.add(to);
@@ -45,19 +41,6 @@ public class TableauModel implements TableauObservable{
         for(TableauObserver to : observers) {
             to.update(this);
         }
-    }
-
-    @Override
-    public int[] getTools() {
-        return this.gereedschap;
-    }
-
-    public int[] getGereedschap() {
-        return gereedschap;
-    }
-
-    public boolean[] getGereedschapGebruikt() {
-        return gereedschapGebruikt;
     }
 
     public void gebruikGereedschap(){
@@ -74,5 +57,22 @@ public class TableauModel implements TableauObservable{
         }
         gereedschap[index]++;
         notifyAllObservers();
+    }
+
+    @Override
+    public int[] getTools() {
+        return this.gereedschap;
+    }
+
+    public int[] getGereedschap() {
+        return gereedschap;
+    }
+
+    public boolean[] getGereedschapGebruikt() {
+        return gereedschapGebruikt;
+    }
+    
+    public List<Stamlid> getStamleden(){
+        return stamleden;
     }
 }

@@ -15,24 +15,20 @@ public class Resource {
 		this.maxCap = maxCap;
 	}
 
-	public String getNaam() {
-		return this.naam;
-	}
-
-	public int getHoeveelheid() {
-		return this.hoeveelheid;
-	}
-
-	public void setHoeveelheid(int amount) {
-		this.hoeveelheid = amount;
-	}
-
 	public void reduceHoeveelheid(int amount) {
 		this.hoeveelheid -= amount;
 	}
 
 	public void addHoeveelheid(int amount) {
 		this.hoeveelheid += amount;
+	}
+
+	public void increaseVillager(int villagers){
+		this.villagers += villagers;
+	}
+
+	public void reduceVillager(int villagers){
+		this.villagers -= villagers;
 	}
 
 	public int getWaarde() {
@@ -51,11 +47,15 @@ public class Resource {
 		this.villagers = villagers;
 	}
 
-	public void increaseVillager(int villagers){
-		this.villagers += villagers;
+	public String getNaam() {
+		return this.naam;
 	}
 
-	public void reduceVillager(int villagers){
-		this.villagers -= villagers;
+	public int getHoeveelheid() {
+		return this.hoeveelheid;
+	}
+
+	public void setHoeveelheid(int amount) {
+		this.hoeveelheid = amount;
 	}
 }

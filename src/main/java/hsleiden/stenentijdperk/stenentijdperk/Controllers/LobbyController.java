@@ -33,6 +33,10 @@ public class LobbyController {
             }
     }
 
+    public void registerObserver(LobbyObserver lo) {
+        this.lobbyModel.register(lo);
+    }
+
     private String setPlayerNumber() {
         int players = FirebaseController.getAmountofPlayersInLobby(this.lobbyId);
         String playerNumber = "";
@@ -51,9 +55,5 @@ public class LobbyController {
                 break;
         }
         return playerNumber;
-    }
-
-    public void registerObserver(LobbyObserver lo) {
-        this.lobbyModel.register(lo);
     }
 }
