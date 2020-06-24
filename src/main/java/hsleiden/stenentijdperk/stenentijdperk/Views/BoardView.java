@@ -1,7 +1,6 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.PlatformHelper;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
@@ -25,6 +24,8 @@ public class BoardView {
 	private BoardController controller;
 	private ArrayList<Button> beschavingsKaartButtons = new ArrayList<Button>();
 	private ArrayList<Button> hutKaartButtons = new ArrayList<Button>();
+	private Button toolStapel1;
+	private Button toolStapel2;
 	private BoardModel boardModel;
 	private GridPane view = new GridPane();
 	private String spelbordImage = "src/main/Resources/Backgrounds/spelbord2.jpg";
@@ -53,6 +54,38 @@ public class BoardView {
 
 	public GridPane setScene() {
 		return view;
+	}
+
+	private void createToolButton(int stapel) {
+		if (stapel == 0) {
+			FileInputStream input = null;
+			try {
+				input = new FileInputStream("src/main/Resources/Tools/Tool1.png");
+			} catch (FileNotFoundException fileNotFoundException) {
+				System.out.println(fileNotFoundException);
+			}
+
+			assert input != null;
+			Image image = new Image(input);
+			ImageView imageView = new ImageView(image);
+			imageView.setFitHeight(48);
+			imageView.setPreserveRatio(true);
+			this.toolStapel1 = new Button("", imageView);
+		} else {
+			FileInputStream input = null;
+			try {
+				input = new FileInputStream("src/main/Resources/Tools/Tool3.png");
+			} catch (FileNotFoundException fileNotFoundException) {
+				System.out.println(fileNotFoundException);
+			}
+
+			assert input != null;
+			Image image = new Image(input);
+			ImageView imageView = new ImageView(image);
+			imageView.setFitHeight(48);
+			imageView.setPreserveRatio(true);
+			this.toolStapel2 = new Button("", imageView);
+		}
 	}
 
 	private void createKaartButtons() {
@@ -291,6 +324,8 @@ public class BoardView {
 
 		this.createKaartButtons();
 		this.createHutStapels();
+		this.createToolButton(0);
+		this.createToolButton(1);
 		// Buttons
 
 		GridPane.setConstraints(this.beschavingsKaartButtons.get(0), 42, 40, 1, 1);
@@ -303,13 +338,12 @@ public class BoardView {
 		GridPane.setConstraints(this.hutKaartButtons.get(2), 10, 42, 1, 1);
 		GridPane.setConstraints(this.hutKaartButtons.get(3), 5, 42, 1, 1);
 
+		GridPane.setConstraints(this.toolStapel1, 28, 29, 1, 1);
+		GridPane.setConstraints(this.toolStapel2, 24, 29, 1, 1);
+
 		Button hutButton = new Button("Stamlid hut");
 		hutButton.setStyle(style);
 		GridPane.setConstraints(hutButton, 18, 32, 5, 1);
-
-		Button gereedschapButton = new Button("gereedschapsmaker");
-		gereedschapButton.setStyle(style);
-		GridPane.setConstraints(gereedschapButton, 25, 26, 5, 1);
 
 		Button akkerbouwButton = new Button("akkerbouw");
 		akkerbouwButton.setStyle(style);
@@ -433,7 +467,15 @@ public class BoardView {
 					setSpelersVisable(true);
 					setLabelTo1();
 					controller.onButtonClick(6);
-				} else if (actionEvent.getSource() == gereedschapButton) {
+				} else if (actionEvent.getSource() == toolStapel1) {
+					resetTextLabel();
+
+					gereedschapKaart();
+
+					setSpelersVisable(true);
+					setLabelTo1();
+					controller.onButtonClick(7);
+				} else if (actionEvent.getSource() == toolStapel2) {
 					resetTextLabel();
 
 					gereedschapKaart();
@@ -536,7 +578,8 @@ public class BoardView {
 		beschavingsKaartButtons.get(2).setOnAction(event);
 		beschavingsKaartButtons.get(3).setOnAction(event);
 		hutButton.setOnAction(event);
-		gereedschapButton.setOnAction(event);
+		toolStapel1.setOnAction(event);
+		toolStapel2.setOnAction(event);
 		akkerbouwButton.setOnAction(event);
 		jachtButton.setOnAction(event);
 		bosButton.setOnAction(event);
@@ -549,7 +592,7 @@ public class BoardView {
 		this.view.getChildren().addAll(imageView, hutKaartButtons.get(0), hutKaartButtons.get(1),
 				hutKaartButtons.get(2), hutKaartButtons.get(3), beschavingsKaartButtons.get(0),
 				beschavingsKaartButtons.get(1), beschavingsKaartButtons.get(2), beschavingsKaartButtons.get(3),
-				hutButton, gereedschapButton, akkerbouwButton, jachtButton, bosButton, leemGroeveButton,
+				hutButton, toolStapel1, toolStapel2, akkerbouwButton, jachtButton, bosButton, leemGroeveButton,
 				steenGroeveButton, rivierButton, endTurn, speler1Image, speler2Image, speler3Image, speler4Image,
 				speler1Label, speler2Label, speler3Label, speler4Label, amountField, amountLabel, amountButton);
 	}
