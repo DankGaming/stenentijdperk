@@ -62,37 +62,45 @@ public class BoardController {
 
     public void onButtonClick(int index) {
         if (vraagPhase() == 1) {
-            if (locatieVrij(index) && !boardmodel.getPlaced()) {
-                if (index == 6 && playercontroller.getVillagers(boardmodel.getPlayer()) >= 2) {
-                    plaatsenStamleden(index, 2);
-                } else if (index == 5 || index == 7) {
-                    plaatsenStamleden(index, 1);
-                }
-            }
+            buttonCheckPhase1(index);
         } else {
-            switch (index) {
-                case 5:
-                    moreAgriculture(index);
-                    break;
-                case 6:
-                    moreVillagerHut(index);
-                    break;
-                case 7:
-                    gainTools(index);
-                    break;
-                case 8:
-                case 9:
-                case 10:
-                case 11:
-                    // TODO hutje actie logica
-                    break;
-                case 12:
-                case 13:
-                case 14:
-                case 15:
-                    // TODO kaarten actie logica
-                    break;
+           buttonCheckPhase2(index);
+        }
+    }
+
+    private void buttonCheckPhase1(int index){
+        if (locatieVrij(index) && !boardmodel.getPlaced()) {
+            if (index == 6 && playercontroller.getVillagers(boardmodel.getPlayer()) >= 2) {
+                plaatsenStamleden(index, 2);
+            } else if (index != 6) {
+                plaatsenStamleden(index, 1);
             }
+        }
+    }
+
+    private void buttonCheckPhase2(int index){
+        switch (index) {
+            case 5:
+                moreAgriculture(index);
+                break;
+            case 6:
+                moreVillagerHut(index);
+                break;
+            case 7:
+                gainTools(index);
+                break;
+            case 8:
+            case 9:
+            case 10:
+            case 11:
+                // TODO hutje actie logica
+                break;
+            case 12:
+            case 13:
+            case 14:
+            case 15:
+                // TODO kaarten actie logica
+                break;
         }
     }
 

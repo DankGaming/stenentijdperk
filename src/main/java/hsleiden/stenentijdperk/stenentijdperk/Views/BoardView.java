@@ -494,6 +494,15 @@ public class BoardView {
 				speler4Image, speler1Label, speler2Label, speler3Label, speler4Label, amountField, amountLabel, amountButton);
 	}
 
+	private void phaseCheck(int location) {
+		this.location = location;
+		setSpelersVisable(true);
+		if (controller.vraagPhase() == 1){
+			setInputVisable(true);
+		} else {
+			controller.resolveResource(location);
+		}
+	}
 	private void setSpelersVisable(boolean visable) {
 		speler1Image.setVisible(visable);
 		speler1Label.setVisible(visable);
@@ -754,13 +763,5 @@ public class BoardView {
 		GridPane.setConstraints(speler4Image, 39, 23, 2, 2);
 		GridPane.setConstraints(speler4Label, 39, 23, 1, 1);
 	}
-	private void phaseCheck(int location) {
-		this.location = location;
-		setSpelersVisable(true);
-		if (controller.vraagPhase() == 1){
-			setInputVisable(true);
-		} else {
-			controller.resolveResource(location);
-		}
-	}
+	
 }
