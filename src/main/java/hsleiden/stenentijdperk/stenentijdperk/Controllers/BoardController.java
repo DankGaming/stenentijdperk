@@ -197,7 +197,6 @@ public class BoardController {
 
     public void EndTurnPhase2() {
         List<Integer> posities = playercontroller.vraagPosities(boardmodel.getPlayer());
-        System.out.println(playercontroller.getNaam(boardmodel.getPlayer()));
         if (posities.stream().allMatch(n -> n == 0)) {
             System.out.println(playercontroller.getNaam(boardmodel.getPlayer()));
             int i = checkPlayer();
@@ -209,7 +208,6 @@ public class BoardController {
             }
             posities = playercontroller.vraagPosities(boardmodel.getPlayer());
             System.out.println("Eind actie beurt");
-            System.out.println(playercontroller.getNaam(boardmodel.getPlayer()));
         }
         if (posities.stream().allMatch(n -> n == 0)) {
             System.out.println("Einde Ronde");
