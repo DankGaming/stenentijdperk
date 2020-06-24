@@ -21,14 +21,14 @@ public class Dobbelsteen {
         }
     }
 
-    public int getTotaal(){
-        return totaalworp;
-    }
-
     public void berekenTotaal() {
         totaalworp = 0;
         for (int worp : worpen) {
             totaalworp += worp;
         }
+    }
+
+    public int getTotaal(){
+        return totaalworp;
     }
 }

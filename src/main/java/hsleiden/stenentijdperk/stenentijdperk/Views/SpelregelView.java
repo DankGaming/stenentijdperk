@@ -20,10 +20,6 @@ public class SpelregelView {
         return this.vBox;
     }
 
-    private void setupPane() {
-        generateVbox();
-    }
-
     public void generateVbox() {
         for(String imageName : imageNames) {
             try {
@@ -35,4 +31,10 @@ public class SpelregelView {
             }
         }
     }
+
+    private void setupPane() {
+        generateVbox();
+    }
+
+ 
 }

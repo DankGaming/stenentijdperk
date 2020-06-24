@@ -11,6 +11,11 @@ public class Tool implements Status {
         this.status = false;
     }
 
+    public void increaseLevel(){
+        this.level += 1;
+    }
+
+
     @Override
     public boolean getStatus() {
         return this.status;
@@ -27,9 +32,5 @@ public class Tool implements Status {
 
     public void setLevel(int level) {
         this.level = level;
-    }
-
-    public void increaseLevel() {
-        this.level += 1;
     }
 }

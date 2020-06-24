@@ -44,6 +44,18 @@ public class LobbyView implements LobbyObserver {
         return view;
     }
 
+    public void selectLobby(int id, ArrayList<PlayerModel> players) {
+        this.lobbyInformation.setText("Lobby " + id);
+        this.lobbyInformation.setStyle("-fx-font-size: 25px; -fx-font-weight: bold; ");
+        updateLabels(players);
+    }
+
+    @Override
+    public void update(LobbyObservable lo) {
+        selectLobby(lo.getId(), lo.getPlayers(lo.getId()));
+
+    }
+    
     private void setupPane() {
         this.view = new GridPane();
         this.view.setPadding(new Insets(10, 10, 10, 10));
@@ -127,12 +139,6 @@ public class LobbyView implements LobbyObserver {
         this.view.getChildren().addAll(welkomLabel, lobbyScrollPane, informationScrollPane, joinLobbyButton);
     }
 
-    public void selectLobby(int id, ArrayList<PlayerModel> players) {
-        this.lobbyInformation.setText("Lobby " + id);
-        this.lobbyInformation.setStyle("-fx-font-size: 25px; -fx-font-weight: bold; ");
-        updateLabels(players);
-    }
-
     private void updateLabels(ArrayList<PlayerModel> players) {
         if (players.size() > 0)
             this.spelers.setText("Spelers: ");
@@ -170,11 +176,5 @@ public class LobbyView implements LobbyObserver {
         lobbyButton.setMinHeight(100);
         lobbyButton.setStyle("-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
         return lobbyButton;
-    }
-
-    @Override
-    public void update(LobbyObservable lo) {
-        selectLobby(lo.getId(), lo.getPlayers(lo.getId()));
-
     }
 }
