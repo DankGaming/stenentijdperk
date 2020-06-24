@@ -76,41 +76,7 @@ public class BoardController {
         }
     }
 
-    private void buttonCheckPhase1(int index){
-        if (locatieVrij(index) && !boardmodel.getPlaced()) {
-            if (index == 6 && playercontroller.getVillagers(boardmodel.getPlayer()) >= 2) {
-                plaatsenStamleden(index, 2);
-            } else if (index != 6) {
-                plaatsenStamleden(index, 1);
-            }
-        }
-    }
-
-    private void buttonCheckPhase2(int index){
-        switch (index) {
-            case 5:
-                moreAgriculture(index);
-                break;
-            case 6:
-                moreVillagerHut(index);
-                break;
-            case 7:
-                gainTools(index);
-                break;
-            case 8:
-            case 9:
-            case 10:
-            case 11:
-                // TODO hutje actie logica
-                break;
-            case 12:
-            case 13:
-            case 14:
-            case 15:
-                // TODO kaarten actie logica
-                break;
-        }
-    }
+    
 
     // Hier is het rollen voor resources.
     public void resolveResource(int index) {
@@ -130,22 +96,7 @@ public class BoardController {
         }
     }
 
-    private void moreAgriculture(int index) {
-        if (playercontroller.getPositie(boardmodel.getPlayer(), index) != 0
-                && playercontroller.vraagGraan(boardmodel.getPlayer()) != 10) {
-            playercontroller.addGraan(boardmodel.getPlayer());
-            playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
 
-        }
-    }
-
-    private void moreVillagerHut(int index) {
-        if (playercontroller.getPositie(boardmodel.getPlayer(), index) != 0
-                && playercontroller.getMaxVillagers(boardmodel.getPlayer()) != 10) {
-            playercontroller.addMaxVillagers(boardmodel.getPlayer());
-            playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
-        }
-    }
 
     public void gainTools(int index) {
         if ((playercontroller.getPositie(boardmodel.getPlayer(), index) != 0)) {
@@ -240,6 +191,74 @@ public class BoardController {
         
     }
 
+    public void toolGebruiken() {
+        // TODO tools stuff
+        ArrayList<Tool> tools = playercontroller.getTools(boardmodel.getPlayer());
+        for (Tool tool : tools) {
+            if (tool.getStatus()) {
+                // TODO Show tool in the pop up
+            }
+        }
+    }
+
+    public int vraagPhase() {
+        return boardmodel.getPhase();
+    }
+
+
+    private void moreAgriculture(int index) {
+        if (playercontroller.getPositie(boardmodel.getPlayer(), index) != 0
+                && playercontroller.vraagGraan(boardmodel.getPlayer()) != 10) {
+            playercontroller.addGraan(boardmodel.getPlayer());
+            playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
+
+        }
+    }
+
+    private void moreVillagerHut(int index) {
+        if (playercontroller.getPositie(boardmodel.getPlayer(), index) != 0
+                && playercontroller.getMaxVillagers(boardmodel.getPlayer()) != 10) {
+            playercontroller.addMaxVillagers(boardmodel.getPlayer());
+            playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
+        }
+    }
+
+    private void buttonCheckPhase1(int index){
+        if (locatieVrij(index) && !boardmodel.getPlaced()) {
+            if (index == 6 && playercontroller.getVillagers(boardmodel.getPlayer()) >= 2) {
+                plaatsenStamleden(index, 2);
+            } else if (index != 6) {
+                plaatsenStamleden(index, 1);
+            }
+        }
+    }
+
+    private void buttonCheckPhase2(int index){
+        switch (index) {
+            case 5:
+                moreAgriculture(index);
+                break;
+            case 6:
+                moreVillagerHut(index);
+                break;
+            case 7:
+                gainTools(index);
+                break;
+            case 8:
+            case 9:
+            case 10:
+            case 11:
+                // TODO hutje actie logica
+                break;
+            case 12:
+            case 13:
+            case 14:
+            case 15:
+                // TODO kaarten actie logica
+                break;
+        }
+    }
+
     private int voedselBetalen(PlayerModel player){
         int remaining = 0;
         int voedselNodig = playercontroller.getMaxVillagers(player) - playercontroller.vraagGraan(player);
@@ -303,19 +322,4 @@ public class BoardController {
             i++;
         }
     }
-
-    public void toolGebruiken() {
-        // TODO tools stuff
-        ArrayList<Tool> tools = playercontroller.getTools(boardmodel.getPlayer());
-        for (Tool tool : tools) {
-            if (tool.getStatus()) {
-                // TODO Show tool in the pop up
-            }
-        }
-    }
-
-    public int vraagPhase() {
-        return boardmodel.getPhase();
-    }
-
 }   
