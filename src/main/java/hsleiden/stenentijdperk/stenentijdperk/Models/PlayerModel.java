@@ -9,8 +9,6 @@ import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 
-import java.util.*;
-
 public class PlayerModel {
     private int lobby;
     private String naam;
@@ -25,7 +23,8 @@ public class PlayerModel {
     private int graan;
     private List<Integer> multiplier = new ArrayList<>();
 
-    public PlayerModel(){}
+    public PlayerModel() {
+    }
 
     public PlayerModel(String naam) {
         this.naam = naam;
@@ -33,17 +32,18 @@ public class PlayerModel {
         this.maxVillagers = 5;
         this.graan = 0;
         this.resources = Arrays.asList(12, 0, 0, 0, 0);
-        this.multiplier = Arrays.asList(0,0,0,0);
+        this.multiplier = Arrays.asList(0, 0, 0, 0);
+      
         for (int i = 0; i < 16; i++) {
             posities.add(0);
-          }
+        }
     }
 
     public int getToolLevel(int index) {
         return this.tools.get(index).getLevel();
     }
 
-    public void  increaseToolLevel(int index){
+    public void increaseToolLevel(int index) {
         this.tools.get(index).increaseLevel();
     }
 
@@ -59,7 +59,7 @@ public class PlayerModel {
         this.resources.set(index, this.resources.get(index) + resources);
     }
 
-    public void reduceResources(int index, int resources){
+    public void reduceResources(int index, int resources) {
         this.resources.set(index, this.resources.get(index) - resources);
     }
 
@@ -76,16 +76,15 @@ public class PlayerModel {
         tools.add(tool);
     }
 
-
     public void registerObserver(TableauObserver to) {
         this.tableauModal.register(to);
     }
 
-    public List<Integer> getPosities(){
+    public List<Integer> getPosities() {
         return this.posities;
     }
 
-    public void setPosities(List<Integer> pos){
+    public void setPosities(List<Integer> pos) {
         this.posities = pos;
     }
 
