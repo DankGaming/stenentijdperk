@@ -337,7 +337,7 @@ public class BoardView {
 		Button endTurn = new Button("Beurt eindigen");
 		endTurn.setStyle(style);
 		GridPane.setConstraints(endTurn, 22, 5, 15, 1);
-
+		// TODO maak dit nog kleiner
 		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
@@ -453,45 +453,30 @@ public class BoardView {
 
 					jachtKaart();
 
-					setSpelersVisable(true);
-					setInputVisable(true);
-					location = 0;
 					phaseCheck(0);
 				} else if (actionEvent.getSource() == bosButton) {
 					resetTextLabel();
 
 					bosKaart();
 
-					setSpelersVisable(true);
-					setInputVisable(true);
-					location = 1;
 					phaseCheck(1);
 				} else if (actionEvent.getSource() == leemGroeveButton) {
 					resetTextLabel();
 
 					leemKaart();
 
-					setSpelersVisable(true);
-					setInputVisable(true);
-					location = 2;
 					phaseCheck(2);
 				} else if (actionEvent.getSource() == steenGroeveButton) {
 					resetTextLabel();
 
 					steenKaart();
 
-					setSpelersVisable(true);
-					setInputVisable(true);
-					location = 3;
 					phaseCheck(3);
 				} else if (actionEvent.getSource() == rivierButton) {
 					resetTextLabel();
 
 					rivierKaart();
 
-					setSpelersVisable(true);
-					setInputVisable(true);
-					location = 4;
 					phaseCheck(4);
 				} else if (actionEvent.getSource() == endTurn) {
 					if (controller.vraagPhase() == 1) {
@@ -553,6 +538,15 @@ public class BoardView {
 				speler1Label, speler2Label, speler3Label, speler4Label, amountField, amountLabel, amountButton);
 	}
 
+	private void phaseCheck(int location) {
+		this.location = location;
+		setSpelersVisable(true);
+		if (controller.vraagPhase() == 1){
+			setInputVisable(true);
+		} else {
+			controller.resolveResource(location);
+		}
+	}
 	private void setSpelersVisable(boolean visable) {
 		speler1Image.setVisible(visable);
 		speler1Label.setVisible(visable);
@@ -813,14 +807,5 @@ public class BoardView {
 		GridPane.setConstraints(speler4Image, 39, 23, 2, 2);
 		GridPane.setConstraints(speler4Label, 39, 23, 1, 1);
 	}
-
-	private void phaseCheck(int location) {
-		this.location = location;
-		setSpelersVisable(true);
-		if (controller.vraagPhase() == 1) {
-			setInputVisable(true);
-		} else {
-			controller.resolveResource(location);
-		}
-	}
+	
 }

@@ -120,40 +120,6 @@ public class BoardModel implements BoardObservable {
         }
     }
 
-    public void setKaarten(ArrayList<Kaart> kaarten) {
-        this.kaarten = kaarten;
-    }
-
-    public ArrayList<Kaart> getKaarten() {
-        return this.kaarten;
-    }
-
-    public void setPlaceable(boolean isPlaceable) {
-        this.isPlaceable = isPlaceable;
-    }
-
-    public boolean getPlaceable() {
-        return this.isPlaceable;
-    }
-
-    // Dit verandered wie er aan de beurt is.
-    public void setPlayer(PlayerModel player) {
-        this.player = player;
-    }
-
-    public PlayerModel getPlayer() {
-        return this.player;
-    }
-
-    // Dit houdt bij of de speler als iets heeft geplaast tijdens de beurt.
-    public void setPlaced(boolean placed) {
-        this.placed = placed;
-    }
-
-    public boolean getPlaced() {
-        return this.placed;
-    }
-
     // dit handelt all het veranderen van de hoeveelheid villagers
     public void changeVillagers(int index, int amount) {
         this.locaties.get(index).setVillager(amount + this.locaties.get(index).getVillagers());
@@ -184,15 +150,6 @@ public class BoardModel implements BoardObservable {
         }
     }
 
-    @Override
-    public int getTurn() {
-        return this.turn;
-    }
-
-    public void setTurn(int turn) {
-        this.turn = turn;
-    }
-
     public void addTurn() {
         this.turn += 1;
     }
@@ -201,12 +158,12 @@ public class BoardModel implements BoardObservable {
         return this.locaties.get(index);
     }
 
-    public int getPhase() {
-        return phase;
+    public void addResources(int index, int amount){
+        this.locaties.get(index).addHoeveelheid(amount);
     }
 
-    public void setPhase(int phase) {
-        this.phase = phase;
+    public void reduceResources(int index, int amount){
+        this.locaties.get(index).reduceHoeveelheid(amount);;
     }
 
     public ArrayList<StaticHut> getHutjes() {
@@ -223,5 +180,56 @@ public class BoardModel implements BoardObservable {
 
     public void setLocaties(ArrayList<Resource> res) {
         this.locaties = res;
+    }
+
+    public void setKaarten(ArrayList<Kaart> kaarten) {
+        this.kaarten = kaarten;
+    }
+
+    public ArrayList<Kaart> getKaarten() {
+        return this.kaarten;
+    }
+
+    public void setPlaceable(boolean isPlaceable) {
+        this.isPlaceable = isPlaceable;
+    }
+
+    public boolean getPlaceable() {
+        return this.isPlaceable;
+    }
+    
+    @Override
+    public int getTurn() {
+        return this.turn;
+    }
+
+    public void setTurn(int turn) {
+        this.turn = turn;
+    }
+    
+    public int getPhase() {
+        return phase;
+    }
+
+    public void setPhase(int phase) {
+        this.phase = phase;
+    }
+
+    // Dit houdt bij of de speler als iets heeft geplaast tijdens de beurt.
+    public void setPlaced(boolean placed) {
+        this.placed = placed;
+    }
+    
+    public boolean getPlaced() {
+        return this.placed;
+    }
+    
+    // Dit verandered wie er aan de beurt is.
+    public void setPlayer(PlayerModel player) {
+        this.player = player;
+    }
+    
+    public PlayerModel getPlayer() {
+        return this.player;
     }
 }
