@@ -24,6 +24,9 @@ public class LobbyController {
     public void joinLobby() {
         if(this.lobbyId > 0)
             if(FirebaseController.getAmountofPlayersInLobby(this.lobbyId) < 4) {
+                if (FirebaseController.getAmountofPlayersInLobby(this.lobbyId) == 0){
+                    FirebaseController.setLobbyLeader(this.lobbyId, this.p);
+                }
                 FirebaseController.addPlayers(this.lobbyId, setPlayerNumber(), this.p.getNaam());
                 FirebaseController.getPlayersInLobby(this.lobbyId);
                 System.out.println("Player selected lobby " + this.lobbyId);
