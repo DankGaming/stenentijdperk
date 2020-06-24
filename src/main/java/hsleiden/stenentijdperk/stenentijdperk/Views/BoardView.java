@@ -146,8 +146,8 @@ public class BoardView {
 
 	}
 
-	private void removeKaartButton(int index) { // dit kan gebruikt worden als de kaarten worden gekocht in een actie
-												// fase
+	// dit kan gebruikt worden als de kaarten worden gekocht in een actie fase
+	private void removeKaartButton(int index) {
 		this.beschavingsKaartButtons.get(index).setVisible(false);
 	}
 
