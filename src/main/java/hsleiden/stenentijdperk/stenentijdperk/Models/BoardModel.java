@@ -3,6 +3,7 @@ package hsleiden.stenentijdperk.stenentijdperk.Models;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.PlayerController;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Resource;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
@@ -13,7 +14,7 @@ import javafx.event.EventHandler;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-
+import java.util.List;
 import java.io.File;
 
 public class BoardModel implements BoardObservable {
@@ -22,13 +23,17 @@ public class BoardModel implements BoardObservable {
     private int turn;
     private boolean placed;
     private ArrayList<Kaart> kaarten = new ArrayList<Kaart>();
+    private ArrayList<StaticHut> hutKaarten = new ArrayList<StaticHut>();
+    private List<StaticHut> hutStapel1 = new ArrayList<StaticHut>();
+    private List<StaticHut> hutStapel2 = new ArrayList<StaticHut>();
+    private List<StaticHut> hutStapel3 = new ArrayList<StaticHut>();
+    private List<StaticHut> hutStapel4 = new ArrayList<StaticHut>();
     private BoardController controller;
     private String LabelText;
     private PlayerController playerController;
     private int phase;
     private ArrayList<StaticHut> hutjes = new ArrayList<>();
     private ArrayList<Resource> locaties = new ArrayList<>();
-    private String path = "src/main/Resources/Kaarten/";
     public ArrayList<BoardObserver> observers = new ArrayList<>();
 
     public BoardModel() {
@@ -46,13 +51,30 @@ public class BoardModel implements BoardObservable {
         locaties.add(leem);
         locaties.add(stone);
         locaties.add(gold);
-        File folder = new File(path);
+
+        File folder = new File("src/main/Resources/Kaarten/");
         File[] listOfFiles = folder.listFiles();
 
         for (int i = 0; i < listOfFiles.length; i++) {
-            this.kaarten.add(i, new Kaart(i, path + listOfFiles[i].getName()));
+            this.kaarten.add(i, new Kaart(i, "src/main/Resources/Kaarten/" + listOfFiles[i].getName()));
         }
         Collections.shuffle(this.kaarten);
+
+        folder = new File("src/main/Resources/Hutjes/");
+        listOfFiles = folder.listFiles();
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+            this.hutKaarten.add(i, new StaticHut(i, "src/main/Resources/Hutjes/" + listOfFiles[i].getName()));
+        }
+        Collections.shuffle(this.hutKaarten);
+        int n = this.hutKaarten.size();
+
+        this.hutStapel1 = new ArrayList<StaticHut>(this.hutKaarten.subList(0, (n + 1) / 4));
+        this.hutStapel2 = new ArrayList<StaticHut>(this.hutKaarten.subList((n + 1) / 4, (n + 1) / 2));
+        this.hutStapel3 = new ArrayList<StaticHut>(this.hutKaarten.subList((n + 1) / 2, ((n + 1) / 4) * 3));
+        this.hutStapel4 = new ArrayList<StaticHut>(this.hutKaarten.subList(((n + 1) / 4) * 3, n));
+
+        this.hutKaarten.clear();
     }
 
     public ArrayList<Kaart> removeKaart(int index) {
@@ -60,17 +82,52 @@ public class BoardModel implements BoardObservable {
         return this.kaarten;
     }
 
+    public List<StaticHut> removeHut(int stapel) {
+        switch (stapel) {
+            case 0:
+                this.hutStapel1.remove(0);
+                return this.hutStapel1;
+            case 1:
+                this.hutStapel2.remove(0);
+                return this.hutStapel2;
+            case 2:
+                this.hutStapel3.remove(0);
+                return this.hutStapel3;
+            case 3:
+                this.hutStapel4.remove(0);
+                return this.hutStapel4;
+            default:
+                return null;
+        }
+    }
+
     public Kaart getKaart(int index) {
         return this.kaarten.get(index);
     }
 
-    public void setKaarten(ArrayList<Kaart> kaarten){
+    public StaticHut getHut(int stapel, int index) {
+        switch (stapel) {
+            case 0:
+                return this.hutStapel1.get(index);
+            case 1:
+                return this.hutStapel2.get(index);
+            case 2:
+                return this.hutStapel3.get(index);
+            case 3:
+                return this.hutStapel4.get(index);
+            default:
+                return null;
+        }
+    }
+
+    public void setKaarten(ArrayList<Kaart> kaarten) {
         this.kaarten = kaarten;
     }
 
-    public ArrayList<Kaart> getKaarten(){
+    public ArrayList<Kaart> getKaarten() {
         return this.kaarten;
     }
+
     public void setPlaceable(boolean isPlaceable) {
         this.isPlaceable = isPlaceable;
     }
@@ -168,11 +225,11 @@ public class BoardModel implements BoardObservable {
         this.hutjes = hutjes;
     }
 
-    public ArrayList<Resource> getLocaties(){
+    public ArrayList<Resource> getLocaties() {
         return this.locaties;
     }
 
-    public void setLocaties(ArrayList<Resource> res){
+    public void setLocaties(ArrayList<Resource> res) {
         this.locaties = res;
     }
 }

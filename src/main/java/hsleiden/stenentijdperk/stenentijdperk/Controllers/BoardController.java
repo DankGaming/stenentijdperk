@@ -1,7 +1,8 @@
 package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.Dobbelsteen;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Dobbelsteen;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
@@ -39,9 +40,13 @@ public class BoardController {
         return this.boardmodel.getKaart(index);
     }
 
+    public StaticHut getHut(int stapel, int index) {
+        return this.boardmodel.getHut(stapel, index);
+    }
+
     public void onResourceButtonClick(int location, int input) {
         if (!boardmodel.getPlaced() && boardmodel.requestCap(location) - boardmodel.requestVillagers(location) != 0
-                 && playercontroller.getPositie(boardmodel.getPlayer(), location) == 0) {
+                && playercontroller.getPositie(boardmodel.getPlayer(), location) == 0) {
             // Dit veranderd de hoeveelheid stamleden van een speler
             boardmodel.changeVillagers(location, input);
             plaatsenStamleden(location, input);
@@ -49,15 +54,18 @@ public class BoardController {
     }
 
     public boolean stamledenCheck(int location, int input) {
-         return (input > 0
-                && input <= playercontroller.getVillagers(boardmodel.getPlayer())
+        return (input > 0 && input <= playercontroller.getVillagers(boardmodel.getPlayer())
                 && input <= (boardmodel.requestCap(location) - boardmodel.requestVillagers(location)));
     }
 
     // methode om de onderste buttons af te handelen. maakt de kaart/hut bezet en
     // zorgt dat je niet meer kan plaatsen.
     public ArrayList<Kaart> onKaartButtonClick(int index) {
-        return (boardmodel.removeKaart(index)); // dit moet naar acties verplaatst worden
+        return (boardmodel.removeKaart(index)); // TODO dit moet naar acties verplaatst worden
+    }
+
+    public List<StaticHut> onHutButtonClick(int stapel) {
+        return (boardmodel.removeHut(stapel)); // TODO dit moet naar acties verplaatst worden
     }
 
     public void onButtonClick(int index) {
@@ -139,13 +147,13 @@ public class BoardController {
         }
     }
 
-    private void gainTools(int index) {
-        if((playercontroller.getPositie(boardmodel.getPlayer(), index) != 0)){
-            ArrayList<Tool> tools = playercontroller.getTools(boardmodel.getPlayer());  
+    public void gainTools(int index) {
+        if ((playercontroller.getPositie(boardmodel.getPlayer(), index) != 0)) {
+            ArrayList<Tool> tools = playercontroller.getTools(boardmodel.getPlayer());
             if (tools.size() < 3) {
                 playercontroller.addTool(boardmodel.getPlayer());
             } else if (tools.get(2).getLevel() != 4) {
-                for (int i = 0; i < 3; i++){
+                for (int i = 0; i < 3; i++) {
                     if (tools.get(i).getLevel() == tools.get(2).getLevel()) {
                         tools.get(i).increaseLevel();
                         playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
@@ -179,7 +187,7 @@ public class BoardController {
             }
             if (!villagersLeft) {
                 boardmodel.setPhase(2);
-                int turnCheck = (boardmodel.getTurn() -1) % 4;
+                int turnCheck = (boardmodel.getTurn() - 1) % 4;
                 boardmodel.setPlayer(players.get(turnCheck));
                 // TODO Dit moet een soort pop up worden.
                 System.out.println("Nu komen de acties");
@@ -290,19 +298,19 @@ public class BoardController {
         playercontroller.setPositie(boardmodel.getPlayer(), index, stamleden);
     }
 
-    private void betalenResources(List<Integer> kost){
+    private void betalenResources(List<Integer> kost) {
         int i = 1;
-        for (Integer resources: kost){
+        for (Integer resources : kost) {
             boardmodel.getPlayer().reduceResources(i, resources);
-            i ++;
+            i++;
         }
     }
 
     public void toolGebruiken() {
         // TODO tools stuff
         ArrayList<Tool> tools = playercontroller.getTools(boardmodel.getPlayer());
-        for (Tool tool: tools){
-            if (tool.getStatus()){
+        for (Tool tool : tools) {
+            if (tool.getStatus()) {
                 // TODO Show tool in the pop up
             }
         }
@@ -311,4 +319,5 @@ public class BoardController {
     public int vraagPhase() {
         return boardmodel.getPhase();
     }
-}
+
+}   
