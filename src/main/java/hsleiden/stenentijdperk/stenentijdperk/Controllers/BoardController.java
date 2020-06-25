@@ -86,6 +86,7 @@ public class BoardController {
             Dobbelsteen roll = new Dobbelsteen(stamleden);
             roll.worp();
             roll.berekenTotaal();
+            ViewManager.loadPopupWindow(new TableauView(boardmodel.getPlayer()).setScene());
             int resources = roll.getTotaal() / boardmodel.getResource(index).getWaarde();
             if (resources > boardmodel.getResource(index).getHoeveelheid()) {
                 resources = boardmodel.getResource(index).getHoeveelheid();
@@ -192,14 +193,18 @@ public class BoardController {
         
     }
 
-    public void toolGebruiken() {
+    public int toolGebruiken(boolean[] used) {
         // TODO tools stuff
         ArrayList<Tool> tools = playercontroller.getTools(boardmodel.getPlayer());
-        for (Tool tool : tools) {
-            if (tool.getStatus()) {
-                // TODO Show tool in the pop up
+        int toolsWorp = 0;
+        for (int i = 0; i < tools.size(); i++) {
+            if (used[i]) {
+                tools.get(i).setStatus(false);
+                toolsWorp += tools.get(i).getLevel();
+                
             }
         }
+        return toolsWorp;
     }
 
     public int vraagPhase() {
