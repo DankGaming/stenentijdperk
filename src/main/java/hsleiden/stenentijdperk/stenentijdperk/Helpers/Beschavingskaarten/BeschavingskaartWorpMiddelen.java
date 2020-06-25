@@ -28,11 +28,14 @@ public class BeschavingskaartWorpMiddelen extends Kaart{
     }
 
     public void uitvoerenActie(PlayerModel player) {
+        // uitvoeren actie
         Dobbelsteen dobbel = new Dobbelsteen(2);
         dobbel.worp();
         dobbel.berekenTotaal();
 
         player.addResources(middel, dobbel.getTotaal() / waarde);
 
+        // ontvang beschavingskaart
+        player.addKaarten(this);
     }
 }

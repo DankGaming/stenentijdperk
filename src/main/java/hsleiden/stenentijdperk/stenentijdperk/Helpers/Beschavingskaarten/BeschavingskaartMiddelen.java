@@ -1,7 +1,6 @@
 package hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten;
 
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
-
 import java.util.ArrayList;
 
 public class BeschavingskaartMiddelen extends Kaart{
@@ -31,8 +30,6 @@ public class BeschavingskaartMiddelen extends Kaart{
         player.addResources(middel, waarde);
 
         // Ontvang beschavingskaart
-        ArrayList<Kaart> test = new ArrayList<>();;
-        test.add(new BeschavingskaartMiddelen(1, "fe" , 1, 2));
-        player.setKaarten(test);
+        player.addKaarten(this);
     }
 }

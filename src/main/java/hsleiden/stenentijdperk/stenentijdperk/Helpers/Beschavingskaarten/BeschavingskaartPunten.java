@@ -29,8 +29,6 @@ public class BeschavingskaartPunten extends Kaart {
         player.setPunten(waarde);
 
         // Ontvang beschavingskaart (this)
-        ArrayList<Kaart> test = new ArrayList<>();;
-        test.add(this);
-        player.setKaarten(test);
+        player.addKaarten(this);
     }
 }

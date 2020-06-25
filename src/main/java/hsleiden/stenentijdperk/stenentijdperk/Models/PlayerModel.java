@@ -139,7 +139,9 @@ public class PlayerModel {
     public void setKaarten(ArrayList<Kaart> kaarten) {
         this.kaarten = kaarten;
     }
-
+    public void addKaarten(Kaart kaart){
+        kaarten.add(kaart);
+    }
     public ArrayList<StaticHut> getHutjes() {
         return hutjes;
     }
