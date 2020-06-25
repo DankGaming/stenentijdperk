@@ -195,16 +195,23 @@ public class BoardController {
 
     public int toolGebruiken(boolean[] used) {
         // TODO tools stuff
-        ArrayList<Tool> tools = playercontroller.getTools(boardmodel.getPlayer());
-        int toolsWorp = 0;
-        for (int i = 0; i < tools.size(); i++) {
-            if (used[i]) {
-                tools.get(i).setStatus(false);
-                toolsWorp += tools.get(i).getLevel();
-                
-            }
-        }
-        return toolsWorp;
+        //ArrayList<Tool> tools = playercontroller.getTools(boardmodel.getPlayer());
+        //int toolsWorp = 0;
+        //for (int i = 0; i < tools.size(); i++) {
+        //    if (used[i]) {
+        //        tools.get(i).setStatus(false);
+        //        toolsWorp += tools.get(i).getLevel();
+        //        
+        //    }
+        //}
+        //return toolsWorp;
+        /* 
+        vragen welke tools een speler heeft.
+        welke worp was er al
+        per tool kijken of deze gebruikt is.
+        */
+
+        return 0;
     }
 
     public int vraagPhase() {

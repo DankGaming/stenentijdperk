@@ -43,7 +43,7 @@ public class Resource {
 		return this.villagers;
 	}
 
-	public void setVillager(int villagers) {
+	public void setVillagers(int villagers) {
 		this.villagers = villagers;
 	}
 
