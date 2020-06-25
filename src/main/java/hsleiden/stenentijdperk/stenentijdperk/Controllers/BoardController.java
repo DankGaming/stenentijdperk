@@ -17,19 +17,13 @@ public class BoardController {
     // TODO naar boardmodel en dan firebase
     private ArrayList<PlayerModel> players = new ArrayList<PlayerModel>();
 
-    public BoardController() {
-        // TODO all references naar temp players moet naar firebase vragen.
-        PlayerModel matt = new PlayerModel("Matt");
-        PlayerModel jake = new PlayerModel("Jake");
-        PlayerModel lucas = new PlayerModel("Lucas");
-        PlayerModel carlos = new PlayerModel("Carlos");
-        players.add(matt);
-        players.add(jake);
-        players.add(lucas);
-        players.add(carlos);
+    public BoardController(){}
+
+    public BoardController(ArrayList<PlayerModel> players) {
+        this.players = players;
         playercontroller = new PlayerController();
         boardmodel = new BoardModel();
-        boardmodel.setPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
+        boardmodel.setPlayer(this.players.get(0)); // Begin van het spel turn eerste speler bepalen.
     }
 
     public void registerObserver(BoardObserver boardobserver) {

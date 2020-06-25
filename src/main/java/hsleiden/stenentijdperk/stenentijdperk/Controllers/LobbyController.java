@@ -1,5 +1,6 @@
 package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 
+import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import hsleiden.stenentijdperk.stenentijdperk.Models.LobbyModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.LobbyObserver;
@@ -27,7 +28,8 @@ public class LobbyController {
                 if (FirebaseController.getAmountofPlayersInLobby(this.lobbyId) == 0){
                     FirebaseController.setLobbyLeader(this.lobbyId, this.p);
                 }
-                FirebaseController.addPlayers(this.lobbyId, setPlayerNumber(), this.p.getNaam());
+                this.p.setPlayerNumber(setPlayerNumber());
+                FirebaseController.addPlayers(this.lobbyId, setPlayerNumber(), this.p);
                 FirebaseController.getPlayersInLobby(this.lobbyId);
                 System.out.println("Player selected lobby " + this.lobbyId);
             }
@@ -55,5 +57,9 @@ public class LobbyController {
                 break;
         }
         return playerNumber;
+    }
+
+    public void handleGameStart() {
+        ViewManager.loadBoardView(FirebaseController.getPlayersInLobby(this.lobbyId));
     }
 }

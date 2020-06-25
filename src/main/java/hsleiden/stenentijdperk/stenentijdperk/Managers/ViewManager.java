@@ -9,6 +9,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 public class ViewManager {
     // The current stage and view.
     private static Stage currentStage;
@@ -38,9 +40,9 @@ public class ViewManager {
         showView(800, 800, "Lobby");
     }
 
-    public static void loadBoardView() {
+    public static void loadBoardView(ArrayList<PlayerModel> players) {
         closeView();
-        currentView = new BoardView().setScene();
+        currentView = new BoardView(players).setScene();
         showView(1200, 800, "Board");
     }
 

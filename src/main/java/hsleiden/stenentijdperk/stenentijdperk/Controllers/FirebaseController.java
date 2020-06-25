@@ -6,6 +6,9 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 
@@ -130,46 +133,101 @@ public class FirebaseController {
         }
     }
 
-    public static void updateDocument(String document, String field, String value) {
+    public static void updateDocument(String lobby, String player, String field, String value) {
         try {
-            db.collection("stenentijdperk").document(document).get();
+            db.collection("stenentijdperk").document(lobby).collection("players").document(player).get();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        DocumentReference docRef = db.collection("stenentijdperk").document(document);
+        DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("players").document(player);
 
         ApiFuture<WriteResult> future = docRef.update(field, value);
     }
 
-    public static void updateDocument(String document, String field, int value) {
+    public static void updateDocument(String lobby, String player, String field, int value) {
         try {
-            db.collection("stenentijdperk").document(document).get();
+            db.collection("stenentijdperk").document(lobby).collection("players").document(player).get();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        DocumentReference docRef = db.collection("stenentijdperk").document(document);
+        DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("players").document(player);
 
         ApiFuture<WriteResult> future = docRef.update(field, value);
     }
 
-    public static void updateDocument(String document, String field, float value) {
+    public static void updateDocument(String lobby, String player, String field, float value) {
         try {
-            db.collection("stenentijdperk").document(document).get();
+            db.collection("stenentijdperk").document(lobby).collection("players").document(player).get();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        DocumentReference docRef = db.collection("stenentijdperk").document(document);
+        DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("players").document(player);
 
         ApiFuture<WriteResult> future = docRef.update(field, value);
     }
 
-    public static void updateDocument(String document, String field, boolean value) {
+    public static void updateDocument(String lobby, String player, String field, boolean value) {
         try {
-            db.collection("stenentijdperk").document(document).get();
+            db.collection("stenentijdperk").document(lobby).collection("players").document(player).get();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        DocumentReference docRef = db.collection("stenentijdperk").document(document);
+        DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("players").document(player);
+
+        ApiFuture<WriteResult> future = docRef.update(field, value);
+    }
+
+    public static void updateDocument(String lobby, String player, String field, ArrayList<Tool> value) {
+        try {
+            db.collection("stenentijdperk").document(lobby).collection("players").document(player).get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("players").document(player);
+
+        ApiFuture<WriteResult> future = docRef.update(field, value);
+    }
+
+    public static void updateDocumentList(String lobby, String player, String field, ArrayList<StaticHut> value) {
+        try {
+            db.collection("stenentijdperk").document(lobby).collection("players").document(player).get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("players").document(player);
+
+        ApiFuture<WriteResult> future = docRef.update(field, value);
+    }
+
+    public static void setPlayerKaarten(String lobby, String player, String field, ArrayList<Kaart> value) {
+        try {
+            db.collection("stenentijdperk").document(lobby).collection("players").document(player).get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("players").document(player);
+
+        ApiFuture<WriteResult> future = docRef.update(field, value);
+    }
+
+    public static void updateDocumentList(String lobby, String player, String field, List<Integer> value) {
+        try {
+            db.collection("stenentijdperk").document(lobby).collection("players").document(player).get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("players").document(player);
+
+        ApiFuture<WriteResult> future = docRef.update(field, value);
+    }
+
+    public static void updateDocument(String lobby, String player, String field, List<String> value) {
+        try {
+            db.collection("stenentijdperk").document(lobby).collection("players").document(player).get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("players").document(player);
 
         ApiFuture<WriteResult> future = docRef.update(field, value);
     }
@@ -207,8 +265,7 @@ public class FirebaseController {
         }
     }
 
-    public static void addPlayers(int lobby, String speler, String naam){
-        PlayerModel player = new PlayerModel(naam);
+    public static void addPlayers(int lobby, String speler, PlayerModel player){
         player.setLobby(lobby);
         ApiFuture<WriteResult> future = db.collection("stenentijdperk").document(String.valueOf(lobby)).collection("players").document(speler).set(player);
         try {
@@ -292,5 +349,4 @@ public class FirebaseController {
             e.printStackTrace();
         }
     }
-
 }

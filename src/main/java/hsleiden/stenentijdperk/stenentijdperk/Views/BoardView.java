@@ -47,8 +47,8 @@ public class BoardView {
 	private Label amountLabel;
 	private int location;
 
-	public BoardView() {
-		this.controller = new BoardController();
+	public BoardView(ArrayList<PlayerModel> players) {
+		this.controller = new BoardController(players);
 		setupPane();
 	}
 
