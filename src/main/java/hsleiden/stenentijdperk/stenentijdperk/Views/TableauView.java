@@ -2,6 +2,7 @@ package hsleiden.stenentijdperk.stenentijdperk.Views;
 
 import hsleiden.stenentijdperk.stenentijdperk.App;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.TableauController;
+import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.PlayerObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.PlayerObserver;
@@ -48,10 +49,23 @@ public class TableauView implements PlayerObserver {
     private Label multiplier3;
     private Label multiplier4;
 
-    public TableauView(PlayerModel playermodel) {
+    public TableauView(PlayerModel playermodel, boolean showbutton) {
         setupPane();
         this.playerModel = playermodel;
         this.playerModel.registerObserver(this);
+        if(showbutton)
+            showConfirmButton();
+    }
+
+    private void showConfirmButton() {
+        Button button = new Button("Gebruiken");
+        button.setOnMouseClicked(event -> {
+            ViewManager.closePopupWindow();
+        });
+        String style = "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;";
+        button.setStyle(style);
+        GridPane.setConstraints(button, 12, 3, 6, 3);
+        this.view.getChildren().add(button);
     }
 
     public GridPane setScene() {

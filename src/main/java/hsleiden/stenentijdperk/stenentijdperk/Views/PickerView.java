@@ -44,7 +44,7 @@ public class PickerView {
             button.setMaxSize(237, 43);
             button.setStyle("-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
             button.setOnMouseClicked(event -> {
-                ViewManager.loadPopupWindow(new TableauView(playerModel).setScene());
+                ViewManager.loadPopupWindow(new TableauView(playerModel, false).setScene());
             });
             this.vBox.getChildren().add(button);
         }
