@@ -81,7 +81,7 @@ public class BoardController {
     // Hier is het rollen voor resources.
     public void resolveResource(int index) {
         int stamleden = playercontroller.getPositie(boardmodel.getPlayer(), index);
-        ViewManager.loadPopupWindow(new TableauView(players.get(1), true).setScene());
+        ViewManager.loadPopupWindow(new TableauView(players.get(1)).setScene());
         if (stamleden != 0) {
             Dobbelsteen roll = new Dobbelsteen(stamleden);
             roll.worp();
@@ -197,11 +197,14 @@ public class BoardController {
 
     public int toolGebruiken(boolean[] used) {
         // TODO tools stuff
-        //ArrayList<Tool> tools = playercontroller.getTools(boardmodel.getPlayer());
-        //int toolsWorp = 0;
-        //for (int i = 0; i < tools.size(); i++) {
-        //    if (used[i]) {
-        //        tools.get(i).setStatus(false);
+        ArrayList<Tool> tools = playercontroller.getTools(boardmodel.getPlayer());
+        int toolsWorp = 0;
+        for (Tool tool: tools){
+            if (!(tool.getStatus())){
+                toolsWorp += tool.getLevel();
+            }
+        }
+        //       tools.get(i).setStatus(false);
         //        toolsWorp += tools.get(i).getLevel();
         //        
         //    }
@@ -211,9 +214,10 @@ public class BoardController {
         vragen welke tools een speler heeft.
         welke worp was er al
         per tool kijken of deze gebruikt is.
+        Tel de levels erbij op
         */
 
-        return 0;
+        return toolsWorp;
     }
 
     public int vraagPhase() {

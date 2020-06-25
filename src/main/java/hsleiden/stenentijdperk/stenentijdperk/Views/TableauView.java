@@ -44,7 +44,6 @@ public class TableauView implements PlayerObserver {
     private Label stamleden;
     private Label punt;
     private PlayerModel playerModel;
-    private TableauController tableauController;
     private Label multiplier1;
     private Label multiplier2;
     private Label multiplier3;
