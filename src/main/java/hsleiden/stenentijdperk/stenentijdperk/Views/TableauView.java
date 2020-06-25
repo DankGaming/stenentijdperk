@@ -7,6 +7,7 @@ import hsleiden.stenentijdperk.stenentijdperk.observers.PlayerObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.PlayerObserver;
 import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObserver;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -17,6 +18,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.transform.Shear;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 public class TableauView implements PlayerObserver {
     Hutview hutview1 = new Hutview(1);
@@ -47,11 +49,9 @@ public class TableauView implements PlayerObserver {
     private Label multiplier4;
 
     public TableauView(PlayerModel playermodel) {
+        setupPane();
         this.playerModel = playermodel;
         this.playerModel.registerObserver(this);
-        setupPane();
-//        this.tableauController = new TableauController();
-//        this.tableauController.registerObserver(this);
     }
 
     public GridPane setScene() {
@@ -169,37 +169,40 @@ public class TableauView implements PlayerObserver {
         this.view.getChildren().add(imageView);
     }
 
-    public void createGereedschap(int positie, int waarde) {
+    public void createGereedschap(int positie, int waarde, boolean status) {
         ImageView imageView = null;
-        if (waarde > 0) {
-            switch (positie) {
-                case 1:
-                    this.gereedschapview = new GereedschapView(waarde);
-                    imageView = this.gereedschapview.setScene();
-                    break;
-                case 2:
-                    this.gereedschapview1 = new GereedschapView(waarde);
-                    imageView = this.gereedschapview1.setScene();
-                    break;
-                case 3:
-                    this.gereedschapview2 = new GereedschapView(waarde);
-                    imageView = this.gereedschapview2.setScene();
-                    break;
-            }
-            addImageViewToView(positie, imageView);
+        System.out.println(waarde);
+        switch (positie) {
+            case 1:
+                System.out.println("Hi");
+                this.gereedschapview = new GereedschapView(waarde, status);
+                imageView = this.gereedschapview.setScene();
+                break;
+            case 2:
+                this.gereedschapview1 = new GereedschapView(waarde, status);
+                imageView = this.gereedschapview1.setScene();
+                break;
+            case 3:
+                this.gereedschapview2 = new GereedschapView(waarde, status);
+                imageView = this.gereedschapview2.setScene();
+                break;
         }
+        System.out.println("bYE");
+        addImageViewToView(positie, imageView);     
     }
-
-//    @Override
-//    public void update(TableauObservable to) {
-//        int[] gereedschap = to.getTools();
-//        for (int i = 0; i < gereedschap.length; i++) {
-//            createGereedschap(i + 1, gereedschap[i]);
-//        }
-//    }
 
     @Override
     public void update(PlayerObservable po) {
-
+        ArrayList<Tool> tools = po.getTools();
+        //for (int i = 0; i < tools.size(); i++) {
+         //   createGereedschap(i + 1, gereedschap[i]);
+        int i = 1;
+        tools.add(new Tool());
+        System.out.println(tools.get(0).getLevel());
+        System.out.println(tools.get(0).getStatus());
+        for (Tool tool: tools) {
+            createGereedschap(i, tool.getLevel(), tool.getStatus());;
+            i++;
+        }
     }
 }

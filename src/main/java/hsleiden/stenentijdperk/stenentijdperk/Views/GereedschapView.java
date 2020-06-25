@@ -11,10 +11,11 @@ import java.net.URISyntaxException;
 public class GereedschapView {
     private ImageView imageView;
     private String resource;
-    private boolean canclick = true;
+    private boolean canclick;
 
-    public GereedschapView(int toolnummer) {
+    public GereedschapView(int toolnummer, boolean status) {
         this.resource = "/Tools/Tool" + toolnummer + ".png";
+        this.canclick = status;
         setupPane();
     }
 
@@ -43,6 +44,10 @@ public class GereedschapView {
         this.imageView = new ImageView(image);
         this.imageView.setFitHeight(70);
         this.imageView.setFitWidth(70);
+
+        if (!(canclick)){
+            imageView.setRotate(90);
+        }
 
         imageView.setOnMouseClicked(e -> {
             if(canclick){

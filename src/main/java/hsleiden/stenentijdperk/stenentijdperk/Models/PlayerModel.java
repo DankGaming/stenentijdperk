@@ -41,6 +41,8 @@ public class PlayerModel implements PlayerObservable {
         for (int i = 0; i < 16; i++) {
             posities.add(0);
         }
+
+        notifyAllObservers();
     }
 
     public int getToolLevel(int index) {
@@ -139,6 +141,7 @@ public class PlayerModel implements PlayerObservable {
     @Override
     public void registerObserver(PlayerObserver po) {
         observers.add(po);
+        notifyAllObservers();
     }
 
     @Override
