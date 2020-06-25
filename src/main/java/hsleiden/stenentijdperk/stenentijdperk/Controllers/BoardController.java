@@ -24,6 +24,7 @@ public class BoardController {
         playercontroller = new PlayerController();
         boardmodel = new BoardModel();
         boardmodel.setPlayer(this.players.get(0)); // Begin van het spel turn eerste speler bepalen.
+        FirebaseController.listenForBoardUpdates(String.valueOf(players.get(0).getLobby()));
     }
 
     public void registerObserver(BoardObserver boardobserver) {

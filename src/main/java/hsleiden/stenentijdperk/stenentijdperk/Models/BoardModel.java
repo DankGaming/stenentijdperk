@@ -1,6 +1,7 @@
 package hsleiden.stenentijdperk.stenentijdperk.Models;
 
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
+import hsleiden.stenentijdperk.stenentijdperk.Controllers.FirebaseController;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.PlayerController;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
@@ -200,6 +201,14 @@ public class BoardModel implements BoardObservable {
     @Override
     public int getTurn() {
         return this.turn;
+    }
+
+    @Override
+    public BoardModel getCurrentBoard() {
+        if(FirebaseController.getBoard() != this){
+            FirebaseController.updateBoard(String.valueOf(this.player.getLobby()), this);
+        }
+        return this;
     }
 
     public void setTurn(int turn) {

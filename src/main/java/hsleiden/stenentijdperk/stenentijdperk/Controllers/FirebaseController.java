@@ -77,25 +77,6 @@ public class FirebaseController {
         players = newPlayers;
     }
 
-    public static BoardModel getBoardUpdates(String lobby){
-        final BoardModel[] newModel = new BoardModel[1];
-        DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("boardData").document("board");
-        docRef.addSnapshotListener((snapshot, e) -> {
-            if (e != null) {
-                System.err.println("Listen failed: " + e);
-                return;
-            }
-
-            if (snapshot != null && snapshot.exists()) {
-                newModel[0] = snapshot.toObject(BoardModel.class);
-                System.out.println("updated model");
-            } else {
-                System.out.print("Current data: null");
-            }
-        });
-        return newModel[0];
-    }
-
     public static void listenForBoardUpdates(String lobby){
         DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("boardData").document("board");
         docRef.addSnapshotListener((snapshot, e) -> {
@@ -346,6 +327,15 @@ public class FirebaseController {
             System.out.println("Update time : " + future.get().getUpdateTime());
         } catch (Exception e) {
             System.out.println(future);
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateBoard(String lobby, BoardModel board) {
+        ApiFuture<WriteResult> future = db.collection("stenentijdperk").document(String.valueOf(lobby)).collection("boardData").document("board").set(board);
+        try {
+            System.out.println("Update time : " + future.get().getUpdateTime());
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
