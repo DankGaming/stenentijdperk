@@ -50,7 +50,7 @@ public class BoardView implements BoardObserver {
 	private Button amountButton;
 	private Label amountLabel;
 	private int location;
-	private int stamledenGeplaatst;
+	private PlayerModel playerModel;
 
 	public BoardView() {
 		this.controller = new BoardController();
@@ -498,7 +498,7 @@ public class BoardView implements BoardObserver {
 					controller.onButtonClick(5);
 				} else if (actionEvent.getSource() == jachtButton) {
 					resetTextLabel();
-
+					checkStamleden(0);
 					jachtKaart();
 
 					setSpelersVisable(true);
@@ -506,7 +506,7 @@ public class BoardView implements BoardObserver {
 					phaseCheck(0);
 				} else if (actionEvent.getSource() == bosButton) {
 					resetTextLabel();
-
+					checkStamleden(1);
 					bosKaart();
 
 					setSpelersVisable(true);
@@ -514,7 +514,7 @@ public class BoardView implements BoardObserver {
 					phaseCheck(1);
 				} else if (actionEvent.getSource() == leemGroeveButton) {
 					resetTextLabel();
-
+					checkStamleden(2);
 					leemKaart();
 
 					setSpelersVisable(true);
@@ -522,14 +522,14 @@ public class BoardView implements BoardObserver {
 					phaseCheck(2);
 				} else if (actionEvent.getSource() == steenGroeveButton) {
 					resetTextLabel();
-
+					checkStamleden(3);
 					steenKaart();
 
 					setSpelersVisable(true);
 					setInputVisable(true);
 					phaseCheck(3);
 				} else if (actionEvent.getSource() == rivierButton) {
-//					resetTextLabel();
+					resetTextLabel();
 					checkStamleden(4);
 					rivierKaart();
 
@@ -557,6 +557,9 @@ public class BoardView implements BoardObserver {
 							controller.onResourceButtonClick(location, aantalStamleden);
 							System.out.println(aantalStamleden);
 							setInputVisable(false);
+//							for (int i = 0; i < 4; i++) {
+//
+//							}
 							speler1Label.setText(" " + aantalStamleden);
 							speler2Label.setText(" " + aantalStamleden);
 							speler3Label.setText(" " + aantalStamleden);
@@ -869,13 +872,24 @@ public class BoardView implements BoardObserver {
 	}
 
 	private void checkStamleden(int location) {
-//		stamledenGeplaatst = boardModel.requestVillagers(location);
-		this.location = location;
-		try {
-			stamledenGeplaatst = boardModel.requestVillagers(location);
-			speler1Label.setText("" + stamledenGeplaatst);
-		} catch (Exception e) {
-			System.out.println("error");
+
+		for (int i = 0; i < 4; i++) {
+			int stamledenGeplaats = controller.getPlayers().get(i).getPositie(location);
+			if (i == 0){
+				speler1Label.setText("" + stamledenGeplaats);
+			}
+
+			else if (i == 1) {
+				speler2Label.setText("" + stamledenGeplaats);
+			}
+
+			else if (i == 2) {
+				speler3Label.setText("" + stamledenGeplaats);
+			}
+
+			else if (i == 3) {
+				speler4Label.setText("" + stamledenGeplaats);
+			}
 		}
 	}
 

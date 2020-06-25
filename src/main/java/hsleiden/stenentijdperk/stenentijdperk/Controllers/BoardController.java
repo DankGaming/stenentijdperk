@@ -44,10 +44,6 @@ public class BoardController {
         return this.boardmodel.getHut(stapel, index);
     }
 
-    public ArrayList<PlayerModel> getPlayers() {
-        return players;
-    }
-
     public void onResourceButtonClick(int location, int input) {
         if (!boardmodel.getPlaced() && boardmodel.requestCap(location) - boardmodel.requestVillagers(location) != 0
                 && playercontroller.getPositie(boardmodel.getPlayer(), location) == 0) {
@@ -320,5 +316,19 @@ public class BoardController {
             boardmodel.getPlayer().reduceResources(i, resources);
             i++;
         }
+    }
+    public BoardModel getBoardmodel() {
+        return boardmodel;
+    }
+
+    public void setBoardmodel(BoardModel boardmodel) {
+        this.boardmodel = boardmodel;
+    }
+    //TODO tijdelijk
+    public ArrayList<PlayerModel> getPlayers() {
+        return this.players;
+    }
+    public void setPlayers(ArrayList<PlayerModel> players) {
+        this.players = players;
     }
 }   
