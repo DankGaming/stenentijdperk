@@ -317,6 +317,7 @@ public class BoardController {
             i++;
         }
     }
+    
     public BoardModel getBoardmodel() {
         return boardmodel;
     }
@@ -324,6 +325,7 @@ public class BoardController {
     public void setBoardmodel(BoardModel boardmodel) {
         this.boardmodel = boardmodel;
     }
+
     //TODO tijdelijk
     public ArrayList<PlayerModel> getPlayers() {
         return this.players;
