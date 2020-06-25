@@ -76,8 +76,6 @@ public class BoardController {
         }
     }
 
-    
-
     // Hier is het rollen voor resources.
     public void resolveResource(int index) {
         int stamleden = playercontroller.getPositie(boardmodel.getPlayer(), index);
@@ -95,8 +93,6 @@ public class BoardController {
             boardmodel.getLocaties().get(index).reduceVillager(stamleden);
         }
     }
-
-
 
     public void gainTools(int index) {
         if ((playercontroller.getPositie(boardmodel.getPlayer(), index) != 0)) {
@@ -136,6 +132,7 @@ public class BoardController {
                     boardmodel.setPlaced(false);
                     break;
             }
+
             if (!villagersLeft) {
                 boardmodel.setPhase(2);
                 int turnCheck = (boardmodel.getTurn() - 1) % 4;
@@ -160,6 +157,7 @@ public class BoardController {
             posities = playercontroller.vraagPosities(boardmodel.getPlayer());
             System.out.println("Eind actie beurt");
         }
+
         if (posities.stream().allMatch(n -> n == 0)) {
             System.out.println("Einde Ronde");
             boardmodel.setPhase(1); 
@@ -186,9 +184,7 @@ public class BoardController {
                 }
                 playercontroller.setVillagers(player, playercontroller.getMaxVillagers(player));
             }
-            
         }
-        
     }
 
     public void toolGebruiken() {
@@ -211,7 +207,6 @@ public class BoardController {
                 && playercontroller.vraagGraan(boardmodel.getPlayer()) != 10) {
             playercontroller.addGraan(boardmodel.getPlayer());
             playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
-
         }
     }
 
@@ -273,6 +268,7 @@ public class BoardController {
                 }
         return remaining;
     }
+
     // Methode om door lijsten spelers te loopen.
     private boolean loopPlayers(int start, List<PlayerModel> player) {
         boolean found = false;
@@ -305,7 +301,6 @@ public class BoardController {
             }
         }
         return status;
-
     }
 
     private void plaatsenStamleden(int index, int stamleden) {
@@ -321,5 +316,21 @@ public class BoardController {
             boardmodel.getPlayer().reduceResources(i, resources);
             i++;
         }
+    }
+    
+    public BoardModel getBoardmodel() {
+        return boardmodel;
+    }
+
+    public void setBoardmodel(BoardModel boardmodel) {
+        this.boardmodel = boardmodel;
+    }
+
+    //TODO tijdelijk
+    public ArrayList<PlayerModel> getPlayers() {
+        return this.players;
+    }
+    public void setPlayers(ArrayList<PlayerModel> players) {
+        this.players = players;
     }
 }   

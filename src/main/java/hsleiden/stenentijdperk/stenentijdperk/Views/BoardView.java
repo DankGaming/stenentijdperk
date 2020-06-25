@@ -5,6 +5,8 @@ import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
+import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
+import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -19,14 +21,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.function.DoubleToIntFunction;
 
-public class BoardView {
+public class BoardView implements BoardObserver {
 	private BoardController controller;
 	private ArrayList<Button> beschavingsKaartButtons = new ArrayList<Button>();
 	private ArrayList<Button> hutKaartButtons = new ArrayList<Button>();
 	private Button toolStapel1;
 	private Button toolStapel2;
 	private BoardModel boardModel;
+	private BoardController boardController;
 	private GridPane view = new GridPane();
 	private String spelbordImage = "src/main/Resources/Backgrounds/spelbord2.jpg";
 	private ImageView imageView;
@@ -46,6 +50,7 @@ public class BoardView {
 	private Button amountButton;
 	private Label amountLabel;
 	private int location;
+	private PlayerModel playerModel;
 
 	public BoardView() {
 		this.controller = new BoardController();
@@ -493,33 +498,43 @@ public class BoardView {
 					controller.onButtonClick(5);
 				} else if (actionEvent.getSource() == jachtButton) {
 					resetTextLabel();
-
+					checkStamleden(0);
 					jachtKaart();
 
+					setSpelersVisable(true);
+					setInputVisable(true);
 					phaseCheck(0);
 				} else if (actionEvent.getSource() == bosButton) {
 					resetTextLabel();
-
+					checkStamleden(1);
 					bosKaart();
 
+					setSpelersVisable(true);
+					setInputVisable(true);
 					phaseCheck(1);
 				} else if (actionEvent.getSource() == leemGroeveButton) {
 					resetTextLabel();
-
+					checkStamleden(2);
 					leemKaart();
 
+					setSpelersVisable(true);
+					setInputVisable(true);
 					phaseCheck(2);
 				} else if (actionEvent.getSource() == steenGroeveButton) {
 					resetTextLabel();
-
+					checkStamleden(3);
 					steenKaart();
 
+					setSpelersVisable(true);
+					setInputVisable(true);
 					phaseCheck(3);
 				} else if (actionEvent.getSource() == rivierButton) {
 					resetTextLabel();
-
+					checkStamleden(4);
 					rivierKaart();
 
+					setSpelersVisable(true);
+					setInputVisable(true);
 					phaseCheck(4);
 				} else if (actionEvent.getSource() == endTurn) {
 					if (controller.vraagPhase() == 1) {
@@ -542,10 +557,7 @@ public class BoardView {
 							controller.onResourceButtonClick(location, aantalStamleden);
 							System.out.println(aantalStamleden);
 							setInputVisable(false);
-							speler1Label.setText(" " + aantalStamleden);
-							speler2Label.setText(" " + aantalStamleden);
-							speler3Label.setText(" " + aantalStamleden);
-							speler4Label.setText(" " + aantalStamleden);
+							checkStamleden(location);
 						}
 					} catch (Exception e) {
 						System.out.println("test2");
@@ -582,15 +594,6 @@ public class BoardView {
 				speler1Label, speler2Label, speler3Label, speler4Label, amountField, amountLabel, amountButton);
 	}
 
-	private void phaseCheck(int location) {
-		this.location = location;
-		setSpelersVisable(true);
-		if (controller.vraagPhase() == 1){
-			setInputVisable(true);
-		} else {
-			controller.resolveResource(location);
-		}
-	}
 	private void setSpelersVisable(boolean visable) {
 		speler1Image.setVisible(visable);
 		speler1Label.setVisible(visable);
@@ -851,5 +854,45 @@ public class BoardView {
 		GridPane.setConstraints(speler4Image, 39, 23, 2, 2);
 		GridPane.setConstraints(speler4Label, 39, 23, 1, 1);
 	}
-	
+
+	private void phaseCheck(int location) {
+		this.location = location;
+		setSpelersVisable(true);
+		if (controller.vraagPhase() == 1) {
+			setInputVisable(true);
+		} else {
+			controller.resolveResource(location);
+		}
+	}
+
+	private void checkStamleden(int location) {
+
+		for (int i = 0; i < 4; i++) {
+			int stamledenGeplaats = controller.getPlayers().get(i).getPositie(location);
+			if (i == 0){
+				speler1Label.setText("" + stamledenGeplaats);
+				System.out.println("test1");
+			}
+
+			else if (i == 1) {
+				speler2Label.setText("" + stamledenGeplaats);
+				System.out.println("test2");
+			}
+
+			else if (i == 2) {
+				speler3Label.setText("" + stamledenGeplaats);
+				System.out.println("test3");
+			}
+
+			else if (i == 3) {
+				speler4Label.setText("" + stamledenGeplaats);
+				System.out.println("test4");
+			}
+		}
+	}
+
+	@Override
+	public void update(BoardObservable boardobserver) {
+
+	}
 }
