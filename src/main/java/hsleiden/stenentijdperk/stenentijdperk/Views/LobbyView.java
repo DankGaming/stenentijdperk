@@ -2,6 +2,7 @@ package hsleiden.stenentijdperk.stenentijdperk.Views;
 
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.FirebaseController;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.LobbyController;
+import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.LobbyObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.LobbyObserver;
@@ -30,6 +31,7 @@ public class LobbyView implements LobbyObserver {
     private Label speler3 = new Label("");
     private Label speler4 = new Label("");
 
+    boolean visible = false;
     private ArrayList<Label> playerLabels;
 
     public LobbyView(PlayerModel model) {
@@ -116,6 +118,17 @@ public class LobbyView implements LobbyObserver {
         lobbyButton5.setOnAction(event);
         joinLobbyButton.setOnAction(event);
 
+        Button startGame = new Button("Start game");
+        startGame.setVisible(visible);
+        startGame.setOnMouseClicked(event1 -> {
+            ViewManager.loadBoardView();
+        });
+        startGame.setMinSize(280, 120);
+        startGame.setMaxSize(280, 120);
+        startGame.setStyle(
+                "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
+        GridPane.setConstraints(startGame, 30, 36, 10, 10);
+
         VBox lobbyVbox = new VBox(lobbyButton1, lobbyButton2, lobbyButton3, lobbyButton4, lobbyButton5);
 
         ScrollPane lobbyScrollPane = new ScrollPane();
@@ -135,7 +148,7 @@ public class LobbyView implements LobbyObserver {
         informationScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         GridPane.setConstraints(informationScrollPane, 30, 5, 18, 15);
 
-        this.view.getChildren().addAll(welkomLabel, lobbyScrollPane, informationScrollPane, joinLobbyButton);
+        this.view.getChildren().addAll(welkomLabel, lobbyScrollPane, informationScrollPane, joinLobbyButton, startGame);
     }
 
     private void updateLabels(ArrayList<PlayerModel> players) {
