@@ -4,12 +4,14 @@ import java.util.*;
 
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.FirebaseController;
 import hsleiden.stenentijdperk.stenentijdperk.observers.LobbyObserver;
+import hsleiden.stenentijdperk.stenentijdperk.observers.PlayerObservable;
+import hsleiden.stenentijdperk.stenentijdperk.observers.PlayerObserver;
 import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObserver;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 
-public class PlayerModel {
+public class PlayerModel implements PlayerObservable {
     private int lobby;
     private String naam;
     private int maxVillagers;
@@ -22,6 +24,8 @@ public class PlayerModel {
     private List<Integer> posities = new ArrayList<>();
     private int graan;
     private List<Integer> multiplier = new ArrayList<>();
+
+    ArrayList<PlayerObserver> observers = new ArrayList<PlayerObserver>();
 
     public PlayerModel() {
     }
@@ -74,10 +78,6 @@ public class PlayerModel {
     public void addTool(){
         Tool tool = new Tool();
         tools.add(tool);
-    }
-
-    public void registerObserver(TableauObserver to) {
-        this.tableauModal.register(to);
     }
 
     public List<Integer> getPosities() {
@@ -134,6 +134,18 @@ public class PlayerModel {
 
     public int getVillagers() {
         return this.villagers;
+    }
+
+    @Override
+    public void registerObserver(PlayerObserver po) {
+        observers.add(po);
+    }
+
+    @Override
+    public void notifyAllObservers() {
+        for(PlayerObserver po : observers) {
+            po.update(this);
+        }
     }
 
     public ArrayList<Tool> getTools() {

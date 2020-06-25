@@ -4,8 +4,10 @@ import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Dobbelsteen;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
+import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
+import hsleiden.stenentijdperk.stenentijdperk.Views.TableauView;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
 
 import java.util.ArrayList;
@@ -76,11 +78,10 @@ public class BoardController {
         }
     }
 
-    
-
     // Hier is het rollen voor resources.
     public void resolveResource(int index) {
         int stamleden = playercontroller.getPositie(boardmodel.getPlayer(), index);
+        ViewManager.loadPopupWindow(new TableauView(players.get(1)).setScene());
         if (stamleden != 0) {
             Dobbelsteen roll = new Dobbelsteen(stamleden);
             roll.worp();

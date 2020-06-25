@@ -3,6 +3,8 @@ package hsleiden.stenentijdperk.stenentijdperk.Views;
 import hsleiden.stenentijdperk.stenentijdperk.App;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.TableauController;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
+import hsleiden.stenentijdperk.stenentijdperk.observers.PlayerObservable;
+import hsleiden.stenentijdperk.stenentijdperk.observers.PlayerObserver;
 import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObserver;
 import javafx.scene.control.Button;
@@ -16,7 +18,7 @@ import javafx.scene.transform.Shear;
 
 import java.net.URISyntaxException;
 
-public class TableauView implements TableauObserver {
+public class TableauView implements PlayerObserver {
     Hutview hutview1 = new Hutview(1);
     Hutview hutview2 = new Hutview(2);
     Hutview hutview3 = new Hutview(3);
@@ -46,9 +48,10 @@ public class TableauView implements TableauObserver {
 
     public TableauView(PlayerModel playermodel) {
         this.playerModel = playermodel;
+        this.playerModel.registerObserver(this);
         setupPane();
-        this.tableauController = new TableauController();
-        this.tableauController.registerObserver(this);
+//        this.tableauController = new TableauController();
+//        this.tableauController.registerObserver(this);
     }
 
     public GridPane setScene() {
@@ -187,11 +190,16 @@ public class TableauView implements TableauObserver {
         }
     }
 
+//    @Override
+//    public void update(TableauObservable to) {
+//        int[] gereedschap = to.getTools();
+//        for (int i = 0; i < gereedschap.length; i++) {
+//            createGereedschap(i + 1, gereedschap[i]);
+//        }
+//    }
+
     @Override
-    public void update(TableauObservable to) {
-        int[] gereedschap = to.getTools();
-        for (int i = 0; i < gereedschap.length; i++) {
-            createGereedschap(i + 1, gereedschap[i]);
-        }
+    public void update(PlayerObservable po) {
+
     }
 }

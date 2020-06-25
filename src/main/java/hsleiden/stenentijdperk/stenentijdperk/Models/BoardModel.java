@@ -185,7 +185,7 @@ public class BoardModel implements BoardObservable {
         this.kaarten = kaarten;
     }
 
-    public ArrayList<Kaart> getKaarten() {
+    public List<Kaart> getKaarten() {
         return this.kaarten;
     }
 
