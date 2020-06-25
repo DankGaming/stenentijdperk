@@ -157,12 +157,12 @@ public class BoardModel implements BoardObservable {
         return this.locaties.get(index);
     }
 
-    public void addResources(int index, int amount){
+    public void addResources(int index, int amount) {
         this.locaties.get(index).addHoeveelheid(amount);
     }
 
-    public void reduceResources(int index, int amount){
-        this.locaties.get(index).reduceHoeveelheid(amount);;
+    public void reduceResources(int index, int amount) {
+        this.locaties.get(index).reduceHoeveelheid(amount);
     }
 
     public ArrayList<StaticHut> getHutjes() {
@@ -196,7 +196,7 @@ public class BoardModel implements BoardObservable {
     public boolean getPlaceable() {
         return this.isPlaceable;
     }
-    
+
     @Override
     public int getTurn() {
         return this.turn;
@@ -205,7 +205,7 @@ public class BoardModel implements BoardObservable {
     public void setTurn(int turn) {
         this.turn = turn;
     }
-    
+
     public int getPhase() {
         return phase;
     }
@@ -218,16 +218,16 @@ public class BoardModel implements BoardObservable {
     public void setPlaced(boolean placed) {
         this.placed = placed;
     }
-    
+
     public boolean getPlaced() {
         return this.placed;
     }
-    
+
     // Dit verandered wie er aan de beurt is.
     public void setPlayer(PlayerModel player) {
         this.player = player;
     }
-    
+
     public PlayerModel getPlayer() {
         return this.player;
     }
