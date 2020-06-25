@@ -5,6 +5,8 @@ import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
+import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
+import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -20,7 +22,7 @@ import java.util.List;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class BoardView {
+public class BoardView implements BoardObserver {
 	private BoardController controller;
 	private ArrayList<Button> beschavingsKaartButtons = new ArrayList<Button>();
 	private ArrayList<Button> hutKaartButtons = new ArrayList<Button>();
@@ -47,7 +49,7 @@ public class BoardView {
 	private Button amountButton;
 	private Label amountLabel;
 	private int location;
-	private int currentSpeler;
+	private ArrayList currentSpeler;
 
 	public BoardView() {
 		this.controller = new BoardController();
@@ -531,7 +533,7 @@ public class BoardView {
 					phaseCheck(3);
 				} else if (actionEvent.getSource() == rivierButton) {
 					resetTextLabel();
-
+					spelerKrijgen();
 					rivierKaart();
 
 					setSpelersVisable(true);
@@ -870,19 +872,24 @@ public class BoardView {
 		}
 	}
 	private void spelerKrijgen() {
-		currentSpeler = boardController.checkPlayer();
-		System.out.println(boardController.checkPlayer());
-		if (currentSpeler = speler1){
-			speler1 = speler1Label, speler1Image;
-		}
-		if (currentSpeler = speler2){
-			speler2 = speler2Label, speler2Label;
-		}
-		if (currentSpeler = speler3){
-			speler3 = speler3Label, speler3Image;
-		}
-		if (currentSpeler = speler4){
-			speler4 - speler4Label, speler4Image;
-		}
+		currentSpeler = boardController.getPlayers();
+		System.out.println(currentSpeler);
+//		if (currentSpeler = speler1){
+//			speler1 = speler1Label, speler1Image;
+//		}
+//		if (currentSpeler = speler2){
+//			speler2 = speler2Label, speler2Label;
+//		}
+//		if (currentSpeler = speler3){
+//			speler3 = speler3Label, speler3Image;
+//		}
+//		if (currentSpeler = speler4){
+//			speler4 - speler4Label, speler4Image;
+//		}
+	}
+
+	@Override
+	public void update(BoardObservable boardobserver) {
+
 	}
 }

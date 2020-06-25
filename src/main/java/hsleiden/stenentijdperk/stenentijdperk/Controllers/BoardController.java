@@ -44,6 +44,10 @@ public class BoardController {
         return this.boardmodel.getHut(stapel, index);
     }
 
+    public ArrayList<PlayerModel> getPlayers() {
+        return players;
+    }
+
     public void onResourceButtonClick(int location, int input) {
         if (!boardmodel.getPlaced() && boardmodel.requestCap(location) - boardmodel.requestVillagers(location) != 0
                 && playercontroller.getPositie(boardmodel.getPlayer(), location) == 0) {

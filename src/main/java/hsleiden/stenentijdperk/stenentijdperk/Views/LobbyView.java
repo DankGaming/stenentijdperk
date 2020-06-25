@@ -53,7 +53,6 @@ public class LobbyView implements LobbyObserver {
     @Override
     public void update(LobbyObservable lo) {
         selectLobby(lo.getId(), lo.getPlayers(lo.getId()));
-
     }
     
     private void setupPane() {
