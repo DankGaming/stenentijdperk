@@ -86,7 +86,7 @@ public class BoardController {
             Dobbelsteen roll = new Dobbelsteen(stamleden);
             roll.worp();
             roll.berekenTotaal();
-            ViewManager.loadPopupWindow(new TableauView(boardmodel.getPlayer()).setScene());
+            ViewManager.loadPopupWindow(new TableauView(boardmodel.getPlayer(), true).setScene());
             int resources = roll.getTotaal() / boardmodel.getResource(index).getWaarde();
             if (resources > boardmodel.getResource(index).getHoeveelheid()) {
                 resources = boardmodel.getResource(index).getHoeveelheid();
