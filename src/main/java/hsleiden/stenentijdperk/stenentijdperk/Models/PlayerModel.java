@@ -1,13 +1,13 @@
 package hsleiden.stenentijdperk.stenentijdperk.Models;
 
-import java.util.*;
-
-import hsleiden.stenentijdperk.stenentijdperk.Controllers.FirebaseController;
-import hsleiden.stenentijdperk.stenentijdperk.observers.LobbyObserver;
-import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObserver;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
+import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObserver;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class PlayerModel {
     private int lobby;
@@ -22,21 +22,31 @@ public class PlayerModel {
     private List<Integer> posities = new ArrayList<>();
     private int graan;
     private List<Integer> multiplier = new ArrayList<>();
+    private int punten;
 
     public PlayerModel() {
     }
 
     public PlayerModel(String naam) {
+        this.punten = 0;
         this.naam = naam;
         this.villagers = 5;
         this.maxVillagers = 5;
         this.graan = 0;
         this.resources = Arrays.asList(12, 0, 0, 0, 0);
         this.multiplier = Arrays.asList(0, 0, 0, 0);
-      
+
         for (int i = 0; i < 16; i++) {
             posities.add(0);
         }
+    }
+
+    public int getPunten() {
+        return this.punten;
+    }
+
+    public void setPunten(int punten) {
+        this.punten = punten;
     }
 
     public int getToolLevel(int index) {
@@ -70,8 +80,8 @@ public class PlayerModel {
     public void increaseGraan() {
         this.graan += 1;
     }
-    
-    public void addTool(){
+
+    public void addTool() {
         Tool tool = new Tool();
         tools.add(tool);
     }
@@ -156,7 +166,7 @@ public class PlayerModel {
         return posities.get(index);
     }
 
-    public void setPositie(int index,int posities) {
+    public void setPositie(int index, int posities) {
         this.posities.set(index, posities);
     }
 
@@ -164,7 +174,6 @@ public class PlayerModel {
         return maxVillagers;
     }
 
-    
     public int getGraan() {
         return graan;
     }

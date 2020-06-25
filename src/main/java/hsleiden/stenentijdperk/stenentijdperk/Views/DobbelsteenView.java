@@ -4,6 +4,7 @@ import hsleiden.stenentijdperk.stenentijdperk.App;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+
 import java.net.URISyntaxException;
 
 public class DobbelsteenView extends Pane {

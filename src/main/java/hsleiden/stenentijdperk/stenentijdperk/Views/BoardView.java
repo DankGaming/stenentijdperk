@@ -1,8 +1,8 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
+import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
-import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
@@ -17,10 +17,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.DoubleToIntFunction;
 
 public class BoardView implements BoardObserver {
@@ -163,19 +164,19 @@ public class BoardView implements BoardObserver {
 		}
 		switch (array.size()) { // kaarten verdwijnen als ze niet aangevuld kunnen worden
 			case 3:
-				this.beschavingsKaartButtons.get(3).setVisible(false);
+				removeKaartButton(3);
 
 				break;
 			case 2:
-				this.beschavingsKaartButtons.get(2).setVisible(false);
+				removeKaartButton(2);
 
 				break;
 			case 1:
-				this.beschavingsKaartButtons.get(1).setVisible(false);
+				removeKaartButton(1);
 
 				break;
 			case 0:
-				this.beschavingsKaartButtons.get(0).setVisible(false);
+				removeKaartButton(0);
 
 				break;
 		}
@@ -869,7 +870,7 @@ public class BoardView implements BoardObserver {
 
 		for (int i = 0; i < 4; i++) {
 			int stamledenGeplaats = controller.getPlayers().get(i).getPositie(location);
-			if (i == 0){
+			if (i == 0) {
 				speler1Label.setText("" + stamledenGeplaats);
 				System.out.println("test1");
 			}
