@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.function.DoubleToIntFunction;
 
 public class BoardView implements BoardObserver {
 	private BoardController controller;
@@ -49,7 +50,7 @@ public class BoardView implements BoardObserver {
 	private Button amountButton;
 	private Label amountLabel;
 	private int location;
-	private ArrayList currentSpeler;
+	private int stamledenGeplaatst;
 
 	public BoardView() {
 		this.controller = new BoardController();
@@ -502,7 +503,6 @@ public class BoardView implements BoardObserver {
 
 					setSpelersVisable(true);
 					setInputVisable(true);
-					location = 0;
 					phaseCheck(0);
 				} else if (actionEvent.getSource() == bosButton) {
 					resetTextLabel();
@@ -511,7 +511,6 @@ public class BoardView implements BoardObserver {
 
 					setSpelersVisable(true);
 					setInputVisable(true);
-					location = 1;
 					phaseCheck(1);
 				} else if (actionEvent.getSource() == leemGroeveButton) {
 					resetTextLabel();
@@ -520,7 +519,6 @@ public class BoardView implements BoardObserver {
 
 					setSpelersVisable(true);
 					setInputVisable(true);
-					location = 2;
 					phaseCheck(2);
 				} else if (actionEvent.getSource() == steenGroeveButton) {
 					resetTextLabel();
@@ -529,16 +527,14 @@ public class BoardView implements BoardObserver {
 
 					setSpelersVisable(true);
 					setInputVisable(true);
-					location = 3;
 					phaseCheck(3);
 				} else if (actionEvent.getSource() == rivierButton) {
-					resetTextLabel();
-					spelerKrijgen();
+//					resetTextLabel();
+					checkStamleden(4);
 					rivierKaart();
 
 					setSpelersVisable(true);
 					setInputVisable(true);
-					location = 4;
 					phaseCheck(4);
 				} else if (actionEvent.getSource() == endTurn) {
 					if (controller.vraagPhase() == 1) {
@@ -871,21 +867,16 @@ public class BoardView implements BoardObserver {
 			controller.resolveResource(location);
 		}
 	}
-	private void spelerKrijgen() {
-		currentSpeler = boardController.getPlayers();
-		System.out.println(currentSpeler);
-//		if (currentSpeler = speler1){
-//			speler1 = speler1Label, speler1Image;
-//		}
-//		if (currentSpeler = speler2){
-//			speler2 = speler2Label, speler2Label;
-//		}
-//		if (currentSpeler = speler3){
-//			speler3 = speler3Label, speler3Image;
-//		}
-//		if (currentSpeler = speler4){
-//			speler4 - speler4Label, speler4Image;
-//		}
+
+	private void checkStamleden(int location) {
+//		stamledenGeplaatst = boardModel.requestVillagers(location);
+		this.location = location;
+		try {
+			stamledenGeplaatst = boardModel.requestVillagers(location);
+			speler1Label.setText("" + stamledenGeplaatst);
+		} catch (Exception e) {
+			System.out.println("error");
+		}
 	}
 
 	@Override
