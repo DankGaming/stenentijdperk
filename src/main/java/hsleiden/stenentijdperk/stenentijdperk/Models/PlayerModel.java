@@ -11,6 +11,7 @@ public class PlayerModel {
     private String naam;
     private int maxVillagers;
     private int villagers;
+    private int punten;
     private ArrayList<Kaart> kaarten = new ArrayList<>();;
     private ArrayList<StaticHut> hutjes = new ArrayList<>();;
     private ArrayList<Tool> tools = new ArrayList<>();
@@ -26,6 +27,7 @@ public class PlayerModel {
         this.naam = naam;
         this.villagers = 5;
         this.maxVillagers = 5;
+        this.punten = 0;
         this.graan = 0;
         this.resources = Arrays.asList(10, 0, 0, 0, 0);
         this.multiplier = Arrays.asList(0,0,0,0);
@@ -40,6 +42,14 @@ public class PlayerModel {
 
     public String getNaam() {
         return this.naam;
+    }
+
+    public int getPunten() {
+        return punten;
+    }
+
+    public void setPunten(int punten) {
+        this.punten = punten;
     }
 
     public void setVillagers(int villagers) {

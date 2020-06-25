@@ -30,9 +30,9 @@ public class BeschavingskaartMiddelen extends Kaart{
         // ontvang resource wat op de kaart staat
         player.addResources(middel, waarde);
 
-        // Ontvang beschavingskaart (this)
+        // Ontvang beschavingskaart
         ArrayList<Kaart> test = new ArrayList<>();;
-        test.add(this);
+        test.add(new BeschavingskaartMiddelen(1, "fe" , 1, 2));
         player.setKaarten(test);
     }
 }

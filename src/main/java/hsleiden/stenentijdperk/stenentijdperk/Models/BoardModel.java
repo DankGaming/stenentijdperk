@@ -2,6 +2,9 @@ package hsleiden.stenentijdperk.stenentijdperk.Models;
 
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.PlayerController;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.BeschavingskaartMiddelen;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.BeschavingskaartPunten;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.BeschavingskaartWorpMiddelen;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Resource;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
@@ -46,9 +49,8 @@ public class BoardModel implements BoardObservable {
         File folder = new File(path);
         File[] listOfFiles = folder.listFiles();
 
-        for (int i = 0; i < listOfFiles.length; i++) {
-            this.kaarten.add(i, new Kaart(i, path + listOfFiles[i].getName()));
-        }
+        maakKaarten();
+
         Collections.shuffle(this.kaarten);
     }
 
@@ -163,5 +165,29 @@ public class BoardModel implements BoardObservable {
 
     public void setLocaties(ArrayList<Resource> res){
         this.locaties = res;
+    }
+
+    public void maakKaarten(){
+        this.kaarten.add(0 ,new BeschavingskaartMiddelen(1, path + "Food_Gpoint.png", 3, 0));
+        this.kaarten.add(1 ,new BeschavingskaartMiddelen(1, path + "Food_Hpoint.png", 2, 0));
+        this.kaarten.add(2 ,new BeschavingskaartMiddelen(1, path + "Food_Kruid.jpg", 5, 0));
+        this.kaarten.add(3 ,new BeschavingskaartMiddelen(1, path + "Food_pot.png", 7, 0));
+        this.kaarten.add(4 ,new BeschavingskaartMiddelen(1, path + "Food_Raam.jpg", 1, 0));
+        this.kaarten.add(5 ,new BeschavingskaartMiddelen(1, path + "3Food_Raam.jpg", 3, 0));
+        this.kaarten.add(6 ,new BeschavingskaartMiddelen(1, path + "4Food_Hpoint.jpg", 4, 0));
+
+        this.kaarten.add(7 ,new BeschavingskaartMiddelen(1, path + "Leem_Bpoint.jpg", 1, 2));
+        this.kaarten.add(8 ,new BeschavingskaartMiddelen(2, path + "Steen_Bpoint.png", 1, 3));
+        this.kaarten.add(9 ,new BeschavingskaartMiddelen(1, path + "Steen_Gpoint.png", 1, 3));
+        this.kaarten.add(10 ,new BeschavingskaartMiddelen(1, path + "Steen_Wagen.png", 2, 3));
+        this.kaarten.add(11 ,new BeschavingskaartMiddelen(3, path + "Goud_Bpoint.png", 1, 4));
+
+
+        this.kaarten.add(12 ,new BeschavingskaartWorpMiddelen(4, path + "xGoud_Idol.png", 6, 4));
+        this.kaarten.add(13 ,new BeschavingskaartWorpMiddelen(4, path + "xSteen_Bpoint.png", 5, 3));
+        this.kaarten.add(14 ,new BeschavingskaartWorpMiddelen(4, path + "xHout_Hpoint.png", 3, 3));
+
+        this.kaarten.add(15 ,new BeschavingskaartPunten(2, path + "Point_Fluit.jpg", 3));
+        this.kaarten.add(16 ,new BeschavingskaartPunten(2, path + "Point_Hpoint.png", 3));
     }
 }
