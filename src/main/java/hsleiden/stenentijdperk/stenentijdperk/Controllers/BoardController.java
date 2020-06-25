@@ -72,11 +72,9 @@ public class BoardController {
         if (vraagPhase() == 1) {
             buttonCheckPhase1(index);
         } else {
-           buttonCheckPhase2(index);
+            buttonCheckPhase2(index);
         }
     }
-
-    
 
     // Hier is het rollen voor resources.
     public void resolveResource(int index) {
@@ -95,8 +93,6 @@ public class BoardController {
             boardmodel.getLocaties().get(index).reduceVillager(stamleden);
         }
     }
-
-
 
     public void gainTools(int index) {
         if ((playercontroller.getPositie(boardmodel.getPlayer(), index) != 0)) {
@@ -162,13 +158,13 @@ public class BoardController {
         }
         if (posities.stream().allMatch(n -> n == 0)) {
             System.out.println("Einde Ronde");
-            boardmodel.setPhase(1); 
-            for (PlayerModel player : players){
+            boardmodel.setPhase(1);
+            for (PlayerModel player : players) {
                 List<Integer> resources = playercontroller.vraagResources(player);
                 int remaining = voedselBetalen(player);
                 for (int j = 1; j < resources.size(); j++) {
-                    if (remaining != 0 && !(resources.stream().allMatch(n -> n == 0))){
-                        for (int k = resources.get(j); k > 0; k --){
+                    if (remaining != 0 && !(resources.stream().allMatch(n -> n == 0))) {
+                        for (int k = resources.get(j); k > 0; k--) {
                             if (remaining != 0) {
                                 remaining -= 1;
                                 playercontroller.reduceResource(player, j, 1);
@@ -177,8 +173,8 @@ public class BoardController {
                                 break;
                             }
                         }
-                    } else if (resources.stream().allMatch(n -> n == 0)){
-                        //TODO punten min 10
+                    } else if (resources.stream().allMatch(n -> n == 0)) {
+                        player.setPunten(player.getPunten() - 10);
                         break;
                     } else {
                         break;
@@ -186,9 +182,9 @@ public class BoardController {
                 }
                 playercontroller.setVillagers(player, playercontroller.getMaxVillagers(player));
             }
-            
+
         }
-        
+
     }
 
     public void toolGebruiken() {
@@ -204,7 +200,6 @@ public class BoardController {
     public int vraagPhase() {
         return boardmodel.getPhase();
     }
-
 
     private void moreAgriculture(int index) {
         if (playercontroller.getPositie(boardmodel.getPlayer(), index) != 0
@@ -223,7 +218,7 @@ public class BoardController {
         }
     }
 
-    private void buttonCheckPhase1(int index){
+    private void buttonCheckPhase1(int index) {
         if (locatieVrij(index) && !boardmodel.getPlaced()) {
             if (index == 6 && playercontroller.getVillagers(boardmodel.getPlayer()) >= 2) {
                 plaatsenStamleden(index, 2);
@@ -233,7 +228,7 @@ public class BoardController {
         }
     }
 
-    private void buttonCheckPhase2(int index){
+    private void buttonCheckPhase2(int index) {
         switch (index) {
             case 5:
                 moreAgriculture(index);
@@ -259,20 +254,21 @@ public class BoardController {
         }
     }
 
-    private int voedselBetalen(PlayerModel player){
+    private int voedselBetalen(PlayerModel player) {
         int remaining = 0;
         int voedselNodig = playercontroller.getMaxVillagers(player) - playercontroller.vraagGraan(player);
         int voedselSpeler = playercontroller.vraagResources(player).get(0);
-                if (voedselSpeler >= voedselNodig){
-                    playercontroller.reduceResource(player, 0, voedselNodig);
-                    boardmodel.addResources(0, voedselNodig);
-                } else {
-                    playercontroller.reduceResource(player, 0, voedselSpeler);
-                    remaining = voedselNodig - voedselSpeler;
-                    boardmodel.addResources(0, voedselSpeler);
-                }
+        if (voedselSpeler >= voedselNodig) {
+            playercontroller.reduceResource(player, 0, voedselNodig);
+            boardmodel.addResources(0, voedselNodig);
+        } else {
+            playercontroller.reduceResource(player, 0, voedselSpeler);
+            remaining = voedselNodig - voedselSpeler;
+            boardmodel.addResources(0, voedselSpeler);
+        }
         return remaining;
     }
+
     // Methode om door lijsten spelers te loopen.
     private boolean loopPlayers(int start, List<PlayerModel> player) {
         boolean found = false;
@@ -322,4 +318,4 @@ public class BoardController {
             i++;
         }
     }
-}   
+}
