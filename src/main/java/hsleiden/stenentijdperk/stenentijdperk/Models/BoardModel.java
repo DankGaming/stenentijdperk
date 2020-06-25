@@ -5,7 +5,6 @@ import hsleiden.stenentijdperk.stenentijdperk.Controllers.PlayerController;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Resource;
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
 import javafx.event.Event;
@@ -22,8 +21,8 @@ public class BoardModel implements BoardObservable {
     private PlayerModel player;
     private int turn;
     private boolean placed;
-    private ArrayList<Kaart> kaarten = new ArrayList<Kaart>();
-    private ArrayList<StaticHut> hutKaarten = new ArrayList<StaticHut>();
+    private List<Kaart> kaarten = new ArrayList<Kaart>();
+    private List<StaticHut> hutKaarten = new ArrayList<StaticHut>();
     private List<StaticHut> hutStapel1 = new ArrayList<StaticHut>();
     private List<StaticHut> hutStapel2 = new ArrayList<StaticHut>();
     private List<StaticHut> hutStapel3 = new ArrayList<StaticHut>();
@@ -77,7 +76,7 @@ public class BoardModel implements BoardObservable {
         this.hutKaarten.clear();
     }
 
-    public ArrayList<Kaart> removeKaart(int index) {
+    public List<Kaart> removeKaart(int index) {
         this.kaarten.remove(index);
         return this.kaarten;
     }
@@ -120,40 +119,6 @@ public class BoardModel implements BoardObservable {
         }
     }
 
-    public void setKaarten(ArrayList<Kaart> kaarten) {
-        this.kaarten = kaarten;
-    }
-
-    public ArrayList<Kaart> getKaarten() {
-        return this.kaarten;
-    }
-
-    public void setPlaceable(boolean isPlaceable) {
-        this.isPlaceable = isPlaceable;
-    }
-
-    public boolean getPlaceable() {
-        return this.isPlaceable;
-    }
-
-    // Dit verandered wie er aan de beurt is.
-    public void setPlayer(PlayerModel player) {
-        this.player = player;
-    }
-
-    public PlayerModel getPlayer() {
-        return this.player;
-    }
-
-    // Dit houdt bij of de speler als iets heeft geplaast tijdens de beurt.
-    public void setPlaced(boolean placed) {
-        this.placed = placed;
-    }
-
-    public boolean getPlaced() {
-        return this.placed;
-    }
-
     // dit handelt all het veranderen van de hoeveelheid villagers
     public void changeVillagers(int index, int amount) {
         this.locaties.get(index).setVillager(amount + this.locaties.get(index).getVillagers());
@@ -184,15 +149,6 @@ public class BoardModel implements BoardObservable {
         }
     }
 
-    @Override
-    public int getTurn() {
-        return this.turn;
-    }
-
-    public void setTurn(int turn) {
-        this.turn = turn;
-    }
-
     public void addTurn() {
         this.turn += 1;
     }
@@ -201,12 +157,12 @@ public class BoardModel implements BoardObservable {
         return this.locaties.get(index);
     }
 
-    public int getPhase() {
-        return phase;
+    public void addResources(int index, int amount){
+        this.locaties.get(index).addHoeveelheid(amount);
     }
 
-    public void setPhase(int phase) {
-        this.phase = phase;
+    public void reduceResources(int index, int amount){
+        this.locaties.get(index).reduceHoeveelheid(amount);;
     }
 
     public ArrayList<StaticHut> getHutjes() {
@@ -223,5 +179,56 @@ public class BoardModel implements BoardObservable {
 
     public void setLocaties(ArrayList<Resource> res) {
         this.locaties = res;
+    }
+
+    public void setKaarten(ArrayList<Kaart> kaarten) {
+        this.kaarten = kaarten;
+    }
+
+    public ArrayList<Kaart> getKaarten() {
+        return this.kaarten;
+    }
+
+    public void setPlaceable(boolean isPlaceable) {
+        this.isPlaceable = isPlaceable;
+    }
+
+    public boolean getPlaceable() {
+        return this.isPlaceable;
+    }
+    
+    @Override
+    public int getTurn() {
+        return this.turn;
+    }
+
+    public void setTurn(int turn) {
+        this.turn = turn;
+    }
+    
+    public int getPhase() {
+        return phase;
+    }
+
+    public void setPhase(int phase) {
+        this.phase = phase;
+    }
+
+    // Dit houdt bij of de speler als iets heeft geplaast tijdens de beurt.
+    public void setPlaced(boolean placed) {
+        this.placed = placed;
+    }
+    
+    public boolean getPlaced() {
+        return this.placed;
+    }
+    
+    // Dit verandered wie er aan de beurt is.
+    public void setPlayer(PlayerModel player) {
+        this.player = player;
+    }
+    
+    public PlayerModel getPlayer() {
+        return this.player;
     }
 }

@@ -47,8 +47,12 @@ public class PlayerController {
 		return playerModel.getGraan();
 	}
 
-	public List<Integer> vraagResources(PlayerModel playerModel){
+	public List<Integer> vraagPosities(PlayerModel playerModel){
 		return playerModel.getPosities();
+	}
+
+	public List<Integer> vraagResources(PlayerModel playerModel){
+		return playerModel.getResources();
 	}
 
 	public void reduceResource(PlayerModel playerModel, int index, int amount) {
@@ -69,5 +73,9 @@ public class PlayerController {
 
 	public int getToolLevel(PlayerModel playerModel, int index){
 		return playerModel.getToolLevel(index);
+	}
+
+	public String getNaam(PlayerModel playerModel){
+		return playerModel.getNaam();
 	}
 }
