@@ -1,6 +1,5 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
-import hsleiden.stenentijdperk.stenentijdperk.Controllers.FirebaseController;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.LobbyController;
 import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;

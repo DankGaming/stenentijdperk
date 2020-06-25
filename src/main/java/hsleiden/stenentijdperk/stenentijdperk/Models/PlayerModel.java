@@ -1,13 +1,13 @@
 package hsleiden.stenentijdperk.stenentijdperk.Models;
 
-import java.util.*;
-
-import hsleiden.stenentijdperk.stenentijdperk.Controllers.FirebaseController;
-import hsleiden.stenentijdperk.stenentijdperk.observers.LobbyObserver;
-import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObserver;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
+import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObserver;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class PlayerModel {
     private int lobby;
