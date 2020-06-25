@@ -51,6 +51,7 @@ public class GereedschapView {
             if(canclick){
                 imageView.setRotate(90);
                 this.canclick = false;
+                
             }
         });
     }
