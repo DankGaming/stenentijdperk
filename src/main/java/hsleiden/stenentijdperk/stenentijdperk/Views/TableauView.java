@@ -51,17 +51,20 @@ public class TableauView implements PlayerObserver {
 
     // Standard constructor
     public TableauView(PlayerModel playermodel) {
-        setupPane();
-        this.playerModel = playermodel;
-        this.playerModel.registerObserver(this);
+        standardConstructorFunction(playermodel);
     }
 
     // Constructor for the boardcontroller
     public TableauView(PlayerModel playermodel, BoardController boardController) {
+        standardConstructorFunction(playermodel);
+        showConfirmButton(boardController);
+    }
+
+    // The statements that are called every time
+    public void standardConstructorFunction(PlayerModel playermodel) {
         setupPane();
         this.playerModel = playermodel;
         this.playerModel.registerObserver(this);
-        showConfirmButton(boardController);
     }
 
     private void showConfirmButton(BoardController boardController) {

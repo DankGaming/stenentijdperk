@@ -81,7 +81,7 @@ public class BoardController {
     // Hier is het rollen voor resources.
     public void resolveResource(int index) {
         int stamleden = playercontroller.getPositie(boardmodel.getPlayer(), index);
-        ViewManager.loadPopupWindow(new TableauView(players.get(1)).setScene());
+        ViewManager.loadPopupWindow(new TableauView(players.get(1), this).setScene());
         if (stamleden != 0) {
             Dobbelsteen roll = new Dobbelsteen(stamleden);
             roll.worp();
