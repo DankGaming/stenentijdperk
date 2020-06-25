@@ -163,7 +163,6 @@ public class BoardModel implements BoardObservable {
 
     public void reduceResources(int index, int amount) {
         this.locaties.get(index).reduceHoeveelheid(amount);
-        ;
     }
 
     public ArrayList<StaticHut> getHutjes() {
