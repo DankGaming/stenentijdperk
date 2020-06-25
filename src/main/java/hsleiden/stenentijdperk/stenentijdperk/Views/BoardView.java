@@ -473,15 +473,7 @@ public class BoardView implements BoardObserver {
 					setSpelersVisable(true);
 					setLabelTo1();
 					controller.onButtonClick(6);
-				} else if (actionEvent.getSource() == toolStapel1) {
-					resetTextLabel();
-
-					gereedschapKaart();
-
-					setSpelersVisable(true);
-					setLabelTo1();
-					controller.onButtonClick(7);
-				} else if (actionEvent.getSource() == toolStapel2) {
+				} else if (actionEvent.getSource() == toolStapel1 || actionEvent.getSource() == toolStapel2) {
 					resetTextLabel();
 
 					gereedschapKaart();
@@ -491,52 +483,26 @@ public class BoardView implements BoardObserver {
 					controller.onButtonClick(7);
 				} else if (actionEvent.getSource() == akkerbouwButton) {
 					resetTextLabel();
-
 					akkerbouwKaart();
 
 					setSpelersVisable(true);
 					setLabelTo1();
 					controller.onButtonClick(5);
 				} else if (actionEvent.getSource() == jachtButton) {
-					resetTextLabel();
-					checkStamleden(0);
 					jachtKaart();
-
-					setSpelersVisable(true);
-					setInputVisable(true);
-					phaseCheck(0);
+					labelsSetter(0);
 				} else if (actionEvent.getSource() == bosButton) {
-					resetTextLabel();
-					checkStamleden(1);
 					bosKaart();
-
-					setSpelersVisable(true);
-					setInputVisable(true);
-					phaseCheck(1);
+					labelsSetter(1);
 				} else if (actionEvent.getSource() == leemGroeveButton) {
-					resetTextLabel();
-					checkStamleden(2);
 					leemKaart();
-
-					setSpelersVisable(true);
-					setInputVisable(true);
-					phaseCheck(2);
+					labelsSetter(2);
 				} else if (actionEvent.getSource() == steenGroeveButton) {
-					resetTextLabel();
-					checkStamleden(3);
 					steenKaart();
-
-					setSpelersVisable(true);
-					setInputVisable(true);
-					phaseCheck(3);
+					labelsSetter(3);
 				} else if (actionEvent.getSource() == rivierButton) {
-					resetTextLabel();
-					checkStamleden(4);
 					rivierKaart();
-
-					setSpelersVisable(true);
-					setInputVisable(true);
-					phaseCheck(4);
+					labelsSetter(4);
 				} else if (actionEvent.getSource() == endTurn) {
 					if (controller.vraagPhase() == 1) {
 						controller.endTurn();
@@ -593,6 +559,18 @@ public class BoardView implements BoardObserver {
 				hutButton, toolStapel1, toolStapel2, akkerbouwButton, jachtButton, bosButton, leemGroeveButton,
 				steenGroeveButton, rivierButton, endTurn, speler1Image, speler2Image, speler3Image, speler4Image,
 				speler1Label, speler2Label, speler3Label, speler4Label, amountField, amountLabel, amountButton);
+	}
+
+	private void labelsSetter(int location){
+		resetTextLabel();
+		checkStamleden(location);
+		setSpelersVisable(true);
+		if (location < 5){
+			phaseCheck(location);
+		} else {
+			controller.onButtonClick(location);
+		}
+
 	}
 
 	private void setSpelersVisable(boolean visable) {
@@ -857,7 +835,6 @@ public class BoardView implements BoardObserver {
 	}
 
 	private void phaseCheck(int location) {
-		this.location = location;
 		setSpelersVisable(true);
 		if (controller.vraagPhase() == 1) {
 			setInputVisable(true);
