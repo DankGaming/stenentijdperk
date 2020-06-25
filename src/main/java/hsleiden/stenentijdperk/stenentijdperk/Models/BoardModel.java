@@ -11,24 +11,28 @@ import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
-
-import java.io.File;
+import java.util.List;
 
 public class BoardModel implements BoardObservable {
     private boolean isPlaceable;
-    private PlayerModel player;
     private int turn;
     private boolean placed;
-    private ArrayList<Kaart> kaarten = new ArrayList<Kaart>();
+    private PlayerModel player;
+    private List<Kaart> kaarten = new ArrayList<Kaart>();
+    private List<StaticHut> hutKaarten = new ArrayList<StaticHut>();
+    private List<StaticHut> hutStapel1 = new ArrayList<StaticHut>();
+    private List<StaticHut> hutStapel2 = new ArrayList<StaticHut>();
+    private List<StaticHut> hutStapel3 = new ArrayList<StaticHut>();
+    private List<StaticHut> hutStapel4 = new ArrayList<StaticHut>();
     private BoardController controller;
     private String LabelText;
     private PlayerController playerController;
     private int phase;
     private ArrayList<StaticHut> hutjes = new ArrayList<>();
     private ArrayList<Resource> locaties = new ArrayList<>();
-    private String path = "src/main/Resources/Kaarten/";
     public ArrayList<BoardObserver> observers = new ArrayList<>();
 
     public BoardModel() {
@@ -46,54 +50,72 @@ public class BoardModel implements BoardObservable {
         locaties.add(leem);
         locaties.add(stone);
         locaties.add(gold);
-        File folder = new File(path);
+
+        File folder = new File("src/main/Resources/Kaarten/");
         File[] listOfFiles = folder.listFiles();
 
         maakKaarten();
 
         Collections.shuffle(this.kaarten);
+
+        folder = new File("src/main/Resources/Hutjes/");
+        listOfFiles = folder.listFiles();
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+            this.hutKaarten.add(i, new StaticHut(i, "src/main/Resources/Hutjes/" + listOfFiles[i].getName()));
+        }
+        Collections.shuffle(this.hutKaarten);
+        int n = this.hutKaarten.size();
+
+        this.hutStapel1 = new ArrayList<StaticHut>(this.hutKaarten.subList(0, (n + 1) / 4));
+        this.hutStapel2 = new ArrayList<StaticHut>(this.hutKaarten.subList((n + 1) / 4, (n + 1) / 2));
+        this.hutStapel3 = new ArrayList<StaticHut>(this.hutKaarten.subList((n + 1) / 2, ((n + 1) / 4) * 3));
+        this.hutStapel4 = new ArrayList<StaticHut>(this.hutKaarten.subList(((n + 1) / 4) * 3, n));
+
+        this.hutKaarten.clear();
     }
 
-    public ArrayList<Kaart> removeKaart(int index) {
+    public List<Kaart> removeKaart(int index) {
         this.kaarten.remove(index);
         return this.kaarten;
+    }
+
+    public List<StaticHut> removeHut(int stapel) {
+        switch (stapel) {
+            case 0:
+                this.hutStapel1.remove(0);
+                return this.hutStapel1;
+            case 1:
+                this.hutStapel2.remove(0);
+                return this.hutStapel2;
+            case 2:
+                this.hutStapel3.remove(0);
+                return this.hutStapel3;
+            case 3:
+                this.hutStapel4.remove(0);
+                return this.hutStapel4;
+            default:
+                return null;
+        }
     }
 
     public Kaart getKaart(int index) {
         return this.kaarten.get(index);
     }
 
-    public void setKaarten(ArrayList<Kaart> kaarten){
-        this.kaarten = kaarten;
-    }
-
-    public ArrayList<Kaart> getKaarten(){
-        return this.kaarten;
-    }
-    public void setPlaceable(boolean isPlaceable) {
-        this.isPlaceable = isPlaceable;
-    }
-
-    public boolean getPlaceable() {
-        return this.isPlaceable;
-    }
-
-    // Dit verandered wie er aan de beurt is.
-    public void setPlayer(PlayerModel player) {
-        this.player = player;
-    }
-
-    public PlayerModel getPlayer() {
-        return this.player;
-    }
-
-    // Dit houdt bij of de speler als iets heeft geplaast tijdens de beurt.
-    public void setPlaced(boolean placed) {
-        this.placed = placed;
-    }
-
-    public boolean getPlaced() {
-        return this.placed;
+    public StaticHut getHut(int stapel, int index) {
+        switch (stapel) {
+            case 0:
+                return this.hutStapel1.get(index);
+            case 1:
+                return this.hutStapel2.get(index);
+            case 2:
+                return this.hutStapel3.get(index);
+            case 3:
+                return this.hutStapel4.get(index);
+            default:
+                return null;
+        }
     }
 
     // dit handelt all het veranderen van de hoeveelheid villagers
@@ -126,15 +148,6 @@ public class BoardModel implements BoardObservable {
         }
     }
 
-    @Override
-    public int getTurn() {
-        return this.turn;
-    }
-
-    public void setTurn(int turn) {
-        this.turn = turn;
-    }
-
     public void addTurn() {
         this.turn += 1;
     }
@@ -143,12 +156,12 @@ public class BoardModel implements BoardObservable {
         return this.locaties.get(index);
     }
 
-    public int getPhase() {
-        return phase;
+    public void addResources(int index, int amount) {
+        this.locaties.get(index).addHoeveelheid(amount);
     }
 
-    public void setPhase(int phase) {
-        this.phase = phase;
+    public void reduceResources(int index, int amount) {
+        this.locaties.get(index).reduceHoeveelheid(amount);
     }
 
     public ArrayList<StaticHut> getHutjes() {
@@ -159,35 +172,88 @@ public class BoardModel implements BoardObservable {
         this.hutjes = hutjes;
     }
 
-    public ArrayList<Resource> getLocaties(){
+    public ArrayList<Resource> getLocaties() {
         return this.locaties;
     }
 
-    public void setLocaties(ArrayList<Resource> res){
+    public void setLocaties(ArrayList<Resource> res) {
         this.locaties = res;
     }
 
-    public void maakKaarten(){
-        this.kaarten.add(0 ,new BeschavingskaartMiddelen(1, path + "Food_Gpoint.png", 3, 0));
-        this.kaarten.add(1 ,new BeschavingskaartMiddelen(1, path + "Food_Hpoint.png", 2, 0));
-        this.kaarten.add(2 ,new BeschavingskaartMiddelen(1, path + "Food_Kruid.jpg", 5, 0));
-        this.kaarten.add(3 ,new BeschavingskaartMiddelen(1, path + "Food_pot.png", 7, 0));
-        this.kaarten.add(4 ,new BeschavingskaartMiddelen(1, path + "Food_Raam.jpg", 1, 0));
-        this.kaarten.add(5 ,new BeschavingskaartMiddelen(1, path + "3Food_Raam.jpg", 3, 0));
-        this.kaarten.add(6 ,new BeschavingskaartMiddelen(1, path + "4Food_Hpoint.jpg", 4, 0));
 
-        this.kaarten.add(7 ,new BeschavingskaartMiddelen(1, path + "Leem_Bpoint.jpg", 1, 2));
-        this.kaarten.add(8 ,new BeschavingskaartMiddelen(2, path + "Steen_Bpoint.png", 1, 3));
-        this.kaarten.add(9 ,new BeschavingskaartMiddelen(1, path + "Steen_Gpoint.png", 1, 3));
-        this.kaarten.add(10 ,new BeschavingskaartMiddelen(1, path + "Steen_Wagen.png", 2, 3));
-        this.kaarten.add(11 ,new BeschavingskaartMiddelen(3, path + "Goud_Bpoint.png", 1, 4));
+    public void maakKaarten() {
+        this.kaarten.add(0, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Food_Gpoint.png", 3, 0));
+        this.kaarten.add(1, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Food_Hpoint.png", 2, 0));
+        this.kaarten.add(2, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Food_Kruid.jpg", 5, 0));
+        this.kaarten.add(3, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Food_pot.png", 7, 0));
+        this.kaarten.add(4, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Food_Raam.jpg", 1, 0));
+        this.kaarten.add(5, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/3Food_Raam.jpg", 3, 0));
+        this.kaarten.add(6, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Food_Hpoint.png", 4, 0));
+
+        this.kaarten.add(7, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Leem_Bpoint.jpg", 1, 2));
+        this.kaarten.add(8, new BeschavingskaartMiddelen(2, "src/main/Resources/Kaarten/Steen_Bpoint.png", 1, 3));
+        this.kaarten.add(9, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Steen_Gpoint.png", 1, 3));
+        this.kaarten.add(10, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Steen_Wagen.png", 2, 3));
+        this.kaarten.add(11, new BeschavingskaartMiddelen(3, "src/main/Resources/Kaarten/Goud_Bpoint.png", 1, 4));
 
 
-        this.kaarten.add(12 ,new BeschavingskaartWorpMiddelen(4, path + "xGoud_Idol.png", 6, 4));
-        this.kaarten.add(13 ,new BeschavingskaartWorpMiddelen(4, path + "xSteen_Bpoint.png", 5, 3));
-        this.kaarten.add(14 ,new BeschavingskaartWorpMiddelen(4, path + "xHout_Hpoint.png", 3, 3));
+        this.kaarten.add(12, new BeschavingskaartWorpMiddelen(4, "src/main/Resources/Kaarten/xGoud_Idol.png", 6, 4));
+        this.kaarten.add(13, new BeschavingskaartWorpMiddelen(4, "src/main/Resources/Kaarten/xSteen_Bpoint.png", 5, 3));
+        this.kaarten.add(14, new BeschavingskaartWorpMiddelen(4, "src/main/Resources/Kaarten/xHout_Hpoint.png", 3, 3));
 
-        this.kaarten.add(15 ,new BeschavingskaartPunten(2, path + "Point_Fluit.jpg", 3));
-        this.kaarten.add(16 ,new BeschavingskaartPunten(2, path + "Point_Hpoint.png", 3));
+        this.kaarten.add(15, new BeschavingskaartPunten(2, "src/main/Resources/Kaarten/Point_Fluit.jpg", 3));
+        this.kaarten.add(16, new BeschavingskaartPunten(2, "src/main/Resources/Kaarten/Point_Hpoint.png", 3));
+    }
+
+    public void setKaarten(ArrayList<Kaart> kaarten) {
+        this.kaarten = kaarten;
+    }
+
+    public List<Kaart> getKaarten() {
+        return this.kaarten;
+    }
+
+    public void setPlaceable(boolean isPlaceable) {
+        this.isPlaceable = isPlaceable;
+    }
+
+    public boolean getPlaceable() {
+        return this.isPlaceable;
+    }
+
+    @Override
+    public int getTurn() {
+        return this.turn;
+    }
+
+    public void setTurn(int turn) {
+        this.turn = turn;
+    }
+
+    public int getPhase() {
+        return phase;
+    }
+
+    public void setPhase(int phase) {
+        this.phase = phase;
+    }
+
+    // Dit houdt bij of de speler als iets heeft geplaast tijdens de beurt.
+    public void setPlaced(boolean placed) {
+        this.placed = placed;
+    }
+
+    public boolean getPlaced() {
+        return this.placed;
+    }
+
+    // Dit verandered wie er aan de beurt is.
+    public void setPlayer(PlayerModel player) {
+        this.player = player;
+    }
+
+    public PlayerModel getPlayer() {
+        return this.player;
+
     }
 }

@@ -5,9 +5,11 @@ import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.Views.BoardView;
 import hsleiden.stenentijdperk.stenentijdperk.Views.LobbyView;
 import hsleiden.stenentijdperk.stenentijdperk.Views.LoginView;
-import hsleiden.stenentijdperk.stenentijdperk.Views.TableauView;
+import hsleiden.stenentijdperk.stenentijdperk.Views.SpelregelView;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class ViewManager {
@@ -19,6 +21,7 @@ public class ViewManager {
     // tableau popup
     private static Stage currentPopupStage;
     private static GridPane currentPopupView;
+    private static VBox currentPopupVbox;
 
     public static void setFirebase(FirebaseController f) {
         firebaseController = f;
@@ -44,12 +47,22 @@ public class ViewManager {
         showView(1200, 800, "Board");
     }
 
+    public static void loadSpelregelView() {
+        ViewManager.loadPopupWindow(new SpelregelView().setScene());
+    }
+
     // Popup window functions
 
     public static void loadPopupWindow(GridPane tableauView) {
         closePopupWindow();
         currentPopupView = tableauView;
         openPopupWindow();
+    }
+
+    public static void loadPopupWindow(VBox vBox) {
+        closePopupWindow();
+        currentPopupVbox = vBox;
+        openPopupVbox(800, 600, "Spelregels");
     }
 
     // This function creates a stage from a gridpane.
@@ -85,6 +98,22 @@ public class ViewManager {
     // Function that opens popup window
     public static void openPopupWindow() {
         createPopupFromView(680, 460, "tableau");
+        if(currentPopupStage != null)
+            currentPopupStage.show();
+    }
+
+    public static void createPopupFromVbox(int width, int height, String title) {
+        currentPopupStage = new Stage();
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(currentPopupVbox);
+        if(currentPopupVbox != null)
+            currentPopupStage.setScene(new Scene(scrollPane, width, height));
+        currentPopupStage.setTitle(title);
+        currentPopupStage.setResizable(false);
+    }
+
+    public static void openPopupVbox(int width, int height, String title) {
+        createPopupFromVbox(width, height, title);
         if(currentPopupStage != null)
             currentPopupStage.show();
     }

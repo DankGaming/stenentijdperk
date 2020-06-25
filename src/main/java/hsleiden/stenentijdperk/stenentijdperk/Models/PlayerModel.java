@@ -1,3 +1,4 @@
+
 package hsleiden.stenentijdperk.stenentijdperk.Models;
 
 import java.util.*;
@@ -6,12 +7,11 @@ import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObserver;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
-
 public class PlayerModel {
+    private int lobby;
     private String naam;
     private int maxVillagers;
     private int villagers;
-    private int punten;
     private ArrayList<Kaart> kaarten = new ArrayList<>();;
     private ArrayList<StaticHut> hutjes = new ArrayList<>();;
     private ArrayList<Tool> tools = new ArrayList<>();
@@ -20,59 +20,38 @@ public class PlayerModel {
     private List<Integer> posities = new ArrayList<>();
     private int graan;
     private List<Integer> multiplier = new ArrayList<>();
+    private int punten;
 
-    public PlayerModel(){}
+    public PlayerModel() {
+    }
 
     public PlayerModel(String naam) {
+        this.punten = 0;
         this.naam = naam;
         this.villagers = 5;
         this.maxVillagers = 5;
-        this.punten = 0;
         this.graan = 0;
-        this.resources = Arrays.asList(10, 0, 0, 0, 0);
-        this.multiplier = Arrays.asList(0,0,0,0);
+        this.resources = Arrays.asList(12, 0, 0, 0, 0);
+        this.multiplier = Arrays.asList(0, 0, 0, 0);
+
         for (int i = 0; i < 16; i++) {
             posities.add(0);
-          }
-    }
-
-    public void setNaam(String naam) {
-        this.naam = naam;
-    }
-
-    public String getNaam() {
-        return this.naam;
+        }
     }
 
     public int getPunten() {
-        return punten;
+        return this.punten;
     }
 
     public void setPunten(int punten) {
         this.punten = punten;
     }
 
-    public void setVillagers(int villagers) {
-        this.villagers = villagers;
-    }
-
-    public int getVillagers() {
-        return this.villagers;
-    }
-
-    public ArrayList<Tool> getTools() {
-        return tools;
-    }
-
-    public void setTools(ArrayList<Tool> tools) {
-        this.tools = tools;
-    }
-
     public int getToolLevel(int index) {
         return this.tools.get(index).getLevel();
     }
 
-    public void  increaseToolLevel(int index){
+    public void increaseToolLevel(int index) {
         this.tools.get(index).increaseLevel();
     }
 
@@ -84,51 +63,36 @@ public class PlayerModel {
         this.resources.set(index, resources);
     }
 
-    public List<Integer> getResources() {
-        return this.resources;
-    }
-
-    public void setResource(List<Integer> resources) {
-        this.resources = resources;
-    }
-
     public void addResources(int index, int resources) {
-        this.resources.set(index, resources);
+        this.resources.set(index, this.resources.get(index) + resources);
     }
 
-    public int getPositie(int index) {
-        return posities.get(index);
-    }
-
-    public void setPositie(int index,int posities) {
-        this.posities.set(index, posities);
-    }
-
-    public int getMaxVillagers() {
-        return maxVillagers;
+    public void reduceResources(int index, int resources) {
+        this.resources.set(index, this.resources.get(index) - resources);
     }
 
     public void addMaxVillagers() {
         this.maxVillagers += 1;
     }
 
-    public int getGraan() {
-        return graan;
-    }
-
     public void increaseGraan() {
         this.graan += 1;
+    }
+
+    public void addTool() {
+        Tool tool = new Tool();
+        tools.add(tool);
     }
 
     public void registerObserver(TableauObserver to) {
         this.tableauModal.register(to);
     }
 
-    public List<Integer> getPosities(){
+    public List<Integer> getPosities() {
         return this.posities;
     }
 
-    public void setPosities(List<Integer> pos){
+    public void setPosities(List<Integer> pos) {
         this.posities = pos;
     }
 
@@ -158,8 +122,64 @@ public class PlayerModel {
         this.multiplier = mulitplier;
     }
 
-    public void addTool(){
-        Tool tool = new Tool();
-        tools.add(tool);
+    public int getLobby() {
+        return lobby;
+    }
+
+    public void setLobby(int lobby) {
+        this.lobby = lobby;
+    }
+
+    public void setNaam(String naam) {
+        this.naam = naam;
+    }
+
+    public String getNaam() {
+        return this.naam;
+    }
+
+    public void setVillagers(int villagers) {
+        this.villagers = villagers;
+    }
+
+    public int getVillagers() {
+        return this.villagers;
+    }
+
+    public ArrayList<Tool> getTools() {
+        return tools;
+    }
+
+    public void setTools(ArrayList<Tool> tools) {
+        this.tools = tools;
+    }
+
+    public List<Integer> getResources() {
+        return this.resources;
+    }
+
+    public void setResource(List<Integer> resources) {
+        this.resources = resources;
+    }
+
+    public int getPositie(int index) {
+        return posities.get(index);
+    }
+
+    public void setPositie(int index, int posities) {
+        this.posities.set(index, posities);
+    }
+
+    public int getMaxVillagers() {
+        return maxVillagers;
+    }
+
+    public int getGraan() {
+        return graan;
+    }
+
+    public void setGraan(int graan) {
+        this.graan = graan;
     }
 }
+
