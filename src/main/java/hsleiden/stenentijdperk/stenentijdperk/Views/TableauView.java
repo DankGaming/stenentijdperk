@@ -2,22 +2,18 @@ package hsleiden.stenentijdperk.stenentijdperk.Views;
 
 import hsleiden.stenentijdperk.stenentijdperk.App;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
-import hsleiden.stenentijdperk.stenentijdperk.Controllers.TableauController;
 import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.PlayerObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.PlayerObserver;
-import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObservable;
-import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObserver;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.transform.Shear;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;

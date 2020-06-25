@@ -11,7 +11,9 @@ import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class FirebaseController {
     static Firestore db;
