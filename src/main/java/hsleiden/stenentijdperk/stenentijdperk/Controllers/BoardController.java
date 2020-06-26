@@ -90,13 +90,11 @@ public class BoardController {
             roll.berekenTotaal();
             gegooideWorp[1] = roll.getTotaal();
             gegooideWorp[2] = stamleden;
-            if (playercontroller.getTools(boardmodel.getPlayer()).size() != 0){
+            if (playercontroller.getTools(boardmodel.getPlayer()).size() != 0) {
                 ViewManager.loadPopupWindow(new TableauView(boardmodel.getPlayer(), this).setScene());
             } else {
                 toolsGebruiken(0);
             }
-            
-            
         }
     }
 

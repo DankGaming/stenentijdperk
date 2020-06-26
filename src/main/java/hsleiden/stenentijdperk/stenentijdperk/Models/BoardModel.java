@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class BoardModel implements BoardObservable {
+    public ArrayList<BoardObserver> observers = new ArrayList<>();
     private boolean isPlaceable;
     private PlayerModel player;
     private int turn;
@@ -30,7 +31,6 @@ public class BoardModel implements BoardObservable {
     private int phase;
     private ArrayList<StaticHut> hutjes = new ArrayList<>();
     private ArrayList<Resource> locaties = new ArrayList<>();
-    public ArrayList<BoardObserver> observers = new ArrayList<>();
 
     public BoardModel() {
         this.isPlaceable = true;
@@ -182,20 +182,20 @@ public class BoardModel implements BoardObservable {
         this.locaties = res;
     }
 
-    public void setKaarten(ArrayList<Kaart> kaarten) {
-        this.kaarten = kaarten;
-    }
-
     public List<Kaart> getKaarten() {
         return this.kaarten;
     }
 
-    public void setPlaceable(boolean isPlaceable) {
-        this.isPlaceable = isPlaceable;
+    public void setKaarten(ArrayList<Kaart> kaarten) {
+        this.kaarten = kaarten;
     }
 
     public boolean getPlaceable() {
         return this.isPlaceable;
+    }
+
+    public void setPlaceable(boolean isPlaceable) {
+        this.isPlaceable = isPlaceable;
     }
 
     @Override
@@ -215,21 +215,21 @@ public class BoardModel implements BoardObservable {
         this.phase = phase;
     }
 
+    public boolean getPlaced() {
+        return this.placed;
+    }
+
     // Dit houdt bij of de speler als iets heeft geplaast tijdens de beurt.
     public void setPlaced(boolean placed) {
         this.placed = placed;
     }
 
-    public boolean getPlaced() {
-        return this.placed;
+    public PlayerModel getPlayer() {
+        return this.player;
     }
 
     // Dit verandered wie er aan de beurt is.
     public void setPlayer(PlayerModel player) {
         this.player = player;
-    }
-
-    public PlayerModel getPlayer() {
-        return this.player;
     }
 }

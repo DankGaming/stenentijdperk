@@ -60,7 +60,7 @@ public class ViewManager {
         closePickerView();
         PickerView pickerView = new PickerView(playerModels);
         pickerStage = pickerView.setScene();
-        if(isRunning) {
+        if (isRunning) {
             showPickerView();
         }
     }
@@ -107,6 +107,7 @@ public class ViewManager {
             currentStage.show();
         ViewManager.loadPickerView(playerModels);
     }
+
     public static void closeView() {
         if (currentStage != null)
             currentStage.close();
@@ -114,19 +115,19 @@ public class ViewManager {
 
     // Picker view
     public static void closePickerView() {
-        if(pickerStage != null)
+        if (pickerStage != null)
             pickerStage.close();
     }
 
     public static void showPickerView() {
-        if(pickerStage != null)
+        if (pickerStage != null)
             pickerStage.show();
     }
 
     // This function creates a stage from a gridpane.
     public static void createPopupFromView(int width, int height, String title) {
         currentPopupStage = new Stage();
-        if(currentPopupView != null)
+        if (currentPopupView != null)
             currentPopupStage.setScene(new Scene(currentPopupView, width, height));
         currentPopupStage.setTitle(title);
         currentPopupStage.setResizable(false);
@@ -135,7 +136,7 @@ public class ViewManager {
     // Function that opens popup window
     public static void openPopupWindow() {
         createPopupFromView(680, 460, "tableau");
-        if(currentPopupStage != null)
+        if (currentPopupStage != null)
             currentPopupStage.show();
     }
 
@@ -143,7 +144,7 @@ public class ViewManager {
         currentPopupStage = new Stage();
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(currentPopupVbox);
-        if(currentPopupVbox != null)
+        if (currentPopupVbox != null)
             currentPopupStage.setScene(new Scene(scrollPane, width, height));
         currentPopupStage.setTitle(title);
         currentPopupStage.setResizable(false);
@@ -151,13 +152,13 @@ public class ViewManager {
 
     public static void openPopupVbox(int width, int height, String title) {
         createPopupFromVbox(width, height, title);
-        if(currentPopupStage != null)
+        if (currentPopupStage != null)
             currentPopupStage.show();
     }
 
     // Function that closes popup window
     public static void closePopupWindow() {
-        if(currentPopupStage != null)
+        if (currentPopupStage != null)
             currentPopupStage.close();
     }
 }
