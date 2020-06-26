@@ -520,6 +520,7 @@ public class BoardView implements BoardObserver {
 		} else {
 			controller.onButtonClick(location);
 		}
+		checkStamleden(location);
 
 	}
 

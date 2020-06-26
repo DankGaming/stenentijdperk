@@ -218,8 +218,6 @@ public class TableauView implements PlayerObserver {
         //for (int i = 0; i < tools.size(); i++) {
          //   createGereedschap(i + 1, gereedschap[i]);
         int i = 1;
-        System.out.println(tools.get(0).getLevel());
-        System.out.println(tools.get(0).getStatus());
         for (Tool tool: tools) {
             createGereedschap(i, tool.getLevel(), tool.getStatus());;
             i++;
