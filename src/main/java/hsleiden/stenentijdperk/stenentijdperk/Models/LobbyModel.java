@@ -7,12 +7,12 @@ import hsleiden.stenentijdperk.stenentijdperk.observers.LobbyObserver;
 import java.util.ArrayList;
 
 public class LobbyModel implements LobbyObservable {
+    ArrayList<LobbyObserver> observers = new ArrayList<>();
     private int lobbyId;
     private ArrayList<PlayerModel> players;
 
-    ArrayList<LobbyObserver> observers = new ArrayList<>();
-
-    public LobbyModel() { }
+    public LobbyModel() {
+    }
 
     public void changeLobbyId(int id) {
         this.lobbyId = id;
@@ -26,7 +26,7 @@ public class LobbyModel implements LobbyObservable {
 
     @Override
     public void notifyAllObservers() {
-        for(LobbyObserver lo : observers) {
+        for (LobbyObserver lo : observers) {
             lo.update(this);
         }
     }

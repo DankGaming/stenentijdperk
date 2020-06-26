@@ -9,17 +9,17 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class TableauModel implements TableauObservable{
+public class TableauModel implements TableauObservable {
+    ArrayList<TableauObserver> observers = new ArrayList<>();
     private List<Stamlid> stamleden;
     private PlayerModel player;
     private int[] gereedschap;
     private boolean[] gereedschapGebruikt;
-    ArrayList<TableauObserver> observers = new ArrayList<>();
 
     // TODO alle info moet uit playermodel
-    public TableauModel(){
+    public TableauModel() {
         stamleden = new LinkedList<>();
-        gereedschap = new int[] { 0, 0, 0 };
+        gereedschap = new int[]{0, 0, 0};
     }
 
     public void ontvangStamlid(Stamlid stamlid) {
@@ -38,20 +38,20 @@ public class TableauModel implements TableauObservable{
 
     @Override
     public void notifyAllObservers() {
-        for(TableauObserver to : observers) {
+        for (TableauObserver to : observers) {
             to.update(this);
         }
     }
 
-    public void gebruikGereedschap(){
+    public void gebruikGereedschap() {
     }
 
     public void verhoogGereedschap() {
         int index = gereedschap.length - 1, totaal = 0;
-        for (int i = gereedschap.length - 1; i >= 0; i--){
+        for (int i = gereedschap.length - 1; i >= 0; i--) {
             int aantal = gereedschap[i];
             totaal += aantal;
-            if (gereedschap[index] >= aantal){
+            if (gereedschap[index] >= aantal) {
                 index = i;
             }
         }
@@ -71,8 +71,8 @@ public class TableauModel implements TableauObservable{
     public boolean[] getGereedschapGebruikt() {
         return gereedschapGebruikt;
     }
-    
-    public List<Stamlid> getStamleden(){
+
+    public List<Stamlid> getStamleden() {
         return stamleden;
     }
 }
