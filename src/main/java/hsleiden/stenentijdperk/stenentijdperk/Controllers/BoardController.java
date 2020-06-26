@@ -52,7 +52,7 @@ public class BoardController {
         if (!boardmodel.getPlaced() && boardmodel.requestCap(location) - boardmodel.requestVillagers(location) != 0
                 && playercontroller.getPositie(boardmodel.getPlayer(), location) == 0) {
             // Dit veranderd de hoeveelheid stamleden van een speler
-            boardmodel.changeVillagers(location, input);
+            boardmodel.decreaseVillagers(location, input);
             plaatsenStamleden(location, input);
         }
     }
@@ -84,14 +84,19 @@ public class BoardController {
     public void resolveResource(int index) {
         gegooideWorp[0] = index;
         int stamleden = playercontroller.getPositie(boardmodel.getPlayer(), index);
-        ViewManager.loadPopupWindow(new TableauView(players.get(1), this).setScene());
         if (stamleden != 0) {
             Dobbelsteen roll = new Dobbelsteen(stamleden);
             roll.worp();
             roll.berekenTotaal();
             gegooideWorp[1] = roll.getTotaal();
-            ViewManager.loadPopupWindow(new TableauView(boardmodel.getPlayer(), this).setScene());
             gegooideWorp[2] = stamleden;
+            if (playercontroller.getTools(boardmodel.getPlayer()).size() != 0){
+                ViewManager.loadPopupWindow(new TableauView(boardmodel.getPlayer(), this).setScene());
+            } else {
+                toolsGebruiken(0);
+            }
+            
+            
         }
     }
 
@@ -323,20 +328,12 @@ public class BoardController {
         }
     }
 
-    public BoardModel getBoardmodel() {
-        return boardmodel;
-    }
-
-    public void setBoardmodel(BoardModel boardmodel) {
-        this.boardmodel = boardmodel;
-    }
-
     // TODO tijdelijk
     public ArrayList<PlayerModel> getPlayers() {
         return this.players;
     }
 
-    public void setPlayers(ArrayList<PlayerModel> players) {
-        this.players = players;
+    public PlayerModel getPlayer() {
+        return boardmodel.getPlayer();
     }
 }

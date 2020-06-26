@@ -30,8 +30,6 @@ public class BoardView implements BoardObserver {
 	private ArrayList<Button> hutKaartButtons = new ArrayList<Button>();
 	private Button toolStapel1;
 	private Button toolStapel2;
-	private BoardModel boardModel;
-	private BoardController boardController;
 	private GridPane view = new GridPane();
 	private String spelbordImage = "src/main/Resources/Backgrounds/spelbord2.jpg";
 	private ImageView imageView;
@@ -50,8 +48,9 @@ public class BoardView implements BoardObserver {
 	private TextField amountField;
 	private Button amountButton;
 	private Label amountLabel;
+	private Label beurtLabel;
 	private int location;
-	private PlayerModel playerModel;
+
 
 	public BoardView() {
 		this.controller = new BoardController();
@@ -240,9 +239,7 @@ public class BoardView implements BoardObserver {
 		assert speler1 != null;
 		Image Speler1 = new Image(speler1);
 		speler1Image = new ImageView(Speler1);
-		speler1Image.setFitHeight(30);
-		speler1Image.setFitWidth(30);
-		speler1Image.setVisible(false);
+		makePlayerToken(speler1Image);
 
 		FileInputStream speler2 = null;
 		try {
@@ -254,9 +251,7 @@ public class BoardView implements BoardObserver {
 		assert speler2 != null;
 		Image Speler2 = new Image(speler2);
 		speler2Image = new ImageView(Speler2);
-		speler2Image.setFitHeight(30);
-		speler2Image.setFitWidth(30);
-		speler2Image.setVisible(false);
+		makePlayerToken(speler2Image);
 
 		FileInputStream speler3 = null;
 		try {
@@ -268,9 +263,7 @@ public class BoardView implements BoardObserver {
 		assert speler3 != null;
 		Image Speler3 = new Image(speler3);
 		speler3Image = new ImageView(Speler3);
-		speler3Image.setFitHeight(30);
-		speler3Image.setFitWidth(30);
-		speler3Image.setVisible(false);
+		makePlayerToken(speler3Image);
 
 		FileInputStream speler4 = null;
 		try {
@@ -282,9 +275,7 @@ public class BoardView implements BoardObserver {
 		assert speler4 != null;
 		Image Speler4 = new Image(speler4);
 		speler4Image = new ImageView(Speler4);
-		speler4Image.setFitHeight(30);
-		speler4Image.setFitWidth(30);
-		speler4Image.setVisible(false);
+		makePlayerToken(speler4Image);
 
 		String styleLabel = "-fx-font-size: 20px; -fx-font-weight: bold";
 
@@ -307,9 +298,10 @@ public class BoardView implements BoardObserver {
 
 		String style = "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;";
 
+		String textStyle = "-fx-font-size: 25px; -fx-text-fill: #f6e5b6; -fx-background-color: #dfa231; ";
 		// invoeren aantal stamleden
 		amountLabel = new Label("Hoeveel: ");
-		amountLabel.setStyle("-fx-font-size: 25px; -fx-text-fill: #f6e5b6; -fx-background-color: #dfa231; ");
+		amountLabel.setStyle(textStyle);
 		amountLabel.setVisible(false);
 		GridPane.setConstraints(amountLabel, 18, 18, 5, 3);
 
@@ -323,10 +315,10 @@ public class BoardView implements BoardObserver {
 		amountButton.setVisible(false);
 		GridPane.setConstraints(amountButton, 30, 18, 5, 3);
 
-		/*
-		 * locaties jacht: onbeperkt hut: 2 hutkaart: 1 beschavingskaart: 1 gereedschap:
-		 * 1 akkerbouw: 1 steen, leem, goud, hout: 7
-		 */
+		// laten zijn welke speler aan de beurt is.
+		beurtLabel = new Label(controller.getPlayer().getNaam() + " is aan de beurt.");
+		beurtLabel.setStyle(textStyle);
+		GridPane.setConstraints(beurtLabel, 2, 3, 50, 3);
 
 		this.createKaartButtons();
 		this.createHutStapels();
@@ -377,7 +369,7 @@ public class BoardView implements BoardObserver {
 
 		Button endTurn = new Button("Beurt eindigen");
 		endTurn.setStyle(style);
-		GridPane.setConstraints(endTurn, 22, 5, 15, 1);
+		GridPane.setConstraints(endTurn, 22, 7, 15, 1);
 		// TODO maak dit nog kleiner
 		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
 			@Override
@@ -460,6 +452,7 @@ public class BoardView implements BoardObserver {
 					} else {
 						controller.EndTurnPhase2();
 					}
+					beurtLabel.setText(controller.getPlayer().getNaam() + " is aan de beurt.");
 				}
 			}
 		};
@@ -509,7 +502,7 @@ public class BoardView implements BoardObserver {
 				beschavingsKaartButtons.get(1), beschavingsKaartButtons.get(2), beschavingsKaartButtons.get(3),
 				hutButton, toolStapel1, toolStapel2, akkerbouwButton, jachtButton, bosButton, leemGroeveButton,
 				steenGroeveButton, rivierButton, endTurn, speler1Image, speler2Image, speler3Image, speler4Image,
-				speler1Label, speler2Label, speler3Label, speler4Label, amountField, amountLabel, amountButton);
+				speler1Label, speler2Label, speler3Label, speler4Label, amountField, amountLabel, amountButton, beurtLabel);
 	}
 
 	private void labelsSetter(int location) {
@@ -771,6 +764,7 @@ public class BoardView implements BoardObserver {
 		GridPane.setConstraints(speler4Label, 39, 23, 1, 1);
 	}
 
+
 	private void phaseCheck(int location) {
 		this.location = location;
 		setSpelersVisable(true);
@@ -803,8 +797,19 @@ public class BoardView implements BoardObserver {
 		}
 	}
 
+	private void makePlayerToken(ImageView speler){
+		speler.setFitHeight(30);
+		speler.setFitWidth(30);
+		speler.setVisible(false);
+	}
+		
 	@Override
 	public void update(BoardObservable boardobserver) {
 
+	}
+
+	// Voor de ViewManager.
+	public ArrayList<PlayerModel> getPlayers() {
+		return this.controller.getPlayers();
 	}
 }
