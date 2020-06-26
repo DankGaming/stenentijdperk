@@ -1,6 +1,7 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
 import hsleiden.stenentijdperk.stenentijdperk.App;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -9,27 +10,18 @@ import java.net.URISyntaxException;
 public class GereedschapView {
     private ImageView imageView;
     private String resource;
-    private boolean canclick;
-    private int toolnummer;
     private TableauView tableauView;
+    private Tool tool;
 
-    public GereedschapView(int toolnummer, boolean status, TableauView tableauView) {
-        this.resource = "/Tools/Tool" + toolnummer + ".png";
-        this.canclick = status;
+    public GereedschapView(Tool tool, TableauView tableauView) {
+        this.tool = tool;
         this.tableauView = tableauView;
-        this.toolnummer = toolnummer;
+        this.resource = "/Tools/Tool" + tool.getLevel() + ".png";
         setupPane();
     }
 
     public ImageView setScene() {
         return imageView;
-    }
-
-    public void resetGereedschap(){
-        if(!canclick){
-            imageView.setRotate(0);
-            canclick = true;
-        }
     }
 
     public void setupPane() {
@@ -47,15 +39,15 @@ public class GereedschapView {
         this.imageView.setFitHeight(70);
         this.imageView.setFitWidth(70);
 
-        if (!(canclick)){
+        if (!(tool.getStatus())){
             imageView.setRotate(90);
         }
 
         imageView.setOnMouseClicked(e -> {
-            if(canclick){
+            if(tool.getStatus()){
                 imageView.setRotate(90);
-                this.canclick = false;
-                tableauView.waarde += toolnummer;
+                tool.setStatus(false);
+                tableauView.waarde += tool.getLevel();
             }
         });
     }

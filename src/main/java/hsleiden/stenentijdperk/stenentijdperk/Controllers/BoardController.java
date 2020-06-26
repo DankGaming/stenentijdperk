@@ -98,7 +98,7 @@ public class BoardController {
         }
     }
 
-    public void test(int waarde) {
+    public void toolsGebruiken(int waarde) {
         System.out.println(waarde);
         int index = zooi[0];
         int roltotaal = zooi[1] + waarde;
@@ -205,31 +205,6 @@ public class BoardController {
                 playercontroller.setVillagers(player, playercontroller.getMaxVillagers(player));
             }
         }
-    }
-
-    public int toolGebruiken(boolean[] used) {
-        // TODO tools stuff
-        ArrayList<Tool> tools = playercontroller.getTools(boardmodel.getPlayer());
-        int toolsWorp = 0;
-        for (Tool tool: tools){
-            if (!(tool.getStatus())){
-                toolsWorp += tool.getLevel();
-            }
-        }
-        //       tools.get(i).setStatus(false);
-        //        toolsWorp += tools.get(i).getLevel();
-        //        
-        //    }
-        //}
-        //return toolsWorp;
-        /* 
-        vragen welke tools een speler heeft.
-        welke worp was er al
-        per tool kijken of deze gebruikt is.
-        Tel de levels erbij op
-        */
-
-        return toolsWorp;
     }
 
     public int vraagPhase() {

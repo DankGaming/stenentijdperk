@@ -68,7 +68,7 @@ public class TableauView implements PlayerObserver {
     private void showConfirmButton(BoardController boardController) {
         Button button = new Button("Gebruiken");
         button.setOnMouseClicked(event -> {
-            boardController.test(waarde);
+            boardController.toolsGebruiken(waarde);
             ViewManager.closePopupWindow();
         });
         String style = "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;";
@@ -192,21 +192,20 @@ public class TableauView implements PlayerObserver {
         this.view.getChildren().add(imageView);
     }
 
-    public void createGereedschap(int positie, int waarde, boolean status) {
+    public void createGereedschap(int positie, Tool tool) {
         ImageView imageView = null;
-        System.out.println(waarde);
         switch (positie) {
             case 1:
                 System.out.println("Hi");
-                this.gereedschapview = new GereedschapView(waarde, status, this);
+                this.gereedschapview = new GereedschapView(tool, this);
                 imageView = this.gereedschapview.setScene();
                 break;
             case 2:
-                this.gereedschapview1 = new GereedschapView(waarde, status, this);
+                this.gereedschapview1 = new GereedschapView(tool, this);
                 imageView = this.gereedschapview1.setScene();
                 break;
             case 3:
-                this.gereedschapview2 = new GereedschapView(waarde, status, this);
+                this.gereedschapview2 = new GereedschapView(tool, this);
                 imageView = this.gereedschapview2.setScene();
                 break;
         }
@@ -219,7 +218,7 @@ public class TableauView implements PlayerObserver {
         ArrayList<Tool> tools = po.getTools();
         int i = 1;
         for (Tool tool: tools) {
-            createGereedschap(i, tool.getLevel(), tool.getStatus());
+            createGereedschap(i, tool);
             i++;
         }
     }
