@@ -30,6 +30,10 @@ public class BoardController {
         players.add(jake);
         players.add(lucas);
         players.add(carlos);
+
+        // Show pickerview
+        ViewManager.loadPickerView(players);
+
         playercontroller = new PlayerController();
         boardmodel = new BoardModel();
         boardmodel.setPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
