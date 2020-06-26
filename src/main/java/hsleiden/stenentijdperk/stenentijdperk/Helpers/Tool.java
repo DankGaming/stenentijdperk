@@ -8,7 +8,7 @@ public class Tool implements Status {
 
     public Tool() {
         this.level = 1;
-        this.status = false;
+        this.status = true;
     }
 
     public void increaseLevel(){

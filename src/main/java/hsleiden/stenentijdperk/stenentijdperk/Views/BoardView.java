@@ -385,158 +385,75 @@ public class BoardView implements BoardObserver {
 				if (actionEvent.getSource() == hutKaartButtons.get(0)) {
 					List<StaticHut> array = controller.onHutButtonClick(0); // TODO verplaatsen naar acties
 					renderNewHutten(array, 0);
-					resetTextLabel();
 
 					hutKaart1();
-
-					setSpelersVisable(true);
-					setLabelTo1();
-					controller.onButtonClick(8);
+					labelsSetter(8);
 				} else if (actionEvent.getSource() == hutKaartButtons.get(1)) {
 					List<StaticHut> array = controller.onHutButtonClick(1); // TODO verplaatsen naar acties
 					renderNewHutten(array, 1);
 
-					resetTextLabel();
-
 					hutKaart2();
-
-					setSpelersVisable(true);
-					setLabelTo1();
-					controller.onButtonClick(9);
+					labelsSetter(9);
 				} else if (actionEvent.getSource() == hutKaartButtons.get(2)) {
 					List<StaticHut> array = controller.onHutButtonClick(2); // TODO verplaatsen naar acties
 					renderNewHutten(array, 2);
 
-					resetTextLabel();
-
 					hutKaart3();
-
-					setSpelersVisable(true);
-					setLabelTo1();
-					controller.onButtonClick(10);
+					labelsSetter(10);
 				} else if (actionEvent.getSource() == hutKaartButtons.get(3)) {
 					List<StaticHut> array = controller.onHutButtonClick(3); // TODO verplaatsen naar acties
 					renderNewHutten(array, 3);
 
-					resetTextLabel();
-
 					hutKaart4();
-
-					setSpelersVisable(true);
-					setLabelTo1();
-					controller.onButtonClick(11);
+					labelsSetter(11);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(0)) {
-					resetTextLabel();
 					List<Kaart> array = controller.onKaartButtonClick(0); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
 
 					beschavingsKaart1();
-
-					setSpelersVisable(true);
-					setLabelTo1();
-					controller.onButtonClick(12);
+					labelsSetter(12);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(1)) {
-					resetTextLabel();
 					List<Kaart> array = controller.onKaartButtonClick(1); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
 
 					beschavingsKaart2();
-
-					setSpelersVisable(true);
-					setLabelTo1();
-					controller.onButtonClick(13);
+					labelsSetter(13);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(2)) {
-					resetTextLabel();
 					List<Kaart> array = controller.onKaartButtonClick(2); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
 
 					beschavingsKaart3();
-
-					setSpelersVisable(true);
-					setLabelTo1();
-					controller.onButtonClick(14);
+					labelsSetter(14);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(3)) {
-					resetTextLabel();
 					List<Kaart> array = controller.onKaartButtonClick(3); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
 
 					beschavingsKaart4();
-
-					setSpelersVisable(true);
-					setLabelTo1();
-					controller.onButtonClick(15);
+					labelsSetter(15);
 				} else if (actionEvent.getSource() == hutButton) {
-					resetTextLabel();
-
 					hutKaart();
-
-					setSpelersVisable(true);
-					setLabelTo1();
-					controller.onButtonClick(6);
-				} else if (actionEvent.getSource() == toolStapel1) {
-					resetTextLabel();
-
+					labelsSetter(6);
+				} else if (actionEvent.getSource() == toolStapel1 || actionEvent.getSource() == toolStapel2) {
 					gereedschapKaart();
-
-					setSpelersVisable(true);
-					setLabelTo1();
-					controller.onButtonClick(7);
-				} else if (actionEvent.getSource() == toolStapel2) {
-					resetTextLabel();
-
-					gereedschapKaart();
-
-					setSpelersVisable(true);
-					setLabelTo1();
-					controller.onButtonClick(7);
+					labelsSetter(7);
 				} else if (actionEvent.getSource() == akkerbouwButton) {
-					resetTextLabel();
-
 					akkerbouwKaart();
-
-					setSpelersVisable(true);
-					setLabelTo1();
-					controller.onButtonClick(5);
+					labelsSetter(5);
 				} else if (actionEvent.getSource() == jachtButton) {
-					resetTextLabel();
-					checkStamleden(0);
 					jachtKaart();
-
-					setSpelersVisable(true);
-					setInputVisable(true);
-					phaseCheck(0);
+					labelsSetter(0);
 				} else if (actionEvent.getSource() == bosButton) {
-					resetTextLabel();
-					checkStamleden(1);
 					bosKaart();
-
-					setSpelersVisable(true);
-					setInputVisable(true);
-					phaseCheck(1);
+					labelsSetter(1);
 				} else if (actionEvent.getSource() == leemGroeveButton) {
-					resetTextLabel();
-					checkStamleden(2);
 					leemKaart();
-
-					setSpelersVisable(true);
-					setInputVisable(true);
-					phaseCheck(2);
+					labelsSetter(2);
 				} else if (actionEvent.getSource() == steenGroeveButton) {
-					resetTextLabel();
-					checkStamleden(3);
 					steenKaart();
-
-					setSpelersVisable(true);
-					setInputVisable(true);
-					phaseCheck(3);
+					labelsSetter(3);
 				} else if (actionEvent.getSource() == rivierButton) {
-					resetTextLabel();
-					checkStamleden(4);
 					rivierKaart();
-
-					setSpelersVisable(true);
-					setInputVisable(true);
-					phaseCheck(4);
+					labelsSetter(4);
 				} else if (actionEvent.getSource() == endTurn) {
 					if (controller.vraagPhase() == 1) {
 						controller.endTurn();
@@ -595,6 +512,18 @@ public class BoardView implements BoardObserver {
 				speler1Label, speler2Label, speler3Label, speler4Label, amountField, amountLabel, amountButton);
 	}
 
+	private void labelsSetter(int location){
+		checkStamleden(location);
+		setSpelersVisable(true);
+		if (location < 5){
+			phaseCheck(location);
+		} else {
+			controller.onButtonClick(location);
+		}
+		checkStamleden(location);
+
+	}
+
 	private void setSpelersVisable(boolean visable) {
 		speler1Image.setVisible(visable);
 		speler1Label.setVisible(visable);
@@ -616,20 +545,6 @@ public class BoardView implements BoardObserver {
 
 		amountField.setEditable(visable);
 		amountField.setVisible(visable);
-	}
-
-	private void resetTextLabel() {
-		speler1Label.setText("");
-		speler2Label.setText("");
-		speler3Label.setText("");
-		speler4Label.setText("");
-	}
-
-	private void setLabelTo1() {
-		speler1Label.setText(" 1");
-		speler2Label.setText(" 1");
-		speler3Label.setText(" 1");
-		speler4Label.setText(" 1");
 	}
 
 	private void hutKaart1() {
