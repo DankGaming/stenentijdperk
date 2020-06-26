@@ -85,8 +85,7 @@ public class BoardController {
         gegooideWorp[0] = index;
         int stamleden = playercontroller.getPositie(boardmodel.getPlayer(), index);
         if (stamleden != 0) {
-            Dobbelsteen roll = new 
-            Dobbelsteen(stamleden);
+            Dobbelsteen roll = new Dobbelsteen(stamleden);
             roll.worp();
             roll.berekenTotaal();
             gegooideWorp[1] = roll.getTotaal();
