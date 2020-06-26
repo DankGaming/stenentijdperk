@@ -19,6 +19,10 @@ public class BoardController {
     // TODO naar boardmodel en dan firebase
     private ArrayList<PlayerModel> players = new ArrayList<PlayerModel>();
 
+
+    // TEST
+    private int[] zooi;
+
     public BoardController() {
         // TODO all references naar temp players moet naar firebase vragen.
         PlayerModel matt = new PlayerModel("Matt");
@@ -32,6 +36,7 @@ public class BoardController {
         playercontroller = new PlayerController();
         boardmodel = new BoardModel();
         boardmodel.setPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
+        zooi = new int[3];
     }
 
     public void registerObserver(BoardObserver boardobserver) {
@@ -80,26 +85,33 @@ public class BoardController {
 
     // Hier is het rollen voor resources.
     public void resolveResource(int index) {
+        zooi[0] = index;
         int stamleden = playercontroller.getPositie(boardmodel.getPlayer(), index);
         ViewManager.loadPopupWindow(new TableauView(players.get(1), this).setScene());
         if (stamleden != 0) {
             Dobbelsteen roll = new Dobbelsteen(stamleden);
             roll.worp();
             roll.berekenTotaal();
+            zooi[1] = roll.getTotaal();
             ViewManager.loadPopupWindow(new TableauView(boardmodel.getPlayer(), this).setScene());
-            int resources = roll.getTotaal() / boardmodel.getResource(index).getWaarde();
-            if (resources > boardmodel.getResource(index).getHoeveelheid()) {
-                resources = boardmodel.getResource(index).getHoeveelheid();
-            }
-            boardmodel.reduceResources(index, resources);
-            playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
-            boardmodel.getPlayer().addResources(index, resources);
-            boardmodel.getLocaties().get(index).reduceVillager(stamleden);
+            zooi[2] = stamleden;
         }
     }
 
     public void test() {
-        System.out.println("JA");
+        System.out.println("ja");
+        int index = zooi[0];
+        int roltotaal = zooi[1];
+        System.out.println(roltotaal);
+        int stamleden = zooi[2];
+        int resources = roltotaal / boardmodel.getResource(index).getWaarde();
+        if (resources > boardmodel.getResource(index).getHoeveelheid()) {
+            resources = boardmodel.getResource(index).getHoeveelheid();
+        }
+        boardmodel.reduceResources(index, resources);
+        playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
+        boardmodel.getPlayer().addResources(index, resources);
+        boardmodel.getLocaties().get(index).reduceVillager(stamleden);
     }
 
     public void gainTools(int index) {
