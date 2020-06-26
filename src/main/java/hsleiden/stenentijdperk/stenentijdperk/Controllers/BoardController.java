@@ -116,6 +116,7 @@ public class BoardController {
             ArrayList<Tool> tools = playercontroller.getTools(boardmodel.getPlayer());
             if (tools.size() < 3) {
                 playercontroller.addTool(boardmodel.getPlayer());
+                playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
             } else if (tools.get(2).getLevel() != 4) {
                 for (int i = 0; i < 3; i++) {
                     if (tools.get(i).getLevel() == tools.get(2).getLevel()) {

@@ -808,6 +808,7 @@ public class BoardView implements BoardObserver {
 			setInputVisable(true);
 		} else {
 			controller.resolveResource(location);
+			checkStamleden(location);
 		}
 	}
 
