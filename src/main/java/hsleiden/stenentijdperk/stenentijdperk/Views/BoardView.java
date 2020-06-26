@@ -428,7 +428,7 @@ public class BoardView implements BoardObserver {
 					resetTextLabel();
 					List<Kaart> array = controller.onKaartButtonClick(0); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
-					ViewManager.loadPopupWindow(new ResourceView().setScene());
+					ViewManager.loadPopupWindow(new ResourceView());
 					beschavingsKaart1();
 
 					setSpelersVisable(true);
@@ -438,7 +438,7 @@ public class BoardView implements BoardObserver {
 					resetTextLabel();
 					List<Kaart> array = controller.onKaartButtonClick(1); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
-					ViewManager.loadPopupWindow(new ResourceView().setScene());
+					ViewManager.loadPopupWindow(new ResourceView());
 					beschavingsKaart2();
 
 					setSpelersVisable(true);
@@ -448,7 +448,7 @@ public class BoardView implements BoardObserver {
 					resetTextLabel();
 					List<Kaart> array = controller.onKaartButtonClick(2); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
-					ViewManager.loadPopupWindow(new ResourceView().setScene());
+					ViewManager.loadPopupWindow(new ResourceView());
 					beschavingsKaart3();
 
 					setSpelersVisable(true);
@@ -458,7 +458,7 @@ public class BoardView implements BoardObserver {
 					resetTextLabel();
 					List<Kaart> array = controller.onKaartButtonClick(3); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
-					ViewManager.loadPopupWindow(new ResourceView().setScene());
+					ViewManager.loadPopupWindow(new ResourceView());
 					beschavingsKaart4();
 
 					setSpelersVisable(true);
