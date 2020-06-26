@@ -192,7 +192,6 @@ public class TableauView implements PlayerObserver {
         ImageView imageView = null;
         switch (positie) {
             case 1:
-                System.out.println("Hi");
                 this.gereedschapview = new GereedschapView(tool, this);
                 imageView = this.gereedschapview.setScene();
                 break;
@@ -205,7 +204,6 @@ public class TableauView implements PlayerObserver {
                 imageView = this.gereedschapview2.setScene();
                 break;
         }
-        System.out.println("bYE");
         addImageViewToView(positie, imageView);
     }
 
