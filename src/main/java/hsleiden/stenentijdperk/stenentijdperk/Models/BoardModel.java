@@ -60,7 +60,27 @@ public class BoardModel implements BoardObservable {
         listOfFiles = folder.listFiles();
 
         for (int i = 0; i < listOfFiles.length; i++) {
-            this.hutKaarten.add(i, new StaticHut(i, "src/main/Resources/Hutjes/" + listOfFiles[i].getName()));
+            List<Integer> resourceKost = new ArrayList<Integer>();
+            String[] s = listOfFiles[i].getName().split("\\.");
+            int punten;
+            if (s[0].contains("-")) {
+                String kosten[] = s[0].split("-");
+                for (String kost : kosten) {
+                    resourceKost.add(Integer.parseInt(kost));
+                }
+                if (resourceKost.size() > 4) {
+                    resourceKost.remove(4);
+                }
+                punten = (resourceKost.get(0) * 3) + (resourceKost.get(1) * 4) + (resourceKost.get(2) * 5)
+                        + (resourceKost.get(3) * 6);
+            } else {
+                punten = 0;
+                resourceKost.add(0);
+
+            }
+
+            this.hutKaarten.add(i,
+                    new StaticHut(punten, resourceKost, "src/main/Resources/Hutjes/" + listOfFiles[i].getName()));
         }
         Collections.shuffle(this.hutKaarten);
         int n = this.hutKaarten.size();

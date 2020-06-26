@@ -512,10 +512,10 @@ public class BoardView implements BoardObserver {
 				speler1Label, speler2Label, speler3Label, speler4Label, amountField, amountLabel, amountButton);
 	}
 
-	private void labelsSetter(int location){
+	private void labelsSetter(int location) {
 		checkStamleden(location);
 		setSpelersVisable(true);
-		if (location < 5){
+		if (location < 5) {
 			phaseCheck(location);
 		} else {
 			controller.onButtonClick(location);
@@ -787,22 +787,18 @@ public class BoardView implements BoardObserver {
 			int stamledenGeplaats = controller.getPlayers().get(i).getPositie(location);
 			if (i == 0) {
 				speler1Label.setText("" + stamledenGeplaats);
-				System.out.println("test1");
 			}
 
 			else if (i == 1) {
 				speler2Label.setText("" + stamledenGeplaats);
-				System.out.println("test2");
 			}
 
 			else if (i == 2) {
 				speler3Label.setText("" + stamledenGeplaats);
-				System.out.println("test3");
 			}
 
 			else if (i == 3) {
 				speler4Label.setText("" + stamledenGeplaats);
-				System.out.println("test4");
 			}
 		}
 	}
