@@ -239,9 +239,7 @@ public class BoardView implements BoardObserver {
 		assert speler1 != null;
 		Image Speler1 = new Image(speler1);
 		speler1Image = new ImageView(Speler1);
-		speler1Image.setFitHeight(30);
-		speler1Image.setFitWidth(30);
-		speler1Image.setVisible(false);
+		makePlayerToken(speler1Image);
 
 		FileInputStream speler2 = null;
 		try {
@@ -253,9 +251,7 @@ public class BoardView implements BoardObserver {
 		assert speler2 != null;
 		Image Speler2 = new Image(speler2);
 		speler2Image = new ImageView(Speler2);
-		speler2Image.setFitHeight(30);
-		speler2Image.setFitWidth(30);
-		speler2Image.setVisible(false);
+		makePlayerToken(speler2Image);
 
 		FileInputStream speler3 = null;
 		try {
@@ -267,9 +263,7 @@ public class BoardView implements BoardObserver {
 		assert speler3 != null;
 		Image Speler3 = new Image(speler3);
 		speler3Image = new ImageView(Speler3);
-		speler3Image.setFitHeight(30);
-		speler3Image.setFitWidth(30);
-		speler3Image.setVisible(false);
+		makePlayerToken(speler3Image);
 
 		FileInputStream speler4 = null;
 		try {
@@ -281,9 +275,7 @@ public class BoardView implements BoardObserver {
 		assert speler4 != null;
 		Image Speler4 = new Image(speler4);
 		speler4Image = new ImageView(Speler4);
-		speler4Image.setFitHeight(30);
-		speler4Image.setFitWidth(30);
-		speler4Image.setVisible(false);
+		makePlayerToken(speler4Image);
 
 		String styleLabel = "-fx-font-size: 20px; -fx-font-weight: bold";
 
@@ -772,6 +764,7 @@ public class BoardView implements BoardObserver {
 		GridPane.setConstraints(speler4Label, 39, 23, 1, 1);
 	}
 
+
 	private void phaseCheck(int location) {
 		this.location = location;
 		setSpelersVisable(true);
@@ -808,6 +801,12 @@ public class BoardView implements BoardObserver {
 		}
 	}
 
+	private void makePlayerToken(ImageView speler){
+		speler.setFitHeight(30);
+		speler.setFitWidth(30);
+		speler.setVisible(false);
+	}
+		
 	@Override
 	public void update(BoardObservable boardobserver) {
 
