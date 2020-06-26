@@ -30,6 +30,10 @@ public class BoardController {
         players.add(jake);
         players.add(lucas);
         players.add(carlos);
+
+        // Show pickerview
+        ViewManager.loadPickerView(players);
+
         playercontroller = new PlayerController();
         boardmodel = new BoardModel();
         boardmodel.setPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
@@ -52,7 +56,7 @@ public class BoardController {
         if (!boardmodel.getPlaced() && boardmodel.requestCap(location) - boardmodel.requestVillagers(location) != 0
                 && playercontroller.getPositie(boardmodel.getPlayer(), location) == 0) {
             // Dit veranderd de hoeveelheid stamleden van een speler
-            boardmodel.changeVillagers(location, input);
+            boardmodel.decreaseVillagers(location, input);
             plaatsenStamleden(location, input);
         }
     }
@@ -323,20 +327,8 @@ public class BoardController {
         }
     }
 
-    public BoardModel getBoardmodel() {
-        return boardmodel;
-    }
-
-    public void setBoardmodel(BoardModel boardmodel) {
-        this.boardmodel = boardmodel;
-    }
-
     // TODO tijdelijk
     public ArrayList<PlayerModel> getPlayers() {
         return this.players;
-    }
-
-    public void setPlayers(ArrayList<PlayerModel> players) {
-        this.players = players;
     }
 }
