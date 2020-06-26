@@ -122,8 +122,6 @@ public class FirebaseController {
     }
 
     public static void setSpeler(String spelerNummer, PlayerModel player) {
-        System.out.println(player.getNaam());
-        System.out.println(player.getVillagers());
         ApiFuture<WriteResult> future = db.collection("stenentijdperk").document(spelerNummer).set(player);
         try {
             System.out.println("Update time : " + future.get().getUpdateTime());
@@ -286,7 +284,6 @@ public class FirebaseController {
 
     public static void addBoard(int lobby, BoardModel model) {
         ApiFuture<WriteResult> future = db.collection("stenentijdperk").document("1").collection("boardData").document("board").set(model);
-        System.out.println("hello");
         try {
             System.out.println("Update time : " + future.get().getUpdateTime());
         } catch (Exception e) {
@@ -294,5 +291,4 @@ public class FirebaseController {
             e.printStackTrace();
         }
     }
-
 }

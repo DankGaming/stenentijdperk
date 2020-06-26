@@ -162,7 +162,6 @@ public class BoardController {
     public void EndTurnPhase2() {
         List<Integer> posities = playercontroller.vraagPosities(boardmodel.getPlayer());
         if (posities.stream().allMatch(n -> n == 0)) {
-            System.out.println(playercontroller.getNaam(boardmodel.getPlayer()));
             int i = checkPlayer();
             if (i == 3) {
                 boardmodel.setPlayer(players.get(0));
