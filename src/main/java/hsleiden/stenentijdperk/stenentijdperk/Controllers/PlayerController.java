@@ -68,14 +68,6 @@ public class PlayerController {
 		playerModel.addTool();
 	}
 
-	public void increaseToolLevel(PlayerModel playerModel, int index){
-		playerModel.increaseToolLevel(index);
-	}
-
-	public int getToolLevel(PlayerModel playerModel, int index){
-		return playerModel.getToolLevel(index);
-	}
-
 	public String getNaam(PlayerModel playerModel){
 		return playerModel.getNaam();
 	}

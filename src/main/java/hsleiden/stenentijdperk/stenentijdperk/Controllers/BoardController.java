@@ -18,8 +18,6 @@ public class BoardController {
     private BoardModel boardmodel;
     // TODO naar boardmodel en dan firebase
     private ArrayList<PlayerModel> players = new ArrayList<PlayerModel>();
-
-    // TEST
     private int[] gegooideWorp;
 
     public BoardController() {
@@ -325,20 +323,8 @@ public class BoardController {
         }
     }
 
-    public BoardModel getBoardmodel() {
-        return boardmodel;
-    }
-
-    public void setBoardmodel(BoardModel boardmodel) {
-        this.boardmodel = boardmodel;
-    }
-
     // TODO tijdelijk
     public ArrayList<PlayerModel> getPlayers() {
         return this.players;
-    }
-
-    public void setPlayers(ArrayList<PlayerModel> players) {
-        this.players = players;
     }
 }
