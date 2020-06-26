@@ -1,8 +1,9 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
+import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
@@ -18,12 +19,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.DoubleToIntFunction;
 
 public class BoardView implements BoardObserver {
 	private BoardController controller;
@@ -345,6 +344,7 @@ public class BoardView implements BoardObserver {
 		this.createHutStapels();
 		this.createToolButton(0);
 		this.createToolButton(1);
+
 		// Buttons
 
 		GridPane.setConstraints(this.beschavingsKaartButtons.get(0), 42, 40, 1, 1);
@@ -424,25 +424,25 @@ public class BoardView implements BoardObserver {
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(0)) {
 					List<Kaart> array = controller.onKaartButtonClick(0); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
-
+					ViewManager.loadPopupWindow(new ResourceView());
 					beschavingsKaart1();
 					labelsSetter(12);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(1)) {
 					List<Kaart> array = controller.onKaartButtonClick(1); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
-
+					ViewManager.loadPopupWindow(new ResourceView());
 					beschavingsKaart2();
 					labelsSetter(13);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(2)) {
 					List<Kaart> array = controller.onKaartButtonClick(2); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
-
+					ViewManager.loadPopupWindow(new ResourceView());
 					beschavingsKaart3();
 					labelsSetter(14);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(3)) {
 					List<Kaart> array = controller.onKaartButtonClick(3); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
-
+					ViewManager.loadPopupWindow(new ResourceView());
 					beschavingsKaart4();
 					labelsSetter(15);
 				} else if (actionEvent.getSource() == hutButton) {
@@ -801,7 +801,6 @@ public class BoardView implements BoardObserver {
 		GridPane.setConstraints(speler4Label, 39, 23, 1, 1);
 	}
 
-
 	private void phaseCheck(int location) {
 		this.location = location;
 		setSpelersVisable(true);
@@ -842,7 +841,7 @@ public class BoardView implements BoardObserver {
 		}
 	
 	}
-		
+
 	@Override
 	public void update(BoardObservable boardobserver) {
 

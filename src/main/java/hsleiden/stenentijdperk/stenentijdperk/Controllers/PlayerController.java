@@ -2,7 +2,6 @@ package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
-
 import java.util.ArrayList;
 import java.util.List;
 
