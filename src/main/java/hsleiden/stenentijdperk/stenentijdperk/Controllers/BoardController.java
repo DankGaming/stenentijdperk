@@ -129,7 +129,6 @@ public class BoardController {
                 }
             }
         }
-
     }
 
     public void endTurn() {
