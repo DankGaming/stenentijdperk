@@ -2,7 +2,7 @@ package hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten;
 
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 
-public class BeschavingskaartMiddelen extends Kaart{
+public class BeschavingskaartMiddelen extends Kaart {
     private int waarde;
     private int middel;
 
