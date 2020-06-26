@@ -6,7 +6,7 @@ import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 
 import hsleiden.stenentijdperk.stenentijdperk.observers.PlayerObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.PlayerObserver;
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 
