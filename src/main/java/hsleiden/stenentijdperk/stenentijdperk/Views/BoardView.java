@@ -811,4 +811,9 @@ public class BoardView implements BoardObserver {
 	public void update(BoardObservable boardobserver) {
 
 	}
+
+	// Voor de ViewManager.
+	public ArrayList<PlayerModel> getPlayers() {
+		return this.controller.getPlayers();
+	}
 }

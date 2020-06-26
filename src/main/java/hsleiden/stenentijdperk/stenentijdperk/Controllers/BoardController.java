@@ -30,10 +30,6 @@ public class BoardController {
         players.add(jake);
         players.add(lucas);
         players.add(carlos);
-
-        // Show pickerview
-        ViewManager.loadPickerView(players);
-
         playercontroller = new PlayerController();
         boardmodel = new BoardModel();
         boardmodel.setPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
@@ -89,8 +85,7 @@ public class BoardController {
         gegooideWorp[0] = index;
         int stamleden = playercontroller.getPositie(boardmodel.getPlayer(), index);
         if (stamleden != 0) {
-            Dobbelsteen roll = new 
-            Dobbelsteen(stamleden);
+            Dobbelsteen roll = new Dobbelsteen(stamleden);
             roll.worp();
             roll.berekenTotaal();
             gegooideWorp[1] = roll.getTotaal();

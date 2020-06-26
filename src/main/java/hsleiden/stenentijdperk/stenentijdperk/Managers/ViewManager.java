@@ -47,8 +47,9 @@ public class ViewManager {
     public static void loadBoardView() {
         closeView();
         isRunning = true;
-        currentView = new BoardView().setScene();
-        showView(1200, 800, "Board", true);
+        BoardView boardView = new BoardView();
+        currentView = boardView.setScene();
+        showView(1200, 800, "Board", boardView.getPlayers());
     }
 
     public static void loadSpelregelView() {
@@ -96,7 +97,7 @@ public class ViewManager {
     }
 
     // And this function closes a view.
-    public static void showView(int width, int height, String title, boolean fromBoard) {
+    public static void showView(int width, int height, String title, ArrayList<PlayerModel> playerModels) {
         createStageFromView(width, height, title);
         currentStage.setOnCloseRequest(event -> {
             isRunning = false;
@@ -104,6 +105,7 @@ public class ViewManager {
         });
         if (currentStage != null)
             currentStage.show();
+        ViewManager.loadPickerView(playerModels);
     }
     public static void closeView() {
         if (currentStage != null)
