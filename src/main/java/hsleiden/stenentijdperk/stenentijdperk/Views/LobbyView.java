@@ -58,7 +58,7 @@ public class LobbyView implements LobbyObserver {
     private void setupPane() {
         this.view = new GridPane();
         this.view.setPadding(new Insets(10, 10, 10, 10));
-        this.view.setStyle("-fx-background-color: d0c9b5");
+        this.view.setStyle("-fx-background-color: #d0c9b5");
         int amountOfRows = 50;
         int amountOfColumns = 50;
 

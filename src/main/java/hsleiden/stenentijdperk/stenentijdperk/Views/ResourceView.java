@@ -1,5 +1,6 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
@@ -25,6 +26,7 @@ public class ResourceView {
     private Label voedsel;
     private Label voedselHoeveelheid;
     private TextField voedselField;
+    private Button resourceButton;
 
 
     public ResourceView(){
@@ -37,7 +39,7 @@ public class ResourceView {
 
     public void setupPane() {
         this.view = new GridPane();
-
+        this.view.setStyle("-fx-background-color: #d0c9b5");
         int amountOfRows = 50;
         int amountOfColumns = 50;
 
@@ -112,7 +114,13 @@ public class ResourceView {
         voedselField= new TextField();
         GridPane.setConstraints(voedselField, 15, 12, 5, 1);
 
+        //button
+        resourceButton = new Button("Confirm");
+        resourceButton.setMinSize(220, 50);
+        resourceButton.setStyle("-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 20px;");
+        GridPane.setConstraints(resourceButton, 3 ,15, 5, 5);
 
-        this.view.getChildren().addAll(hout, leem, steen, goud, voedsel, houtHoeveelheid, leemHoeveelheid, steenHoeveelheid, goudHoeveelheid, voedselHoeveelheid, houtField, leemField, steenField, goudField, voedselField);
+        this.view.getChildren().addAll(hout, leem, steen, goud, voedsel, houtHoeveelheid, leemHoeveelheid, steenHoeveelheid, goudHoeveelheid, voedselHoeveelheid,
+                houtField, leemField, steenField, goudField, voedselField, resourceButton);
     }
 }
