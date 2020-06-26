@@ -54,7 +54,7 @@ public class BoardController {
         if (!boardmodel.getPlaced() && boardmodel.requestCap(location) - boardmodel.requestVillagers(location) != 0
                 && playercontroller.getPositie(boardmodel.getPlayer(), location) == 0) {
             // Dit veranderd de hoeveelheid stamleden van een speler
-            boardmodel.changeVillagers(location, input);
+            boardmodel.decreaseVillagers(location, input);
             plaatsenStamleden(location, input);
         }
     }

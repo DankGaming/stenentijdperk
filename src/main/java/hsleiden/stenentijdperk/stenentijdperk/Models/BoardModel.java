@@ -117,8 +117,12 @@ public class BoardModel implements BoardObservable {
     }
 
     // dit handelt all het veranderen van de hoeveelheid villagers
-    public void changeVillagers(int index, int amount) {
-        this.locaties.get(index).setVillagers(amount + this.locaties.get(index).getVillagers());
+    public void increaseVillagers(int index, int amount) {
+        this.locaties.get(index).increaseVillager(amount);
+    }
+
+    public void decreaseVillagers(int index, int amount) {
+        this.locaties.get(index).reduceVillager(amount);
     }
 
     public int requestVillagers(int index) {
