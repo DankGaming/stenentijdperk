@@ -48,18 +48,18 @@ public class BoardController {
         return this.boardmodel.getHut(stapel, index);
     }
 
-    public void onResourceButtonClick(int location, int input) {
-        if (!boardmodel.getPlaced() && boardmodel.requestCap(location) - boardmodel.requestVillagers(location) != 0
-                && playercontroller.getPositie(boardmodel.getPlayer(), location) == 0) {
+    public void onResourceButtonClick(int index, int input) {
+        if (!boardmodel.getPlaced() && boardmodel.requestCap(index) - boardmodel.requestVillagers(index) != 0
+                && playercontroller.getPositie(boardmodel.getPlayer(), index) == 0) {
             // Dit veranderd de hoeveelheid stamleden van een speler
-            boardmodel.decreaseVillagers(location, input);
-            plaatsenStamleden(location, input);
+            boardmodel.decreaseVillagers(index, input);
+            plaatsenStamleden(index, input);
         }
     }
 
-    public boolean stamledenCheck(int location, int input) {
+    public boolean stamledenCheck(int index, int input) {
         return (input > 0 && input <= playercontroller.getVillagers(boardmodel.getPlayer())
-                && input <= (boardmodel.requestCap(location) - boardmodel.requestVillagers(location)));
+                && input <= (boardmodel.requestCap(index) - boardmodel.requestVillagers(index)));
     }
 
     // methode om de onderste buttons af te handelen. maakt de kaart/hut bezet en
