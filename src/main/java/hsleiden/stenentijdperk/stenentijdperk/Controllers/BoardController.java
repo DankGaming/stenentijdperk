@@ -99,10 +99,8 @@ public class BoardController {
     }
 
     public void toolsGebruiken(int waarde) {
-        System.out.println(waarde);
         int index = gegooideWorp[0];
         int roltotaal = gegooideWorp[1] + waarde;
-        System.out.println(roltotaal);
         int stamleden = gegooideWorp[2];
         int resources = roltotaal / boardmodel.getResource(index).getWaarde();
         if (resources > boardmodel.getResource(index).getHoeveelheid()) {
@@ -134,7 +132,6 @@ public class BoardController {
     public void endTurn() {
         if (boardmodel.getPlaced()) { // checkt of de speler stamleden heeft geplaast.
             boolean villagersLeft = true;
-            System.out.println("Einde beurt");
             int i = checkPlayer();
             switch (i) { // Verschillede loops bepaalt door welke speler aan de beurt was
                 case 0: // Spelers 1, 2 en 3
@@ -174,7 +171,6 @@ public class BoardController {
                 boardmodel.setPlayer(players.get(i));
             }
             posities = playercontroller.vraagPosities(boardmodel.getPlayer());
-            System.out.println("Eind actie beurt");
         }
 
         if (posities.stream().allMatch(n -> n == 0)) {

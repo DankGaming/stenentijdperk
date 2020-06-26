@@ -487,12 +487,11 @@ public class BoardView implements BoardObserver {
 						aantalStamleden = Integer.parseInt(amountField.getText());
 						if (controller.stamledenCheck(location, aantalStamleden)) {
 							controller.onResourceButtonClick(location, aantalStamleden);
-							System.out.println(aantalStamleden);
 							setInputVisable(false);
 							checkStamleden(location);
 						}
 					} catch (Exception e) {
-						System.out.println("test2");
+						System.out.println(e);
 					}
 				}
 			}
@@ -540,12 +539,13 @@ public class BoardView implements BoardObserver {
 
 	private void playerColor(boolean seen){		
 		int i = 1;
-		for (PlayerModel player: controller.getPlayers()){
+		for (PlayerModel player : controller.getPlayers()) {
 			if (player.equals(controller.getPlayer())){
 				GridPane.setConstraints(imageViews.get(i), 2, 6, 1, 1);
 				imageViews.get(i).setVisible(seen);
-				i+= 2;
+			
 			}
+			i += 2;
 			
 		}		
 	}
@@ -814,22 +814,18 @@ public class BoardView implements BoardObserver {
 			int stamledenGeplaats = controller.getPlayers().get(i).getPositie(location);
 			if (i == 0) {
 				speler1Label.setText("" + stamledenGeplaats);
-				System.out.println("test1");
 			}
 
 			else if (i == 1) {
 				speler2Label.setText("" + stamledenGeplaats);
-				System.out.println("test2");
 			}
 
 			else if (i == 2) {
 				speler3Label.setText("" + stamledenGeplaats);
-				System.out.println("test3");
 			}
 
 			else if (i == 3) {
 				speler4Label.setText("" + stamledenGeplaats);
-				System.out.println("test4");
 			}
 		}
 	}
