@@ -18,8 +18,6 @@ public class BoardController {
     private BoardModel boardmodel;
     // TODO naar boardmodel en dan firebase
     private ArrayList<PlayerModel> players = new ArrayList<PlayerModel>();
-
-    // TEST
     private int[] gegooideWorp;
 
     public BoardController() {
