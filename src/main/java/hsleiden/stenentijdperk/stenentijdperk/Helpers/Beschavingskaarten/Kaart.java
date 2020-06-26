@@ -1,18 +1,20 @@
-package hsleiden.stenentijdperk.stenentijdperk.Helpers;
+package hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten;
 
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Resource;
 import hsleiden.stenentijdperk.stenentijdperk.Interfaces.Status;
 
 public class Kaart implements Status {
-	private int punten;
+	//wat kost de kaart
+	private int kosten;
 	private Resource tool;
 	private Resource graan;
 	private String treasure;
 	private boolean status;
 	private String path;
 
-	public Kaart(int punten, String path) {
+	public Kaart(int kosten, String path) {
 		this.path = path;
-		this.punten = punten;
+		this.kosten = kosten;
 		this.status = false;
 	}
 
@@ -21,7 +23,7 @@ public class Kaart implements Status {
 	}
 
 	public int getPunten() {
-		return this.punten;
+		return this.kosten;
 	}
 
 	public Resource getTool() {
@@ -39,13 +41,11 @@ public class Kaart implements Status {
 	@Override
 	public boolean getStatus() {
 		return this.status;
-
 	}
 
 	@Override
 	public void setStatus(boolean status) {
 		this.status = status;
-
 	}
 
 }
