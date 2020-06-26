@@ -4,8 +4,10 @@ import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Dobbelsteen;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
+import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
+import hsleiden.stenentijdperk.stenentijdperk.Views.TableauView;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,7 @@ public class BoardController {
     private BoardModel boardmodel;
     // TODO naar boardmodel en dan firebase
     private ArrayList<PlayerModel> players = new ArrayList<PlayerModel>();
+    private int[] gegooideWorp;
 
     public BoardController() {
         // TODO all references naar temp players moet naar firebase vragen.
@@ -29,6 +32,7 @@ public class BoardController {
         playercontroller = new PlayerController();
         boardmodel = new BoardModel();
         boardmodel.setPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
+        gegooideWorp = new int[3];
     }
 
     public void registerObserver(BoardObserver boardobserver) {
@@ -47,7 +51,7 @@ public class BoardController {
         if (!boardmodel.getPlaced() && boardmodel.requestCap(location) - boardmodel.requestVillagers(location) != 0
                 && playercontroller.getPositie(boardmodel.getPlayer(), location) == 0) {
             // Dit veranderd de hoeveelheid stamleden van een speler
-            boardmodel.changeVillagers(location, input);
+            boardmodel.decreaseVillagers(location, input);
             plaatsenStamleden(location, input);
         }
     }
@@ -77,20 +81,38 @@ public class BoardController {
 
     // Hier is het rollen voor resources.
     public void resolveResource(int index) {
+        gegooideWorp[0] = index;
         int stamleden = playercontroller.getPositie(boardmodel.getPlayer(), index);
         if (stamleden != 0) {
             Dobbelsteen roll = new Dobbelsteen(stamleden);
             roll.worp();
             roll.berekenTotaal();
-            int resources = roll.getTotaal() / boardmodel.getResource(index).getWaarde();
-            if (resources > boardmodel.getResource(index).getHoeveelheid()) {
-                resources = boardmodel.getResource(index).getHoeveelheid();
+            gegooideWorp[1] = roll.getTotaal();
+            gegooideWorp[2] = stamleden;
+            if (playercontroller.getTools(boardmodel.getPlayer()).size() != 0){
+                ViewManager.loadPopupWindow(new TableauView(boardmodel.getPlayer(), this).setScene());
+            } else {
+                toolsGebruiken(0);
             }
-            boardmodel.reduceResources(index, resources);
-            playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
-            boardmodel.getPlayer().addResources(index, resources);
-            boardmodel.getLocaties().get(index).reduceVillager(stamleden);
+            
+            
         }
+    }
+
+    public void toolsGebruiken(int waarde) {
+        System.out.println(waarde);
+        int index = gegooideWorp[0];
+        int roltotaal = gegooideWorp[1] + waarde;
+        System.out.println(roltotaal);
+        int stamleden = gegooideWorp[2];
+        int resources = roltotaal / boardmodel.getResource(index).getWaarde();
+        if (resources > boardmodel.getResource(index).getHoeveelheid()) {
+            resources = boardmodel.getResource(index).getHoeveelheid();
+        }
+        boardmodel.reduceResources(index, resources);
+        playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
+        boardmodel.getPlayer().addResources(index, resources);
+        boardmodel.getLocaties().get(index).reduceVillager(stamleden);
     }
 
     public void gainTools(int index) {
@@ -181,16 +203,6 @@ public class BoardController {
                     }
                 }
                 playercontroller.setVillagers(player, playercontroller.getMaxVillagers(player));
-            }
-        }
-    }
-
-    public void toolGebruiken() {
-        // TODO tools stuff
-        ArrayList<Tool> tools = playercontroller.getTools(boardmodel.getPlayer());
-        for (Tool tool : tools) {
-            if (tool.getStatus()) {
-                // TODO Show tool in the pop up
             }
         }
     }
@@ -315,20 +327,12 @@ public class BoardController {
         }
     }
 
-    public BoardModel getBoardmodel() {
-        return boardmodel;
-    }
-
-    public void setBoardmodel(BoardModel boardmodel) {
-        this.boardmodel = boardmodel;
-    }
-
     // TODO tijdelijk
     public ArrayList<PlayerModel> getPlayers() {
         return this.players;
     }
 
-    public void setPlayers(ArrayList<PlayerModel> players) {
-        this.players = players;
+    public PlayerModel getPlayer() {
+        return boardmodel.getPlayer();
     }
 }

@@ -1,13 +1,20 @@
-
 package hsleiden.stenentijdperk.stenentijdperk.Models;
 
 import java.util.*;
 import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObserver;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
+
+import hsleiden.stenentijdperk.stenentijdperk.observers.PlayerObservable;
+import hsleiden.stenentijdperk.stenentijdperk.observers.PlayerObserver;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 
-public class PlayerModel {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class PlayerModel implements PlayerObservable {
     private int lobby;
     private String naam;
     private int maxVillagers;
@@ -15,12 +22,13 @@ public class PlayerModel {
     private ArrayList<Kaart> kaarten = new ArrayList<>();;
     private ArrayList<StaticHut> hutjes = new ArrayList<>();;
     private ArrayList<Tool> tools = new ArrayList<>();
-    private TableauModel tableauModal;
     private List<Integer> resources;
     private List<Integer> posities = new ArrayList<>();
     private int graan;
     private List<Integer> multiplier = new ArrayList<>();
     private int punten;
+
+    ArrayList<PlayerObserver> observers = new ArrayList<PlayerObserver>();
 
     public PlayerModel() {
     }
@@ -37,6 +45,8 @@ public class PlayerModel {
         for (int i = 0; i < 16; i++) {
             posities.add(0);
         }
+
+        notifyAllObservers();
     }
 
     public int getPunten() {
@@ -82,10 +92,6 @@ public class PlayerModel {
     public void addTool() {
         Tool tool = new Tool();
         tools.add(tool);
-    }
-
-    public void registerObserver(TableauObserver to) {
-        this.tableauModal.register(to);
     }
 
     public List<Integer> getPosities() {
@@ -146,6 +152,19 @@ public class PlayerModel {
         return this.villagers;
     }
 
+    @Override
+    public void registerObserver(PlayerObserver po) {
+        observers.add(po);
+        notifyAllObservers();
+    }
+
+    @Override
+    public void notifyAllObservers() {
+        for(PlayerObserver po : observers) {
+            po.update(this);
+        }
+    }
+
     public ArrayList<Tool> getTools() {
         return tools;
     }
@@ -182,4 +201,3 @@ public class PlayerModel {
         this.graan = graan;
     }
 }
-

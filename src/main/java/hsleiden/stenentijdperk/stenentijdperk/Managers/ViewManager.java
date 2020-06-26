@@ -9,6 +9,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 public class ViewManager {
     // The current stage and view.
     private static Stage currentStage;
@@ -23,6 +25,10 @@ public class ViewManager {
     //Resource popup
     private static Stage resourcePopupStage;
     private static GridPane resourcePopupView;
+
+    // Picker view
+    private static Stage pickerStage;
+    private static boolean isRunning = false;
 
     public static void setFirebase(FirebaseController f) {
         firebaseController = f;
@@ -44,12 +50,23 @@ public class ViewManager {
 
     public static void loadBoardView() {
         closeView();
-        currentView = new BoardView().setScene();
-        showView(1200, 800, "Board");
+        isRunning = true;
+        BoardView boardView = new BoardView();
+        currentView = boardView.setScene();
+        showView(1200, 800, "Board", boardView.getPlayers());
     }
 
     public static void loadSpelregelView() {
         ViewManager.loadPopupWindow(new SpelregelView().setScene());
+    }
+
+    public static void loadPickerView(ArrayList<PlayerModel> playerModels) {
+        closePickerView();
+        PickerView pickerView = new PickerView(playerModels);
+        pickerStage = pickerView.setScene();
+        if(isRunning) {
+            showPickerView();
+        }
     }
 
     // Popup window functions
@@ -98,14 +115,38 @@ public class ViewManager {
     // This function shows a view.
     public static void showView(int width, int height, String title) {
         createStageFromView(width, height, title);
+        currentStage.setOnCloseRequest(event -> {
+            closePickerView();
+        });
         if (currentStage != null)
             currentStage.show();
     }
 
     // And this function closes a view.
+    public static void showView(int width, int height, String title, ArrayList<PlayerModel> playerModels) {
+        createStageFromView(width, height, title);
+        currentStage.setOnCloseRequest(event -> {
+            isRunning = false;
+            closePickerView();
+        });
+        if (currentStage != null)
+            currentStage.show();
+        ViewManager.loadPickerView(playerModels);
+    }
     public static void closeView() {
         if (currentStage != null)
             currentStage.close();
+    }
+
+    // Picker view
+    public static void closePickerView() {
+        if(pickerStage != null)
+            pickerStage.close();
+    }
+
+    public static void showPickerView() {
+        if(pickerStage != null)
+            pickerStage.show();
     }
 
     // This function creates a stage from a gridpane.

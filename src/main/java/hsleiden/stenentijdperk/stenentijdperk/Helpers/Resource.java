@@ -5,7 +5,7 @@ public class Resource {
 	private final int waarde;
 	private final int maxCap;
 	private int hoeveelheid;
-	private int villagers = 0;
+	private int villagers;
 	 
 	
 	public Resource(String naam, int hoeveelheid, int waarde, int maxCap) {
@@ -13,6 +13,7 @@ public class Resource {
 		this.hoeveelheid = hoeveelheid;
 		this.waarde = waarde;
 		this.maxCap = maxCap;
+		this.villagers = 0;
 	}
 
 	public void reduceHoeveelheid(int amount) {
@@ -43,7 +44,7 @@ public class Resource {
 		return this.villagers;
 	}
 
-	public void setVillager(int villagers) {
+	public void setVillagers(int villagers) {
 		this.villagers = villagers;
 	}
 
