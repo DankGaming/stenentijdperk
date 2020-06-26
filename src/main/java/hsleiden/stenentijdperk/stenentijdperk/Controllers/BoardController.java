@@ -98,10 +98,10 @@ public class BoardController {
         }
     }
 
-    public void test() {
-        System.out.println("ja");
+    public void test(int waarde) {
+        System.out.println(waarde);
         int index = zooi[0];
-        int roltotaal = zooi[1];
+        int roltotaal = zooi[1] + waarde;
         System.out.println(roltotaal);
         int stamleden = zooi[2];
         int resources = roltotaal / boardmodel.getResource(index).getWaarde();

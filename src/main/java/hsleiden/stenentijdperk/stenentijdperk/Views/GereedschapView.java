@@ -10,10 +10,14 @@ public class GereedschapView {
     private ImageView imageView;
     private String resource;
     private boolean canclick;
+    private int toolnummer;
+    private TableauView tableauView;
 
-    public GereedschapView(int toolnummer, boolean status) {
+    public GereedschapView(int toolnummer, boolean status, TableauView tableauView) {
         this.resource = "/Tools/Tool" + toolnummer + ".png";
         this.canclick = status;
+        this.tableauView = tableauView;
+        this.toolnummer = toolnummer;
         setupPane();
     }
 
@@ -51,7 +55,7 @@ public class GereedschapView {
             if(canclick){
                 imageView.setRotate(90);
                 this.canclick = false;
-                
+                tableauView.waarde += toolnummer;
             }
         });
     }

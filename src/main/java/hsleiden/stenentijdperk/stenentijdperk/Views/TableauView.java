@@ -45,6 +45,8 @@ public class TableauView implements PlayerObserver {
     private Label multiplier3;
     private Label multiplier4;
 
+    public int waarde;
+
     // Standard constructor
     public TableauView(PlayerModel playermodel) {
         standardConstructorFunction(playermodel);
@@ -66,7 +68,7 @@ public class TableauView implements PlayerObserver {
     private void showConfirmButton(BoardController boardController) {
         Button button = new Button("Gebruiken");
         button.setOnMouseClicked(event -> {
-            boardController.test();
+            boardController.test(waarde);
             ViewManager.closePopupWindow();
         });
         String style = "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;";
@@ -196,30 +198,28 @@ public class TableauView implements PlayerObserver {
         switch (positie) {
             case 1:
                 System.out.println("Hi");
-                this.gereedschapview = new GereedschapView(waarde, status);
+                this.gereedschapview = new GereedschapView(waarde, status, this);
                 imageView = this.gereedschapview.setScene();
                 break;
             case 2:
-                this.gereedschapview1 = new GereedschapView(waarde, status);
+                this.gereedschapview1 = new GereedschapView(waarde, status, this);
                 imageView = this.gereedschapview1.setScene();
                 break;
             case 3:
-                this.gereedschapview2 = new GereedschapView(waarde, status);
+                this.gereedschapview2 = new GereedschapView(waarde, status, this);
                 imageView = this.gereedschapview2.setScene();
                 break;
         }
         System.out.println("bYE");
         addImageViewToView(positie, imageView);     
     }
-    //TODO this no work
+
     @Override
     public void update(PlayerObservable po) {
         ArrayList<Tool> tools = po.getTools();
-        //for (int i = 0; i < tools.size(); i++) {
-         //   createGereedschap(i + 1, gereedschap[i]);
         int i = 1;
         for (Tool tool: tools) {
-            createGereedschap(i, tool.getLevel(), tool.getStatus());;
+            createGereedschap(i, tool.getLevel(), tool.getStatus());
             i++;
         }
     }
