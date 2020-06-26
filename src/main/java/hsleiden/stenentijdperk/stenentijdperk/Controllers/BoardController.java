@@ -90,7 +90,7 @@ public class BoardController {
             roll.berekenTotaal();
             gegooideWorp[1] = roll.getTotaal();
             gegooideWorp[2] = stamleden;
-            if (playercontroller.getTools(boardmodel.getPlayer()).size() != 0) {
+            if (playercontroller.getTools(boardmodel.getPlayer()).size() != 0 && checkTools()) {
                 ViewManager.loadPopupWindow(new TableauView(boardmodel.getPlayer(), this).setScene());
             } else {
                 toolsGebruiken(0);
@@ -112,7 +112,17 @@ public class BoardController {
         boardmodel.getLocaties().get(index).reduceVillager(stamleden);
     }
 
-    public void gainTools(int index) {
+    private boolean checkTools() {
+        boolean toolsLeft = false;
+        for (Tool tool : playercontroller.getTools(boardmodel.getPlayer())){
+            if (tool.getStatus()){
+                toolsLeft = true;
+            }
+        }
+        return toolsLeft;
+    }
+
+    private void gainTools(int index) {
         if ((playercontroller.getPositie(boardmodel.getPlayer(), index) != 0)) {
             ArrayList<Tool> tools = playercontroller.getTools(boardmodel.getPlayer());
             if (tools.size() < 3) {

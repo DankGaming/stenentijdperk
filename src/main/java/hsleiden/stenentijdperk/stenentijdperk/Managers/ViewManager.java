@@ -132,6 +132,7 @@ public class ViewManager {
         });
         if (currentStage != null)
             currentStage.show();
+            currentStage.setResizable(false);
         ViewManager.loadPickerView(playerModels);
     }
 
