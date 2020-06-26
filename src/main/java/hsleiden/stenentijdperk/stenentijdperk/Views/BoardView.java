@@ -3,6 +3,7 @@ package hsleiden.stenentijdperk.stenentijdperk.Views;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
+import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
@@ -427,7 +428,7 @@ public class BoardView implements BoardObserver {
 					resetTextLabel();
 					List<Kaart> array = controller.onKaartButtonClick(0); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
-
+					ViewManager.loadPopupWindow(new ResourceView().setScene());
 					beschavingsKaart1();
 
 					setSpelersVisable(true);
@@ -437,7 +438,7 @@ public class BoardView implements BoardObserver {
 					resetTextLabel();
 					List<Kaart> array = controller.onKaartButtonClick(1); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
-
+					ViewManager.loadPopupWindow(new ResourceView().setScene());
 					beschavingsKaart2();
 
 					setSpelersVisable(true);
@@ -447,7 +448,7 @@ public class BoardView implements BoardObserver {
 					resetTextLabel();
 					List<Kaart> array = controller.onKaartButtonClick(2); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
-
+					ViewManager.loadPopupWindow(new ResourceView().setScene());
 					beschavingsKaart3();
 
 					setSpelersVisable(true);
@@ -457,7 +458,7 @@ public class BoardView implements BoardObserver {
 					resetTextLabel();
 					List<Kaart> array = controller.onKaartButtonClick(3); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
-
+					ViewManager.loadPopupWindow(new ResourceView().setScene());
 					beschavingsKaart4();
 
 					setSpelersVisable(true);
