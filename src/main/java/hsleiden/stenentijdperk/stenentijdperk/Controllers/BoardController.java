@@ -323,20 +323,8 @@ public class BoardController {
         }
     }
 
-    public BoardModel getBoardmodel() {
-        return boardmodel;
-    }
-
-    public void setBoardmodel(BoardModel boardmodel) {
-        this.boardmodel = boardmodel;
-    }
-
     // TODO tijdelijk
     public ArrayList<PlayerModel> getPlayers() {
         return this.players;
-    }
-
-    public void setPlayers(ArrayList<PlayerModel> players) {
-        this.players = players;
     }
 }
