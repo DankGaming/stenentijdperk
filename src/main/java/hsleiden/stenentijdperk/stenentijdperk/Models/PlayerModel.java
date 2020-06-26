@@ -43,11 +43,6 @@ public class PlayerModel implements PlayerObservable {
             posities.add(0);
         }
 
-        // TODO ff weghalen
-        for(int i = 0; i < 3; i++) {
-            addTool();
-        }
-
         notifyAllObservers();
     }
 

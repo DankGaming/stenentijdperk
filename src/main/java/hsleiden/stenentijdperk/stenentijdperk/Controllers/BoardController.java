@@ -19,9 +19,8 @@ public class BoardController {
     // TODO naar boardmodel en dan firebase
     private ArrayList<PlayerModel> players = new ArrayList<PlayerModel>();
 
-
     // TEST
-    private int[] zooi;
+    private int[] gegooideWorp;
 
     public BoardController() {
         // TODO all references naar temp players moet naar firebase vragen.
@@ -36,7 +35,7 @@ public class BoardController {
         playercontroller = new PlayerController();
         boardmodel = new BoardModel();
         boardmodel.setPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
-        zooi = new int[3];
+        gegooideWorp = new int[3];
     }
 
     public void registerObserver(BoardObserver boardobserver) {
@@ -85,25 +84,25 @@ public class BoardController {
 
     // Hier is het rollen voor resources.
     public void resolveResource(int index) {
-        zooi[0] = index;
+        gegooideWorp[0] = index;
         int stamleden = playercontroller.getPositie(boardmodel.getPlayer(), index);
         ViewManager.loadPopupWindow(new TableauView(players.get(1), this).setScene());
         if (stamleden != 0) {
             Dobbelsteen roll = new Dobbelsteen(stamleden);
             roll.worp();
             roll.berekenTotaal();
-            zooi[1] = roll.getTotaal();
+            gegooideWorp[1] = roll.getTotaal();
             ViewManager.loadPopupWindow(new TableauView(boardmodel.getPlayer(), this).setScene());
-            zooi[2] = stamleden;
+            gegooideWorp[2] = stamleden;
         }
     }
 
     public void toolsGebruiken(int waarde) {
         System.out.println(waarde);
-        int index = zooi[0];
-        int roltotaal = zooi[1] + waarde;
+        int index = gegooideWorp[0];
+        int roltotaal = gegooideWorp[1] + waarde;
         System.out.println(roltotaal);
-        int stamleden = zooi[2];
+        int stamleden = gegooideWorp[2];
         int resources = roltotaal / boardmodel.getResource(index).getWaarde();
         if (resources > boardmodel.getResource(index).getHoeveelheid()) {
             resources = boardmodel.getResource(index).getHoeveelheid();

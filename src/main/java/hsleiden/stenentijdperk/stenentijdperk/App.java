@@ -14,7 +14,7 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
         FirebaseController.initializeFirebaseApp();
-        ViewManager.loadBoardView();
+        ViewManager.loadLoginView();
     }
 
     public static void main(String[] args) {
