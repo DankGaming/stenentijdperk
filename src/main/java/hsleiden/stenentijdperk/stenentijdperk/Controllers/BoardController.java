@@ -84,14 +84,20 @@ public class BoardController {
     public void resolveResource(int index) {
         gegooideWorp[0] = index;
         int stamleden = playercontroller.getPositie(boardmodel.getPlayer(), index);
-        ViewManager.loadPopupWindow(new TableauView(players.get(1), this).setScene());
         if (stamleden != 0) {
-            Dobbelsteen roll = new Dobbelsteen(stamleden);
+            Dobbelsteen roll = new 
+            Dobbelsteen(stamleden);
             roll.worp();
             roll.berekenTotaal();
             gegooideWorp[1] = roll.getTotaal();
-            ViewManager.loadPopupWindow(new TableauView(boardmodel.getPlayer(), this).setScene());
             gegooideWorp[2] = stamleden;
+            if (playercontroller.getTools(boardmodel.getPlayer()).size() != 0){
+                ViewManager.loadPopupWindow(new TableauView(boardmodel.getPlayer(), this).setScene());
+            } else {
+                toolsGebruiken(0);
+            }
+            
+            
         }
     }
 
@@ -326,5 +332,9 @@ public class BoardController {
     // TODO tijdelijk
     public ArrayList<PlayerModel> getPlayers() {
         return this.players;
+    }
+
+    public PlayerModel getPlayer() {
+        return boardmodel.getPlayer();
     }
 }

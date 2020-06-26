@@ -30,8 +30,6 @@ public class BoardView implements BoardObserver {
 	private ArrayList<Button> hutKaartButtons = new ArrayList<Button>();
 	private Button toolStapel1;
 	private Button toolStapel2;
-	private BoardModel boardModel;
-	private BoardController boardController;
 	private GridPane view = new GridPane();
 	private String spelbordImage = "src/main/Resources/Backgrounds/spelbord2.jpg";
 	private ImageView imageView;
@@ -50,8 +48,9 @@ public class BoardView implements BoardObserver {
 	private TextField amountField;
 	private Button amountButton;
 	private Label amountLabel;
+	private Label beurtLabel;
 	private int location;
-	private PlayerModel playerModel;
+
 
 	public BoardView() {
 		this.controller = new BoardController();
@@ -307,9 +306,10 @@ public class BoardView implements BoardObserver {
 
 		String style = "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;";
 
+		String textStyle = "-fx-font-size: 25px; -fx-text-fill: #f6e5b6; -fx-background-color: #dfa231; ";
 		// invoeren aantal stamleden
 		amountLabel = new Label("Hoeveel: ");
-		amountLabel.setStyle("-fx-font-size: 25px; -fx-text-fill: #f6e5b6; -fx-background-color: #dfa231; ");
+		amountLabel.setStyle(textStyle);
 		amountLabel.setVisible(false);
 		GridPane.setConstraints(amountLabel, 18, 18, 5, 3);
 
@@ -323,10 +323,10 @@ public class BoardView implements BoardObserver {
 		amountButton.setVisible(false);
 		GridPane.setConstraints(amountButton, 30, 18, 5, 3);
 
-		/*
-		 * locaties jacht: onbeperkt hut: 2 hutkaart: 1 beschavingskaart: 1 gereedschap:
-		 * 1 akkerbouw: 1 steen, leem, goud, hout: 7
-		 */
+		// laten zijn welke speler aan de beurt is.
+		beurtLabel = new Label(controller.getPlayer().getNaam() + " is aan de beurt.");
+		beurtLabel.setStyle(textStyle);
+		GridPane.setConstraints(beurtLabel, 2, 3, 50, 3);
 
 		this.createKaartButtons();
 		this.createHutStapels();
@@ -377,7 +377,7 @@ public class BoardView implements BoardObserver {
 
 		Button endTurn = new Button("Beurt eindigen");
 		endTurn.setStyle(style);
-		GridPane.setConstraints(endTurn, 22, 5, 15, 1);
+		GridPane.setConstraints(endTurn, 22, 7, 15, 1);
 		// TODO maak dit nog kleiner
 		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
 			@Override
@@ -460,6 +460,7 @@ public class BoardView implements BoardObserver {
 					} else {
 						controller.EndTurnPhase2();
 					}
+					beurtLabel.setText(controller.getPlayer().getNaam() + " is aan de beurt.");
 				}
 			}
 		};
@@ -509,7 +510,7 @@ public class BoardView implements BoardObserver {
 				beschavingsKaartButtons.get(1), beschavingsKaartButtons.get(2), beschavingsKaartButtons.get(3),
 				hutButton, toolStapel1, toolStapel2, akkerbouwButton, jachtButton, bosButton, leemGroeveButton,
 				steenGroeveButton, rivierButton, endTurn, speler1Image, speler2Image, speler3Image, speler4Image,
-				speler1Label, speler2Label, speler3Label, speler4Label, amountField, amountLabel, amountButton);
+				speler1Label, speler2Label, speler3Label, speler4Label, amountField, amountLabel, amountButton, beurtLabel);
 	}
 
 	private void labelsSetter(int location){
