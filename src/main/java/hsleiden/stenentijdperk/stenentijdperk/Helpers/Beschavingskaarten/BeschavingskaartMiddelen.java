@@ -1,7 +1,6 @@
 package hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten;
 
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
-import java.util.ArrayList;
 
 public class BeschavingskaartMiddelen extends Kaart{
     private int waarde;

@@ -15,7 +15,6 @@ public class Tool implements Status {
         this.level += 1;
     }
 
-
     @Override
     public boolean getStatus() {
         return this.status;

@@ -10,7 +10,6 @@ import hsleiden.stenentijdperk.stenentijdperk.Helpers.Resource;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -180,7 +179,6 @@ public class BoardModel implements BoardObservable {
         this.locaties = res;
     }
 
-
     public void maakKaarten() {
         this.kaarten.add(0, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Food_Gpoint.png", 3, 0));
         this.kaarten.add(1, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Food_Hpoint.png", 2, 0));
@@ -195,7 +193,6 @@ public class BoardModel implements BoardObservable {
         this.kaarten.add(9, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Steen_Gpoint.png", 1, 3));
         this.kaarten.add(10, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Steen_Wagen.png", 2, 3));
         this.kaarten.add(11, new BeschavingskaartMiddelen(3, "src/main/Resources/Kaarten/Goud_Bpoint.png", 1, 4));
-
 
         this.kaarten.add(12, new BeschavingskaartWorpMiddelen(4, "src/main/Resources/Kaarten/xGoud_Idol.png", 6, 4));
         this.kaarten.add(13, new BeschavingskaartWorpMiddelen(4, "src/main/Resources/Kaarten/xSteen_Bpoint.png", 5, 3));
@@ -254,6 +251,5 @@ public class BoardModel implements BoardObservable {
 
     public PlayerModel getPlayer() {
         return this.player;
-
     }
 }

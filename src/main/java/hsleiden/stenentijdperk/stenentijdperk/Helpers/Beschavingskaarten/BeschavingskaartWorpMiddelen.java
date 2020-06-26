@@ -3,8 +3,6 @@ package hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Dobbelsteen;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 
-import java.util.ArrayList;
-
 public class BeschavingskaartWorpMiddelen extends Kaart{
     private int waarde;
     private int middel;

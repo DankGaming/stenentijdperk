@@ -17,12 +17,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.DoubleToIntFunction;
 
 public class BoardView implements BoardObserver {
 	private BoardController controller;
@@ -332,8 +330,8 @@ public class BoardView implements BoardObserver {
 		this.createHutStapels();
 		this.createToolButton(0);
 		this.createToolButton(1);
-		// Buttons
 
+		// Buttons
 		GridPane.setConstraints(this.beschavingsKaartButtons.get(0), 42, 40, 1, 1);
 		GridPane.setConstraints(this.beschavingsKaartButtons.get(1), 37, 40, 1, 1);
 		GridPane.setConstraints(this.beschavingsKaartButtons.get(2), 31, 40, 1, 1);
@@ -378,7 +376,7 @@ public class BoardView implements BoardObserver {
 		Button endTurn = new Button("Beurt eindigen");
 		endTurn.setStyle(style);
 		GridPane.setConstraints(endTurn, 22, 5, 15, 1);
-		// TODO maak dit nog kleiner
+
 		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
@@ -560,9 +558,7 @@ public class BoardView implements BoardObserver {
 							setInputVisable(false);
 							checkStamleden(location);
 						}
-					} catch (Exception e) {
-						System.out.println("test2");
-					}
+					} catch (Exception ignored) {}
 				}
 			}
 		};
@@ -872,22 +868,18 @@ public class BoardView implements BoardObserver {
 			int stamledenGeplaats = controller.getPlayers().get(i).getPositie(location);
 			if (i == 0) {
 				speler1Label.setText("" + stamledenGeplaats);
-				System.out.println("test1");
 			}
 
 			else if (i == 1) {
 				speler2Label.setText("" + stamledenGeplaats);
-				System.out.println("test2");
 			}
 
 			else if (i == 2) {
 				speler3Label.setText("" + stamledenGeplaats);
-				System.out.println("test3");
 			}
 
 			else if (i == 3) {
 				speler4Label.setText("" + stamledenGeplaats);
-				System.out.println("test4");
 			}
 		}
 	}

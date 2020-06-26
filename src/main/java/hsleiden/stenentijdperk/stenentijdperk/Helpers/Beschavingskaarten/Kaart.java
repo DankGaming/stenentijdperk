@@ -41,13 +41,11 @@ public class Kaart implements Status {
 	@Override
 	public boolean getStatus() {
 		return this.status;
-
 	}
 
 	@Override
 	public void setStatus(boolean status) {
 		this.status = status;
-
 	}
 
 }

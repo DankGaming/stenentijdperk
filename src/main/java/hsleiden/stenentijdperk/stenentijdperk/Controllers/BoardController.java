@@ -7,7 +7,6 @@ import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,7 +108,6 @@ public class BoardController {
                 }
             }
         }
-
     }
 
     public void endTurn() {
