@@ -26,14 +26,11 @@ public class DobbelsteenView extends Pane {
 
         try {
             image = new Image(String.valueOf(App.class.getResource(this.resource).toURI()));
-        }catch (URISyntaxException e) {
+            this.imageView = new ImageView(image);
+            this.imageView.setFitHeight(image.getHeight() * 0.75);
+            this.imageView.setFitWidth(image.getWidth() * 0.75);
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-
-        assert image != null;
-        this.imageView = new ImageView(image);
-        this.imageView.setFitHeight(image.getHeight() * 0.75);
-        this.imageView.setFitWidth(image.getWidth() * 0.75);
     }
-    
 }

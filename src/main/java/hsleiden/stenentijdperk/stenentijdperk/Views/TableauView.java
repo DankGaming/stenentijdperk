@@ -2,11 +2,11 @@ package hsleiden.stenentijdperk.stenentijdperk.Views;
 
 import hsleiden.stenentijdperk.stenentijdperk.App;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.PlayerObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.PlayerObserver;
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -19,16 +19,16 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 public class TableauView implements PlayerObserver {
+    public int waarde;
     Hutview hutview1 = new Hutview(1);
     Hutview hutview2 = new Hutview(2);
     Hutview hutview3 = new Hutview(3);
     Hutview hutview4 = new Hutview(2);
     Hutview hutview5 = new Hutview(4);
-    private ImageView[] huttegels;
     GereedschapView gereedschapview = null;
     GereedschapView gereedschapview1 = null;
     GereedschapView gereedschapview2 = null;
-
+    private ImageView[] huttegels;
     private ImageView tableau;
     private String resource = "/Backgrounds/tableau.png";
     private GridPane view;
@@ -44,8 +44,6 @@ public class TableauView implements PlayerObserver {
     private Label multiplier2;
     private Label multiplier3;
     private Label multiplier4;
-
-    public int waarde;
 
     // Standard constructor
     public TableauView(PlayerModel playermodel) {
@@ -102,15 +100,13 @@ public class TableauView implements PlayerObserver {
 
         try {
             image = new Image(String.valueOf(App.class.getResource(this.resource).toURI()));
-        }catch(URISyntaxException e) {
+            this.tableau = new ImageView(image);
+            this.tableau.setFitWidth(680);
+            this.tableau.setFitHeight(460);
+            GridPane.setConstraints(tableau, 0, 0, 50, 50);
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-
-        assert image != null;
-        this.tableau = new ImageView(image);
-        this.tableau.setFitWidth(680);
-        this.tableau.setFitHeight(460);
-        GridPane.setConstraints(tableau, 0, 0, 50, 50);
 
         stamleden = new Label("Aantal stamleden: 0");
         stamleden.setStyle("-fx-font-size: 30px;");
@@ -179,12 +175,12 @@ public class TableauView implements PlayerObserver {
     }
 
     public void setPoint(int height) {
-        int[] rows = new int[] {6, 9, 12, 14, 17, 19, 22, 25};
-        GridPane.setConstraints(this.punt, 37, rows[height-1], 5, 5);
+        int[] rows = new int[]{6, 9, 12, 14, 17, 19, 22, 25};
+        GridPane.setConstraints(this.punt, 37, rows[height - 1], 5, 5);
     }
 
     public void addImageViewToView(int positie, ImageView imageView) {
-        int[][] allConstraints = new int[][] { { 2, 1 }, { 2, 11 }, { 2, 21 } };
+        int[][] allConstraints = new int[][]{{2, 1}, {2, 11}, {2, 21}};
 
         int[] constraints = allConstraints[positie - 1];
 
@@ -210,14 +206,14 @@ public class TableauView implements PlayerObserver {
                 break;
         }
         System.out.println("bYE");
-        addImageViewToView(positie, imageView);     
+        addImageViewToView(positie, imageView);
     }
 
     @Override
     public void update(PlayerObservable po) {
         ArrayList<Tool> tools = po.getTools();
         int i = 1;
-        for (Tool tool: tools) {
+        for (Tool tool : tools) {
             createGereedschap(i, tool);
             i++;
         }
