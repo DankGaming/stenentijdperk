@@ -65,7 +65,6 @@ public class ViewManager {
     }
 
     // Popup window functions
-
     public static void loadPopupWindow(GridPane tableauView) {
         closePopupWindow();
         currentPopupView = tableauView;
