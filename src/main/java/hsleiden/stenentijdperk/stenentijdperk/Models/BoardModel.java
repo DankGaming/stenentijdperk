@@ -121,16 +121,16 @@ public class BoardModel implements BoardObservable {
         return this.kaarten.get(index);
     }
 
-    public StaticHut getHut(int stapel, int index) {
+    public StaticHut getHut(int stapel) {
         switch (stapel) {
             case 0:
-                return this.hutStapel1.get(index);
+                return this.hutStapel1.get(0);
             case 1:
-                return this.hutStapel2.get(index);
+                return this.hutStapel2.get(0);
             case 2:
-                return this.hutStapel3.get(index);
+                return this.hutStapel3.get(0);
             case 3:
-                return this.hutStapel4.get(index);
+                return this.hutStapel4.get(0);
             default:
                 return null;
         }

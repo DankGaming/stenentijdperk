@@ -44,8 +44,8 @@ public class BoardController {
         return this.boardmodel.getKaart(index);
     }
 
-    public StaticHut getHut(int stapel, int index) {
-        return this.boardmodel.getHut(stapel, index);
+    public StaticHut getHut(int stapel) {
+        return this.boardmodel.getHut(stapel);
     }
 
     public void onResourceButtonClick(int location, int input) {
@@ -90,13 +90,12 @@ public class BoardController {
             roll.berekenTotaal();
             gegooideWorp[1] = roll.getTotaal();
             gegooideWorp[2] = stamleden;
-            if (playercontroller.getTools(boardmodel.getPlayer()).size() != 0){
+            if (playercontroller.getTools(boardmodel.getPlayer()).size() != 0) {
                 ViewManager.loadPopupWindow(new TableauView(boardmodel.getPlayer(), this).setScene());
             } else {
                 toolsGebruiken(0);
             }
-            
-            
+
         }
     }
 
@@ -250,10 +249,16 @@ public class BoardController {
                 gainTools(index);
                 break;
             case 8:
+                hutActie(0);
+                break;
             case 9:
+                hutActie(1);
+                break;
             case 10:
+                hutActie(2);
+                break;
             case 11:
-                // TODO hutje actie logica
+                hutActie(3);
                 break;
             case 12:
             case 13:
@@ -261,6 +266,16 @@ public class BoardController {
             case 15:
                 // TODO kaarten actie logica
                 break;
+        }
+    }
+
+    private void hutActie(int index) {
+        if (resourcesBetalen(this.boardmodel.getHut(index).getKosten())) {
+            this.boardmodel.getPlayer()
+                    .setPunten(this.boardmodel.getPlayer().getPunten() + this.boardmodel.getHut(index).getPunten());
+            this.boardmodel.getPlayer().addHutjes(this.boardmodel.getHut(index));
+        } else {
+            // hut teruggeven
         }
     }
 
@@ -303,6 +318,10 @@ public class BoardController {
         return i;
     }
 
+    private boolean checkResourceKost(int resource, List<Integer> kost) {
+        return boardmodel.getPlayer().getResource(resource + 1) >= kost.get(resource);
+    }
+
     private boolean locatieVrij(int index) {
         boolean status = true;
         for (PlayerModel player : players) {
@@ -320,11 +339,17 @@ public class BoardController {
         playercontroller.setPositie(boardmodel.getPlayer(), index, stamleden);
     }
 
-    private void betalenResources(List<Integer> kost) {
-        int i = 1;
-        for (Integer resources : kost) {
-            boardmodel.getPlayer().reduceResources(i, resources);
-            i++;
+    private boolean resourcesBetalen(List<Integer> kost) {
+        if (checkResourceKost(0, kost) && checkResourceKost(1, kost) && checkResourceKost(2, kost)
+                && checkResourceKost(3, kost)) {
+            int i = 1;
+            for (Integer amount : kost) {
+                boardmodel.getPlayer().reduceResources(i, amount);
+                i++;
+            }
+            return true;
+        } else {
+            return false;
         }
     }
 

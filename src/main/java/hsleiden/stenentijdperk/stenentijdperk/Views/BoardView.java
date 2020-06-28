@@ -51,7 +51,6 @@ public class BoardView implements BoardObserver {
 	private Label beurtLabel;
 	private int location;
 
-
 	public BoardView() {
 		this.controller = new BoardController();
 		setupPane();
@@ -115,7 +114,7 @@ public class BoardView implements BoardObserver {
 		for (int i = 0; i < 4; i++) { // maakt 4 beschavingskaart buttons
 			FileInputStream input = null;
 			try {
-				input = new FileInputStream(this.controller.getHut(i, 0).getPath());
+				input = new FileInputStream(this.controller.getHut(i).getPath());
 			} catch (FileNotFoundException fileNotFoundException) {
 				System.out.println(fileNotFoundException);
 			}
@@ -502,7 +501,8 @@ public class BoardView implements BoardObserver {
 				beschavingsKaartButtons.get(1), beschavingsKaartButtons.get(2), beschavingsKaartButtons.get(3),
 				hutButton, toolStapel1, toolStapel2, akkerbouwButton, jachtButton, bosButton, leemGroeveButton,
 				steenGroeveButton, rivierButton, endTurn, speler1Image, speler2Image, speler3Image, speler4Image,
-				speler1Label, speler2Label, speler3Label, speler4Label, amountField, amountLabel, amountButton, beurtLabel);
+				speler1Label, speler2Label, speler3Label, speler4Label, amountField, amountLabel, amountButton,
+				beurtLabel);
 	}
 
 	private void labelsSetter(int location) {
@@ -764,7 +764,6 @@ public class BoardView implements BoardObserver {
 		GridPane.setConstraints(speler4Label, 39, 23, 1, 1);
 	}
 
-
 	private void phaseCheck(int location) {
 		this.location = location;
 		setSpelersVisable(true);
@@ -797,12 +796,12 @@ public class BoardView implements BoardObserver {
 		}
 	}
 
-	private void makePlayerToken(ImageView speler){
+	private void makePlayerToken(ImageView speler) {
 		speler.setFitHeight(30);
 		speler.setFitWidth(30);
 		speler.setVisible(false);
 	}
-		
+
 	@Override
 	public void update(BoardObservable boardobserver) {
 

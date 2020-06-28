@@ -1,6 +1,5 @@
 package hsleiden.stenentijdperk.stenentijdperk.Models;
 
-
 import hsleiden.stenentijdperk.stenentijdperk.observers.PlayerObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.PlayerObserver;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
@@ -66,16 +65,16 @@ public class PlayerModel implements PlayerObservable {
         return resources.get(index);
     }
 
-    public void setResource(int index, int resources) {
-        this.resources.set(index, resources);
+    public void setResource(int index, int amount) {
+        this.resources.set(index, amount);
     }
 
-    public void addResources(int index, int resources) {
-        this.resources.set(index, this.resources.get(index) + resources);
+    public void addResources(int index, int amount) {
+        this.resources.set(index, this.resources.get(index) + amount);
     }
 
-    public void reduceResources(int index, int resources) {
-        this.resources.set(index, this.resources.get(index) - resources);
+    public void reduceResources(int index, int amount) {
+        this.resources.set(index, this.resources.get(index) - amount);
     }
 
     public void addMaxVillagers() {
@@ -113,6 +112,10 @@ public class PlayerModel implements PlayerObservable {
 
     public void setHutjes(ArrayList<StaticHut> hutjes) {
         this.hutjes = hutjes;
+    }
+
+    public void addHutjes(StaticHut hut) {
+        this.hutjes.add(hut);
     }
 
     public List<Integer> getMulitplier() {
@@ -155,7 +158,7 @@ public class PlayerModel implements PlayerObservable {
 
     @Override
     public void notifyAllObservers() {
-        for(PlayerObserver po : observers) {
+        for (PlayerObserver po : observers) {
             po.update(this);
         }
     }
