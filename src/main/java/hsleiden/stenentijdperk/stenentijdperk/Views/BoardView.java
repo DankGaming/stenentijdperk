@@ -549,7 +549,6 @@ public class BoardView implements BoardObserver {
 			
 			}
 			i += 2;
-			
 		}		
 	}
 
