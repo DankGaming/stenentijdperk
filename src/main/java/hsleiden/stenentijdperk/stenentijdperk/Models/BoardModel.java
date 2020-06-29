@@ -100,22 +100,20 @@ public class BoardModel implements BoardObservable {
         return this.kaarten;
     }
 
-    public List<StaticHut> removeHut(int stapel) {
+    public void removeHut(int stapel) {
         switch (stapel) {
             case 0:
                 this.hutStapel1.remove(0);
-                return this.hutStapel1;
+                notifyAllObservers();
             case 1:
                 this.hutStapel2.remove(0);
-                return this.hutStapel2;
+                notifyAllObservers();
             case 2:
                 this.hutStapel3.remove(0);
-                return this.hutStapel3;
+                notifyAllObservers();
             case 3:
                 this.hutStapel4.remove(0);
-                return this.hutStapel4;
-            default:
-                return null;
+                notifyAllObservers();
         }
     }
 
@@ -133,6 +131,21 @@ public class BoardModel implements BoardObservable {
                 return this.hutStapel3.get(0);
             case 3:
                 return this.hutStapel4.get(0);
+            default:
+                return null;
+        }
+    }
+
+    public List<StaticHut> getHutStapel(int stapel) {
+        switch (stapel) {
+            case 0:
+                return this.hutStapel1;
+            case 1:
+                return this.hutStapel2;
+            case 2:
+                return this.hutStapel3;
+            case 3:
+                return this.hutStapel4;
             default:
                 return null;
         }

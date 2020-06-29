@@ -48,6 +48,10 @@ public class BoardController {
         return this.boardmodel.getHut(stapel);
     }
 
+    public List<StaticHut> getHutStapel(int stapel) {
+        return this.boardmodel.getHutStapel(stapel);
+    }
+
     public void onResourceButtonClick(int index, int input) {
         if (!boardmodel.getPlaced() && boardmodel.requestCap(index) - boardmodel.requestVillagers(index) != 0
                 && playercontroller.getPositie(boardmodel.getPlayer(), index) == 0) {
@@ -66,10 +70,6 @@ public class BoardController {
     // zorgt dat je niet meer kan plaatsen.
     public List<Kaart> onKaartButtonClick(int index) {
         return (boardmodel.removeKaart(index)); // TODO dit moet naar acties verplaatst worden
-    }
-
-    public List<StaticHut> onHutButtonClick(int stapel) {
-        return (boardmodel.removeHut(stapel)); // TODO dit moet naar acties verplaatst worden
     }
 
     public void onButtonClick(int index) {
@@ -279,6 +279,7 @@ public class BoardController {
             this.boardmodel.getPlayer()
                     .setPunten(this.boardmodel.getPlayer().getPunten() + this.boardmodel.getHut(index).getPunten());
             this.boardmodel.getPlayer().addHutjes(this.boardmodel.getHut(index));
+            boardmodel.removeHut(index);
         } else {
             // hut teruggeven
         }

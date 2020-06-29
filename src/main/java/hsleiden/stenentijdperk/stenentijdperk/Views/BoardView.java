@@ -120,7 +120,7 @@ public class BoardView implements BoardObserver {
 	}
 
 	private void createHutStapels() {
-		for (int i = 0; i < 4; i++) { // maakt 4 beschavingskaart buttons
+		for (int i = 0; i < 4; i++) { // maakt 4 hutkaart buttons
 			FileInputStream input = null;
 			try {
 				input = new FileInputStream(this.controller.getHut(i).getPath());
@@ -137,24 +137,27 @@ public class BoardView implements BoardObserver {
 		}
 	}
 
-	private void renderNewHutten(List<StaticHut> array, int index) {
-		if (array.size() < 1) {
-			this.hutKaartButtons.get(index).setVisible(false);
-		} else {
-			this.hutKaartButtons.get(index).setVisible(true);
-			FileInputStream input = null;
-			try {
-				input = new FileInputStream(array.get(0).getPath());
-			} catch (FileNotFoundException fileNotFoundException) {
-				System.out.println(fileNotFoundException);
-			}
+	private void renderNewHutten() {
+		for (int i = 0; i < 4; i++) { // maakt 4 hutkaart buttons
+			List<StaticHut> hutStapel = controller.getHutStapel(i);
+			if (hutStapel.size() < 1) {
+				this.hutKaartButtons.get(i).setVisible(false);
+			} else {
+				this.hutKaartButtons.get(i).setVisible(true);
+				FileInputStream input = null;
+				try {
+					input = new FileInputStream(hutStapel.get(0).getPath());
+				} catch (FileNotFoundException fileNotFoundException) {
+					System.out.println(fileNotFoundException);
+				}
 
-			assert input != null;
-			Image image = new Image(input);
-			ImageView imageView = new ImageView(image);
-			imageView.setFitHeight(100);
-			imageView.setPreserveRatio(true);
-			this.hutKaartButtons.get(index).setGraphic(imageView);
+				assert input != null;
+				Image image = new Image(input);
+				ImageView imageView = new ImageView(image);
+				imageView.setFitHeight(100);
+				imageView.setPreserveRatio(true);
+				this.hutKaartButtons.get(i).setGraphic(imageView);
+			}
 		}
 
 	}
@@ -396,27 +399,15 @@ public class BoardView implements BoardObserver {
 			@Override
 			public void handle(ActionEvent actionEvent) {
 				if (actionEvent.getSource() == hutKaartButtons.get(0)) {
-					List<StaticHut> array = controller.onHutButtonClick(0); // TODO verplaatsen naar acties
-					renderNewHutten(array, 0);
-
 					hutKaart1();
 					labelsSetter(8);
 				} else if (actionEvent.getSource() == hutKaartButtons.get(1)) {
-					List<StaticHut> array = controller.onHutButtonClick(1); // TODO verplaatsen naar acties
-					renderNewHutten(array, 1);
-
 					hutKaart2();
 					labelsSetter(9);
 				} else if (actionEvent.getSource() == hutKaartButtons.get(2)) {
-					List<StaticHut> array = controller.onHutButtonClick(2); // TODO verplaatsen naar acties
-					renderNewHutten(array, 2);
-
 					hutKaart3();
 					labelsSetter(10);
 				} else if (actionEvent.getSource() == hutKaartButtons.get(3)) {
-					List<StaticHut> array = controller.onHutButtonClick(3); // TODO verplaatsen naar acties
-					renderNewHutten(array, 3);
-
 					hutKaart4();
 					labelsSetter(11);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(0)) {
@@ -844,7 +835,7 @@ public class BoardView implements BoardObserver {
 
 	@Override
 	public void update(BoardObservable boardobserver) {
-
+		renderNewHutten();
 	}
 
 	// Voor de ViewManager.
