@@ -52,6 +52,7 @@ public class PlayerModel implements PlayerObservable {
 
     public void setPunten(int punten) {
         this.punten = punten;
+        FirebaseController.updateDocument(String.valueOf(this.getLobby()), this.getPlayerNumber(), "punten", this.punten);
     }
 
     public int getToolLevel(int index) {
@@ -132,6 +133,7 @@ public class PlayerModel implements PlayerObservable {
 
     public void setMultiplier(List<Integer> multiplier) {
         this.multiplier = multiplier;
+        System.out.println("Mtp: " + String.valueOf(this.getLobby()) + " " + this.getPlayerNumber() + " " + this.multiplier);
         FirebaseController.updateDocumentList(String.valueOf(this.getLobby()), this.getPlayerNumber(), "multiplier", this.multiplier);
     }
 
@@ -222,5 +224,6 @@ public class PlayerModel implements PlayerObservable {
 
     public void setPlayerNumber(String playerNumber) {
         this.playerNumber = playerNumber;
+        FirebaseController.updateDocument(String.valueOf(this.getLobby()), this.playerNumber, "playerNumber", this.playerNumber);
     }
 }

@@ -96,15 +96,15 @@ public class LobbyView implements LobbyObserver {
             @Override
             public void handle(ActionEvent actionEvent) {
                 if (actionEvent.getSource() == lobbyButton1) {
-                    controller.setLobbyId(1);
+                    controller.setLobbyId(1, playerModel);
                 } else if (actionEvent.getSource() == lobbyButton2) {
-                    controller.setLobbyId(2);
+                    controller.setLobbyId(2, playerModel);
                 } else if (actionEvent.getSource() == lobbyButton3) {
-                    controller.setLobbyId(3);
+                    controller.setLobbyId(3, playerModel);
                 } else if (actionEvent.getSource() == lobbyButton4) {
-                    controller.setLobbyId(4);
+                    controller.setLobbyId(4, playerModel);
                 } else if (actionEvent.getSource() == lobbyButton5) {
-                    controller.setLobbyId(5);
+                    controller.setLobbyId(5, playerModel);
                 } else if (actionEvent.getSource() == joinLobbyButton) {
                     controller.joinLobby();
                 }

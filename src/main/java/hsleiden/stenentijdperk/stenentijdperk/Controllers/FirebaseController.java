@@ -62,7 +62,7 @@ public class FirebaseController {
         colRef.addSnapshotListener((queryDocumentSnapshots, e) -> {
             ArrayList<PlayerModel> updatedPlayers = new ArrayList<>();
             for(DocumentSnapshot s : Objects.requireNonNull(queryDocumentSnapshots)){
-                players.add(s.toObject(PlayerModel.class));
+                updatedPlayers.add(s.toObject(PlayerModel.class));
             }
             setPlayers(updatedPlayers);
         });
