@@ -22,6 +22,10 @@ public class ViewManager {
     private static GridPane currentPopupView;
     private static VBox currentPopupVbox;
 
+    //Resource popup
+    private static Stage resourcePopupStage;
+    private static GridPane resourcePopupView;
+
     // Picker view
     private static Stage pickerStage;
     private static boolean isRunning = false;
@@ -76,6 +80,28 @@ public class ViewManager {
         closePopupWindow();
         currentPopupVbox = vBox;
         openPopupVbox(800, 600, "Spelregels");
+    }
+    public static void loadPopupWindow(ResourceView resourceView){
+        closeResourceWindow();
+        resourcePopupView = resourceView.setScene();
+        openResourceWindow();
+    }
+    public static void closeResourceWindow(){
+        if(resourcePopupStage != null)
+            resourcePopupStage.close();
+    }
+
+    public static void openResourceWindow(){
+        createResourceFromView();
+        resourcePopupStage.show();
+    }
+
+    public static void createResourceFromView() {
+        resourcePopupStage = new Stage();
+        if(resourcePopupView != null)
+            resourcePopupStage.setScene(new Scene(resourcePopupView, 640, 640));
+        resourcePopupStage.setTitle("Resources");
+        resourcePopupStage.setResizable(false);
     }
 
     // This function creates a stage from a gridpane.

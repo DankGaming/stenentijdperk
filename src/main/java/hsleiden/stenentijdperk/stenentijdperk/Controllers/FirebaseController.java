@@ -8,7 +8,6 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,7 +31,6 @@ public class FirebaseController {
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(credentials)
                 .build();
-
 
         FirebaseApp.initializeApp(options);
         db = FirestoreClient.getFirestore();
@@ -294,5 +292,4 @@ public class FirebaseController {
             e.printStackTrace();
         }
     }
-
 }
