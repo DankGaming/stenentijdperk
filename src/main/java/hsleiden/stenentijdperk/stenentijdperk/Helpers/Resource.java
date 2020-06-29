@@ -1,62 +1,62 @@
 package hsleiden.stenentijdperk.stenentijdperk.Helpers;
 
 public class Resource {
-	private final String naam;
-	private final int waarde;
-	private final int maxCap;
-	private int hoeveelheid;
-	private int villagers;
-	 
-	
-	public Resource(String naam, int hoeveelheid, int waarde, int maxCap) {
-		this.naam = naam;
-		this.hoeveelheid = hoeveelheid;
-		this.waarde = waarde;
-		this.maxCap = maxCap;
-		this.villagers = 0;
-	}
+    private String naam;
+    private int waarde;
+    private int maxCap;
+    private int hoeveelheid;
+    private int villagers;
 
-	public void reduceHoeveelheid(int amount) {
-		this.hoeveelheid -= amount;
-	}
 
-	public void addHoeveelheid(int amount) {
-		this.hoeveelheid += amount;
-	}
+    public Resource(String naam, int hoeveelheid, int waarde, int maxCap) {
+        this.naam = naam;
+        this.hoeveelheid = hoeveelheid;
+        this.waarde = waarde;
+        this.maxCap = maxCap;
+        this.villagers = 0;
+    }
 
-	public void increaseVillager(int villagers){
-		this.villagers += villagers;
-	}
+    public void reduceHoeveelheid(int amount) {
+        this.hoeveelheid -= amount;
+    }
 
-	public void reduceVillager(int villagers){
-		this.villagers -= villagers;
-	}
+    public void addHoeveelheid(int amount) {
+        this.hoeveelheid += amount;
+    }
 
-	public int getWaarde() {
-		return this.waarde;
-	}
+    public void increaseVillager(int villagers) {
+        this.villagers += villagers;
+    }
 
-	public int getMaxCap() {
-		return this.maxCap;
-	}
+    public void reduceVillager(int villagers) {
+        this.villagers -= villagers;
+    }
 
-	public int getVillagers() {
-		return this.villagers;
-	}
+    public int getWaarde() {
+        return this.waarde;
+    }
 
-	public void setVillagers(int villagers) {
-		this.villagers = villagers;
-	}
+    public int getMaxCap() {
+        return this.maxCap;
+    }
 
-	public String getNaam() {
-		return this.naam;
-	}
+    public int getVillagers() {
+        return this.villagers;
+    }
 
-	public int getHoeveelheid() {
-		return this.hoeveelheid;
-	}
+    public void setVillagers(int villagers) {
+        this.villagers = villagers;
+    }
 
-	public void setHoeveelheid(int amount) {
-		this.hoeveelheid = amount;
-	}
+    public String getNaam() {
+        return this.naam;
+    }
+
+    public int getHoeveelheid() {
+        return this.hoeveelheid;
+    }
+
+    public void setHoeveelheid(int amount) {
+        this.hoeveelheid = amount;
+    }
 }

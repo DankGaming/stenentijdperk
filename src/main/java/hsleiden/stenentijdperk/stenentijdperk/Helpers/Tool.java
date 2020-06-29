@@ -11,7 +11,7 @@ public class Tool implements Status {
         this.status = true;
     }
 
-    public void increaseLevel(){
+    public void increaseLevel() {
         this.level += 1;
     }
 

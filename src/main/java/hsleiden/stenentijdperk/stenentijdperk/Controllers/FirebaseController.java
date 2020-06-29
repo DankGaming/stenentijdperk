@@ -8,6 +8,7 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class FirebaseController {
     static Firestore db;
     static BoardModel board;
     static ArrayList<PlayerModel> players;
+
     public static void initializeFirebaseApp() {
         GoogleCredentials credentials = null;
 
@@ -36,7 +38,7 @@ public class FirebaseController {
         db = FirestoreClient.getFirestore();
     }
 
-    public static void listenForLobbyUpdates(String lobby){
+    public static void listenForLobbyUpdates(String lobby) {
         DocumentReference docRef = db.collection("stenentijdperk").document(lobby);
         docRef.addSnapshotListener((snapshot, e) -> {
             if (e != null) {
@@ -52,29 +54,28 @@ public class FirebaseController {
         });
     }
 
-    public static void listenForPlayerUpdates(String lobby){
+    public static void listenForPlayerUpdates(String lobby) {
         CollectionReference colRef = db.collection("stenentijdperk")
                 .document(lobby)
                 .collection("players");
         colRef.addSnapshotListener((queryDocumentSnapshots, e) -> {
             ArrayList<PlayerModel> updatedPlayers = new ArrayList<>();
-            for(DocumentSnapshot s : Objects.requireNonNull(queryDocumentSnapshots)){
+            for (DocumentSnapshot s : Objects.requireNonNull(queryDocumentSnapshots)) {
                 players.add(s.toObject(PlayerModel.class));
             }
             setPlayers(updatedPlayers);
         });
     }
 
-    public static ArrayList<PlayerModel> getPlayers()
-    {
+    public static ArrayList<PlayerModel> getPlayers() {
         return players;
     }
 
-    static void setPlayers(ArrayList<PlayerModel> newPlayers){
+    static void setPlayers(ArrayList<PlayerModel> newPlayers) {
         players = newPlayers;
     }
 
-    public static BoardModel getBoardUpdates(String lobby){
+    public static BoardModel getBoardUpdates(String lobby) {
         final BoardModel[] newModel = new BoardModel[1];
         DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("boardData").document("board");
         docRef.addSnapshotListener((snapshot, e) -> {
@@ -93,7 +94,7 @@ public class FirebaseController {
         return newModel[0];
     }
 
-    public static void listenForBoardUpdates(String lobby){
+    public static void listenForBoardUpdates(String lobby) {
         DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("boardData").document("board");
         docRef.addSnapshotListener((snapshot, e) -> {
             if (e != null) {
@@ -111,17 +112,15 @@ public class FirebaseController {
         });
     }
 
-    public static void setBoard(BoardModel newBoard){
-        board = newBoard;
-    }
-
-    public static BoardModel getBoard(){
+    public static BoardModel getBoard() {
         return board;
     }
 
-    public static void setSpeler(String spelerNummer, PlayerModel player){
-        System.out.println(player.getNaam());
-        System.out.println(player.getVillagers());
+    public static void setBoard(BoardModel newBoard) {
+        board = newBoard;
+    }
+
+    public static void setSpeler(String spelerNummer, PlayerModel player) {
         ApiFuture<WriteResult> future = db.collection("stenentijdperk").document(spelerNummer).set(player);
         try {
             System.out.println("Update time : " + future.get().getUpdateTime());
@@ -174,7 +173,7 @@ public class FirebaseController {
         ApiFuture<WriteResult> future = docRef.update(field, value);
     }
 
-    public static ArrayList<PlayerModel> getPlayersInLobby(int lobby){
+    public static ArrayList<PlayerModel> getPlayersInLobby(int lobby) {
         ArrayList<PlayerModel> players = new ArrayList<>();
         ApiFuture<QuerySnapshot> docRef = db.collection("stenentijdperk")
                 .document(String.valueOf(lobby))
@@ -192,7 +191,7 @@ public class FirebaseController {
         return players;
     }
 
-    public static int getAmountofPlayersInLobby(int lobby){
+    public static int getAmountofPlayersInLobby(int lobby) {
         ApiFuture<QuerySnapshot> docRef = db.collection("stenentijdperk")
                 .document(String.valueOf(lobby))
                 .collection("players")
@@ -207,7 +206,7 @@ public class FirebaseController {
         }
     }
 
-    public static void addPlayers(int lobby, String speler, String naam){
+    public static void addPlayers(int lobby, String speler, String naam) {
         PlayerModel player = new PlayerModel(naam);
         player.setLobby(lobby);
         ApiFuture<WriteResult> future = db.collection("stenentijdperk").document(String.valueOf(lobby)).collection("players").document(speler).set(player);
@@ -218,7 +217,7 @@ public class FirebaseController {
         }
     }
 
-    public static void setGamestatus(int lobby, boolean gameStarted){
+    public static void setGamestatus(int lobby, boolean gameStarted) {
         try {
             db.collection("stenentijdperk").document(String.valueOf(lobby)).get();
         } catch (Exception e) {
@@ -228,7 +227,7 @@ public class FirebaseController {
         docRef.update("isActive", gameStarted);
     }
 
-    public static boolean getGamestatus(int lobby){
+    public static boolean getGamestatus(int lobby) {
         try {
             DocumentReference f = db.collection("stenentijdperk").document(String.valueOf(lobby));
             ApiFuture<DocumentSnapshot> docRef = f.get();
@@ -241,7 +240,7 @@ public class FirebaseController {
         return false;
     }
 
-    public static void setLobbyLeader(int lobby, PlayerModel leader){
+    public static void setLobbyLeader(int lobby, PlayerModel leader) {
         try {
             db.collection("stenentijdperk").document(String.valueOf(lobby)).get();
         } catch (Exception e) {
@@ -251,7 +250,7 @@ public class FirebaseController {
         docRef.update("leader", leader.getNaam());
     }
 
-    public static String getLobbyLeader(int lobby){
+    public static String getLobbyLeader(int lobby) {
         try {
             DocumentReference f = db.collection("stenentijdperk").document(String.valueOf(lobby));
             ApiFuture<DocumentSnapshot> docRef = f.get();
@@ -264,7 +263,7 @@ public class FirebaseController {
         return null;
     }
 
-    public static void resetLobby(int lobby){
+    public static void resetLobby(int lobby) {
         db.collection("stenentijdperk").document(String.valueOf(lobby)).collection("players").document("speler1").delete();
         db.collection("stenentijdperk").document(String.valueOf(lobby)).collection("players").document("speler2").delete();
         db.collection("stenentijdperk").document(String.valueOf(lobby)).collection("players").document("speler3").delete();
@@ -273,18 +272,17 @@ public class FirebaseController {
         setGamestatus(lobby, false);
     }
 
-    public static void switchLobby(int oldLobby, PlayerModel player){
+    public static void switchLobby(int oldLobby, PlayerModel player) {
         ArrayList<PlayerModel> players = getPlayersInLobby(oldLobby);
-        for(PlayerModel curPlayer : players) {
-            if(curPlayer.getNaam().equals(player.getNaam())) {
+        for (PlayerModel curPlayer : players) {
+            if (curPlayer.getNaam().equals(player.getNaam())) {
                 db.collection("stenentijdperk").document(String.valueOf(oldLobby)).collection("players").document("speler" + "2").delete();
             }
         }
     }
 
-    public static void addBoard(int lobby, BoardModel model){
+    public static void addBoard(int lobby, BoardModel model) {
         ApiFuture<WriteResult> future = db.collection("stenentijdperk").document("1").collection("boardData").document("board").set(model);
-        System.out.println("hello");
         try {
             System.out.println("Update time : " + future.get().getUpdateTime());
         } catch (Exception e) {
