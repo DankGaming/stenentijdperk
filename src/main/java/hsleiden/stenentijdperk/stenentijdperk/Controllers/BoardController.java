@@ -275,13 +275,17 @@ public class BoardController {
     }
 
     private void hutActie(int index) {
-        if (resourcesBetalen(this.boardmodel.getHut(index).getKosten())) {
-            this.boardmodel.getPlayer()
-                    .setPunten(this.boardmodel.getPlayer().getPunten() + this.boardmodel.getHut(index).getPunten());
-            this.boardmodel.getPlayer().addHutjes(this.boardmodel.getHut(index));
-            boardmodel.removeHut(index);
-        } else {
-            // hut teruggeven
+        if ((playercontroller.getPositie(boardmodel.getPlayer(), (index + 8)) != 0)) {
+            playercontroller.setPositie(boardmodel.getPlayer(), (index + 8), 0);
+            if (resourcesBetalen(this.boardmodel.getHut(index).getKosten())) {
+                this.boardmodel.getPlayer()
+                        .setPunten(this.boardmodel.getPlayer().getPunten() + this.boardmodel.getHut(index).getPunten());
+                this.boardmodel.getPlayer().addHutjes(this.boardmodel.getHut(index));
+                boardmodel.removeHut(index);
+            } else {
+                System.out.println("niet genoeg resources");
+                // TODO deze else verbeteren
+            }
         }
     }
 

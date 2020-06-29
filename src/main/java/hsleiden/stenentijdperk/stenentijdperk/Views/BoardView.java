@@ -61,6 +61,7 @@ public class BoardView implements BoardObserver {
 	public BoardView() {
 		this.controller = new BoardController();
 		this.imageViews = new ArrayList<>();
+		this.controller.registerObserver(this);
 
 		setupPane();
 	}
@@ -835,6 +836,7 @@ public class BoardView implements BoardObserver {
 
 	@Override
 	public void update(BoardObservable boardobserver) {
+		System.out.println("render new hutten");
 		renderNewHutten();
 	}
 

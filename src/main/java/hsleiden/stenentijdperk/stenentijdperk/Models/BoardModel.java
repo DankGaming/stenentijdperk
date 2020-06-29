@@ -105,15 +105,19 @@ public class BoardModel implements BoardObservable {
             case 0:
                 this.hutStapel1.remove(0);
                 notifyAllObservers();
+                break;
             case 1:
                 this.hutStapel2.remove(0);
                 notifyAllObservers();
+                break;
             case 2:
                 this.hutStapel3.remove(0);
                 notifyAllObservers();
+                break;
             case 3:
                 this.hutStapel4.remove(0);
                 notifyAllObservers();
+                break;
         }
     }
 
