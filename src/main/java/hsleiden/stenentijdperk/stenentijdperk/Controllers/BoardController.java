@@ -9,6 +9,7 @@ import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.Views.TableauView;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,18 +48,18 @@ public class BoardController {
         return this.boardmodel.getHut(stapel, index);
     }
 
-    public void onResourceButtonClick(int location, int input) {
-        if (!boardmodel.getPlaced() && boardmodel.requestCap(location) - boardmodel.requestVillagers(location) != 0
-                && playercontroller.getPositie(boardmodel.getPlayer(), location) == 0) {
+    public void onResourceButtonClick(int index, int input) {
+        if (!boardmodel.getPlaced() && boardmodel.requestCap(index) - boardmodel.requestVillagers(index) != 0
+                && playercontroller.getPositie(boardmodel.getPlayer(), index) == 0) {
             // Dit veranderd de hoeveelheid stamleden van een speler
-            boardmodel.decreaseVillagers(location, input);
-            plaatsenStamleden(location, input);
+            boardmodel.decreaseVillagers(index, input);
+            plaatsenStamleden(index, input);
         }
     }
 
-    public boolean stamledenCheck(int location, int input) {
+    public boolean stamledenCheck(int index, int input) {
         return (input > 0 && input <= playercontroller.getVillagers(boardmodel.getPlayer())
-                && input <= (boardmodel.requestCap(location) - boardmodel.requestVillagers(location)));
+                && input <= (boardmodel.requestCap(index) - boardmodel.requestVillagers(index)));
     }
 
     // methode om de onderste buttons af te handelen. maakt de kaart/hut bezet en
@@ -89,21 +90,17 @@ public class BoardController {
             roll.berekenTotaal();
             gegooideWorp[1] = roll.getTotaal();
             gegooideWorp[2] = stamleden;
-            if (playercontroller.getTools(boardmodel.getPlayer()).size() != 0){
+            if (playercontroller.getTools(boardmodel.getPlayer()).size() != 0 && checkTools()) {
                 ViewManager.loadPopupWindow(new TableauView(boardmodel.getPlayer(), this).setScene());
             } else {
                 toolsGebruiken(0);
             }
-            
-            
         }
     }
 
     public void toolsGebruiken(int waarde) {
-        System.out.println(waarde);
         int index = gegooideWorp[0];
         int roltotaal = gegooideWorp[1] + waarde;
-        System.out.println(roltotaal);
         int stamleden = gegooideWorp[2];
         int resources = roltotaal / boardmodel.getResource(index).getWaarde();
         if (resources > boardmodel.getResource(index).getHoeveelheid()) {
@@ -115,11 +112,22 @@ public class BoardController {
         boardmodel.getLocaties().get(index).reduceVillager(stamleden);
     }
 
-    public void gainTools(int index) {
+    private boolean checkTools() {
+        boolean toolsLeft = false;
+        for (Tool tool : playercontroller.getTools(boardmodel.getPlayer())){
+            if (tool.getStatus()){
+                toolsLeft = true;
+            }
+        }
+        return toolsLeft;
+    }
+
+    private void gainTools(int index) {
         if ((playercontroller.getPositie(boardmodel.getPlayer(), index) != 0)) {
             ArrayList<Tool> tools = playercontroller.getTools(boardmodel.getPlayer());
             if (tools.size() < 3) {
                 playercontroller.addTool(boardmodel.getPlayer());
+                playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
             } else if (tools.get(2).getLevel() != 4) {
                 for (int i = 0; i < 3; i++) {
                     if (tools.get(i).getLevel() == tools.get(2).getLevel()) {
@@ -135,7 +143,6 @@ public class BoardController {
     public void endTurn() {
         if (boardmodel.getPlaced()) { // checkt of de speler stamleden heeft geplaast.
             boolean villagersLeft = true;
-            System.out.println("Einde beurt");
             int i = checkPlayer();
             switch (i) { // Verschillede loops bepaalt door welke speler aan de beurt was
                 case 0: // Spelers 1, 2 en 3
@@ -166,7 +173,6 @@ public class BoardController {
     public void EndTurnPhase2() {
         List<Integer> posities = playercontroller.vraagPosities(boardmodel.getPlayer());
         if (posities.stream().allMatch(n -> n == 0)) {
-            System.out.println(playercontroller.getNaam(boardmodel.getPlayer()));
             int i = checkPlayer();
             if (i == 3) {
                 boardmodel.setPlayer(players.get(0));
@@ -175,7 +181,6 @@ public class BoardController {
                 boardmodel.setPlayer(players.get(i));
             }
             posities = playercontroller.vraagPosities(boardmodel.getPlayer());
-            System.out.println("Eind actie beurt");
         }
 
         if (posities.stream().allMatch(n -> n == 0)) {

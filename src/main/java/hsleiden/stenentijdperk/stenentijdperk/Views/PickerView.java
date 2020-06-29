@@ -2,6 +2,7 @@ package hsleiden.stenentijdperk.stenentijdperk.Views;
 
 import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;

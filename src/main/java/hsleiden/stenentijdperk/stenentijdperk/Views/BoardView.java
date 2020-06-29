@@ -1,13 +1,13 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
-import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -44,15 +45,24 @@ public class BoardView implements BoardObserver {
 	private ImageView speler2Image;
 	private ImageView speler3Image;
 	private ImageView speler4Image;
+	private ImageView speler1Token;
+	private ImageView speler2Token;
+	private ImageView speler3Token;
+	private ImageView speler4Token;
 	private TextField amountField;
 	private Button amountButton;
 	private Label amountLabel;
 	private Label beurtLabel;
 	private int location;
+	private List<ImageView> imageViews;
 
+
+	//TODO fix try catch
 
 	public BoardView() {
 		this.controller = new BoardController();
+		this.imageViews = new ArrayList<>();
+
 		setupPane();
 	}
 
@@ -238,7 +248,9 @@ public class BoardView implements BoardObserver {
 		assert speler1 != null;
 		Image Speler1 = new Image(speler1);
 		speler1Image = new ImageView(Speler1);
-		makePlayerToken(speler1Image);
+		speler1Token = new ImageView(Speler1);
+		imageViews.add(speler1Image);
+		imageViews.add(speler1Token);
 
 		FileInputStream speler2 = null;
 		try {
@@ -250,7 +262,9 @@ public class BoardView implements BoardObserver {
 		assert speler2 != null;
 		Image Speler2 = new Image(speler2);
 		speler2Image = new ImageView(Speler2);
-		makePlayerToken(speler2Image);
+		speler2Token = new ImageView(Speler2);
+		imageViews.add(speler2Image);
+		imageViews.add(speler2Token);
 
 		FileInputStream speler3 = null;
 		try {
@@ -262,7 +276,9 @@ public class BoardView implements BoardObserver {
 		assert speler3 != null;
 		Image Speler3 = new Image(speler3);
 		speler3Image = new ImageView(Speler3);
-		makePlayerToken(speler3Image);
+		speler3Token = new ImageView(Speler3);
+		imageViews.add(speler3Image);
+		imageViews.add(speler3Token);
 
 		FileInputStream speler4 = null;
 		try {
@@ -274,9 +290,12 @@ public class BoardView implements BoardObserver {
 		assert speler4 != null;
 		Image Speler4 = new Image(speler4);
 		speler4Image = new ImageView(Speler4);
-		makePlayerToken(speler4Image);
+		speler4Token = new ImageView(Speler4);
+		imageViews.add(speler4Image);
+		imageViews.add(speler4Token);
 
 		String styleLabel = "-fx-font-size: 20px; -fx-font-weight: bold";
+
 
 		// Stamleden hoeveelheden
 		speler1Label = new Label("  ");
@@ -294,6 +313,8 @@ public class BoardView implements BoardObserver {
 		speler4Label = new Label("  ");
 		speler4Label.setStyle(styleLabel);
 		speler4Label.setVisible(false);
+
+		makePlayerToken();
 
 		String style = "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;";
 
@@ -371,6 +392,8 @@ public class BoardView implements BoardObserver {
 		Button endTurn = new Button("Beurt eindigen");
 		endTurn.setStyle(style);
 		GridPane.setConstraints(endTurn, 22, 7, 15, 1);
+
+		playerColor(true);
 		// TODO maak dit nog kleiner
 		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
 			@Override
@@ -448,12 +471,14 @@ public class BoardView implements BoardObserver {
 					rivierKaart();
 					labelsSetter(4);
 				} else if (actionEvent.getSource() == endTurn) {
+					playerColor(false);
 					if (controller.vraagPhase() == 1) {
 						controller.endTurn();
 					} else {
 						controller.EndTurnPhase2();
 					}
 					beurtLabel.setText(controller.getPlayer().getNaam() + " is aan de beurt.");
+					playerColor(true);
 				}
 			}
 		};
@@ -467,11 +492,12 @@ public class BoardView implements BoardObserver {
 						aantalStamleden = Integer.parseInt(amountField.getText());
 						if (controller.stamledenCheck(location, aantalStamleden)) {
 							controller.onResourceButtonClick(location, aantalStamleden);
-							System.out.println(aantalStamleden);
 							setInputVisable(false);
 							checkStamleden(location);
 						}
-					} catch (Exception ignored) {}
+					} catch (Exception e) {
+						System.out.println(e);
+					}
 				}
 			}
 		};
@@ -501,7 +527,7 @@ public class BoardView implements BoardObserver {
 				beschavingsKaartButtons.get(1), beschavingsKaartButtons.get(2), beschavingsKaartButtons.get(3),
 				hutButton, toolStapel1, toolStapel2, akkerbouwButton, jachtButton, bosButton, leemGroeveButton,
 				steenGroeveButton, rivierButton, endTurn, speler1Image, speler2Image, speler3Image, speler4Image,
-				speler1Label, speler2Label, speler3Label, speler4Label, amountField, amountLabel, amountButton, beurtLabel);
+				speler1Label, speler2Label, speler3Label, speler4Label, speler1Token, speler2Token, speler3Token, speler4Token, amountField, amountLabel, amountButton, beurtLabel);
 	}
 
 	private void labelsSetter(int location){
@@ -514,6 +540,19 @@ public class BoardView implements BoardObserver {
 		}
 		checkStamleden(location);
 
+	}
+
+	private void playerColor(boolean seen){		
+		int i = 1;
+		for (PlayerModel player : controller.getPlayers()) {
+			if (player.equals(controller.getPlayer())){
+				GridPane.setConstraints(imageViews.get(i), 2, 6, 1, 1);
+				imageViews.get(i).setVisible(seen);
+			
+			}
+			i += 2;
+			
+		}		
 	}
 
 	private void setSpelersVisable(boolean visable) {
@@ -770,6 +809,7 @@ public class BoardView implements BoardObserver {
 			setInputVisable(true);
 		} else {
 			controller.resolveResource(location);
+			checkStamleden(location);
 		}
 	}
 
@@ -795,10 +835,13 @@ public class BoardView implements BoardObserver {
 		}
 	}
 
-	private void makePlayerToken(ImageView speler){
-		speler.setFitHeight(30);
-		speler.setFitWidth(30);
-		speler.setVisible(false);
+	private void makePlayerToken(){
+		for (ImageView imageview : imageViews){
+			imageview.setFitHeight(30);
+			imageview.setFitWidth(30);
+			imageview.setVisible(false);
+		}
+	
 	}
 
 	@Override
