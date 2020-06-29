@@ -157,7 +157,6 @@ public class BoardView implements BoardObserver {
 			imageView.setPreserveRatio(true);
 			this.hutKaartButtons.get(index).setGraphic(imageView);
 		}
-
 	}
 
 	// dit kan gebruikt worden als de kaarten worden gekocht in een actie fase
@@ -347,7 +346,6 @@ public class BoardView implements BoardObserver {
 		this.createToolButton(1);
 
 		// Buttons
-
 		GridPane.setConstraints(this.beschavingsKaartButtons.get(0), 42, 40, 1, 1);
 		GridPane.setConstraints(this.beschavingsKaartButtons.get(1), 37, 40, 1, 1);
 		GridPane.setConstraints(this.beschavingsKaartButtons.get(2), 31, 40, 1, 1);
