@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class PlayerModel implements PlayerObservable {
+public class PlayerModel implements PlayerObservable, Comparable {
     private int lobby;
     private String naam;
     private int maxVillagers;
@@ -194,5 +194,11 @@ public class PlayerModel implements PlayerObservable {
 
     public void setGraan(int graan) {
         this.graan = graan;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        int comparePunten = ((PlayerModel) o).getPunten();
+        return comparePunten-this.getPunten();
     }
 }

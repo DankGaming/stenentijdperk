@@ -52,6 +52,20 @@ public class ViewManager {
         showView(1200, 800, "Board", boardView.getPlayers());
     }
 
+    public static void loadGameOverView(ArrayList<PlayerModel> playerModels) {
+        // Close the main view
+        closeView();
+
+        // Close the picker view
+        closePickerView();
+
+        // Close the popup windows
+        closePopupWindow();
+
+        currentView = new GameOverView(playerModels).setScene();
+        showView(600, 600, "Game over");
+    }
+
     public static void loadSpelregelView() {
         ViewManager.loadPopupWindow(new SpelregelView().setScene());
     }
@@ -91,6 +105,7 @@ public class ViewManager {
         createStageFromView(width, height, title);
         currentStage.setOnCloseRequest(event -> {
             closePickerView();
+            closePopupWindow();
         });
         if (currentStage != null)
             currentStage.show();
@@ -102,11 +117,13 @@ public class ViewManager {
         currentStage.setOnCloseRequest(event -> {
             isRunning = false;
             closePickerView();
+            closePopupWindow();
         });
         if (currentStage != null)
             currentStage.show();
         ViewManager.loadPickerView(playerModels);
     }
+
     public static void closeView() {
         if (currentStage != null)
             currentStage.close();
