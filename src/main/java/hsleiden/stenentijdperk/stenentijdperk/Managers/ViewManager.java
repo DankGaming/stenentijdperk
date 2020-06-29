@@ -128,6 +128,7 @@ public class ViewManager {
         currentStage.setOnCloseRequest(event -> {
             isRunning = false;
             closePickerView();
+            closeResourceWindow();
         });
         if (currentStage != null)
             currentStage.show();
