@@ -24,6 +24,7 @@ public class PlayerModel implements PlayerObservable {
     private int graan;
     private List<Integer> multiplier = new ArrayList<>();
     private int punten;
+    private List<String> treasures = new ArrayList<>();
 
     public PlayerModel() {
     }
@@ -50,6 +51,18 @@ public class PlayerModel implements PlayerObservable {
 
     public void setPunten(int punten) {
         this.punten = punten;
+    }
+
+    public List<String> getTreasures() {
+        return treasures;
+    }
+
+    public void setTreasures(List<String> treasures) {
+        this.treasures = treasures;
+    }
+
+    public void addTreasure(String treasure) {
+        this.treasures.add(treasure);
     }
 
     public int getToolLevel(int index) {
@@ -121,6 +134,10 @@ public class PlayerModel implements PlayerObservable {
 
     public void setMulitplier(List<Integer> mulitplier) {
         this.multiplier = mulitplier;
+    }
+
+    public void addMultiplier(int index, int multiplier) {
+        this.resources.set(index, this.resources.get(index) + multiplier);
     }
 
     public int getLobby() {

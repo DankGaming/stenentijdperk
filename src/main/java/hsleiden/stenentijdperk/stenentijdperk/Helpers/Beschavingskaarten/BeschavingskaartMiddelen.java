@@ -5,9 +5,18 @@ import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 public class BeschavingskaartMiddelen extends Kaart {
     private int waarde;
     private int middel;
+    private String treasure;
+    private int multiplier;
 
-    public BeschavingskaartMiddelen(int kosten, String path, int waarde, int middel) {
+    public BeschavingskaartMiddelen(int kosten, String path, String treasure, int waarde, int middel) {
         super(kosten, path);
+        this.treasure = treasure;
+        this.waarde = waarde;
+        this.middel = middel;
+    }
+    public BeschavingskaartMiddelen(int kosten, String path,int multiplier, int waarde, int middel) {
+        super(kosten, path);
+        this.multiplier = multiplier;
         this.waarde = waarde;
         this.middel = middel;
     }
@@ -28,6 +37,11 @@ public class BeschavingskaartMiddelen extends Kaart {
         // ontvang resource wat op de kaart staat
         player.addResources(middel, waarde);
 
+        if(treasure != null){
+            player.addTreasure(treasure);
+        }else{
+            player.addMultiplier(multiplier, 1);
+        }
         // Ontvang beschavingskaart
         player.addKaarten(this);
     }
