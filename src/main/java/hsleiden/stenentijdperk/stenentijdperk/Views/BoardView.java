@@ -58,7 +58,6 @@ public class BoardView implements BoardObserver {
 
 
 	//TODO fix try catch
-
 	public BoardView() {
 		this.controller = new BoardController();
 		this.imageViews = new ArrayList<>();
@@ -537,7 +536,6 @@ public class BoardView implements BoardObserver {
 			controller.onButtonClick(location);
 		}
 		checkStamleden(location);
-
 	}
 
 	private void playerColor(boolean seen){		
