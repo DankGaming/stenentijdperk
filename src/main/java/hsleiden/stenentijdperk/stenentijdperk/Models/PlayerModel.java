@@ -91,6 +91,14 @@ public class PlayerModel implements PlayerObservable {
         tools.add(tool);
     }
 
+    public void increasePunten(int punten) {
+        this.punten += punten;
+    }
+
+    public void decreasePunten(int punten) {
+        this.punten -= punten;
+    }
+
     public List<Integer> getPosities() {
         return this.posities;
     }
