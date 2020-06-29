@@ -30,7 +30,7 @@ public class BeschavingskaartPunten extends Kaart {
         // ontvang punten op de kaart
         player.setPunten(waarde);
 
-        if(treasure != null){
+        if(treasure != ""){
             player.addTreasure(treasure);
         }else{
             player.addMultiplier(multiplier, 1);

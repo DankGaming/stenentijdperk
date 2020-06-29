@@ -32,7 +32,7 @@ public class BeschavingskaartMiddelen extends Kaart {
         // ontvang resource wat op de kaart staat
         player.addResources(middel, waarde);
 
-        if(treasure != null){
+        if(treasure != ""){
             player.addTreasure(treasure);
         }else{
             player.addMultiplier(multiplier, 1);
