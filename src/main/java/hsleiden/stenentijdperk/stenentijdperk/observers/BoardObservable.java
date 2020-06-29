@@ -8,6 +8,4 @@ public interface BoardObservable {
     void notifyAllObservers();
 
     int getTurn();
-
-    BoardModel getCurrentBoard();
 }

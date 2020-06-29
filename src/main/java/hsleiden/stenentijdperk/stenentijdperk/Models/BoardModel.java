@@ -203,14 +203,6 @@ public class BoardModel implements BoardObservable {
         return this.turn;
     }
 
-    @Override
-    public BoardModel getCurrentBoard() {
-        if(FirebaseController.getBoard() != this){
-            FirebaseController.updateBoard(String.valueOf(this.player.getLobby()), this);
-        }
-        return this;
-    }
-
     public void setTurn(int turn) {
         this.turn = turn;
     }

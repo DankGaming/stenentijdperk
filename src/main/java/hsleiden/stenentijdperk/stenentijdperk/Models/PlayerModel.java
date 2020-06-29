@@ -186,6 +186,7 @@ public class PlayerModel {
 
     public void setGraan(int graan) {
         this.graan = graan;
+        System.out.println(String.valueOf(this.getLobby()) + " " + this.getPlayerNumber() + " " + this.graan);
         FirebaseController.updateDocument(String.valueOf(this.getLobby()), this.getPlayerNumber(), "graan", this.graan);
     }
 
