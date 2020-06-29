@@ -546,7 +546,6 @@ public class BoardView implements BoardObserver {
 			if (player.equals(controller.getPlayer())){
 				GridPane.setConstraints(imageViews.get(i), 2, 6, 1, 1);
 				imageViews.get(i).setVisible(seen);
-			
 			}
 			i += 2;
 		}		
