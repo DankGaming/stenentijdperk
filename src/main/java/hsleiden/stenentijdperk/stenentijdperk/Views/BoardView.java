@@ -298,6 +298,7 @@ public class BoardView implements BoardObserver {
 		String style = "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;";
 
 		String textStyle = "-fx-font-size: 25px; -fx-text-fill: #f6e5b6; -fx-background-color: #dfa231; ";
+
 		// invoeren aantal stamleden
 		amountLabel = new Label("Hoeveel: ");
 		amountLabel.setStyle(textStyle);
@@ -343,27 +344,27 @@ public class BoardView implements BoardObserver {
 		hutButton.setStyle(style);
 		GridPane.setConstraints(hutButton, 18, 32, 5, 1);
 
-		Button akkerbouwButton = new Button("akkerbouw");
+		Button akkerbouwButton = new Button("Akkerbouw");
 		akkerbouwButton.setStyle(style);
 		GridPane.setConstraints(akkerbouwButton, 15, 25, 5, 1);
 
-		Button jachtButton = new Button("stamlid jachtvlakte");
+		Button jachtButton = new Button("Stamlid jachtvlakte");
 		jachtButton.setStyle(style);
 		GridPane.setConstraints(jachtButton, 5, 7, 5, 1);
 
-		Button bosButton = new Button("stamlid bos");
+		Button bosButton = new Button("Stamlid bos");
 		bosButton.setStyle(style);
 		GridPane.setConstraints(bosButton, 21, 15, 5, 1);
 
-		Button leemGroeveButton = new Button("stamlid leem");
+		Button leemGroeveButton = new Button("Stamlid leem");
 		leemGroeveButton.setStyle(style);
 		GridPane.setConstraints(leemGroeveButton, 28, 15, 5, 1);
 
-		Button steenGroeveButton = new Button("stamlid steen");
+		Button steenGroeveButton = new Button("Stamlid steen");
 		steenGroeveButton.setStyle(style);
 		GridPane.setConstraints(steenGroeveButton, 40, 15, 5, 1);
 
-		Button rivierButton = new Button("stamlid rivier");
+		Button rivierButton = new Button("Stamlid rivier");
 		rivierButton.setStyle(style);
 		GridPane.setConstraints(rivierButton, 41, 25, 5, 1);
 
