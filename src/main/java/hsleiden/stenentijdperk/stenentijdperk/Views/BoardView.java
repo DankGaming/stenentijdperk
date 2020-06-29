@@ -406,7 +406,6 @@ public class BoardView implements BoardObserver {
 					renderNewHutten(array, 0);
 					makeConstraints(20, 40, 2);
 					labelsSetter(11);
-					System.out.println(controller.getPlayer().getPositie(11));
 				} else if (actionEvent.getSource() == hutKaartButtons.get(1)) {
 					List<StaticHut> array = controller.onHutButtonClick(1); // TODO verplaatsen naar acties
 					renderNewHutten(array, 1);
