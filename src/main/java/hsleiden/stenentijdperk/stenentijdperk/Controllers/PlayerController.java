@@ -1,6 +1,7 @@
 package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 
 import java.util.ArrayList;
@@ -70,5 +71,17 @@ public class PlayerController {
 
 	public String getNaam(PlayerModel playerModel){
 		return playerModel.getNaam();
+	}
+
+	public void increasePunten(PlayerModel playermodel, int punten) {
+		playermodel.increasePunten(punten);
+	}
+
+	public List<Integer> getMultiplier(PlayerModel playermodel) {
+		return playermodel.getMulitplier();
+	}
+
+	public List<StaticHut> getHutjes(PlayerModel playermodel) {
+		return playermodel.getHutjes();
 	}
 }
