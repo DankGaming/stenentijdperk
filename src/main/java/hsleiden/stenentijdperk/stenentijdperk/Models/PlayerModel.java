@@ -1,5 +1,6 @@
 package hsleiden.stenentijdperk.stenentijdperk.Models;
 
+import hsleiden.stenentijdperk.stenentijdperk.Controllers.FirebaseController;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
@@ -210,7 +211,9 @@ public class PlayerModel implements PlayerObservable {
     public void setGraan(int graan) {
         this.graan = graan;
         System.out.println(String.valueOf(this.getLobby()) + " " + this.getPlayerNumber() + " " + this.graan);
-        FirebaseController.updateDocument(String.valueOf(this.getLobby()), this.getPlayerNumber(), "graan", this.graan);
+        if(this.getPlayerNumber() != null) {
+            FirebaseController.updateDocument(String.valueOf(this.getLobby()), this.getPlayerNumber(), "graan", this.graan);
+        }
     }
 
     public String getPlayerNumber() {

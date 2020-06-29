@@ -20,20 +20,14 @@ public class BoardController {
     private ArrayList<PlayerModel> players = new ArrayList<PlayerModel>();
     private int[] gegooideWorp;
 
-    public BoardController() {
-        // TODO all references naar temp players moet naar firebase vragen.
-        PlayerModel matt = new PlayerModel("Matt");
-        PlayerModel jake = new PlayerModel("Jake");
-        PlayerModel lucas = new PlayerModel("Lucas");
-        PlayerModel carlos = new PlayerModel("Carlos");
-        players.add(matt);
-        players.add(jake);
-        players.add(lucas);
-        players.add(carlos);
+    public BoardController(ArrayList<PlayerModel> playerlist) {
+        players = playerlist;
         playercontroller = new PlayerController();
         boardmodel = new BoardModel();
         boardmodel.setPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
         gegooideWorp = new int[3];
+        FirebaseController.listenForBoardUpdates(String.valueOf(players.get(0).getLobby()));
+        FirebaseController.updateBoard(String.valueOf(players.get(0).getLobby()), boardmodel);
     }
 
     public void registerObserver(BoardObserver boardobserver) {

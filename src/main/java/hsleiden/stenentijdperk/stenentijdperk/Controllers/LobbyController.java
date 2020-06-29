@@ -14,9 +14,8 @@ public class LobbyController {
         this.lobbyModel = new LobbyModel();
     }
 
-    public void setLobbyId(int id, PlayerModel player) {
+    public void setLobbyId(int id) {
         this.lobbyId = id;
-        this.p = player;
         lobbyModel.changeLobbyId(id);
         FirebaseController.listenForLobbyUpdates(String.valueOf(id));
         FirebaseController.listenForPlayerUpdates(String.valueOf(id));
@@ -25,11 +24,11 @@ public class LobbyController {
     public void joinLobby() {
         if (this.lobbyId > 0)
             if (FirebaseController.getAmountofPlayersInLobby(this.lobbyId) < 4) {
+                this.p.setPlayerNumber(setPlayerNumber());
                 if (FirebaseController.getAmountofPlayersInLobby(this.lobbyId) == 0) {
                     FirebaseController.setLobbyLeader(this.lobbyId, this.p);
                 }
-                this.p.setPlayerNumber(setPlayerNumber());
-                FirebaseController.addPlayers(this.lobbyId, setPlayerNumber(), this.p);
+                FirebaseController.addPlayers(this.lobbyId, this.p.getPlayerNumber(), this.p);
                 FirebaseController.getPlayersInLobby(this.lobbyId);
                 System.out.println("Player selected lobby " + this.lobbyId);
             }

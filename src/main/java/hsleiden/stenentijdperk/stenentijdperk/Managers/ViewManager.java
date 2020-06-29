@@ -10,6 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class ViewManager {
@@ -49,10 +50,10 @@ public class ViewManager {
         showView(800, 800, "Lobby");
     }
 
-    public static void loadBoardView() {
+    public static void loadBoardView(ArrayList<PlayerModel> players) {
         closeView();
         isRunning = true;
-        BoardView boardView = new BoardView();
+        BoardView boardView = new BoardView(players);
         currentView = boardView.setScene();
         showView(1200, 800, "Board", boardView.getPlayers());
     }

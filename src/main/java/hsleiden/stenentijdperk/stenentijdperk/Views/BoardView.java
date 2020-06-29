@@ -1,6 +1,7 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
+import hsleiden.stenentijdperk.stenentijdperk.Controllers.FirebaseController;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
@@ -59,8 +60,8 @@ public class BoardView implements BoardObserver {
 
 	//TODO fix try catch
 
-	public BoardView() {
-		this.controller = new BoardController();
+	public BoardView(ArrayList<PlayerModel> players) {
+		this.controller = new BoardController(players);
 		this.imageViews = new ArrayList<>();
 
 		setupPane();
