@@ -15,6 +15,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Arrays;
 
 public class BoardModel implements BoardObservable {
     public ArrayList<BoardObserver> observers = new ArrayList<>();
@@ -28,6 +29,7 @@ public class BoardModel implements BoardObservable {
     private List<StaticHut> hutStapel2 = new ArrayList<StaticHut>();
     private List<StaticHut> hutStapel3 = new ArrayList<StaticHut>();
     private List<StaticHut> hutStapel4 = new ArrayList<StaticHut>();
+    private List<StaticHut> hutStapel5 = new ArrayList<StaticHut>();
     private BoardController controller;
     private String LabelText;
     private PlayerController playerController;
@@ -91,6 +93,7 @@ public class BoardModel implements BoardObservable {
         this.hutStapel2 = new ArrayList<StaticHut>(this.hutKaarten.subList((n + 1) / 4, (n + 1) / 2));
         this.hutStapel3 = new ArrayList<StaticHut>(this.hutKaarten.subList((n + 1) / 2, ((n + 1) / 4) * 3));
         this.hutStapel4 = new ArrayList<StaticHut>(this.hutKaarten.subList(((n + 1) / 4) * 3, n));
+        this.hutStapel5.add(new StaticHut(0, new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0)), ""));
 
         this.hutKaarten.clear();
     }
@@ -136,7 +139,7 @@ public class BoardModel implements BoardObservable {
             case 3:
                 return this.hutStapel4.get(0);
             default:
-                return null;
+                return this.hutStapel5.get(0);
         }
     }
 
@@ -151,7 +154,7 @@ public class BoardModel implements BoardObservable {
             case 3:
                 return this.hutStapel4;
             default:
-                return null;
+                return this.hutStapel5;
         }
     }
 
