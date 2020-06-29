@@ -3,6 +3,7 @@ package hsleiden.stenentijdperk.stenentijdperk.Managers;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.FirebaseController;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.Views.*;
+
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
@@ -21,6 +22,10 @@ public class ViewManager {
     private static Stage currentPopupStage;
     private static GridPane currentPopupView;
     private static VBox currentPopupVbox;
+
+    //Resource popup
+    private static Stage resourcePopupStage;
+    private static GridPane resourcePopupView;
 
     // Picker view
     private static Stage pickerStage;
@@ -52,6 +57,20 @@ public class ViewManager {
         showView(1200, 800, "Board", boardView.getPlayers());
     }
 
+    public static void loadGameOverView(ArrayList<PlayerModel> playerModels) {
+        // Close the main view
+        closeView();
+
+        // Close the picker view
+        closePickerView();
+
+        // Close the popup windows
+        closePopupWindow();
+
+        currentView = new GameOverView(playerModels).setScene();
+        showView(600, 600, "Game over");
+    }
+
     public static void loadSpelregelView() {
         ViewManager.loadPopupWindow(new SpelregelView().setScene());
     }
@@ -60,7 +79,7 @@ public class ViewManager {
         closePickerView();
         PickerView pickerView = new PickerView(playerModels);
         pickerStage = pickerView.setScene();
-        if(isRunning) {
+        if (isRunning) {
             showPickerView();
         }
     }
@@ -77,6 +96,28 @@ public class ViewManager {
         currentPopupVbox = vBox;
         openPopupVbox(800, 600, "Spelregels");
     }
+    public static void loadPopupWindow(ResourceView resourceView){
+        closeResourceWindow();
+        resourcePopupView = resourceView.setScene();
+        openResourceWindow();
+    }
+    public static void closeResourceWindow(){
+        if(resourcePopupStage != null)
+            resourcePopupStage.close();
+    }
+
+    public static void openResourceWindow(){
+        createResourceFromView();
+        resourcePopupStage.show();
+    }
+
+    public static void createResourceFromView() {
+        resourcePopupStage = new Stage();
+        if(resourcePopupView != null)
+            resourcePopupStage.setScene(new Scene(resourcePopupView, 640, 640));
+        resourcePopupStage.setTitle("Resources");
+        resourcePopupStage.setResizable(false);
+    }
 
     // This function creates a stage from a gridpane.
     public static void createStageFromView(int width, int height, String title) {
@@ -91,6 +132,7 @@ public class ViewManager {
         createStageFromView(width, height, title);
         currentStage.setOnCloseRequest(event -> {
             closePickerView();
+            closePopupWindow();
         });
         if (currentStage != null)
             currentStage.show();
@@ -102,11 +144,14 @@ public class ViewManager {
         currentStage.setOnCloseRequest(event -> {
             isRunning = false;
             closePickerView();
+            closePopupWindow();
         });
         if (currentStage != null)
             currentStage.show();
+            currentStage.setResizable(false);
         ViewManager.loadPickerView(playerModels);
     }
+
     public static void closeView() {
         if (currentStage != null)
             currentStage.close();
@@ -114,19 +159,19 @@ public class ViewManager {
 
     // Picker view
     public static void closePickerView() {
-        if(pickerStage != null)
+        if (pickerStage != null)
             pickerStage.close();
     }
 
     public static void showPickerView() {
-        if(pickerStage != null)
+        if (pickerStage != null)
             pickerStage.show();
     }
 
     // This function creates a stage from a gridpane.
     public static void createPopupFromView(int width, int height, String title) {
         currentPopupStage = new Stage();
-        if(currentPopupView != null)
+        if (currentPopupView != null)
             currentPopupStage.setScene(new Scene(currentPopupView, width, height));
         currentPopupStage.setTitle(title);
         currentPopupStage.setResizable(false);
@@ -135,7 +180,7 @@ public class ViewManager {
     // Function that opens popup window
     public static void openPopupWindow() {
         createPopupFromView(680, 460, "tableau");
-        if(currentPopupStage != null)
+        if (currentPopupStage != null)
             currentPopupStage.show();
     }
 
@@ -143,7 +188,7 @@ public class ViewManager {
         currentPopupStage = new Stage();
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(currentPopupVbox);
-        if(currentPopupVbox != null)
+        if (currentPopupVbox != null)
             currentPopupStage.setScene(new Scene(scrollPane, width, height));
         currentPopupStage.setTitle(title);
         currentPopupStage.setResizable(false);
@@ -151,13 +196,13 @@ public class ViewManager {
 
     public static void openPopupVbox(int width, int height, String title) {
         createPopupFromVbox(width, height, title);
-        if(currentPopupStage != null)
+        if (currentPopupStage != null)
             currentPopupStage.show();
     }
 
     // Function that closes popup window
     public static void closePopupWindow() {
-        if(currentPopupStage != null)
+        if (currentPopupStage != null)
             currentPopupStage.close();
     }
 }

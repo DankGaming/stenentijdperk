@@ -23,13 +23,11 @@ public class Hutview {
         Image image = null;
         try {
             image = new Image(String.valueOf(App.class.getResource(resource).toURI()));
-        } catch(URISyntaxException e) {
+            this.imageView = new ImageView(image);
+            this.imageView.setFitHeight(165);
+            this.imageView.setFitWidth(115);
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-
-        assert image != null;
-        this.imageView = new ImageView(image);
-        this.imageView.setFitHeight(165);
-        this.imageView.setFitWidth(115);
     }
 }

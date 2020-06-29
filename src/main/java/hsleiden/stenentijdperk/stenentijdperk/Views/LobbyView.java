@@ -5,6 +5,7 @@ import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.LobbyObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.LobbyObserver;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -59,7 +60,7 @@ public class LobbyView implements LobbyObserver {
     private void setupPane() {
         this.view = new GridPane();
         this.view.setPadding(new Insets(10, 10, 10, 10));
-        this.view.setStyle("-fx-background-color: d0c9b5");
+        this.view.setStyle("-fx-background-color: #d0c9b5");
         int amountOfRows = 50;
         int amountOfColumns = 50;
 
@@ -155,29 +156,27 @@ public class LobbyView implements LobbyObserver {
             this.spelers.setText("Spelers: ");
         this.spelers.setStyle("-fx-font-size: 22px;");
 
+        String fontSize = "-fx-font-size: 15px;";
+
         try {
             this.speler1.setText(players.get(0).getNaam());
-            this.speler1.setStyle("-fx-font-size: 15px;");
-        } catch (Exception ignored) {
-        }
+            this.speler1.setStyle(fontSize);
+        } catch (Exception ignored) {}
 
         try {
             this.speler2.setText(players.get(1).getNaam());
-            this.speler2.setStyle("-fx-font-size: 15px;");
-        } catch (Exception ignored) {
-        }
+            this.speler2.setStyle(fontSize);
+        } catch (Exception ignored) {}
 
         try {
             this.speler3.setText(players.get(2).getNaam());
-            this.speler3.setStyle("-fx-font-size: 15px;");
-        } catch (Exception ignored) {
-        }
+            this.speler3.setStyle(fontSize);
+        } catch (Exception ignored) {}
 
         try {
             this.speler4.setText(players.get(3).getNaam());
-            this.speler4.setStyle("-fx-font-size: 15px;");
-        } catch (Exception ignored) {
-        }
+            this.speler4.setStyle(fontSize);
+        } catch (Exception ignored) {}
 
     }
 

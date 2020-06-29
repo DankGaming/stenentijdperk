@@ -1,23 +1,23 @@
 package hsleiden.stenentijdperk.stenentijdperk.Models;
 
-
-import hsleiden.stenentijdperk.stenentijdperk.observers.PlayerObservable;
-import hsleiden.stenentijdperk.stenentijdperk.observers.PlayerObserver;
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
+import hsleiden.stenentijdperk.stenentijdperk.observers.PlayerObservable;
+import hsleiden.stenentijdperk.stenentijdperk.observers.PlayerObserver;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class PlayerModel implements PlayerObservable {
+public class PlayerModel implements PlayerObservable, Comparable {
+    ArrayList<PlayerObserver> observers = new ArrayList<PlayerObserver>();
     private int lobby;
     private String naam;
     private int maxVillagers;
     private int villagers;
-    private ArrayList<Kaart> kaarten = new ArrayList<>();;
-    private ArrayList<StaticHut> hutjes = new ArrayList<>();;
+    private ArrayList<Kaart> kaarten = new ArrayList<>();
+    private ArrayList<StaticHut> hutjes = new ArrayList<>();
     private ArrayList<Tool> tools = new ArrayList<>();
     private List<Integer> resources;
     private List<Integer> posities = new ArrayList<>();
@@ -25,8 +25,6 @@ public class PlayerModel implements PlayerObservable {
     private List<Integer> multiplier = new ArrayList<>();
     private int punten;
     private List<String> treasures = new ArrayList<>();
-
-    ArrayList<PlayerObserver> observers = new ArrayList<PlayerObserver>();
 
     public PlayerModel() {
     }
@@ -116,6 +114,10 @@ public class PlayerModel implements PlayerObservable {
         this.kaarten = kaarten;
     }
 
+    public void addKaarten(Kaart kaart) {
+        kaarten.add(kaart);
+    }
+
     public ArrayList<StaticHut> getHutjes() {
         return hutjes;
     }
@@ -140,20 +142,20 @@ public class PlayerModel implements PlayerObservable {
         this.lobby = lobby;
     }
 
-    public void setNaam(String naam) {
-        this.naam = naam;
-    }
-
     public String getNaam() {
         return this.naam;
     }
 
-    public void setVillagers(int villagers) {
-        this.villagers = villagers;
+    public void setNaam(String naam) {
+        this.naam = naam;
     }
 
     public int getVillagers() {
         return this.villagers;
+    }
+
+    public void setVillagers(int villagers) {
+        this.villagers = villagers;
     }
 
     @Override
@@ -164,7 +166,7 @@ public class PlayerModel implements PlayerObservable {
 
     @Override
     public void notifyAllObservers() {
-        for(PlayerObserver po : observers) {
+        for (PlayerObserver po : observers) {
             po.update(this);
         }
     }
@@ -215,5 +217,11 @@ public class PlayerModel implements PlayerObservable {
 
     public void addTreasure(String treasure) {
         this.treasures.add(treasure);
+    }
+    
+    @Override
+    public int compareTo(Object o) {
+        int comparePunten = ((PlayerModel) o).getPunten();
+        return comparePunten - this.getPunten();
     }
 }
