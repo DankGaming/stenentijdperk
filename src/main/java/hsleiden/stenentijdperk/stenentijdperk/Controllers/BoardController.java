@@ -115,8 +115,8 @@ public class BoardController {
 
     private boolean checkTools() {
         boolean toolsLeft = false;
-        for (Tool tool : playercontroller.getTools(boardmodel.getPlayer())){
-            if (tool.getStatus()){
+        for (Tool tool : playercontroller.getTools(boardmodel.getPlayer())) {
+            if (tool.getStatus()) {
                 toolsLeft = true;
             }
         }
@@ -336,7 +336,7 @@ public class BoardController {
     private void endGame() {
         // Did gaat denk ik crashen maar ach
         boardmodel.setPlayer(null);
-        for (PlayerModel player :players){
+        for (PlayerModel player : players) {
             finalPuntenCount(player);
         }
         // TODO roep hier de endgame view aan.
@@ -345,11 +345,11 @@ public class BoardController {
     private void finalPuntenCount(PlayerModel player) {
         List<Integer> multipliers = playercontroller.getMultiplier(player);
         for (Tool tool : playercontroller.getTools(player)) {
-            playercontroller.increasePunten(player,  multipliers.get(0) * tool.getLevel());
+            playercontroller.increasePunten(player, multipliers.get(0) * tool.getLevel());
         }
         playercontroller.increasePunten(player, multipliers.get(1) * playercontroller.getHutjes(player).size());
         playercontroller.increasePunten(player, multipliers.get(2) * playercontroller.getMaxVillagers(player));
-        playercontroller.increasePunten(player, multipliers.get(3) *playercontroller.vraagGraan(player));
+        playercontroller.increasePunten(player, multipliers.get(3) * playercontroller.vraagGraan(player));
     }
 
     // TODO tijdelijk

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 public interface PlayerObservable {
     void registerObserver(PlayerObserver po);
+
     void notifyAllObservers();
+
     ArrayList<Tool> getTools();
 }

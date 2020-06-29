@@ -21,7 +21,7 @@ public class PlayerController {
 		playermodel.setVillagers(villagers);
 	}
 
-	public int getMaxVillagers(PlayerModel playerModel){
+	public int getMaxVillagers(PlayerModel playerModel) {
 		return playerModel.getMaxVillagers();
 	}
 
@@ -29,31 +29,31 @@ public class PlayerController {
 		playerModel.addMaxVillagers();
 	}
 
-	public ArrayList<Tool> getTools(PlayerModel playermodel){
+	public ArrayList<Tool> getTools(PlayerModel playermodel) {
 		return playermodel.getTools();
 	}
 
-	public int getPositie(PlayerModel playerModel, int index){
+	public int getPositie(PlayerModel playerModel, int index) {
 		return playerModel.getPositie(index);
 	}
 
-	public void setPositie(PlayerModel playerModel, int index, int stamleden){
+	public void setPositie(PlayerModel playerModel, int index, int stamleden) {
 		playerModel.setPositie(index, stamleden);
 	}
 
-	public void addGraan(PlayerModel playerModel){
+	public void addGraan(PlayerModel playerModel) {
 		playerModel.increaseGraan();
 	}
 
-	public int vraagGraan(PlayerModel playerModel){
+	public int vraagGraan(PlayerModel playerModel) {
 		return playerModel.getGraan();
 	}
 
-	public List<Integer> vraagPosities(PlayerModel playerModel){
+	public List<Integer> vraagPosities(PlayerModel playerModel) {
 		return playerModel.getPosities();
 	}
 
-	public List<Integer> vraagResources(PlayerModel playerModel){
+	public List<Integer> vraagResources(PlayerModel playerModel) {
 		return playerModel.getResources();
 	}
 
@@ -64,12 +64,12 @@ public class PlayerController {
 	public void increaseResource(PlayerModel playerModel, int index, int amount) {
 		playerModel.addResources(index, amount);
 	}
-	
-	public void addTool(PlayerModel playerModel){
+
+	public void addTool(PlayerModel playerModel) {
 		playerModel.addTool();
 	}
 
-	public String getNaam(PlayerModel playerModel){
+	public String getNaam(PlayerModel playerModel) {
 		return playerModel.getNaam();
 	}
 

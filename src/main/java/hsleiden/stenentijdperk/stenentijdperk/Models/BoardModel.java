@@ -2,7 +2,10 @@ package hsleiden.stenentijdperk.stenentijdperk.Models;
 
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.PlayerController;
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.BeschavingskaartMiddelen;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.BeschavingskaartPunten;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.BeschavingskaartWorpMiddelen;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Resource;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
@@ -14,10 +17,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class BoardModel implements BoardObservable {
+    public ArrayList<BoardObserver> observers = new ArrayList<>();
     private boolean isPlaceable;
-    private PlayerModel player;
     private int turn;
     private boolean placed;
+    private PlayerModel player;
     private List<Kaart> kaarten = new ArrayList<Kaart>();
     private List<StaticHut> hutKaarten = new ArrayList<StaticHut>();
     private List<StaticHut> hutStapel1 = new ArrayList<StaticHut>();
@@ -30,7 +34,6 @@ public class BoardModel implements BoardObservable {
     private int phase;
     private ArrayList<StaticHut> hutjes = new ArrayList<>();
     private ArrayList<Resource> locaties = new ArrayList<>();
-    public ArrayList<BoardObserver> observers = new ArrayList<>();
 
     public BoardModel() {
         this.isPlaceable = true;
@@ -51,9 +54,8 @@ public class BoardModel implements BoardObservable {
         File folder = new File("src/main/Resources/Kaarten/");
         File[] listOfFiles = folder.listFiles();
 
-        for (int i = 0; i < listOfFiles.length; i++) {
-            this.kaarten.add(i, new Kaart(i, "src/main/Resources/Kaarten/" + listOfFiles[i].getName()));
-        }
+        maakKaarten();
+
         Collections.shuffle(this.kaarten);
 
         folder = new File("src/main/Resources/Hutjes/");
@@ -182,20 +184,43 @@ public class BoardModel implements BoardObservable {
         this.locaties = res;
     }
 
-    public void setKaarten(ArrayList<Kaart> kaarten) {
-        this.kaarten = kaarten;
+    public void maakKaarten() {
+        this.kaarten.add(0, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Food_Gpoint.png", 3, 0));
+        this.kaarten.add(1, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Food_Hpoint.png", 2, 0));
+        this.kaarten.add(2, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Food_Kruid.jpg", 5, 0));
+        this.kaarten.add(3, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Food_pot.png", 7, 0));
+        this.kaarten.add(4, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Food_Raam.jpg", 1, 0));
+        this.kaarten.add(5, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/3Food_Raam.jpg", 3, 0));
+        this.kaarten.add(6, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Food_Hpoint.png", 4, 0));
+
+        this.kaarten.add(7, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Leem_Bpoint.jpg", 1, 2));
+        this.kaarten.add(8, new BeschavingskaartMiddelen(2, "src/main/Resources/Kaarten/Steen_Bpoint.png", 1, 3));
+        this.kaarten.add(9, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Steen_Gpoint.png", 1, 3));
+        this.kaarten.add(10, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Steen_Wagen.png", 2, 3));
+        this.kaarten.add(11, new BeschavingskaartMiddelen(3, "src/main/Resources/Kaarten/Goud_Bpoint.png", 1, 4));
+
+        this.kaarten.add(12, new BeschavingskaartWorpMiddelen(4, "src/main/Resources/Kaarten/xGoud_Idol.png", 6, 4));
+        this.kaarten.add(13, new BeschavingskaartWorpMiddelen(4, "src/main/Resources/Kaarten/xSteen_Bpoint.png", 5, 3));
+        this.kaarten.add(14, new BeschavingskaartWorpMiddelen(4, "src/main/Resources/Kaarten/xHout_Hpoint.png", 3, 3));
+
+        this.kaarten.add(15, new BeschavingskaartPunten(2, "src/main/Resources/Kaarten/Point_Fluit.jpg", 3));
+        this.kaarten.add(16, new BeschavingskaartPunten(2, "src/main/Resources/Kaarten/Point_Hpoint.png", 3));
     }
 
     public List<Kaart> getKaarten() {
         return this.kaarten;
     }
 
-    public void setPlaceable(boolean isPlaceable) {
-        this.isPlaceable = isPlaceable;
+    public void setKaarten(ArrayList<Kaart> kaarten) {
+        this.kaarten = kaarten;
     }
 
     public boolean getPlaceable() {
         return this.isPlaceable;
+    }
+
+    public void setPlaceable(boolean isPlaceable) {
+        this.isPlaceable = isPlaceable;
     }
 
     @Override
@@ -215,21 +240,21 @@ public class BoardModel implements BoardObservable {
         this.phase = phase;
     }
 
+    public boolean getPlaced() {
+        return this.placed;
+    }
+
     // Dit houdt bij of de speler als iets heeft geplaast tijdens de beurt.
     public void setPlaced(boolean placed) {
         this.placed = placed;
     }
 
-    public boolean getPlaced() {
-        return this.placed;
+    public PlayerModel getPlayer() {
+        return this.player;
     }
 
     // Dit verandered wie er aan de beurt is.
     public void setPlayer(PlayerModel player) {
         this.player = player;
-    }
-
-    public PlayerModel getPlayer() {
-        return this.player;
     }
 }

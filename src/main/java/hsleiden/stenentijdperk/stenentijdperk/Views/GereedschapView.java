@@ -30,21 +30,19 @@ public class GereedschapView {
 
         try {
             image = new Image(String.valueOf(App.class.getResource(this.resource).toURI()));
-        }catch (URISyntaxException e) {
+            this.imageView = new ImageView(image);
+            this.imageView.setFitHeight(70);
+            this.imageView.setFitWidth(70);
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
 
-        assert image != null;
-        this.imageView = new ImageView(image);
-        this.imageView.setFitHeight(70);
-        this.imageView.setFitWidth(70);
-
-        if (!(tool.getStatus())){
+        if (!(tool.getStatus())) {
             imageView.setRotate(90);
         }
 
         imageView.setOnMouseClicked(e -> {
-            if(tool.getStatus()){
+            if (tool.getStatus()) {
                 imageView.setRotate(90);
                 tool.setStatus(false);
                 tableauView.waarde += tool.getLevel();
