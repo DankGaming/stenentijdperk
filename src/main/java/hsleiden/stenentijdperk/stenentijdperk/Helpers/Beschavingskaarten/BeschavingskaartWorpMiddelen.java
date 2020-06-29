@@ -9,14 +9,9 @@ public class BeschavingskaartWorpMiddelen extends Kaart {
     private String treasure;
     private int multiplier;
 
-    public BeschavingskaartWorpMiddelen(int kosten, String path, String treasure, int waarde, int middel) {
+    public BeschavingskaartWorpMiddelen(int kosten, String path, String treasure, int multiplier, int waarde, int middel) {
         super(kosten, path);
         this.treasure = treasure;
-        this.waarde = waarde;
-        this.middel = middel;
-    }
-    public BeschavingskaartWorpMiddelen(int kosten, String path, int multiplier, int waarde, int middel) {
-        super(kosten, path);
         this.multiplier = multiplier;
         this.waarde = waarde;
         this.middel = middel;

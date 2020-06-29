@@ -8,14 +8,9 @@ public class BeschavingskaartMiddelen extends Kaart {
     private String treasure;
     private int multiplier;
 
-    public BeschavingskaartMiddelen(int kosten, String path, String treasure, int waarde, int middel) {
+    public BeschavingskaartMiddelen(int kosten, String path, String treasure, int multiplier, int waarde, int middel) {
         super(kosten, path);
         this.treasure = treasure;
-        this.waarde = waarde;
-        this.middel = middel;
-    }
-    public BeschavingskaartMiddelen(int kosten, String path,int multiplier, int waarde, int middel) {
-        super(kosten, path);
         this.multiplier = multiplier;
         this.waarde = waarde;
         this.middel = middel;

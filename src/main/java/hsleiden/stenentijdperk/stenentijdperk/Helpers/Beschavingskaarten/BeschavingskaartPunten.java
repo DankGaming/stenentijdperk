@@ -7,16 +7,13 @@ public class BeschavingskaartPunten extends Kaart {
     private String treasure;
     private int multiplier;
 
-    public BeschavingskaartPunten(int kosten, String path, String treasure, int waarde) {
+    public BeschavingskaartPunten(int kosten, String path, String treasure, int multiplier, int waarde) {
         super(kosten, path);
         this.treasure = treasure;
-        this.waarde = waarde;
-    }
-    public BeschavingskaartPunten(int kosten, String path, int multiplier, int waarde) {
-        super(kosten, path);
         this.multiplier = multiplier;
         this.waarde = waarde;
     }
+
     public int getWaarde() {
         return waarde;
     }
