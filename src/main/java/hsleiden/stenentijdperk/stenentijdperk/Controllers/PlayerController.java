@@ -84,4 +84,12 @@ public class PlayerController {
 	public List<StaticHut> getHutjes(PlayerModel playermodel) {
 		return playermodel.getHutjes();
 	}
+
+	public List<String> getTreasures(PlayerModel playermodel) {
+		return playermodel.getTreasures();
+	}
+
+	public void addTreasure(PlayerModel playermodel, String treasure) {
+		playermodel.addTreasure(treasure);
+	}
 }

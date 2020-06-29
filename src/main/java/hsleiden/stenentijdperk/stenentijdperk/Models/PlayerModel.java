@@ -24,6 +24,7 @@ public class PlayerModel implements PlayerObservable {
     private int graan;
     private List<Integer> multiplier = new ArrayList<>();
     private int punten;
+    private List<String> treasures = new ArrayList<>();
 
     ArrayList<PlayerObserver> observers = new ArrayList<PlayerObserver>();
 
@@ -202,5 +203,17 @@ public class PlayerModel implements PlayerObservable {
 
     public void setGraan(int graan) {
         this.graan = graan;
+    }
+
+    public List<String> getTreasures() {
+        return treasures;
+    }
+
+    public void setTreasures(List<String> treasures) {
+        this.treasures = treasures;
+    }
+
+    public void addTreasure(String treasure) {
+        this.treasures.add(treasure);
     }
 }

@@ -210,6 +210,9 @@ public class BoardController {
                 }
                 playercontroller.setVillagers(player, playercontroller.getMaxVillagers(player));
             }
+            if (boardmodel.getWincondition()) {
+            endGame();
+            }  
         }
     }
 
@@ -350,6 +353,9 @@ public class BoardController {
         playercontroller.increasePunten(player, multipliers.get(1) * playercontroller.getHutjes(player).size());
         playercontroller.increasePunten(player, multipliers.get(2) * playercontroller.getMaxVillagers(player));
         playercontroller.increasePunten(player, multipliers.get(3) *playercontroller.vraagGraan(player));
+
+        playercontroller.increasePunten(player, 
+            playercontroller.getTreasures(player).size() * playercontroller.getTreasures(player).size());
     }
 
     // TODO tijdelijk
