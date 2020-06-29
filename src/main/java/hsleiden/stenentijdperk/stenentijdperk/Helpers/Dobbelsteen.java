@@ -7,7 +7,6 @@ public class Dobbelsteen {
     private int totaalworp;
     private ArrayList<Integer> worpen = new ArrayList<Integer>();
     private int dobbelstenen;
-    
 
     public Dobbelsteen(int dobbelstenen) {
         this.ogen = 0;
@@ -15,7 +14,7 @@ public class Dobbelsteen {
     }
 
     public void worp() {
-        for (int i = 0; i < dobbelstenen; i++){
+        for (int i = 0; i < dobbelstenen; i++) {
             ogen = (int) (Math.random() * 6) + 1;
             worpen.add(ogen);
         }
@@ -28,7 +27,7 @@ public class Dobbelsteen {
         }
     }
 
-    public int getTotaal(){
+    public int getTotaal() {
         return totaalworp;
     }
 }
