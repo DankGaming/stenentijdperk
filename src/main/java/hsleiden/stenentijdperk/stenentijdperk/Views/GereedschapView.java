@@ -1,32 +1,27 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
 import hsleiden.stenentijdperk.stenentijdperk.App;
-import hsleiden.stenentijdperk.stenentijdperk.Models.TableauModel;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
 
 import java.net.URISyntaxException;
 
 public class GereedschapView {
     private ImageView imageView;
     private String resource;
-    private boolean canclick = true;
+    private TableauView tableauView;
+    private Tool tool;
 
-    public GereedschapView(int toolnummer) {
-        this.resource = "/Tools/Tool" + toolnummer + ".png";
+    public GereedschapView(Tool tool, TableauView tableauView) {
+        this.tool = tool;
+        this.tableauView = tableauView;
+        this.resource = "/Tools/Tool" + tool.getLevel() + ".png";
         setupPane();
     }
 
     public ImageView setScene() {
         return imageView;
-    }
-
-    public void resetGereedschap(){
-        if(!canclick){
-            imageView.setRotate(0);
-            canclick = true;
-        }
     }
 
     public void setupPane() {
@@ -35,19 +30,22 @@ public class GereedschapView {
 
         try {
             image = new Image(String.valueOf(App.class.getResource(this.resource).toURI()));
-        }catch (URISyntaxException e) {
+            this.imageView = new ImageView(image);
+            this.imageView.setFitHeight(70);
+            this.imageView.setFitWidth(70);
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
 
-        assert image != null;
-        this.imageView = new ImageView(image);
-        this.imageView.setFitHeight(70);
-        this.imageView.setFitWidth(70);
+        if (!(tool.getStatus())) {
+            imageView.setRotate(90);
+        }
 
         imageView.setOnMouseClicked(e -> {
-            if(canclick){
+            if (tool.getStatus()) {
                 imageView.setRotate(90);
-                this.canclick = false;
+                tool.setStatus(false);
+                tableauView.waarde += tool.getLevel();
             }
         });
     }

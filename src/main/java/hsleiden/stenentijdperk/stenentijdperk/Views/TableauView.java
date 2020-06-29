@@ -1,32 +1,35 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
 import hsleiden.stenentijdperk.stenentijdperk.App;
-import hsleiden.stenentijdperk.stenentijdperk.Controllers.TableauController;
+import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
+import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
-import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObservable;
-import hsleiden.stenentijdperk.stenentijdperk.observers.TableauObserver;
+import hsleiden.stenentijdperk.stenentijdperk.observers.PlayerObservable;
+import hsleiden.stenentijdperk.stenentijdperk.observers.PlayerObserver;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.transform.Shear;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
-public class TableauView implements TableauObserver {
+public class TableauView implements PlayerObserver {
+    public int waarde;
     Hutview hutview1 = new Hutview(1);
     Hutview hutview2 = new Hutview(2);
     Hutview hutview3 = new Hutview(3);
     Hutview hutview4 = new Hutview(2);
     Hutview hutview5 = new Hutview(4);
-    private ImageView[] huttegels;
     GereedschapView gereedschapview = null;
     GereedschapView gereedschapview1 = null;
     GereedschapView gereedschapview2 = null;
-
+    private ImageView[] huttegels;
     private ImageView tableau;
     private String resource = "/Backgrounds/tableau.png";
     private GridPane view;
@@ -38,17 +41,39 @@ public class TableauView implements TableauObserver {
     private Label stamleden;
     private Label punt;
     private PlayerModel playerModel;
-    private TableauController tableauController;
     private Label multiplier1;
     private Label multiplier2;
     private Label multiplier3;
     private Label multiplier4;
 
+    // Standard constructor
     public TableauView(PlayerModel playermodel) {
-        this.playerModel = playermodel;
+        standardConstructorFunction(playermodel);
+    }
+
+    // Constructor for the boardcontroller
+    public TableauView(PlayerModel playermodel, BoardController boardController) {
+        standardConstructorFunction(playermodel);
+        showConfirmButton(boardController);
+    }
+
+    // The statements that are called every time
+    public void standardConstructorFunction(PlayerModel playermodel) {
         setupPane();
-        this.tableauController = new TableauController();
-        this.tableauController.registerObserver(this);
+        this.playerModel = playermodel;
+        this.playerModel.registerObserver(this);
+    }
+
+    private void showConfirmButton(BoardController boardController) {
+        Button button = new Button("Gebruiken");
+        button.setOnMouseClicked(event -> {
+            boardController.toolsGebruiken(waarde);
+            ViewManager.closePopupWindow();
+        });
+        String style = "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;";
+        button.setStyle(style);
+        GridPane.setConstraints(button, 12, 3, 6, 3);
+        this.view.getChildren().add(button);
     }
 
     public GridPane setScene() {
@@ -76,15 +101,13 @@ public class TableauView implements TableauObserver {
 
         try {
             image = new Image(String.valueOf(App.class.getResource(this.resource).toURI()));
-        }catch(URISyntaxException e) {
+            this.tableau = new ImageView(image);
+            this.tableau.setFitWidth(680);
+            this.tableau.setFitHeight(460);
+            GridPane.setConstraints(tableau, 0, 0, 50, 50);
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-
-        assert image != null;
-        this.tableau = new ImageView(image);
-        this.tableau.setFitWidth(680);
-        this.tableau.setFitHeight(460);
-        GridPane.setConstraints(tableau, 0, 0, 50, 50);
 
         stamleden = new Label("Aantal stamleden: 0");
         stamleden.setStyle("-fx-font-size: 30px;");
@@ -153,12 +176,12 @@ public class TableauView implements TableauObserver {
     }
 
     public void setPoint(int height) {
-        int[] rows = new int[] {6, 9, 12, 14, 17, 19, 22, 25};
-        GridPane.setConstraints(this.punt, 37, rows[height-1], 5, 5);
+        int[] rows = new int[]{6, 9, 12, 14, 17, 19, 22, 25};
+        GridPane.setConstraints(this.punt, 37, rows[height - 1], 5, 5);
     }
 
     public void addImageViewToView(int positie, ImageView imageView) {
-        int[][] allConstraints = new int[][] { { 2, 1 }, { 2, 11 }, { 2, 21 } };
+        int[][] allConstraints = new int[][]{{2, 1}, {2, 11}, {2, 21}};
 
         int[] constraints = allConstraints[positie - 1];
 
@@ -166,32 +189,32 @@ public class TableauView implements TableauObserver {
         this.view.getChildren().add(imageView);
     }
 
-    public void createGereedschap(int positie, int waarde) {
+    public void createGereedschap(int positie, Tool tool) {
         ImageView imageView = null;
-        if (waarde > 0) {
-            switch (positie) {
-                case 1:
-                    this.gereedschapview = new GereedschapView(waarde);
-                    imageView = this.gereedschapview.setScene();
-                    break;
-                case 2:
-                    this.gereedschapview1 = new GereedschapView(waarde);
-                    imageView = this.gereedschapview1.setScene();
-                    break;
-                case 3:
-                    this.gereedschapview2 = new GereedschapView(waarde);
-                    imageView = this.gereedschapview2.setScene();
-                    break;
-            }
-            addImageViewToView(positie, imageView);
+        switch (positie) {
+            case 1:
+                this.gereedschapview = new GereedschapView(tool, this);
+                imageView = this.gereedschapview.setScene();
+                break;
+            case 2:
+                this.gereedschapview1 = new GereedschapView(tool, this);
+                imageView = this.gereedschapview1.setScene();
+                break;
+            case 3:
+                this.gereedschapview2 = new GereedschapView(tool, this);
+                imageView = this.gereedschapview2.setScene();
+                break;
         }
+        addImageViewToView(positie, imageView);
     }
 
     @Override
-    public void update(TableauObservable to) {
-        int[] gereedschap = to.getTools();
-        for (int i = 0; i < gereedschap.length; i++) {
-            createGereedschap(i + 1, gereedschap[i]);
+    public void update(PlayerObservable po) {
+        ArrayList<Tool> tools = po.getTools();
+        int i = 1;
+        for (Tool tool : tools) {
+            createGereedschap(i, tool);
+            i++;
         }
     }
 }

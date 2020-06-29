@@ -1,10 +1,13 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.Kaart;
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
-import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
+import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
+import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
+import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -15,18 +18,18 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class BoardView {
+public class BoardView implements BoardObserver {
 	private BoardController controller;
 	private ArrayList<Button> beschavingsKaartButtons = new ArrayList<Button>();
 	private ArrayList<Button> hutKaartButtons = new ArrayList<Button>();
 	private Button toolStapel1;
 	private Button toolStapel2;
-	private BoardModel boardModel;
 	private GridPane view = new GridPane();
 	private String spelbordImage = "src/main/Resources/Backgrounds/spelbord2.jpg";
 	private ImageView imageView;
@@ -42,13 +45,24 @@ public class BoardView {
 	private ImageView speler2Image;
 	private ImageView speler3Image;
 	private ImageView speler4Image;
+	private ImageView speler1Token;
+	private ImageView speler2Token;
+	private ImageView speler3Token;
+	private ImageView speler4Token;
 	private TextField amountField;
 	private Button amountButton;
 	private Label amountLabel;
+	private Label beurtLabel;
 	private int location;
+	private List<ImageView> imageViews;
 
-	public BoardView(ArrayList<PlayerModel> players) {
-		this.controller = new BoardController(players);
+
+	//TODO fix try catch
+
+	public BoardView() {
+		this.controller = new BoardController();
+		this.imageViews = new ArrayList<>();
+
 		setupPane();
 	}
 
@@ -158,19 +172,19 @@ public class BoardView {
 		}
 		switch (array.size()) { // kaarten verdwijnen als ze niet aangevuld kunnen worden
 			case 3:
-				this.beschavingsKaartButtons.get(3).setVisible(false);
+				removeKaartButton(3);
 
 				break;
 			case 2:
-				this.beschavingsKaartButtons.get(2).setVisible(false);
+				removeKaartButton(2);
 
 				break;
 			case 1:
-				this.beschavingsKaartButtons.get(1).setVisible(false);
+				removeKaartButton(1);
 
 				break;
 			case 0:
-				this.beschavingsKaartButtons.get(0).setVisible(false);
+				removeKaartButton(0);
 
 				break;
 		}
@@ -234,9 +248,9 @@ public class BoardView {
 		assert speler1 != null;
 		Image Speler1 = new Image(speler1);
 		speler1Image = new ImageView(Speler1);
-		speler1Image.setFitHeight(30);
-		speler1Image.setFitWidth(30);
-		speler1Image.setVisible(false);
+		speler1Token = new ImageView(Speler1);
+		imageViews.add(speler1Image);
+		imageViews.add(speler1Token);
 
 		FileInputStream speler2 = null;
 		try {
@@ -248,9 +262,9 @@ public class BoardView {
 		assert speler2 != null;
 		Image Speler2 = new Image(speler2);
 		speler2Image = new ImageView(Speler2);
-		speler2Image.setFitHeight(30);
-		speler2Image.setFitWidth(30);
-		speler2Image.setVisible(false);
+		speler2Token = new ImageView(Speler2);
+		imageViews.add(speler2Image);
+		imageViews.add(speler2Token);
 
 		FileInputStream speler3 = null;
 		try {
@@ -262,9 +276,9 @@ public class BoardView {
 		assert speler3 != null;
 		Image Speler3 = new Image(speler3);
 		speler3Image = new ImageView(Speler3);
-		speler3Image.setFitHeight(30);
-		speler3Image.setFitWidth(30);
-		speler3Image.setVisible(false);
+		speler3Token = new ImageView(Speler3);
+		imageViews.add(speler3Image);
+		imageViews.add(speler3Token);
 
 		FileInputStream speler4 = null;
 		try {
@@ -276,11 +290,12 @@ public class BoardView {
 		assert speler4 != null;
 		Image Speler4 = new Image(speler4);
 		speler4Image = new ImageView(Speler4);
-		speler4Image.setFitHeight(30);
-		speler4Image.setFitWidth(30);
-		speler4Image.setVisible(false);
+		speler4Token = new ImageView(Speler4);
+		imageViews.add(speler4Image);
+		imageViews.add(speler4Token);
 
 		String styleLabel = "-fx-font-size: 20px; -fx-font-weight: bold";
+
 
 		// Stamleden hoeveelheden
 		speler1Label = new Label("  ");
@@ -299,11 +314,14 @@ public class BoardView {
 		speler4Label.setStyle(styleLabel);
 		speler4Label.setVisible(false);
 
+		makePlayerToken();
+
 		String style = "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;";
 
+		String textStyle = "-fx-font-size: 25px; -fx-text-fill: #f6e5b6; -fx-background-color: #dfa231; ";
 		// invoeren aantal stamleden
 		amountLabel = new Label("Hoeveel: ");
-		amountLabel.setStyle("-fx-font-size: 25px; -fx-text-fill: #f6e5b6; -fx-background-color: #dfa231; ");
+		amountLabel.setStyle(textStyle);
 		amountLabel.setVisible(false);
 		GridPane.setConstraints(amountLabel, 18, 18, 5, 3);
 
@@ -317,15 +335,16 @@ public class BoardView {
 		amountButton.setVisible(false);
 		GridPane.setConstraints(amountButton, 30, 18, 5, 3);
 
-		/*
-		 * locaties jacht: onbeperkt hut: 2 hutkaart: 1 beschavingskaart: 1 gereedschap:
-		 * 1 akkerbouw: 1 steen, leem, goud, hout: 7
-		 */
+		// laten zijn welke speler aan de beurt is.
+		beurtLabel = new Label(controller.getPlayer().getNaam() + " is aan de beurt.");
+		beurtLabel.setStyle(textStyle);
+		GridPane.setConstraints(beurtLabel, 2, 3, 50, 3);
 
 		this.createKaartButtons();
 		this.createHutStapels();
 		this.createToolButton(0);
 		this.createToolButton(1);
+
 		// Buttons
 
 		GridPane.setConstraints(this.beschavingsKaartButtons.get(0), 42, 40, 1, 1);
@@ -371,7 +390,9 @@ public class BoardView {
 
 		Button endTurn = new Button("Beurt eindigen");
 		endTurn.setStyle(style);
-		GridPane.setConstraints(endTurn, 22, 5, 15, 1);
+		GridPane.setConstraints(endTurn, 22, 7, 15, 1);
+
+		playerColor(true);
 		// TODO maak dit nog kleiner
 		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
 			@Override
@@ -379,154 +400,84 @@ public class BoardView {
 				if (actionEvent.getSource() == hutKaartButtons.get(0)) {
 					List<StaticHut> array = controller.onHutButtonClick(0); // TODO verplaatsen naar acties
 					renderNewHutten(array, 0);
-					resetTextLabel();
 
 					hutKaart1();
-
-					setSpelersVisable(true);
-					setLabelTo1();
-					controller.onButtonClick(8);
+					labelsSetter(8);
 				} else if (actionEvent.getSource() == hutKaartButtons.get(1)) {
 					List<StaticHut> array = controller.onHutButtonClick(1); // TODO verplaatsen naar acties
 					renderNewHutten(array, 1);
 
-					resetTextLabel();
-
 					hutKaart2();
-
-					setSpelersVisable(true);
-					setLabelTo1();
-					controller.onButtonClick(9);
+					labelsSetter(9);
 				} else if (actionEvent.getSource() == hutKaartButtons.get(2)) {
 					List<StaticHut> array = controller.onHutButtonClick(2); // TODO verplaatsen naar acties
 					renderNewHutten(array, 2);
 
-					resetTextLabel();
-
 					hutKaart3();
-
-					setSpelersVisable(true);
-					setLabelTo1();
-					controller.onButtonClick(10);
+					labelsSetter(10);
 				} else if (actionEvent.getSource() == hutKaartButtons.get(3)) {
 					List<StaticHut> array = controller.onHutButtonClick(3); // TODO verplaatsen naar acties
 					renderNewHutten(array, 3);
 
-					resetTextLabel();
-
 					hutKaart4();
-
-					setSpelersVisable(true);
-					setLabelTo1();
-					controller.onButtonClick(11);
+					labelsSetter(11);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(0)) {
-					resetTextLabel();
 					List<Kaart> array = controller.onKaartButtonClick(0); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
-
+					ViewManager.loadPopupWindow(new ResourceView());
 					beschavingsKaart1();
-
-					setSpelersVisable(true);
-					setLabelTo1();
-					controller.onButtonClick(12);
+					labelsSetter(12);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(1)) {
-					resetTextLabel();
 					List<Kaart> array = controller.onKaartButtonClick(1); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
-
+					ViewManager.loadPopupWindow(new ResourceView());
 					beschavingsKaart2();
-
-					setSpelersVisable(true);
-					setLabelTo1();
-					controller.onButtonClick(13);
+					labelsSetter(13);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(2)) {
-					resetTextLabel();
 					List<Kaart> array = controller.onKaartButtonClick(2); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
-
+					ViewManager.loadPopupWindow(new ResourceView());
 					beschavingsKaart3();
-
-					setSpelersVisable(true);
-					setLabelTo1();
-					controller.onButtonClick(14);
+					labelsSetter(14);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(3)) {
-					resetTextLabel();
 					List<Kaart> array = controller.onKaartButtonClick(3); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
-
+					ViewManager.loadPopupWindow(new ResourceView());
 					beschavingsKaart4();
-
-					setSpelersVisable(true);
-					setLabelTo1();
-					controller.onButtonClick(15);
+					labelsSetter(15);
 				} else if (actionEvent.getSource() == hutButton) {
-					resetTextLabel();
-
 					hutKaart();
-
-					setSpelersVisable(true);
-					setLabelTo1();
-					controller.onButtonClick(6);
-				} else if (actionEvent.getSource() == toolStapel1) {
-					resetTextLabel();
-
+					labelsSetter(6);
+				} else if (actionEvent.getSource() == toolStapel1 || actionEvent.getSource() == toolStapel2) {
 					gereedschapKaart();
-
-					setSpelersVisable(true);
-					setLabelTo1();
-					controller.onButtonClick(7);
-				} else if (actionEvent.getSource() == toolStapel2) {
-					resetTextLabel();
-
-					gereedschapKaart();
-
-					setSpelersVisable(true);
-					setLabelTo1();
-					controller.onButtonClick(7);
+					labelsSetter(7);
 				} else if (actionEvent.getSource() == akkerbouwButton) {
-					resetTextLabel();
-
 					akkerbouwKaart();
-
-					setSpelersVisable(true);
-					setLabelTo1();
-					controller.onButtonClick(5);
+					labelsSetter(5);
 				} else if (actionEvent.getSource() == jachtButton) {
-					resetTextLabel();
-
 					jachtKaart();
-
-					phaseCheck(0);
+					labelsSetter(0);
 				} else if (actionEvent.getSource() == bosButton) {
-					resetTextLabel();
-
 					bosKaart();
-
-					phaseCheck(1);
+					labelsSetter(1);
 				} else if (actionEvent.getSource() == leemGroeveButton) {
-					resetTextLabel();
-
 					leemKaart();
-
-					phaseCheck(2);
+					labelsSetter(2);
 				} else if (actionEvent.getSource() == steenGroeveButton) {
-					resetTextLabel();
-
 					steenKaart();
-
-					phaseCheck(3);
+					labelsSetter(3);
 				} else if (actionEvent.getSource() == rivierButton) {
-					resetTextLabel();
-
 					rivierKaart();
-
-					phaseCheck(4);
+					labelsSetter(4);
 				} else if (actionEvent.getSource() == endTurn) {
+					playerColor(false);
 					if (controller.vraagPhase() == 1) {
 						controller.endTurn();
 					} else {
 						controller.EndTurnPhase2();
 					}
+					beurtLabel.setText(controller.getPlayer().getNaam() + " is aan de beurt.");
+					playerColor(true);
 				}
 			}
 		};
@@ -540,15 +491,11 @@ public class BoardView {
 						aantalStamleden = Integer.parseInt(amountField.getText());
 						if (controller.stamledenCheck(location, aantalStamleden)) {
 							controller.onResourceButtonClick(location, aantalStamleden);
-							System.out.println(aantalStamleden);
 							setInputVisable(false);
-							speler1Label.setText(" " + aantalStamleden);
-							speler2Label.setText(" " + aantalStamleden);
-							speler3Label.setText(" " + aantalStamleden);
-							speler4Label.setText(" " + aantalStamleden);
+							checkStamleden(location);
 						}
 					} catch (Exception e) {
-						System.out.println("test2");
+						System.out.println(e);
 					}
 				}
 			}
@@ -579,18 +526,34 @@ public class BoardView {
 				beschavingsKaartButtons.get(1), beschavingsKaartButtons.get(2), beschavingsKaartButtons.get(3),
 				hutButton, toolStapel1, toolStapel2, akkerbouwButton, jachtButton, bosButton, leemGroeveButton,
 				steenGroeveButton, rivierButton, endTurn, speler1Image, speler2Image, speler3Image, speler4Image,
-				speler1Label, speler2Label, speler3Label, speler4Label, amountField, amountLabel, amountButton);
+				speler1Label, speler2Label, speler3Label, speler4Label, speler1Token, speler2Token, speler3Token, speler4Token, amountField, amountLabel, amountButton, beurtLabel);
 	}
 
-	private void phaseCheck(int location) {
-		this.location = location;
+	private void labelsSetter(int location){
+		checkStamleden(location);
 		setSpelersVisable(true);
-		if (controller.vraagPhase() == 1){
-			setInputVisable(true);
+		if (location < 5){
+			phaseCheck(location);
 		} else {
-			controller.resolveResource(location);
+			controller.onButtonClick(location);
 		}
+		checkStamleden(location);
+
 	}
+
+	private void playerColor(boolean seen){		
+		int i = 1;
+		for (PlayerModel player : controller.getPlayers()) {
+			if (player.equals(controller.getPlayer())){
+				GridPane.setConstraints(imageViews.get(i), 2, 6, 1, 1);
+				imageViews.get(i).setVisible(seen);
+			
+			}
+			i += 2;
+			
+		}		
+	}
+
 	private void setSpelersVisable(boolean visable) {
 		speler1Image.setVisible(visable);
 		speler1Label.setVisible(visable);
@@ -612,20 +575,6 @@ public class BoardView {
 
 		amountField.setEditable(visable);
 		amountField.setVisible(visable);
-	}
-
-	private void resetTextLabel() {
-		speler1Label.setText("");
-		speler2Label.setText("");
-		speler3Label.setText("");
-		speler4Label.setText("");
-	}
-
-	private void setLabelTo1() {
-		speler1Label.setText(" 1");
-		speler2Label.setText(" 1");
-		speler3Label.setText(" 1");
-		speler4Label.setText(" 1");
 	}
 
 	private void hutKaart1() {
@@ -851,5 +800,56 @@ public class BoardView {
 		GridPane.setConstraints(speler4Image, 39, 23, 2, 2);
 		GridPane.setConstraints(speler4Label, 39, 23, 1, 1);
 	}
+
+	private void phaseCheck(int location) {
+		this.location = location;
+		setSpelersVisable(true);
+		if (controller.vraagPhase() == 1) {
+			setInputVisable(true);
+		} else {
+			controller.resolveResource(location);
+			checkStamleden(location);
+		}
+	}
+
+	private void checkStamleden(int location) {
+
+		for (int i = 0; i < 4; i++) {
+			int stamledenGeplaats = controller.getPlayers().get(i).getPositie(location);
+			if (i == 0) {
+				speler1Label.setText("" + stamledenGeplaats);
+			}
+
+			else if (i == 1) {
+				speler2Label.setText("" + stamledenGeplaats);
+			}
+
+			else if (i == 2) {
+				speler3Label.setText("" + stamledenGeplaats);
+			}
+
+			else if (i == 3) {
+				speler4Label.setText("" + stamledenGeplaats);
+			}
+		}
+	}
+
+	private void makePlayerToken(){
+		for (ImageView imageview : imageViews){
+			imageview.setFitHeight(30);
+			imageview.setFitWidth(30);
+			imageview.setVisible(false);
+		}
 	
+	}
+
+	@Override
+	public void update(BoardObservable boardobserver) {
+
+	}
+
+	// Voor de ViewManager.
+	public ArrayList<PlayerModel> getPlayers() {
+		return this.controller.getPlayers();
+	}
 }

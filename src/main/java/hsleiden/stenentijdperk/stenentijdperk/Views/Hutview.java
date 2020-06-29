@@ -3,6 +3,7 @@ package hsleiden.stenentijdperk.stenentijdperk.Views;
 import hsleiden.stenentijdperk.stenentijdperk.App;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
 import java.net.URISyntaxException;
 
 public class Hutview {
@@ -22,13 +23,11 @@ public class Hutview {
         Image image = null;
         try {
             image = new Image(String.valueOf(App.class.getResource(resource).toURI()));
-        } catch(URISyntaxException e) {
+            this.imageView = new ImageView(image);
+            this.imageView.setFitHeight(165);
+            this.imageView.setFitWidth(115);
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-
-        assert image != null;
-        this.imageView = new ImageView(image);
-        this.imageView.setFitHeight(165);
-        this.imageView.setFitWidth(115);
     }
 }

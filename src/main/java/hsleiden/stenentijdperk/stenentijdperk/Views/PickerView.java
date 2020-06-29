@@ -2,32 +2,47 @@ package hsleiden.stenentijdperk.stenentijdperk.Views;
 
 import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
+
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-// Constraints for pickerview
-// GridPane.setConstraints(pickerView, 2, 2, 15, 11);
-
 public class PickerView {
     private VBox vBox;
-    private ScrollPane view;
+    private ScrollPane scrollPane;
+    private ArrayList<PlayerModel> playerModels;
+    private Stage view;
 
-    public PickerView() {
+    public PickerView(ArrayList<PlayerModel> playerModels) {
+        this.playerModels = playerModels;
         setupPane();
+        generateButtons(playerModels);
     }
 
     public void createPane() {
-        this.view = new ScrollPane();
-        this.view.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        this.view.setStyle("-fx-background-color: black");
-        this.view.setContent(this.vBox);
+        this.scrollPane = new ScrollPane();
+        this.scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        this.scrollPane.setStyle("-fx-background-color: black");
+        this.scrollPane.setContent(this.vBox);
     }
 
-    public ScrollPane setScene() {
+    public void createStage() {
+        this.view = new Stage();
+        this.view.setTitle("Picker");
+        this.view.setResizable(false);
+        this.view.setScene(new Scene(this.scrollPane, 238, 600));
+        this.view.setOnCloseRequest(event -> {
+            ViewManager.loadPickerView(playerModels);
+        });
+    }
+
+    public Stage setScene() {
         createPane();
+        createStage();
         return this.view;
     }
 
@@ -36,7 +51,6 @@ public class PickerView {
     }
 
     // Functions that create buttons based on playermodels
-
     public void generateButtons(ArrayList<PlayerModel> playerModels) {
         Button button = new Button("Spelregels");
         button.setMinSize(237, 43);
