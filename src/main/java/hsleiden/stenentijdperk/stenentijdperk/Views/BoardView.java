@@ -838,7 +838,6 @@ public class BoardView implements BoardObserver {
 			imageview.setFitWidth(30);
 			imageview.setVisible(false);
 		}
-	
 	}
 
 	@Override
