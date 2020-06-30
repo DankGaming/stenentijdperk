@@ -363,7 +363,7 @@ public class BoardView implements BoardObserver {
 		spelerNaam4.setStyle(spelerNaamLabels);
 		GridPane.setConstraints(spelerNaam4, 44 ,9, 3, 1);
 
-		//Speler Punten
+		//Speler Punten TODO Speler punten functie
 		spelerPunten1 = new Label("punten");
 		spelerPunten1.setStyle(spelerNaamLabels);
 		GridPane.setConstraints(spelerPunten1, 47, 3, 3, 1);
