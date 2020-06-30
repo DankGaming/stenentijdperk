@@ -4,6 +4,7 @@ import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
+import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
@@ -26,6 +27,7 @@ import java.util.List;
 
 public class BoardView implements BoardObserver {
 	private BoardController controller;
+	private BoardModel boardModel;
 	private ArrayList<Button> beschavingsKaartButtons = new ArrayList<Button>();
 	private ArrayList<Button> hutKaartButtons = new ArrayList<Button>();
 	private Button toolStapel1;
@@ -53,6 +55,14 @@ public class BoardView implements BoardObserver {
 	private Button amountButton;
 	private Label amountLabel;
 	private Label beurtLabel;
+	private Label spelerNaam1;
+	private Label spelerNaam2;
+	private Label spelerNaam3;
+	private Label spelerNaam4;
+	private Label spelerPunten1;
+	private Label spelerPunten2;
+	private Label spelerPunten3;
+	private Label spelerPunten4;
 	private int location;
 	private List<ImageView> imageViews;
 
@@ -334,6 +344,42 @@ public class BoardView implements BoardObserver {
 		amountButton.setVisible(false);
 		GridPane.setConstraints(amountButton, 30, 18, 5, 3);
 
+		String spelerNaamLabels = "-fx-font-size: 20px; -fx-font-weight: 700;";
+
+		//Speler Namem
+		spelerNaam1 = new Label(controller.getPlayers().get(0).getNaam());
+		spelerNaam1.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerNaam1, 44 ,3, 3, 1);
+
+		spelerNaam2 = new Label(controller.getPlayers().get(1).getNaam());
+		spelerNaam2.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerNaam2, 44 ,5, 3, 1);
+
+		spelerNaam3 = new Label(controller.getPlayers().get(2).getNaam());
+		spelerNaam3.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerNaam3, 44 ,7, 3, 1);
+
+		spelerNaam4 = new Label(controller.getPlayers().get(3).getNaam());
+		spelerNaam4.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerNaam4, 44 ,9, 3, 1);
+
+		//Speler Punten
+		spelerPunten1 = new Label("punten");
+		spelerPunten1.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerPunten1, 47, 3, 3, 1);
+
+		spelerPunten2 = new Label("punten");
+		spelerPunten2.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerPunten2, 47, 5, 3, 1);
+
+		spelerPunten3 = new Label("punten");
+		spelerPunten3.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerPunten3, 47, 7, 3, 1);
+
+		spelerPunten4 = new Label("punten");
+		spelerPunten4.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerPunten4, 47, 9, 3, 1);
+
 		// laten zijn welke speler aan de beurt is.
 		beurtLabel = new Label(controller.getPlayer().getNaam() + " is aan de beurt.");
 		beurtLabel.setStyle(textStyle);
@@ -524,7 +570,8 @@ public class BoardView implements BoardObserver {
 				beschavingsKaartButtons.get(1), beschavingsKaartButtons.get(2), beschavingsKaartButtons.get(3),
 				hutButton, toolStapel1, toolStapel2, akkerbouwButton, jachtButton, bosButton, leemGroeveButton,
 				steenGroeveButton, rivierButton, endTurn, speler1Image, speler2Image, speler3Image, speler4Image,
-				speler1Label, speler2Label, speler3Label, speler4Label, speler1Token, speler2Token, speler3Token, speler4Token, amountField, amountLabel, amountButton, beurtLabel);
+				speler1Label, speler2Label, speler3Label, speler4Label, speler1Token, speler2Token, speler3Token, speler4Token,
+				amountField, amountLabel, amountButton, beurtLabel, spelerNaam1, spelerNaam2, spelerNaam3, spelerNaam4);
 	}
 
 	private void labelsSetter(int location){
