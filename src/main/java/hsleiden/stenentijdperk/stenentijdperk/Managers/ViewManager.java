@@ -68,7 +68,7 @@ public class ViewManager {
         closePopupWindow();
 
         currentView = new GameOverView(playerModels).setScene();
-        showView(600, 600, "Game over");
+        showView(650, 400, "Game over");
     }
 
     public static void loadSpelregelView() {
