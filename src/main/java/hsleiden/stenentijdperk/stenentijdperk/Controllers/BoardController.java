@@ -211,7 +211,7 @@ public class BoardController {
                 playercontroller.setVillagers(player, playercontroller.getMaxVillagers(player));
             }
             if (boardmodel.getWincondition()) {
-            endGame();
+                endGame();
             }  
         }
     }
