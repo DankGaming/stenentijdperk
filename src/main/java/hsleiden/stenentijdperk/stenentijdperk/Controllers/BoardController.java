@@ -354,7 +354,8 @@ public class BoardController {
                 && checkResourceKost(3, kost)) {
             int i = 1;
             for (Integer amount : kost) {
-                boardmodel.getPlayer().reduceResources(i, amount);
+                playercontroller.reduceResource(boardmodel.getPlayer(), i, amount);
+                boardmodel.changeHoeveelheid(i, amount);
                 i++;
             }
             return true;
