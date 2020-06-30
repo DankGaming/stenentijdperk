@@ -57,11 +57,11 @@ public class BoardView implements BoardObserver {
 	private List<ImageView> imageViews  = new ArrayList<>();
 	private List<Label> labels = new ArrayList<>();
 
-
-	//TODO fix try catch
+	// TODO fix try catch
 
 	public BoardView() {
 		this.controller = new BoardController();
+		this.controller.registerObserver(this);
 
 		setupPane();
 	}
@@ -121,10 +121,10 @@ public class BoardView implements BoardObserver {
 	}
 
 	private void createHutStapels() {
-		for (int i = 0; i < 4; i++) { // maakt 4 beschavingskaart buttons
+		for (int i = 0; i < 4; i++) { // maakt 4 hutkaart buttons
 			FileInputStream input = null;
 			try {
-				input = new FileInputStream(this.controller.getHut(i, 0).getPath());
+				input = new FileInputStream(this.controller.getHut(i).getPath());
 			} catch (FileNotFoundException fileNotFoundException) {
 				System.out.println(fileNotFoundException);
 			}
@@ -138,24 +138,27 @@ public class BoardView implements BoardObserver {
 		}
 	}
 
-	private void renderNewHutten(List<StaticHut> array, int index) {
-		if (array.size() < 1) {
-			this.hutKaartButtons.get(index).setVisible(false);
-		} else {
-			this.hutKaartButtons.get(index).setVisible(true);
-			FileInputStream input = null;
-			try {
-				input = new FileInputStream(array.get(0).getPath());
-			} catch (FileNotFoundException fileNotFoundException) {
-				System.out.println(fileNotFoundException);
-			}
+	private void renderNewHutten() {
+		for (int i = 0; i < 4; i++) { // maakt 4 hutkaart buttons
+			List<StaticHut> hutStapel = controller.getHutStapel(i);
+			if (hutStapel.size() < 1) {
+				this.hutKaartButtons.get(i).setVisible(false);
+			} else {
+				this.hutKaartButtons.get(i).setVisible(true);
+				FileInputStream input = null;
+				try {
+					input = new FileInputStream(hutStapel.get(0).getPath());
+				} catch (FileNotFoundException fileNotFoundException) {
+					System.out.println(fileNotFoundException);
+				}
 
-			assert input != null;
-			Image image = new Image(input);
-			ImageView imageView = new ImageView(image);
-			imageView.setFitHeight(100);
-			imageView.setPreserveRatio(true);
-			this.hutKaartButtons.get(index).setGraphic(imageView);
+				assert input != null;
+				Image image = new Image(input);
+				ImageView imageView = new ImageView(image);
+				imageView.setFitHeight(100);
+				imageView.setPreserveRatio(true);
+				this.hutKaartButtons.get(i).setGraphic(imageView);
+			}
 		}
 
 	}
@@ -296,7 +299,6 @@ public class BoardView implements BoardObserver {
 
 		String styleLabel = "-fx-font-size: 20px; -fx-font-weight: bold";
 
-
 		// Stamleden hoeveelheden
 		speler1Label = new Label("  ");
 		speler1Label.setStyle(styleLabel);
@@ -402,28 +404,17 @@ public class BoardView implements BoardObserver {
 			@Override
 			public void handle(ActionEvent actionEvent) {
 				if (actionEvent.getSource() == hutKaartButtons.get(0)) {
-					List<StaticHut> array = controller.onHutButtonClick(0); // TODO verplaatsen naar acties
-					renderNewHutten(array, 0);
-					makeConstraints(20, 40, 2);
-					labelsSetter(11);
-				} else if (actionEvent.getSource() == hutKaartButtons.get(1)) {
-					List<StaticHut> array = controller.onHutButtonClick(1); // TODO verplaatsen naar acties
-					renderNewHutten(array, 1);
-
-					makeConstraints(15, 40, 2);
-					labelsSetter(10);
-				} else if (actionEvent.getSource() == hutKaartButtons.get(2)) {
-					List<StaticHut> array = controller.onHutButtonClick(2); // TODO verplaatsen naar acties
-					renderNewHutten(array, 2);
-
-					makeConstraints(10, 40, 2);
-					labelsSetter(9);
-				} else if (actionEvent.getSource() == hutKaartButtons.get(3)) {
-					List<StaticHut> array = controller.onHutButtonClick(3); // TODO verplaatsen naar acties
-					renderNewHutten(array, 3);
-
-					makeConstraints(5, 40, 2);	
+					makeConstraints(20, 40, 2);	
 					labelsSetter(8);
+				} else if (actionEvent.getSource() == hutKaartButtons.get(1)) {
+					makeConstraints(15, 40, 2);
+					labelsSetter(9);
+				} else if (actionEvent.getSource() == hutKaartButtons.get(2)) {
+					makeConstraints(10, 40, 2);
+					labelsSetter(10);
+				} else if (actionEvent.getSource() == hutKaartButtons.get(3)) {
+					makeConstraints(5, 40, 2);
+					labelsSetter(11);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(0)) {
 					List<Kaart> array = controller.onKaartButtonClick(0); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
@@ -529,13 +520,14 @@ public class BoardView implements BoardObserver {
 				beschavingsKaartButtons.get(1), beschavingsKaartButtons.get(2), beschavingsKaartButtons.get(3),
 				hutButton, toolStapel1, toolStapel2, akkerbouwButton, jachtButton, bosButton, leemGroeveButton,
 				steenGroeveButton, rivierButton, endTurn, speler1Image, speler2Image, speler3Image, speler4Image,
-				speler1Label, speler2Label, speler3Label, speler4Label, speler1Token, speler2Token, speler3Token, speler4Token, amountField, amountLabel, amountButton, beurtLabel);
+				speler1Label, speler2Label, speler3Label, speler4Label, speler1Token, speler2Token, speler3Token,
+				speler4Token, amountField, amountLabel, amountButton, beurtLabel);
 	}
 
-	private void labelsSetter(int location){
+	private void labelsSetter(int location) {
 		checkStamleden(location);
 		setSpelersVisable(true);
-		if (location < 5){
+		if (location < 5) {
 			phaseCheck(location);
 		} else {
 			controller.onButtonClick(location);
@@ -544,17 +536,17 @@ public class BoardView implements BoardObserver {
 
 	}
 
-	private void playerColor(boolean seen){		
+	private void playerColor(boolean seen) {
 		int i = 1;
 		for (PlayerModel player : controller.getPlayers()) {
-			if (player.equals(controller.getPlayer())){
+			if (player.equals(controller.getPlayer())) {
 				GridPane.setConstraints(imageViews.get(i), 2, 6, 1, 1);
 				imageViews.get(i).setVisible(seen);
-			
+
 			}
 			i += 2;
-			
-		}		
+
+		}
 	}
 
 	private void setSpelersVisable(boolean visable) {
@@ -634,18 +626,19 @@ public class BoardView implements BoardObserver {
 		}
 	}
 
-	private void makePlayerToken(){
-		for (ImageView imageview : imageViews){
+	private void makePlayerToken() {
+		for (ImageView imageview : imageViews) {
 			imageview.setFitHeight(30);
 			imageview.setFitWidth(30);
 			imageview.setVisible(false);
 		}
-	
+
 	}
 
 	@Override
 	public void update(BoardObservable boardobserver) {
-
+		System.out.println("render new hutten");
+		renderNewHutten();
 	}
 
 	// Voor de ViewManager.
