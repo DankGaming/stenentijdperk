@@ -55,6 +55,7 @@ public class BoardView implements BoardObserver {
 	private Label beurtLabel;
 	private int location;
 	private List<ImageView> imageViews;
+	private List<Label> labels;
 
 	// TODO fix try catch
 
@@ -65,6 +66,7 @@ public class BoardView implements BoardObserver {
 		this.beschavingsKaartButtons = new ArrayList<>();
 		this.imageViews = new ArrayList<>();
 		this.hutKaartButtons = new ArrayList<Button>();
+		this.labels = new ArrayList<>();
 
 		setupPane();
 	}
@@ -306,18 +308,22 @@ public class BoardView implements BoardObserver {
 		speler1Label = new Label("  ");
 		speler1Label.setStyle(styleLabel);
 		speler1Label.setVisible(false);
+		labels.add(speler1Label);
 
 		speler2Label = new Label("  ");
 		speler2Label.setStyle(styleLabel);
 		speler2Label.setVisible(false);
+		labels.add(speler2Label);
 
 		speler3Label = new Label("  ");
 		speler3Label.setStyle(styleLabel);
 		speler3Label.setVisible(false);
+		labels.add(speler3Label);
 
 		speler4Label = new Label("  ");
 		speler4Label.setStyle(styleLabel);
 		speler4Label.setVisible(false);
+		labels.add(speler4Label);
 
 		makePlayerToken();
 
