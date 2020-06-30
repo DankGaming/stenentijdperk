@@ -17,6 +17,7 @@ public class LobbyController {
     public void setLobbyId(int id, PlayerModel player) {
         this.lobbyId = id;
         this.p = player;
+        this.p.setPlayerNumber("temp");
         lobbyModel.changeLobbyId(id);
         FirebaseController.listenForLobbyUpdates(String.valueOf(id));
         FirebaseController.listenForPlayerUpdates(String.valueOf(id));

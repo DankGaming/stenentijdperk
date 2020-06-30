@@ -158,6 +158,7 @@ public class BoardController {
                 boardmodel.setPhase(2);
                 int turnCheck = (boardmodel.getTurn() - 1) % 4;
                 boardmodel.setPlayer(players.get(turnCheck));
+                FirebaseController.updateBoard(String.valueOf(this.players.get(0).getLobby()), boardmodel);
                 // TODO Dit moet een soort pop up worden.
                 System.out.println("Nu komen de acties");
             }
@@ -207,6 +208,8 @@ public class BoardController {
     }
 
     public int vraagPhase() {
+        int phase = boardmodel.getPhase();
+        boardmodel = FirebaseController.getBoard();
         return boardmodel.getPhase();
     }
 
@@ -296,6 +299,9 @@ public class BoardController {
             if (boardmodel.getPlayer().equals(players.get(j))) { // Bepaling welke player aan de beurt is
                 i = j;
                 break;
+            }
+            else{
+                FirebaseController.getBoard();
             }
         }
         return i;

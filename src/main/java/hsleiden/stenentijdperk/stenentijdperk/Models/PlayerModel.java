@@ -52,6 +52,7 @@ public class PlayerModel implements PlayerObservable {
 
     public void setPunten(int punten) {
         this.punten = punten;
+        if(this.getPlayerNumber() != null)
         FirebaseController.updateDocument(String.valueOf(this.getLobby()), this.getPlayerNumber(), "punten", this.punten);
     }
 
@@ -61,6 +62,9 @@ public class PlayerModel implements PlayerObservable {
 
     public void increaseToolLevel(int index) {
         this.tools.get(index).increaseLevel();
+        if(this.getPlayerNumber() != null) {
+            FirebaseController.updateDocument(String.valueOf(this.getLobby()), this.getPlayerNumber(), "tools", this.tools);
+        }
     }
 
     public int getResource(int index) {
@@ -69,32 +73,38 @@ public class PlayerModel implements PlayerObservable {
 
     public void setResource(int index, int resources) {
         this.resources.set(index, resources);
+        if(this.getPlayerNumber() != null)
         FirebaseController.updateDocumentList(String.valueOf(this.getLobby()), this.getPlayerNumber(), "resources", this.resources);
     }
 
     public void addResources(int index, int resources) {
         this.resources.set(index, this.resources.get(index) + resources);
+        if(this.getPlayerNumber() != null)
         FirebaseController.updateDocumentList(String.valueOf(this.getLobby()), this.getPlayerNumber(), "resources", this.resources);
     }
 
     public void reduceResources(int index, int resources) {
         this.resources.set(index, this.resources.get(index) - resources);
+        if(this.getPlayerNumber() != null)
         FirebaseController.updateDocumentList(String.valueOf(this.getLobby()), this.getPlayerNumber(), "resources", this.resources);
     }
 
     public void addMaxVillagers() {
         this.maxVillagers += 1;
+        if(this.getPlayerNumber() != null)
         FirebaseController.updateDocument(String.valueOf(this.getLobby()), this.getPlayerNumber(), "maxVillagers", this.maxVillagers);
     }
 
     public void increaseGraan() {
         this.graan += 1;
+        if(this.getPlayerNumber() != null)
         FirebaseController.updateDocument(String.valueOf(this.getLobby()), this.getPlayerNumber(), "graan", this.graan);
     }
 
     public void addTool() {
         Tool tool = new Tool();
         tools.add(tool);
+        if(this.getPlayerNumber() != null)
         FirebaseController.updateDocument(String.valueOf(this.getLobby()), this.getPlayerNumber(), "tools", this.tools);
     }
 
@@ -104,6 +114,7 @@ public class PlayerModel implements PlayerObservable {
 
     public void setPosities(List<Integer> pos) {
         this.posities = pos;
+        if(this.getPlayerNumber() != null)
         FirebaseController.updateDocumentList(String.valueOf(this.getLobby()), this.getPlayerNumber(), "posities", this.posities);
     }
 
@@ -113,6 +124,7 @@ public class PlayerModel implements PlayerObservable {
 
     public void setKaarten(ArrayList<Kaart> kaarten) {
         this.kaarten = kaarten;
+        if(this.getPlayerNumber() != null)
         FirebaseController.setPlayerKaarten(String.valueOf(this.getLobby()), this.getPlayerNumber(), "kaarten", this.kaarten);
     }
     public void addKaarten(Kaart kaart){
@@ -124,6 +136,7 @@ public class PlayerModel implements PlayerObservable {
 
     public void setHutjes(ArrayList<StaticHut> hutjes) {
         this.hutjes = hutjes;
+        if(this.getPlayerNumber() != null)
         FirebaseController.updateDocumentList(String.valueOf(this.getLobby()), this.getPlayerNumber(), "hutjes", this.hutjes);
     }
 
@@ -134,6 +147,7 @@ public class PlayerModel implements PlayerObservable {
     public void setMultiplier(List<Integer> multiplier) {
         this.multiplier = multiplier;
         System.out.println("Mtp: " + String.valueOf(this.getLobby()) + " " + this.getPlayerNumber() + " " + this.multiplier);
+        if(this.getPlayerNumber() != null)
         FirebaseController.updateDocumentList(String.valueOf(this.getLobby()), this.getPlayerNumber(), "multiplier", this.multiplier);
     }
 
@@ -159,6 +173,7 @@ public class PlayerModel implements PlayerObservable {
 
     public void setVillagers(int villagers) {
         this.villagers = villagers;
+        if(this.getPlayerNumber() != null)
         FirebaseController.updateDocument(String.valueOf(this.getLobby()), this.getPlayerNumber(), "villagers", this.villagers);
     }
 
@@ -181,6 +196,7 @@ public class PlayerModel implements PlayerObservable {
 
     public void setTools(ArrayList<Tool> tools) {
         this.tools = tools;
+        if(this.getPlayerNumber() != null)
         FirebaseController.updateDocument(String.valueOf(this.getLobby()), this.getPlayerNumber(), "tools", this.tools);
     }
 
@@ -190,6 +206,7 @@ public class PlayerModel implements PlayerObservable {
 
     public void setResource(List<Integer> resources) {
         this.resources = resources;
+        if(this.getPlayerNumber() != null)
         FirebaseController.updateDocumentList(String.valueOf(this.getLobby()), this.getPlayerNumber(), "resources", this.resources);
     }
 
@@ -199,6 +216,7 @@ public class PlayerModel implements PlayerObservable {
 
     public void setPositie(int index, int posities) {
         this.posities.set(index, posities);
+        if(this.getPlayerNumber() != null)
         FirebaseController.updateDocumentList(String.valueOf(this.getLobby()), this.getPlayerNumber(), "posities", this.posities);
     }
 
