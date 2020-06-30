@@ -30,9 +30,6 @@ public class BoardModel implements BoardObservable {
     private List<StaticHut> hutStapel3 = new ArrayList<StaticHut>();
     private List<StaticHut> hutStapel4 = new ArrayList<StaticHut>();
     private List<StaticHut> hutStapel5 = new ArrayList<StaticHut>();
-    private BoardController controller;
-    private String LabelText;
-    private PlayerController playerController;
     private int phase;
     private ArrayList<StaticHut> hutjes = new ArrayList<>();
     private ArrayList<Resource> locaties = new ArrayList<>();
