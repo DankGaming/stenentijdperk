@@ -559,7 +559,8 @@ public class BoardView implements BoardObserver {
 				hutButton, toolStapel1, toolStapel2, akkerbouwButton, jachtButton, bosButton, leemGroeveButton,
 				steenGroeveButton, rivierButton, endTurn, speler1Image, speler2Image, speler3Image, speler4Image,
 				speler1Label, speler2Label, speler3Label, speler4Label, speler1Token, speler2Token, speler3Token, speler4Token,
-				amountField, amountLabel, amountButton, beurtLabel, spelerNaam1, spelerNaam2, spelerNaam3, spelerNaam4);
+				amountField, amountLabel, amountButton, beurtLabel, spelerNaam1, spelerNaam2, spelerNaam3, spelerNaam4, spelerPunten1,
+				spelerPunten2, spelerPunten3, spelerPunten4);
 	}
 
 	private void labelsSetter(int location) {
