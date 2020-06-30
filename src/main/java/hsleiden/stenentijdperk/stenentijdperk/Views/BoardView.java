@@ -363,20 +363,20 @@ public class BoardView implements BoardObserver {
 		spelerNaam4.setStyle(spelerNaamLabels);
 		GridPane.setConstraints(spelerNaam4, 44 ,9, 3, 1);
 
-		//Speler Punten TODO Speler punten functie
-		spelerPunten1 = new Label("punten");
+		//Speler Punten
+		spelerPunten1 = new Label("" + controller.getPlayers().get(0).getPunten());
 		spelerPunten1.setStyle(spelerNaamLabels);
 		GridPane.setConstraints(spelerPunten1, 47, 3, 3, 1);
 
-		spelerPunten2 = new Label("punten");
+		spelerPunten2 = new Label("" + controller.getPlayers().get(1).getPunten());
 		spelerPunten2.setStyle(spelerNaamLabels);
 		GridPane.setConstraints(spelerPunten2, 47, 5, 3, 1);
 
-		spelerPunten3 = new Label("punten");
+		spelerPunten3 = new Label("" + controller.getPlayers().get(2).getPunten());
 		spelerPunten3.setStyle(spelerNaamLabels);
 		GridPane.setConstraints(spelerPunten3, 47, 7, 3, 1);
 
-		spelerPunten4 = new Label("punten");
+		spelerPunten4 = new Label("" + controller.getPlayers().get(3).getPunten());
 		spelerPunten4.setStyle(spelerNaamLabels);
 		GridPane.setConstraints(spelerPunten4, 47, 9, 3, 1);
 
