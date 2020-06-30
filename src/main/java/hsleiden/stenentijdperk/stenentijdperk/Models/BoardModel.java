@@ -15,6 +15,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Arrays;
 
 public class BoardModel implements BoardObservable {
     public ArrayList<BoardObserver> observers = new ArrayList<>();
@@ -28,6 +29,7 @@ public class BoardModel implements BoardObservable {
     private List<StaticHut> hutStapel2 = new ArrayList<StaticHut>();
     private List<StaticHut> hutStapel3 = new ArrayList<StaticHut>();
     private List<StaticHut> hutStapel4 = new ArrayList<StaticHut>();
+    private List<StaticHut> hutStapel5 = new ArrayList<StaticHut>();
     private BoardController controller;
     private String LabelText;
     private PlayerController playerController;
@@ -65,7 +67,27 @@ public class BoardModel implements BoardObservable {
         listOfFiles = folder.listFiles();
 
         for (int i = 0; i < listOfFiles.length; i++) {
-            this.hutKaarten.add(i, new StaticHut(i, "src/main/Resources/Hutjes/" + listOfFiles[i].getName()));
+            List<Integer> resourceKost = new ArrayList<Integer>();
+            String[] s = listOfFiles[i].getName().split("\\.");
+            int punten;
+            if (s[0].contains("-")) {
+                String kosten[] = s[0].split("-");
+                for (String kost : kosten) {
+                    resourceKost.add(Integer.parseInt(kost));
+                }
+                if (resourceKost.size() > 4) {
+                    resourceKost.remove(4);
+                }
+                punten = (resourceKost.get(0) * 3) + (resourceKost.get(1) * 4) + (resourceKost.get(2) * 5)
+                        + (resourceKost.get(3) * 6);
+            } else {
+                punten = 0;
+                resourceKost.add(0);
+
+            }
+
+            this.hutKaarten.add(i,
+                    new StaticHut(punten, resourceKost, "src/main/Resources/Hutjes/" + listOfFiles[i].getName()));
         }
         Collections.shuffle(this.hutKaarten);
         int n = this.hutKaarten.size();
@@ -74,6 +96,7 @@ public class BoardModel implements BoardObservable {
         this.hutStapel2 = new ArrayList<StaticHut>(this.hutKaarten.subList((n + 1) / 4, (n + 1) / 2));
         this.hutStapel3 = new ArrayList<StaticHut>(this.hutKaarten.subList((n + 1) / 2, ((n + 1) / 4) * 3));
         this.hutStapel4 = new ArrayList<StaticHut>(this.hutKaarten.subList(((n + 1) / 4) * 3, n));
+        this.hutStapel5.add(new StaticHut(0, new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0)), ""));
 
         this.hutKaarten.clear();
     }
@@ -83,22 +106,24 @@ public class BoardModel implements BoardObservable {
         return this.kaarten;
     }
 
-    public List<StaticHut> removeHut(int stapel) {
+    public void removeHut(int stapel) {
         switch (stapel) {
             case 0:
                 this.hutStapel1.remove(0);
-                return this.hutStapel1;
+                notifyAllObservers();
+                break;
             case 1:
                 this.hutStapel2.remove(0);
-                return this.hutStapel2;
+                notifyAllObservers();
+                break;
             case 2:
                 this.hutStapel3.remove(0);
-                return this.hutStapel3;
+                notifyAllObservers();
+                break;
             case 3:
                 this.hutStapel4.remove(0);
-                return this.hutStapel4;
-            default:
-                return null;
+                notifyAllObservers();
+                break;
         }
     }
 
@@ -106,18 +131,33 @@ public class BoardModel implements BoardObservable {
         return this.kaarten.get(index);
     }
 
-    public StaticHut getHut(int stapel, int index) {
+    public StaticHut getHut(int stapel) {
         switch (stapel) {
             case 0:
-                return this.hutStapel1.get(index);
+                return this.hutStapel1.get(0);
             case 1:
-                return this.hutStapel2.get(index);
+                return this.hutStapel2.get(0);
             case 2:
-                return this.hutStapel3.get(index);
+                return this.hutStapel3.get(0);
             case 3:
-                return this.hutStapel4.get(index);
+                return this.hutStapel4.get(0);
             default:
-                return null;
+                return this.hutStapel5.get(0);
+        }
+    }
+
+    public List<StaticHut> getHutStapel(int stapel) {
+        switch (stapel) {
+            case 0:
+                return this.hutStapel1;
+            case 1:
+                return this.hutStapel2;
+            case 2:
+                return this.hutStapel3;
+            case 3:
+                return this.hutStapel4;
+            default:
+                return this.hutStapel5;
         }
     }
 
