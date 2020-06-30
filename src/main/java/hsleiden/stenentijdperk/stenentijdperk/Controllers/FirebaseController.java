@@ -7,6 +7,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Resource;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
@@ -209,6 +210,105 @@ public class FirebaseController {
             e.printStackTrace();
         }
         DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("players").document(player);
+
+        ApiFuture<WriteResult> future = docRef.update(field, value);
+    }
+
+    public static void updateBoardFieldObj(String lobby, String field, List<String> value) {
+        try {
+            db.collection("stenentijdperk").document(lobby).collection("board").document("boardData").get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("board").document("boardData");
+
+        ApiFuture<WriteResult> future = docRef.update(field, value);
+    }
+
+    public static void updateBoardField(String lobby, String field, PlayerModel value) {
+        try {
+            db.collection("stenentijdperk").document(lobby).collection("board").document("boardData").get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("board").document("boardData");
+
+        ApiFuture<WriteResult> future = docRef.update(field, value);
+    }
+
+    public static void updateBoardResource(String lobby, String field, ArrayList<Resource> value) {
+        try {
+            db.collection("stenentijdperk").document(lobby).collection("board").document("boardData").get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("board").document("boardData");
+
+        ApiFuture<WriteResult> future = docRef.update(field, value);
+    }
+
+    public static void updateBoardHutjes(String lobby, String field, ArrayList<StaticHut> value) {
+        try {
+            db.collection("stenentijdperk").document(lobby).collection("board").document("boardData").get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("board").document("boardData");
+
+        ApiFuture<WriteResult> future = docRef.update(field, value);
+    }
+
+    public static void updateBoardField(String lobby, String field, boolean value) {
+        try {
+            db.collection("stenentijdperk").document(lobby).collection("board").document("boardData").get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("board").document("boardData");
+
+        ApiFuture<WriteResult> future = docRef.update(field, value);
+    }
+
+    public static void updateBoardField(String lobby, String field, String value) {
+        try {
+            db.collection("stenentijdperk").document(lobby).collection("board").document("boardData").get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("board").document("boardData");
+
+        ApiFuture<WriteResult> future = docRef.update(field, value);
+    }
+
+    public static void updateBoardField(String lobby, String field, List<Kaart> value) {
+        try {
+            db.collection("stenentijdperk").document(lobby).collection("board").document("boardData").get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("board").document("boardData");
+
+        ApiFuture<WriteResult> future = docRef.update(field, value);
+    }
+
+    public static void updateBoardFieldInt(String lobby, String field, List<Integer> value) {
+        try {
+            db.collection("stenentijdperk").document(lobby).collection("board").document("boardData").get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("board").document("boardData");
+
+        ApiFuture<WriteResult> future = docRef.update(field, value);
+    }
+
+    public static void updateBoardFieldInt(String lobby, String field, int value) {
+        try {
+            db.collection("stenentijdperk").document(lobby).collection("board").document("boardData").get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("board").document("boardData");
 
         ApiFuture<WriteResult> future = docRef.update(field, value);
     }

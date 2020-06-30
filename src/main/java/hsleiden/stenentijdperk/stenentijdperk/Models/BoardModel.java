@@ -78,6 +78,7 @@ public class BoardModel implements BoardObservable {
 
     public List<Kaart> removeKaart(int index) {
         this.kaarten.remove(index);
+        FirebaseController.updateBoardField(String.valueOf(this.player.getLobby()), "kaarten", this.kaarten);
         return this.kaarten;
     }
 
@@ -122,10 +123,12 @@ public class BoardModel implements BoardObservable {
     // dit handelt all het veranderen van de hoeveelheid villagers
     public void increaseVillagers(int index, int amount) {
         this.locaties.get(index).increaseVillager(amount);
+        FirebaseController.updateBoardResource(String.valueOf(this.player.getLobby()), "locaties", this.locaties);
     }
 
     public void decreaseVillagers(int index, int amount) {
         this.locaties.get(index).reduceVillager(amount);
+        FirebaseController.updateBoardResource(String.valueOf(this.player.getLobby()), "locaties", this.locaties);
     }
 
     public int requestVillagers(int index) {
@@ -139,6 +142,7 @@ public class BoardModel implements BoardObservable {
     // dit is voor het toevoegen of weghalen van resources per locatie
     public void changeHoeveelheid(int index, int amount) {
         this.locaties.get(index).setHoeveelheid(amount + this.locaties.get(index).getHoeveelheid());
+        FirebaseController.updateBoardResource(String.valueOf(this.player.getLobby()), "locaties", this.locaties);
     }
 
     @Override
@@ -155,6 +159,7 @@ public class BoardModel implements BoardObservable {
 
     public void addTurn() {
         this.turn += 1;
+        FirebaseController.updateBoardFieldInt(String.valueOf(this.player.getLobby()), "turn", this.turn);
     }
 
     public Resource getResource(int index) {
@@ -163,10 +168,12 @@ public class BoardModel implements BoardObservable {
 
     public void addResources(int index, int amount) {
         this.locaties.get(index).addHoeveelheid(amount);
+        FirebaseController.updateBoardResource(String.valueOf(this.player.getLobby()), "locaties", this.locaties);
     }
 
     public void reduceResources(int index, int amount) {
         this.locaties.get(index).reduceHoeveelheid(amount);
+        FirebaseController.updateBoardResource(String.valueOf(this.player.getLobby()), "locaties", this.locaties);
     }
 
     public ArrayList<StaticHut> getHutjes() {
@@ -175,6 +182,7 @@ public class BoardModel implements BoardObservable {
 
     public void setHutjes(ArrayList<StaticHut> hutjes) {
         this.hutjes = hutjes;
+        FirebaseController.updateBoardHutjes(String.valueOf(this.player.getLobby()), "hutjes", this.hutjes);
     }
 
     public ArrayList<Resource> getLocaties() {
@@ -183,6 +191,7 @@ public class BoardModel implements BoardObservable {
 
     public void setLocaties(ArrayList<Resource> res) {
         this.locaties = res;
+        FirebaseController.updateBoardResource(String.valueOf(this.player.getLobby()), "locaties", this.locaties);
     }
 
     public void maakKaarten() {
@@ -214,6 +223,7 @@ public class BoardModel implements BoardObservable {
 
     public void setKaarten(ArrayList<Kaart> kaarten) {
         this.kaarten = kaarten;
+        FirebaseController.updateBoardField(String.valueOf(this.player.getLobby()), "kaarten", this.kaarten);
     }
 
     public boolean getPlaceable() {
@@ -222,6 +232,7 @@ public class BoardModel implements BoardObservable {
 
     public void setPlaceable(boolean isPlaceable) {
         this.isPlaceable = isPlaceable;
+        FirebaseController.updateBoardField(String.valueOf(this.player.getLobby()), "isPlaceable", this.isPlaceable);
     }
 
     @Override
@@ -231,6 +242,7 @@ public class BoardModel implements BoardObservable {
 
     public void setTurn(int turn) {
         this.turn = turn;
+        FirebaseController.updateBoardFieldInt(String.valueOf(this.player.getLobby()), "turn", this.turn);
     }
 
     public int getPhase() {
@@ -239,6 +251,7 @@ public class BoardModel implements BoardObservable {
 
     public void setPhase(int phase) {
         this.phase = phase;
+        FirebaseController.updateBoardFieldInt(String.valueOf(this.player.getLobby()), "phase", this.phase);
     }
 
     public boolean getPlaced() {
@@ -248,6 +261,7 @@ public class BoardModel implements BoardObservable {
     // Dit houdt bij of de speler als iets heeft geplaast tijdens de beurt.
     public void setPlaced(boolean placed) {
         this.placed = placed;
+        FirebaseController.updateBoardField(String.valueOf(this.player.getLobby()), "placed", this.placed);
     }
 
     public PlayerModel getPlayer() {
@@ -257,5 +271,6 @@ public class BoardModel implements BoardObservable {
     // Dit verandered wie er aan de beurt is.
     public void setPlayer(PlayerModel player) {
         this.player = player;
+        FirebaseController.updateBoardField(String.valueOf(this.player.getLobby()), "player", this.player);
     }
 }
