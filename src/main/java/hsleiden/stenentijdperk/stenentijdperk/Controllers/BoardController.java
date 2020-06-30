@@ -44,8 +44,12 @@ public class BoardController {
         return this.boardmodel.getKaart(index);
     }
 
-    public StaticHut getHut(int stapel, int index) {
-        return this.boardmodel.getHut(stapel, index);
+    public StaticHut getHut(int stapel) {
+        return this.boardmodel.getHut(stapel);
+    }
+
+    public List<StaticHut> getHutStapel(int stapel) {
+        return this.boardmodel.getHutStapel(stapel);
     }
 
     public void onResourceButtonClick(int index, int input) {
@@ -66,10 +70,6 @@ public class BoardController {
     // zorgt dat je niet meer kan plaatsen.
     public List<Kaart> onKaartButtonClick(int index) {
         return (boardmodel.removeKaart(index)); // TODO dit moet naar acties verplaatst worden
-    }
-
-    public List<StaticHut> onHutButtonClick(int stapel) {
-        return (boardmodel.removeHut(stapel)); // TODO dit moet naar acties verplaatst worden
     }
 
     public void onButtonClick(int index) {
@@ -114,8 +114,8 @@ public class BoardController {
 
     private boolean checkTools() {
         boolean toolsLeft = false;
-        for (Tool tool : playercontroller.getTools(boardmodel.getPlayer())){
-            if (tool.getStatus()){
+        for (Tool tool : playercontroller.getTools(boardmodel.getPlayer())) {
+            if (tool.getStatus()) {
                 toolsLeft = true;
             }
         }
@@ -254,10 +254,16 @@ public class BoardController {
                 gainTools(index);
                 break;
             case 8:
+                hutActie(0);
+                break;
             case 9:
+                hutActie(1);
+                break;
             case 10:
+                hutActie(2);
+                break;
             case 11:
-                // TODO hutje actie logica
+                hutActie(3);
                 break;
             case 12:
             case 13:
@@ -265,6 +271,21 @@ public class BoardController {
             case 15:
                 // TODO kaarten actie logica
                 break;
+        }
+    }
+
+    private void hutActie(int index) {
+        if ((playercontroller.getPositie(boardmodel.getPlayer(), (index + 8)) != 0)) {
+            playercontroller.setPositie(boardmodel.getPlayer(), (index + 8), 0);
+            if (resourcesBetalen(this.boardmodel.getHut(index).getKosten())) {
+                this.boardmodel.getPlayer()
+                        .setPunten(this.boardmodel.getPlayer().getPunten() + this.boardmodel.getHut(index).getPunten());
+                this.boardmodel.getPlayer().addHutjes(this.boardmodel.getHut(index));
+                boardmodel.removeHut(index);
+            } else {
+                System.out.println("niet genoeg resources");
+                // TODO deze else verbeteren
+            }
         }
     }
 
@@ -307,6 +328,10 @@ public class BoardController {
         return i;
     }
 
+    private boolean checkResourceKost(int resource, List<Integer> kost) {
+        return boardmodel.getPlayer().getResource(resource + 1) >= kost.get(resource);
+    }
+
     private boolean locatieVrij(int index) {
         boolean status = true;
         for (PlayerModel player : players) {
@@ -324,11 +349,17 @@ public class BoardController {
         playercontroller.setPositie(boardmodel.getPlayer(), index, stamleden);
     }
 
-    private void betalenResources(List<Integer> kost) {
-        int i = 1;
-        for (Integer resources : kost) {
-            boardmodel.getPlayer().reduceResources(i, resources);
-            i++;
+    private boolean resourcesBetalen(List<Integer> kost) {
+        if (checkResourceKost(0, kost) && checkResourceKost(1, kost) && checkResourceKost(2, kost)
+                && checkResourceKost(3, kost)) {
+            int i = 1;
+            for (Integer amount : kost) {
+                boardmodel.getPlayer().reduceResources(i, amount);
+                i++;
+            }
+            return true;
+        } else {
+            return false;
         }
     }
 
