@@ -77,16 +77,16 @@ public class PlayerModel implements PlayerObservable {
         return resources.get(index);
     }
 
-    public void setResource(int index, int resources) {
-        this.resources.set(index, resources);
+    public void setResource(int index, int amount) {
+        this.resources.set(index, amount);
     }
 
-    public void addResources(int index, int resources) {
-        this.resources.set(index, this.resources.get(index) + resources);
+    public void addResources(int index, int amount) {
+        this.resources.set(index, this.resources.get(index) + amount);
     }
 
-    public void reduceResources(int index, int resources) {
-        this.resources.set(index, this.resources.get(index) - resources);
+    public void reduceResources(int index, int amount) {
+        this.resources.set(index, this.resources.get(index) - amount);
     }
 
     public void addMaxVillagers() {
@@ -117,15 +117,21 @@ public class PlayerModel implements PlayerObservable {
     public void setKaarten(ArrayList<Kaart> kaarten) {
         this.kaarten = kaarten;
     }
-    public void addKaarten(Kaart kaart){
+
+    public void addKaarten(Kaart kaart) {
         kaarten.add(kaart);
     }
+
     public ArrayList<StaticHut> getHutjes() {
         return hutjes;
     }
 
     public void setHutjes(ArrayList<StaticHut> hutjes) {
         this.hutjes = hutjes;
+    }
+
+    public void addHutjes(StaticHut hut) {
+        this.hutjes.add(hut);
     }
 
     public List<Integer> getMulitplier() {

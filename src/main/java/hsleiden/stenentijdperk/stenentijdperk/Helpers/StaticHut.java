@@ -9,9 +9,9 @@ public class StaticHut {
     private String path;
     private boolean status;
 
-    public StaticHut(int punten, /* List<Integer> kost, */ String path) {
+    public StaticHut(int punten, List<Integer> kost, String path) {
         this.punten = punten;
-        // this.resourceKost = kost;
+        this.resourceKost = kost;
         this.path = path;
     }
 
@@ -21,5 +21,9 @@ public class StaticHut {
 
     public int getPunten() {
         return this.punten;
+    }
+
+    public List<Integer> getKosten() {
+        return this.resourceKost;
     }
 }
