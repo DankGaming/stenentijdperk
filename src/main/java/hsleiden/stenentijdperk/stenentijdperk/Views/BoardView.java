@@ -21,6 +21,7 @@ import javafx.scene.layout.RowConstraints;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,48 +81,49 @@ public class BoardView implements BoardObserver {
 			FileInputStream input = null;
 			try {
 				input = new FileInputStream("src/main/Resources/Tools/Tool1.png");
+				Image image = new Image(input);
+				ImageView imageView = new ImageView(image);
+				imageView.setFitHeight(48);
+				imageView.setPreserveRatio(true);
+				this.toolStapel1 = new Button("", imageView);
 			} catch (FileNotFoundException fileNotFoundException) {
 				System.out.println(fileNotFoundException);
 			}
 
-			assert input != null;
-			Image image = new Image(input);
-			ImageView imageView = new ImageView(image);
-			imageView.setFitHeight(48);
-			imageView.setPreserveRatio(true);
-			this.toolStapel1 = new Button("", imageView);
 		} else {
 			FileInputStream input = null;
 			try {
 				input = new FileInputStream("src/main/Resources/Tools/Tool3.png");
+				Image image = new Image(input);
+				ImageView imageView = new ImageView(image);
+				imageView.setFitHeight(48);
+				imageView.setPreserveRatio(true);
+				this.toolStapel2 = new Button("", imageView);
 			} catch (FileNotFoundException fileNotFoundException) {
 				System.out.println(fileNotFoundException);
+			} finally {
+				closeFileStream(input);
 			}
-
-			assert input != null;
-			Image image = new Image(input);
-			ImageView imageView = new ImageView(image);
-			imageView.setFitHeight(48);
-			imageView.setPreserveRatio(true);
-			this.toolStapel2 = new Button("", imageView);
 		}
 	}
+
+
 
 	private void createKaartButtons() {
 		for (int i = 0; i < 4; i++) { // maakt 4 beschavingskaart buttons
 			FileInputStream input = null;
 			try {
 				input = new FileInputStream(this.controller.getKaart(i).getPath());
+				Image image = new Image(input);
+				ImageView imageView = new ImageView(image);
+				imageView.setFitHeight(160);
+				imageView.setPreserveRatio(true);
+				this.beschavingsKaartButtons.add(new Button("", imageView));
 			} catch (FileNotFoundException fileNotFoundException) {
 				System.out.println(fileNotFoundException);
+			} finally {
+				closeFileStream(input);
 			}
-
-			assert input != null;
-			Image image = new Image(input);
-			ImageView imageView = new ImageView(image);
-			imageView.setFitHeight(160);
-			imageView.setPreserveRatio(true);
-			this.beschavingsKaartButtons.add(new Button("", imageView));
 		}
 	}
 
@@ -130,16 +132,16 @@ public class BoardView implements BoardObserver {
 			FileInputStream input = null;
 			try {
 				input = new FileInputStream(this.controller.getHut(i).getPath());
+				Image image = new Image(input);
+				ImageView imageView = new ImageView(image);
+				imageView.setFitHeight(100);
+				imageView.setPreserveRatio(true);
+				this.hutKaartButtons.add(new Button("", imageView));
 			} catch (FileNotFoundException fileNotFoundException) {
 				System.out.println(fileNotFoundException);
+			} finally {
+				closeFileStream(input);
 			}
-
-			assert input != null;
-			Image image = new Image(input);
-			ImageView imageView = new ImageView(image);
-			imageView.setFitHeight(100);
-			imageView.setPreserveRatio(true);
-			this.hutKaartButtons.add(new Button("", imageView));
 		}
 	}
 
@@ -153,16 +155,16 @@ public class BoardView implements BoardObserver {
 				FileInputStream input = null;
 				try {
 					input = new FileInputStream(hutStapel.get(0).getPath());
+					Image image = new Image(input);
+					ImageView imageView = new ImageView(image);
+					imageView.setFitHeight(100);
+					imageView.setPreserveRatio(true);
+					this.hutKaartButtons.get(i).setGraphic(imageView);
 				} catch (FileNotFoundException fileNotFoundException) {
 					System.out.println(fileNotFoundException);
+				} finally {
+					closeFileStream(input);
 				}
-
-				assert input != null;
-				Image image = new Image(input);
-				ImageView imageView = new ImageView(image);
-				imageView.setFitHeight(100);
-				imageView.setPreserveRatio(true);
-				this.hutKaartButtons.get(i).setGraphic(imageView);
 			}
 		}
 
@@ -201,16 +203,26 @@ public class BoardView implements BoardObserver {
 			FileInputStream input = null;
 			try {
 				input = new FileInputStream(array.get(i).getPath());
+				Image image = new Image(input);
+				ImageView imageView = new ImageView(image);
+				imageView.setFitHeight(160);
+				imageView.setPreserveRatio(true);
+				this.beschavingsKaartButtons.get(i).setGraphic(imageView);
 			} catch (FileNotFoundException fileNotFoundException) {
 				System.out.println(fileNotFoundException);
+			} finally {
+				closeFileStream(input);
 			}
+		}
+	}
 
-			assert input != null;
-			Image image = new Image(input);
-			ImageView imageView = new ImageView(image);
-			imageView.setFitHeight(160);
-			imageView.setPreserveRatio(true);
-			this.beschavingsKaartButtons.get(i).setGraphic(imageView);
+	private void closeFileStream (FileInputStream input){
+		if (input != null) {
+			try {
+				input.close();
+			} catch (IOException ioe) {
+				System.out.println("I/O error" + ioe.getMessage());
+			}
 		}
 	}
 
@@ -234,73 +246,74 @@ public class BoardView implements BoardObserver {
 		FileInputStream input = null;
 		try {
 			input = new FileInputStream(this.spelbordImage);
+			Image image = new Image(input);
+			this.imageView = new ImageView(image);
+			this.imageView.setFitHeight(800);
+			this.imageView.setFitWidth(1200);
+			GridPane.setConstraints(imageView, 0, 0, 50, 50);
 		} catch (FileNotFoundException fileNotFoundException) {
 			System.out.println(fileNotFoundException);
+		} finally {
+			closeFileStream(input);
 		}
-
-		assert input != null;
-		Image image = new Image(input);
-		this.imageView = new ImageView(image);
-		this.imageView.setFitHeight(800);
-		this.imageView.setFitWidth(1200);
-		GridPane.setConstraints(imageView, 0, 0, 50, 50);
 
 		// Speler stamleden
 		FileInputStream speler1 = null;
 		try {
 			speler1 = new FileInputStream(this.Speler1);
+			Image Speler1 = new Image(speler1);
+			speler1Image = new ImageView(Speler1);
+			speler1Token = new ImageView(Speler1);
+			imageViews.add(speler1Image);
+			imageViews.add(speler1Token);
 		} catch (FileNotFoundException fileNotFoundException) {
 			System.out.println(fileNotFoundException);
-		}
-
-		assert speler1 != null;
-		Image Speler1 = new Image(speler1);
-		speler1Image = new ImageView(Speler1);
-		speler1Token = new ImageView(Speler1);
-		imageViews.add(speler1Image);
-		imageViews.add(speler1Token);
+		}	finally {
+				closeFileStream(input);
+		}	
 
 		FileInputStream speler2 = null;
 		try {
 			speler2 = new FileInputStream(this.Speler2);
+			Image Speler2 = new Image(speler2);
+			speler2Image = new ImageView(Speler2);
+			speler2Token = new ImageView(Speler2);
+			imageViews.add(speler2Image);
+			imageViews.add(speler2Token);
 		} catch (FileNotFoundException fileNotFoundException) {
 			System.out.println(fileNotFoundException);
+		} finally {
+			closeFileStream(input);
 		}
-
-		assert speler2 != null;
-		Image Speler2 = new Image(speler2);
-		speler2Image = new ImageView(Speler2);
-		speler2Token = new ImageView(Speler2);
-		imageViews.add(speler2Image);
-		imageViews.add(speler2Token);
 
 		FileInputStream speler3 = null;
 		try {
 			speler3 = new FileInputStream(this.Speler3);
+			Image Speler3 = new Image(speler3);
+			speler3Image = new ImageView(Speler3);
+			speler3Token = new ImageView(Speler3);
+			imageViews.add(speler3Image);
+			imageViews.add(speler3Token);
 		} catch (FileNotFoundException fileNotFoundException) {
 			System.out.println(fileNotFoundException);
-		}
-
-		assert speler3 != null;
-		Image Speler3 = new Image(speler3);
-		speler3Image = new ImageView(Speler3);
-		speler3Token = new ImageView(Speler3);
-		imageViews.add(speler3Image);
-		imageViews.add(speler3Token);
+		} finally {
+			closeFileStream(input);
+		}		
 
 		FileInputStream speler4 = null;
 		try {
 			speler4 = new FileInputStream(this.Speler4);
+			Image Speler4 = new Image(speler4);
+			speler4Image = new ImageView(Speler4);
+			speler4Token = new ImageView(Speler4);
+			imageViews.add(speler4Image);
+			imageViews.add(speler4Token);
 		} catch (FileNotFoundException fileNotFoundException) {
 			System.out.println(fileNotFoundException);
+		} finally {
+			closeFileStream(input);
 		}
-
-		assert speler4 != null;
-		Image Speler4 = new Image(speler4);
-		speler4Image = new ImageView(Speler4);
-		speler4Token = new ImageView(Speler4);
-		imageViews.add(speler4Image);
-		imageViews.add(speler4Token);
+		
 
 		String styleLabel = "-fx-font-size: 20px; -fx-font-weight: bold";
 
