@@ -254,16 +254,10 @@ public class BoardController {
                 gainTools(index);
                 break;
             case 8:
-                hutActie(0);
-                break;
             case 9:
-                hutActie(1);
-                break;
             case 10:
-                hutActie(2);
-                break;
             case 11:
-                hutActie(3);
+                hutActie(index-8);
                 break;
             case 12:
             case 13:
