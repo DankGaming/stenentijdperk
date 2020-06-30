@@ -58,8 +58,6 @@ public class BoardView implements BoardObserver {
 	private List<ImageView> imageViews;
 	private List<Label> labels;
 
-	// TODO fix try catch
-
 	public BoardView() {
 		this.controller = new BoardController();
 		this.controller.registerObserver(this);
@@ -88,6 +86,8 @@ public class BoardView implements BoardObserver {
 				this.toolStapel1 = new Button("", imageView);
 			} catch (FileNotFoundException fileNotFoundException) {
 				System.out.println(fileNotFoundException);
+			}  finally {
+				closeFileStream(input);
 			}
 
 		} else {
