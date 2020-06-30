@@ -26,11 +26,11 @@ import java.util.List;
 
 public class BoardView implements BoardObserver {
 	private BoardController controller;
-	private ArrayList<Button> beschavingsKaartButtons = new ArrayList<Button>();
-	private ArrayList<Button> hutKaartButtons = new ArrayList<Button>();
+	private ArrayList<Button> beschavingsKaartButtons;
+	private ArrayList<Button> hutKaartButtons;
 	private Button toolStapel1;
 	private Button toolStapel2;
-	private GridPane view = new GridPane();
+	private GridPane view;
 	private String spelbordImage = "src/main/Resources/Backgrounds/spelbord2.jpg";
 	private ImageView imageView;
 	private String Speler1 = "src/main/Resources/Spelers/Speler1.png";
@@ -54,14 +54,17 @@ public class BoardView implements BoardObserver {
 	private Label amountLabel;
 	private Label beurtLabel;
 	private int location;
-	private List<ImageView> imageViews  = new ArrayList<>();
-	private List<Label> labels = new ArrayList<>();
+	private List<ImageView> imageViews;
 
 	// TODO fix try catch
 
 	public BoardView() {
 		this.controller = new BoardController();
 		this.controller.registerObserver(this);
+		this.view = new GridPane();
+		this.beschavingsKaartButtons = new ArrayList<>();
+		this.imageViews = new ArrayList<>();
+		this.hutKaartButtons = new ArrayList<Button>();
 
 		setupPane();
 	}
@@ -303,22 +306,18 @@ public class BoardView implements BoardObserver {
 		speler1Label = new Label("  ");
 		speler1Label.setStyle(styleLabel);
 		speler1Label.setVisible(false);
-		labels.add(speler1Label);
 
 		speler2Label = new Label("  ");
 		speler2Label.setStyle(styleLabel);
 		speler2Label.setVisible(false);
-		labels.add(speler2Label);
 
 		speler3Label = new Label("  ");
 		speler3Label.setStyle(styleLabel);
 		speler3Label.setVisible(false);
-		labels.add(speler3Label);
 
 		speler4Label = new Label("  ");
 		speler4Label.setStyle(styleLabel);
 		speler4Label.setVisible(false);
-		labels.add(speler4Label);
 
 		makePlayerToken();
 
