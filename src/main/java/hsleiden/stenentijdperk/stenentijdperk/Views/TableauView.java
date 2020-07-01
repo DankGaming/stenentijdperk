@@ -18,9 +18,11 @@ import javafx.scene.layout.RowConstraints;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TableauView implements PlayerObserver {
     public int waarde;
+    List<Integer> recources;
     Hutview hutview1 = new Hutview(1);
     Hutview hutview2 = new Hutview(2);
     Hutview hutview3 = new Hutview(3);
@@ -41,10 +43,7 @@ public class TableauView implements PlayerObserver {
     private Label stamleden;
     private Label punt;
     private PlayerModel playerModel;
-    private Label multiplier1;
-    private Label multiplier2;
-    private Label multiplier3;
-    private Label multiplier4;
+    private ArrayList<Label> multipliers;
 
     // Standard constructor
     public TableauView(PlayerModel playermodel) {
@@ -59,6 +58,7 @@ public class TableauView implements PlayerObserver {
 
     // The statements that are called every time
     public void standardConstructorFunction(PlayerModel playermodel) {
+        this.multipliers = new ArrayList<Label>();
         setupPane();
         this.playerModel = playermodel;
         this.playerModel.registerObserver(this);
@@ -96,6 +96,11 @@ public class TableauView implements PlayerObserver {
             rowConstraints.setPercentHeight(100 / amountOfRows);
             this.view.getRowConstraints().add(rowConstraints);
         }
+
+        Label multiplier1;
+        Label multiplier2;
+        Label multiplier3;
+        Label multiplier4;
 
         Image image = null;
 
@@ -149,6 +154,11 @@ public class TableauView implements PlayerObserver {
         multiplier4.setStyle("-fx-font-size: 25px;");
         GridPane.setConstraints(multiplier4, 42, 25, 1, 1);
 
+        this.multipliers.add(multiplier1);
+        this.multipliers.add(multiplier2);
+        this.multipliers.add(multiplier3);
+        this.multipliers.add(multiplier4);
+
         ImageView imageviewhutkaart1 = hutview1.setScene();
         GridPane.setConstraints(imageviewhutkaart1, 2, 36, 10, 10);
 
@@ -171,13 +181,17 @@ public class TableauView implements PlayerObserver {
         GridPane.setConstraints(this.punt, 37, 6, 5, 5);
 
         this.view.getChildren().addAll(tableau, stamleden, voedsel, hout, leem, steen, goud, imageviewhutkaart1, imageviewhutkaart2,
-                imageviewhutkaart3, imageviewhutkaart4, imageviewhutkaart5, punt, multiplier1, multiplier2, multiplier3,
-                multiplier4);
+                imageviewhutkaart3, imageviewhutkaart4, imageviewhutkaart5, punt, this.multipliers.get(0), this.multipliers.get(1), this.multipliers.get(2), this.multipliers.get(3));
     }
 
     public void setPoint(int height) {
         int[] rows = new int[]{6, 9, 12, 14, 17, 19, 22, 25};
-        GridPane.setConstraints(this.punt, 37, rows[height - 1], 5, 5);
+        if(height > 0) {
+            this.punt.setVisible(true);
+            GridPane.setConstraints(this.punt, 37, rows[height - 1], 5, 5);
+        } else {
+            this.punt.setVisible(false);
+        }
     }
 
     public void addImageViewToView(int positie, ImageView imageView) {
@@ -208,13 +222,67 @@ public class TableauView implements PlayerObserver {
         addImageViewToView(positie, imageView);
     }
 
-    @Override
-    public void update(PlayerObservable po) {
+    private void updateTools(PlayerObservable po) {
         ArrayList<Tool> tools = po.getTools();
         int i = 1;
         for (Tool tool : tools) {
             createGereedschap(i, tool);
             i++;
         }
+    }
+
+    private void updateStamleden(PlayerObservable po) {
+        if(this.stamleden != null)
+            this.stamleden.setText("Aantal stamleden: " + po.getVillagers());
+    }
+
+    private void updateVoedsel() {
+        if(this.voedsel != null)
+            this.voedsel.setText(String.valueOf(this.recources.get(0)));
+    }
+
+    private void updateHout() {
+        if(this.hout != null)
+            this.hout.setText(String.valueOf(this.recources.get(1)));
+    }
+
+    private void updateLeem() {
+        if(this.leem != null)
+            this.leem.setText(String.valueOf(this.recources.get(2)));
+    }
+
+    private void updateSteen() {
+        if(this.steen != null)
+            this.steen.setText(String.valueOf(this.recources.get(3)));
+    }
+
+    private void updateGoud() {
+        if(this.goud != null)
+            this.goud.setText(String.valueOf(this.recources.get(4)));
+    }
+
+    private void updateTreasures(PlayerObservable po) {
+        setPoint(po.getTreasures().size());
+    }
+
+    private void updateMultipliers(PlayerObservable po) {
+        for(int i = 0; i < multipliers.size(); i++) {
+            this.multipliers.get(i).setText(String.valueOf(po.getMultiplier().get(i)));
+        }
+    }
+
+    @Override
+    public void update(PlayerObservable po) {
+        this.recources = po.getResources();
+
+        updateTools(po);
+        updateStamleden(po);
+        updateVoedsel();
+        updateHout();
+        updateLeem();
+        updateSteen();
+        updateGoud();
+        updateTreasures(po);
+        updateMultipliers(po);
     }
 }

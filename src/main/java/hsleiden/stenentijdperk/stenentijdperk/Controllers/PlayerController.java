@@ -77,7 +77,7 @@ public class PlayerController {
 	}
 
 	public List<Integer> getMultiplier(PlayerModel playermodel) {
-		return playermodel.getMulitplier();
+		return playermodel.getMultiplier();
 	}
 
 	public List<StaticHut> getHutjes(PlayerModel playermodel) {
