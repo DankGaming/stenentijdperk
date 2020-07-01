@@ -95,7 +95,7 @@ public class BoardView implements BoardObserver {
 				this.toolStapel1 = new Button("", imageView);
 			} catch (FileNotFoundException fileNotFoundException) {
 				System.out.println(fileNotFoundException);
-			}  finally {
+			} finally {
 				closeFileStream(input);
 			}
 
@@ -276,8 +276,8 @@ public class BoardView implements BoardObserver {
 			imageViews.add(speler1Token);
 		} catch (FileNotFoundException fileNotFoundException) {
 			System.out.println(fileNotFoundException);
-		}	finally {
-				closeFileStream(input);
+		} finally {
+			closeFileStream(input);
 		}	
 
 		FileInputStream speler2 = null;
