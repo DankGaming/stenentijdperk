@@ -35,8 +35,8 @@ public class ViewManager {
     public static void setFirebase(FirebaseController f) {
         firebaseController = f;
     }
-    // The load view functions. Call these in your controllers and views.
 
+    // The load view functions. Call these in your controllers and views.
     public static void loadLoginView() {
         closeView();
         currentView = new LoginView().setScene();
@@ -130,6 +130,7 @@ public class ViewManager {
         currentStage.setOnCloseRequest(event -> {
             isRunning = false;
             closePickerView();
+            closeResourceWindow();
         });
         if (currentStage != null)
             currentStage.show();

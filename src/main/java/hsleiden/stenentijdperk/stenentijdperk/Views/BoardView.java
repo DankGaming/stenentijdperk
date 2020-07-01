@@ -5,6 +5,7 @@ import hsleiden.stenentijdperk.stenentijdperk.Controllers.FirebaseController;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
+import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
@@ -22,16 +23,17 @@ import javafx.scene.layout.RowConstraints;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BoardView implements BoardObserver {
 	private BoardController controller;
-	private ArrayList<Button> beschavingsKaartButtons = new ArrayList<Button>();
-	private ArrayList<Button> hutKaartButtons = new ArrayList<Button>();
+	private ArrayList<Button> beschavingsKaartButtons;
+	private ArrayList<Button> hutKaartButtons;
 	private Button toolStapel1;
 	private Button toolStapel2;
-	private GridPane view = new GridPane();
+	private GridPane view;
 	private String spelbordImage = "src/main/Resources/Backgrounds/spelbord2.jpg";
 	private ImageView imageView;
 	private String Speler1 = "src/main/Resources/Spelers/Speler1.png";
@@ -54,15 +56,31 @@ public class BoardView implements BoardObserver {
 	private Button amountButton;
 	private Label amountLabel;
 	private Label beurtLabel;
+	private Label spelerNaam1;
+	private Label spelerNaam2;
+	private Label spelerNaam3;
+	private Label spelerNaam4;
+	private Label spelerPunten1;
+	private Label spelerPunten2;
+	private Label spelerPunten3;
+	private Label spelerPunten4;
 	private int location;
 	private List<ImageView> imageViews;
+	private List<Label> labels;
 
-
-	//TODO fix try catch
-
+<<<<<<< HEAD
 	public BoardView(ArrayList<PlayerModel> players) {
 		this.controller = new BoardController(players);
+=======
+	public BoardView() {
+		this.controller = new BoardController();
+		this.controller.registerObserver(this);
+		this.view = new GridPane();
+		this.beschavingsKaartButtons = new ArrayList<>();
+>>>>>>> master
 		this.imageViews = new ArrayList<>();
+		this.hutKaartButtons = new ArrayList<Button>();
+		this.labels = new ArrayList<>();
 
 		setupPane();
 	}
@@ -76,89 +94,94 @@ public class BoardView implements BoardObserver {
 			FileInputStream input = null;
 			try {
 				input = new FileInputStream("src/main/Resources/Tools/Tool1.png");
+				Image image = new Image(input);
+				ImageView imageView = new ImageView(image);
+				imageView.setFitHeight(48);
+				imageView.setPreserveRatio(true);
+				this.toolStapel1 = new Button("", imageView);
 			} catch (FileNotFoundException fileNotFoundException) {
 				System.out.println(fileNotFoundException);
+			} finally {
+				closeFileStream(input);
 			}
 
-			assert input != null;
-			Image image = new Image(input);
-			ImageView imageView = new ImageView(image);
-			imageView.setFitHeight(48);
-			imageView.setPreserveRatio(true);
-			this.toolStapel1 = new Button("", imageView);
 		} else {
 			FileInputStream input = null;
 			try {
 				input = new FileInputStream("src/main/Resources/Tools/Tool3.png");
+				Image image = new Image(input);
+				ImageView imageView = new ImageView(image);
+				imageView.setFitHeight(48);
+				imageView.setPreserveRatio(true);
+				this.toolStapel2 = new Button("", imageView);
 			} catch (FileNotFoundException fileNotFoundException) {
 				System.out.println(fileNotFoundException);
+			} finally {
+				closeFileStream(input);
 			}
-
-			assert input != null;
-			Image image = new Image(input);
-			ImageView imageView = new ImageView(image);
-			imageView.setFitHeight(48);
-			imageView.setPreserveRatio(true);
-			this.toolStapel2 = new Button("", imageView);
 		}
 	}
+
+
 
 	private void createKaartButtons() {
 		for (int i = 0; i < 4; i++) { // maakt 4 beschavingskaart buttons
 			FileInputStream input = null;
 			try {
 				input = new FileInputStream(this.controller.getKaart(i).getPath());
+				Image image = new Image(input);
+				ImageView imageView = new ImageView(image);
+				imageView.setFitHeight(160);
+				imageView.setPreserveRatio(true);
+				this.beschavingsKaartButtons.add(new Button("", imageView));
 			} catch (FileNotFoundException fileNotFoundException) {
 				System.out.println(fileNotFoundException);
+			} finally {
+				closeFileStream(input);
 			}
-
-			assert input != null;
-			Image image = new Image(input);
-			ImageView imageView = new ImageView(image);
-			imageView.setFitHeight(160);
-			imageView.setPreserveRatio(true);
-			this.beschavingsKaartButtons.add(new Button("", imageView));
 		}
 	}
 
 	private void createHutStapels() {
-		for (int i = 0; i < 4; i++) { // maakt 4 beschavingskaart buttons
+		for (int i = 0; i < 4; i++) { // maakt 4 hutkaart buttons
 			FileInputStream input = null;
 			try {
-				input = new FileInputStream(this.controller.getHut(i, 0).getPath());
+				input = new FileInputStream(this.controller.getHut(i).getPath());
+				Image image = new Image(input);
+				ImageView imageView = new ImageView(image);
+				imageView.setFitHeight(100);
+				imageView.setPreserveRatio(true);
+				this.hutKaartButtons.add(new Button("", imageView));
 			} catch (FileNotFoundException fileNotFoundException) {
 				System.out.println(fileNotFoundException);
+			} finally {
+				closeFileStream(input);
 			}
-
-			assert input != null;
-			Image image = new Image(input);
-			ImageView imageView = new ImageView(image);
-			imageView.setFitHeight(100);
-			imageView.setPreserveRatio(true);
-			this.hutKaartButtons.add(new Button("", imageView));
 		}
 	}
 
-	private void renderNewHutten(List<StaticHut> array, int index) {
-		if (array.size() < 1) {
-			this.hutKaartButtons.get(index).setVisible(false);
-		} else {
-			this.hutKaartButtons.get(index).setVisible(true);
-			FileInputStream input = null;
-			try {
-				input = new FileInputStream(array.get(0).getPath());
-			} catch (FileNotFoundException fileNotFoundException) {
-				System.out.println(fileNotFoundException);
+	private void renderNewHutten() {
+		for (int i = 0; i < 4; i++) { // maakt 4 hutkaart buttons
+			List<StaticHut> hutStapel = controller.getHutStapel(i);
+			if (hutStapel.size() < 1) {
+				this.hutKaartButtons.get(i).setVisible(false);
+			} else {
+				this.hutKaartButtons.get(i).setVisible(true);
+				FileInputStream input = null;
+				try {
+					input = new FileInputStream(hutStapel.get(0).getPath());
+					Image image = new Image(input);
+					ImageView imageView = new ImageView(image);
+					imageView.setFitHeight(100);
+					imageView.setPreserveRatio(true);
+					this.hutKaartButtons.get(i).setGraphic(imageView);
+				} catch (FileNotFoundException fileNotFoundException) {
+					System.out.println(fileNotFoundException);
+				} finally {
+					closeFileStream(input);
+				}
 			}
-
-			assert input != null;
-			Image image = new Image(input);
-			ImageView imageView = new ImageView(image);
-			imageView.setFitHeight(100);
-			imageView.setPreserveRatio(true);
-			this.hutKaartButtons.get(index).setGraphic(imageView);
 		}
-
 	}
 
 	// dit kan gebruikt worden als de kaarten worden gekocht in een actie fase
@@ -194,16 +217,26 @@ public class BoardView implements BoardObserver {
 			FileInputStream input = null;
 			try {
 				input = new FileInputStream(array.get(i).getPath());
+				Image image = new Image(input);
+				ImageView imageView = new ImageView(image);
+				imageView.setFitHeight(160);
+				imageView.setPreserveRatio(true);
+				this.beschavingsKaartButtons.get(i).setGraphic(imageView);
 			} catch (FileNotFoundException fileNotFoundException) {
 				System.out.println(fileNotFoundException);
+			} finally {
+				closeFileStream(input);
 			}
+		}
+	}
 
-			assert input != null;
-			Image image = new Image(input);
-			ImageView imageView = new ImageView(image);
-			imageView.setFitHeight(160);
-			imageView.setPreserveRatio(true);
-			this.beschavingsKaartButtons.get(i).setGraphic(imageView);
+	private void closeFileStream (FileInputStream input){
+		if (input != null) {
+			try {
+				input.close();
+			} catch (IOException ioe) {
+				System.out.println("I/O error" + ioe.getMessage());
+			}
 		}
 	}
 
@@ -227,99 +260,104 @@ public class BoardView implements BoardObserver {
 		FileInputStream input = null;
 		try {
 			input = new FileInputStream(this.spelbordImage);
+			Image image = new Image(input);
+			this.imageView = new ImageView(image);
+			this.imageView.setFitHeight(800);
+			this.imageView.setFitWidth(1200);
+			GridPane.setConstraints(imageView, 0, 0, 50, 50);
 		} catch (FileNotFoundException fileNotFoundException) {
 			System.out.println(fileNotFoundException);
+		} finally {
+			closeFileStream(input);
 		}
-
-		assert input != null;
-		Image image = new Image(input);
-		this.imageView = new ImageView(image);
-		this.imageView.setFitHeight(800);
-		this.imageView.setFitWidth(1200);
-		GridPane.setConstraints(imageView, 0, 0, 50, 50);
 
 		// Speler stamleden
 		FileInputStream speler1 = null;
 		try {
 			speler1 = new FileInputStream(this.Speler1);
+			Image Speler1 = new Image(speler1);
+			speler1Image = new ImageView(Speler1);
+			speler1Token = new ImageView(Speler1);
+			imageViews.add(speler1Image);
+			imageViews.add(speler1Token);
 		} catch (FileNotFoundException fileNotFoundException) {
 			System.out.println(fileNotFoundException);
-		}
-
-		assert speler1 != null;
-		Image Speler1 = new Image(speler1);
-		speler1Image = new ImageView(Speler1);
-		speler1Token = new ImageView(Speler1);
-		imageViews.add(speler1Image);
-		imageViews.add(speler1Token);
+		} finally {
+			closeFileStream(input);
+		}	
 
 		FileInputStream speler2 = null;
 		try {
 			speler2 = new FileInputStream(this.Speler2);
+			Image Speler2 = new Image(speler2);
+			speler2Image = new ImageView(Speler2);
+			speler2Token = new ImageView(Speler2);
+			imageViews.add(speler2Image);
+			imageViews.add(speler2Token);
 		} catch (FileNotFoundException fileNotFoundException) {
 			System.out.println(fileNotFoundException);
+		} finally {
+			closeFileStream(input);
 		}
-
-		assert speler2 != null;
-		Image Speler2 = new Image(speler2);
-		speler2Image = new ImageView(Speler2);
-		speler2Token = new ImageView(Speler2);
-		imageViews.add(speler2Image);
-		imageViews.add(speler2Token);
 
 		FileInputStream speler3 = null;
 		try {
 			speler3 = new FileInputStream(this.Speler3);
+			Image Speler3 = new Image(speler3);
+			speler3Image = new ImageView(Speler3);
+			speler3Token = new ImageView(Speler3);
+			imageViews.add(speler3Image);
+			imageViews.add(speler3Token);
 		} catch (FileNotFoundException fileNotFoundException) {
 			System.out.println(fileNotFoundException);
-		}
-
-		assert speler3 != null;
-		Image Speler3 = new Image(speler3);
-		speler3Image = new ImageView(Speler3);
-		speler3Token = new ImageView(Speler3);
-		imageViews.add(speler3Image);
-		imageViews.add(speler3Token);
+		} finally {
+			closeFileStream(input);
+		}		
 
 		FileInputStream speler4 = null;
 		try {
 			speler4 = new FileInputStream(this.Speler4);
+			Image Speler4 = new Image(speler4);
+			speler4Image = new ImageView(Speler4);
+			speler4Token = new ImageView(Speler4);
+			imageViews.add(speler4Image);
+			imageViews.add(speler4Token);
 		} catch (FileNotFoundException fileNotFoundException) {
 			System.out.println(fileNotFoundException);
+		} finally {
+			closeFileStream(input);
 		}
-
-		assert speler4 != null;
-		Image Speler4 = new Image(speler4);
-		speler4Image = new ImageView(Speler4);
-		speler4Token = new ImageView(Speler4);
-		imageViews.add(speler4Image);
-		imageViews.add(speler4Token);
+		
 
 		String styleLabel = "-fx-font-size: 20px; -fx-font-weight: bold";
-
 
 		// Stamleden hoeveelheden
 		speler1Label = new Label("  ");
 		speler1Label.setStyle(styleLabel);
 		speler1Label.setVisible(false);
+		labels.add(speler1Label);
 
 		speler2Label = new Label("  ");
 		speler2Label.setStyle(styleLabel);
 		speler2Label.setVisible(false);
+		labels.add(speler2Label);
 
 		speler3Label = new Label("  ");
 		speler3Label.setStyle(styleLabel);
 		speler3Label.setVisible(false);
+		labels.add(speler3Label);
 
 		speler4Label = new Label("  ");
 		speler4Label.setStyle(styleLabel);
 		speler4Label.setVisible(false);
+		labels.add(speler4Label);
 
 		makePlayerToken();
 
 		String style = "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;";
 
 		String textStyle = "-fx-font-size: 25px; -fx-text-fill: #f6e5b6; -fx-background-color: #dfa231; ";
+
 		// invoeren aantal stamleden
 		amountLabel = new Label("Hoeveel: ");
 		amountLabel.setStyle(textStyle);
@@ -336,6 +374,42 @@ public class BoardView implements BoardObserver {
 		amountButton.setVisible(false);
 		GridPane.setConstraints(amountButton, 30, 18, 5, 3);
 
+		String spelerNaamLabels = "-fx-font-size: 20px; -fx-font-weight: 700;";
+
+		//Speler Namem
+		spelerNaam1 = new Label(controller.getPlayers().get(0).getNaam());
+		spelerNaam1.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerNaam1, 44 ,3, 3, 1);
+
+		spelerNaam2 = new Label(controller.getPlayers().get(1).getNaam());
+		spelerNaam2.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerNaam2, 44 ,5, 3, 1);
+
+		spelerNaam3 = new Label(controller.getPlayers().get(2).getNaam());
+		spelerNaam3.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerNaam3, 44 ,7, 3, 1);
+
+		spelerNaam4 = new Label(controller.getPlayers().get(3).getNaam());
+		spelerNaam4.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerNaam4, 44 ,9, 3, 1);
+
+		//Speler Punten
+		spelerPunten1 = new Label("" + controller.getPlayers().get(0).getPunten());
+		spelerPunten1.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerPunten1, 47, 3, 3, 1);
+
+		spelerPunten2 = new Label("" + controller.getPlayers().get(1).getPunten());
+		spelerPunten2.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerPunten2, 47, 5, 3, 1);
+
+		spelerPunten3 = new Label("" + controller.getPlayers().get(2).getPunten());
+		spelerPunten3.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerPunten3, 47, 7, 3, 1);
+
+		spelerPunten4 = new Label("" + controller.getPlayers().get(3).getPunten());
+		spelerPunten4.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerPunten4, 47, 9, 3, 1);
+
 		// laten zijn welke speler aan de beurt is.
 		beurtLabel = new Label(controller.getPlayer().getNaam() + " is aan de beurt.");
 		beurtLabel.setStyle(textStyle);
@@ -347,7 +421,6 @@ public class BoardView implements BoardObserver {
 		this.createToolButton(1);
 
 		// Buttons
-
 		GridPane.setConstraints(this.beschavingsKaartButtons.get(0), 42, 40, 1, 1);
 		GridPane.setConstraints(this.beschavingsKaartButtons.get(1), 37, 40, 1, 1);
 		GridPane.setConstraints(this.beschavingsKaartButtons.get(2), 31, 40, 1, 1);
@@ -365,27 +438,27 @@ public class BoardView implements BoardObserver {
 		hutButton.setStyle(style);
 		GridPane.setConstraints(hutButton, 18, 32, 5, 1);
 
-		Button akkerbouwButton = new Button("akkerbouw");
+		Button akkerbouwButton = new Button("Akkerbouw");
 		akkerbouwButton.setStyle(style);
 		GridPane.setConstraints(akkerbouwButton, 15, 25, 5, 1);
 
-		Button jachtButton = new Button("stamlid jachtvlakte");
+		Button jachtButton = new Button("Stamlid jachtvlakte");
 		jachtButton.setStyle(style);
 		GridPane.setConstraints(jachtButton, 5, 7, 5, 1);
 
-		Button bosButton = new Button("stamlid bos");
+		Button bosButton = new Button("Stamlid bos");
 		bosButton.setStyle(style);
 		GridPane.setConstraints(bosButton, 21, 15, 5, 1);
 
-		Button leemGroeveButton = new Button("stamlid leem");
+		Button leemGroeveButton = new Button("Stamlid leem");
 		leemGroeveButton.setStyle(style);
 		GridPane.setConstraints(leemGroeveButton, 28, 15, 5, 1);
 
-		Button steenGroeveButton = new Button("stamlid steen");
+		Button steenGroeveButton = new Button("Stamlid steen");
 		steenGroeveButton.setStyle(style);
 		GridPane.setConstraints(steenGroeveButton, 40, 15, 5, 1);
 
-		Button rivierButton = new Button("stamlid rivier");
+		Button rivierButton = new Button("Stamlid rivier");
 		rivierButton.setStyle(style);
 		GridPane.setConstraints(rivierButton, 41, 25, 5, 1);
 
@@ -399,76 +472,64 @@ public class BoardView implements BoardObserver {
 			@Override
 			public void handle(ActionEvent actionEvent) {
 				if (actionEvent.getSource() == hutKaartButtons.get(0)) {
-					List<StaticHut> array = controller.onHutButtonClick(0); // TODO verplaatsen naar acties
-					renderNewHutten(array, 0);
-
-					hutKaart1();
+					makeConstraints(20, 40, 2);	
 					labelsSetter(8);
 				} else if (actionEvent.getSource() == hutKaartButtons.get(1)) {
-					List<StaticHut> array = controller.onHutButtonClick(1); // TODO verplaatsen naar acties
-					renderNewHutten(array, 1);
-
-					hutKaart2();
+					makeConstraints(15, 40, 2);
 					labelsSetter(9);
 				} else if (actionEvent.getSource() == hutKaartButtons.get(2)) {
-					List<StaticHut> array = controller.onHutButtonClick(2); // TODO verplaatsen naar acties
-					renderNewHutten(array, 2);
-
-					hutKaart3();
+					makeConstraints(10, 40, 2);
 					labelsSetter(10);
 				} else if (actionEvent.getSource() == hutKaartButtons.get(3)) {
-					List<StaticHut> array = controller.onHutButtonClick(3); // TODO verplaatsen naar acties
-					renderNewHutten(array, 3);
-
-					hutKaart4();
+					makeConstraints(5, 40, 2);
 					labelsSetter(11);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(0)) {
 					List<Kaart> array = controller.onKaartButtonClick(0); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
 					ViewManager.loadPopupWindow(new ResourceView());
-					beschavingsKaart1();
+					makeConstraints(43, 36, 2);
 					labelsSetter(12);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(1)) {
 					List<Kaart> array = controller.onKaartButtonClick(1); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
 					ViewManager.loadPopupWindow(new ResourceView());
-					beschavingsKaart2();
+					makeConstraints(38, 36, 2);
 					labelsSetter(13);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(2)) {
 					List<Kaart> array = controller.onKaartButtonClick(2); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
 					ViewManager.loadPopupWindow(new ResourceView());
-					beschavingsKaart3();
+					makeConstraints(32, 36, 2);
 					labelsSetter(14);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(3)) {
 					List<Kaart> array = controller.onKaartButtonClick(3); // TODO verplaatsen naar acties
 					renderNewKaarten(array);
 					ViewManager.loadPopupWindow(new ResourceView());
-					beschavingsKaart4();
+					makeConstraints(27, 36, 2);
 					labelsSetter(15);
 				} else if (actionEvent.getSource() == hutButton) {
-					hutKaart();
+					makeConstraints(16, 34, 1);
 					labelsSetter(6);
 				} else if (actionEvent.getSource() == toolStapel1 || actionEvent.getSource() == toolStapel2) {
-					gereedschapKaart();
+					makeConstraints(26, 21, 2);
 					labelsSetter(7);
 				} else if (actionEvent.getSource() == akkerbouwButton) {
-					akkerbouwKaart();
+					makeConstraints(13, 27, 1);
 					labelsSetter(5);
 				} else if (actionEvent.getSource() == jachtButton) {
-					jachtKaart();
+					makeConstraints(5, 11, 1);
 					labelsSetter(0);
 				} else if (actionEvent.getSource() == bosButton) {
-					bosKaart();
+					makeConstraints(17, 11, 2);
 					labelsSetter(1);
 				} else if (actionEvent.getSource() == leemGroeveButton) {
-					leemKaart();
+					makeConstraints(24, 11, 1);
 					labelsSetter(2);
 				} else if (actionEvent.getSource() == steenGroeveButton) {
-					steenKaart();
+					makeConstraints(42, 11, 3);
 					labelsSetter(3);
 				} else if (actionEvent.getSource() == rivierButton) {
-					rivierKaart();
+					makeConstraints(37, 21, 2);
 					labelsSetter(4);
 				} else if (actionEvent.getSource() == endTurn) {
 					playerColor(false);
@@ -527,32 +588,31 @@ public class BoardView implements BoardObserver {
 				beschavingsKaartButtons.get(1), beschavingsKaartButtons.get(2), beschavingsKaartButtons.get(3),
 				hutButton, toolStapel1, toolStapel2, akkerbouwButton, jachtButton, bosButton, leemGroeveButton,
 				steenGroeveButton, rivierButton, endTurn, speler1Image, speler2Image, speler3Image, speler4Image,
-				speler1Label, speler2Label, speler3Label, speler4Label, speler1Token, speler2Token, speler3Token, speler4Token, amountField, amountLabel, amountButton, beurtLabel);
+				speler1Label, speler2Label, speler3Label, speler4Label, speler1Token, speler2Token, speler3Token, speler4Token,
+				amountField, amountLabel, amountButton, beurtLabel, spelerNaam1, spelerNaam2, spelerNaam3, spelerNaam4, spelerPunten1,
+				spelerPunten2, spelerPunten3, spelerPunten4);
 	}
 
-	private void labelsSetter(int location){
+	private void labelsSetter(int location) {
 		checkStamleden(location);
 		setSpelersVisable(true);
-		if (location < 5){
+		if (location < 5) {
 			phaseCheck(location);
 		} else {
 			controller.onButtonClick(location);
 		}
 		checkStamleden(location);
-
 	}
 
-	private void playerColor(boolean seen){		
+	private void playerColor(boolean seen) {
 		int i = 1;
 		for (PlayerModel player : controller.getPlayers()) {
-			if (player.equals(controller.getPlayer())){
+			if (player.equals(controller.getPlayer())) {
 				GridPane.setConstraints(imageViews.get(i), 2, 6, 1, 1);
 				imageViews.get(i).setVisible(seen);
-			
 			}
 			i += 2;
-			
-		}		
+		}
 	}
 
 	private void setSpelersVisable(boolean visable) {
@@ -578,228 +638,25 @@ public class BoardView implements BoardObserver {
 		amountField.setVisible(visable);
 	}
 
-	private void hutKaart1() {
-		GridPane.setConstraints(speler1Image, 20, 40, 2, 2);
-		GridPane.setConstraints(speler1Label, 20, 40, 1, 1);
-
-		GridPane.setConstraints(speler2Image, 22, 40, 2, 2);
-		GridPane.setConstraints(speler2Label, 22, 40, 1, 1);
-
-		GridPane.setConstraints(speler3Image, 20, 42, 2, 2);
-		GridPane.setConstraints(speler3Label, 20, 42, 1, 1);
-
-		GridPane.setConstraints(speler4Image, 22, 42, 2, 2);
-		GridPane.setConstraints(speler4Label, 22, 42, 1, 1);
-	}
-
-	private void hutKaart2() {
-		GridPane.setConstraints(speler1Image, 15, 40, 2, 2);
-		GridPane.setConstraints(speler1Label, 15, 40, 1, 1);
-
-		GridPane.setConstraints(speler2Image, 17, 40, 2, 2);
-		GridPane.setConstraints(speler2Label, 17, 40, 1, 1);
-
-		GridPane.setConstraints(speler3Image, 15, 42, 2, 2);
-		GridPane.setConstraints(speler3Label, 15, 42, 1, 1);
-
-		GridPane.setConstraints(speler4Image, 17, 42, 2, 2);
-		GridPane.setConstraints(speler4Label, 17, 42, 1, 1);
-	}
-
-	private void hutKaart3() {
-		GridPane.setConstraints(speler1Image, 10, 40, 2, 2);
-		GridPane.setConstraints(speler1Label, 10, 40, 1, 1);
-
-		GridPane.setConstraints(speler2Image, 12, 40, 2, 2);
-		GridPane.setConstraints(speler2Label, 12, 40, 1, 1);
-
-		GridPane.setConstraints(speler3Image, 10, 42, 2, 2);
-		GridPane.setConstraints(speler3Label, 10, 42, 1, 1);
-
-		GridPane.setConstraints(speler4Image, 12, 42, 2, 2);
-		GridPane.setConstraints(speler4Label, 12, 42, 1, 1);
-	}
-
-	private void hutKaart4() {
-		GridPane.setConstraints(speler1Image, 5, 40, 2, 2);
-		GridPane.setConstraints(speler1Label, 5, 40, 1, 1);
-
-		GridPane.setConstraints(speler2Image, 7, 40, 2, 2);
-		GridPane.setConstraints(speler2Label, 7, 40, 1, 1);
-
-		GridPane.setConstraints(speler3Image, 5, 42, 2, 2);
-		GridPane.setConstraints(speler3Label, 5, 42, 1, 1);
-
-		GridPane.setConstraints(speler4Image, 7, 42, 2, 2);
-		GridPane.setConstraints(speler4Label, 7, 42, 1, 1);
-	}
-
-	private void beschavingsKaart1() {
-		GridPane.setConstraints(speler1Image, 43, 36, 2, 2);
-		GridPane.setConstraints(speler1Label, 43, 36, 1, 1);
-
-		GridPane.setConstraints(speler2Image, 45, 36, 2, 2);
-		GridPane.setConstraints(speler2Label, 45, 36, 1, 1);
-
-		GridPane.setConstraints(speler3Image, 43, 38, 2, 2);
-		GridPane.setConstraints(speler3Label, 43, 38, 1, 1);
-
-		GridPane.setConstraints(speler4Image, 45, 38, 2, 2);
-		GridPane.setConstraints(speler4Label, 45, 38, 1, 1);
-	}
-
-	private void beschavingsKaart2() {
-		GridPane.setConstraints(speler1Image, 38, 36, 2, 2);
-		GridPane.setConstraints(speler1Label, 38, 36, 1, 1);
-
-		GridPane.setConstraints(speler2Image, 40, 36, 2, 2);
-		GridPane.setConstraints(speler2Label, 40, 36, 1, 1);
-
-		GridPane.setConstraints(speler3Image, 38, 38, 2, 2);
-		GridPane.setConstraints(speler3Label, 38, 38, 1, 1);
-
-		GridPane.setConstraints(speler4Image, 40, 38, 2, 2);
-		GridPane.setConstraints(speler4Label, 40, 38, 1, 1);
-	}
-
-	private void beschavingsKaart3() {
-		GridPane.setConstraints(speler1Image, 32, 36, 2, 2);
-		GridPane.setConstraints(speler1Label, 32, 36, 1, 1);
-
-		GridPane.setConstraints(speler2Image, 34, 36, 2, 2);
-		GridPane.setConstraints(speler2Label, 34, 36, 1, 1);
-
-		GridPane.setConstraints(speler3Image, 32, 38, 2, 2);
-		GridPane.setConstraints(speler3Label, 32, 38, 1, 1);
-
-		GridPane.setConstraints(speler4Image, 34, 38, 2, 2);
-		GridPane.setConstraints(speler4Label, 34, 38, 1, 1);
-	}
-
-	private void beschavingsKaart4() {
-		GridPane.setConstraints(speler1Image, 27, 36, 2, 2);
-		GridPane.setConstraints(speler1Label, 27, 36, 1, 1);
-
-		GridPane.setConstraints(speler2Image, 29, 36, 2, 2);
-		GridPane.setConstraints(speler2Label, 29, 36, 1, 1);
-
-		GridPane.setConstraints(speler3Image, 27, 38, 2, 2);
-		GridPane.setConstraints(speler3Label, 27, 38, 1, 1);
-
-		GridPane.setConstraints(speler4Image, 29, 38, 2, 2);
-		GridPane.setConstraints(speler4Label, 29, 38, 1, 1);
-	}
-
-	private void hutKaart() {
-		GridPane.setConstraints(speler1Image, 16, 34, 2, 2);
-		GridPane.setConstraints(speler1Label, 16, 34, 1, 1);
-
-		GridPane.setConstraints(speler2Image, 18, 34, 2, 2);
-		GridPane.setConstraints(speler2Label, 18, 34, 1, 1);
-
-		GridPane.setConstraints(speler3Image, 20, 34, 2, 2);
-		GridPane.setConstraints(speler3Label, 20, 34, 1, 1);
-
-		GridPane.setConstraints(speler4Image, 22, 34, 2, 2);
-		GridPane.setConstraints(speler4Label, 22, 34, 1, 1);
-	}
-
-	private void gereedschapKaart() {
-		GridPane.setConstraints(speler1Image, 26, 21, 2, 2);
-		GridPane.setConstraints(speler1Label, 26, 21, 1, 1);
-
-		GridPane.setConstraints(speler2Image, 28, 21, 2, 2);
-		GridPane.setConstraints(speler2Label, 28, 21, 1, 1);
-
-		GridPane.setConstraints(speler3Image, 26, 23, 2, 2);
-		GridPane.setConstraints(speler3Label, 26, 23, 1, 1);
-
-		GridPane.setConstraints(speler4Image, 28, 23, 2, 2);
-		GridPane.setConstraints(speler4Label, 28, 23, 1, 1);
-	}
-
-	private void akkerbouwKaart() {
-		GridPane.setConstraints(speler1Image, 13, 27, 2, 2);
-		GridPane.setConstraints(speler1Label, 13, 27, 1, 1);
-
-		GridPane.setConstraints(speler2Image, 15, 27, 2, 2);
-		GridPane.setConstraints(speler2Label, 15, 27, 1, 1);
-
-		GridPane.setConstraints(speler3Image, 17, 27, 2, 2);
-		GridPane.setConstraints(speler3Label, 17, 27, 1, 1);
-
-		GridPane.setConstraints(speler4Image, 19, 27, 2, 2);
-		GridPane.setConstraints(speler4Label, 19, 27, 1, 1);
-	}
-
-	private void jachtKaart() {
-		GridPane.setConstraints(speler1Image, 5, 11, 2, 2);
-		GridPane.setConstraints(speler1Label, 5, 11, 1, 1);
-
-		GridPane.setConstraints(speler2Image, 7, 11, 2, 2);
-		GridPane.setConstraints(speler2Label, 7, 11, 1, 1);
-
-		GridPane.setConstraints(speler3Image, 9, 11, 2, 2);
-		GridPane.setConstraints(speler3Label, 9, 11, 1, 1);
-
-		GridPane.setConstraints(speler4Image, 11, 11, 2, 2);
-		GridPane.setConstraints(speler4Label, 11, 11, 1, 1);
-	}
-
-	private void bosKaart() {
-		GridPane.setConstraints(speler1Image, 17, 11, 2, 2);
-		GridPane.setConstraints(speler1Label, 17, 11, 1, 1);
-
-		GridPane.setConstraints(speler2Image, 19, 11, 2, 2);
-		GridPane.setConstraints(speler2Label, 19, 11, 1, 1);
-
-		GridPane.setConstraints(speler3Image, 17, 13, 2, 2);
-		GridPane.setConstraints(speler3Label, 17, 13, 1, 1);
-
-		GridPane.setConstraints(speler4Image, 19, 13, 2, 2);
-		GridPane.setConstraints(speler4Label, 19, 13, 1, 1);
-	}
-
-	private void leemKaart() {
-		GridPane.setConstraints(speler1Image, 24, 11, 2, 2);
-		GridPane.setConstraints(speler1Label, 24, 11, 1, 1);
-
-		GridPane.setConstraints(speler2Image, 26, 11, 2, 2);
-		GridPane.setConstraints(speler2Label, 26, 11, 1, 1);
-
-		GridPane.setConstraints(speler3Image, 28, 11, 2, 2);
-		GridPane.setConstraints(speler3Label, 28, 11, 1, 1);
-
-		GridPane.setConstraints(speler4Image, 30, 11, 2, 2);
-		GridPane.setConstraints(speler4Label, 30, 11, 1, 1);
-	}
-
-	private void steenKaart() {
-		GridPane.setConstraints(speler1Image, 42, 11, 2, 2);
-		GridPane.setConstraints(speler1Label, 42, 11, 1, 1);
-
-		GridPane.setConstraints(speler2Image, 44, 11, 2, 2);
-		GridPane.setConstraints(speler2Label, 44, 11, 1, 1);
-
-		GridPane.setConstraints(speler3Image, 46, 11, 2, 2);
-		GridPane.setConstraints(speler3Label, 46, 11, 1, 1);
-
-		GridPane.setConstraints(speler4Image, 44, 13, 2, 2);
-		GridPane.setConstraints(speler4Label, 44, 13, 1, 1);
-	}
-
-	private void rivierKaart() {
-		GridPane.setConstraints(speler1Image, 37, 21, 2, 2);
-		GridPane.setConstraints(speler1Label, 37, 21, 1, 1);
-
-		GridPane.setConstraints(speler2Image, 39, 21, 2, 2);
-		GridPane.setConstraints(speler2Label, 39, 21, 1, 1);
-
-		GridPane.setConstraints(speler3Image, 37, 23, 2, 2);
-		GridPane.setConstraints(speler3Label, 37, 23, 1, 1);
-
-		GridPane.setConstraints(speler4Image, 39, 23, 2, 2);
-		GridPane.setConstraints(speler4Label, 39, 23, 1, 1);
+	private void makeConstraints(int x, int y, int buttontype) {
+		GridPane.setConstraints(imageViews.get(0), x, y, 2, 2);
+		GridPane.setConstraints(labels.get(0), x, y, 1, 1);
+		GridPane.setConstraints(imageViews.get(2), x+2, y, 2, 2);
+		GridPane.setConstraints(labels.get(1), x+2, y, 1, 1);
+		if (buttontype != 2) {
+			GridPane.setConstraints(imageViews.get(4), x+4, y, 2, 2);
+			GridPane.setConstraints(labels.get(2), x+4, y, 1, 1);
+		} else {
+			GridPane.setConstraints(imageViews.get(4), x, y+2, 2, 2);
+			GridPane.setConstraints(labels.get(2), x, y+2, 1, 1);
+		}
+		if (buttontype != 1) {
+			GridPane.setConstraints(imageViews.get(6), x+2, y+2, 2, 2);
+			GridPane.setConstraints(labels.get(3), x+2, y+2, 1, 1);
+		} else {
+			GridPane.setConstraints(imageViews.get(6), x+6, y, 2, 2);
+			GridPane.setConstraints(labels.get(3), x+6, y, 1, 1);
+		}
 	}
 
 	private void phaseCheck(int location) {
@@ -835,18 +692,18 @@ public class BoardView implements BoardObserver {
 		}
 	}
 
-	private void makePlayerToken(){
-		for (ImageView imageview : imageViews){
+	private void makePlayerToken() {
+		for (ImageView imageview : imageViews) {
 			imageview.setFitHeight(30);
 			imageview.setFitWidth(30);
 			imageview.setVisible(false);
 		}
-	
 	}
 
 	@Override
 	public void update(BoardObservable boardobserver) {
-
+		System.out.println("render new hutten");
+		renderNewHutten();
 	}
 
 	// Voor de ViewManager.
