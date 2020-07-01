@@ -210,7 +210,7 @@ public class BoardController {
                 }
                 playercontroller.setVillagers(player, playercontroller.getMaxVillagers(player));
             }
-            if (boardmodel.getWincondition()) {
+            if (checkWincondition()) {
                 endGame();
             }  
         }
@@ -369,6 +369,20 @@ public class BoardController {
             finalPuntenCount(player);
         }
         // TODO roep hier de endgame view aan.
+    }
+
+    private boolean checkWincondition(){
+        boolean endGame = false;
+        for (int i = 0; i < 4; i++) {
+            if (boardmodel.getHutStapel(i).size() == 0) {
+                endGame = true;
+            }
+        }
+        if (boardmodel.getKaarten().size() > 4) {
+            endGame = true;
+        }
+
+        return endGame;
     }
 
     private void finalPuntenCount(PlayerModel player) {
