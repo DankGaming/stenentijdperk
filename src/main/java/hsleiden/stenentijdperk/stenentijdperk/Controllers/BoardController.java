@@ -358,7 +358,6 @@ public class BoardController {
         }
     }
 
-    // TODO tijdelijk
     public ArrayList<PlayerModel> getPlayers() {
         return this.players;
     }

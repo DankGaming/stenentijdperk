@@ -4,6 +4,7 @@ import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
+import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
@@ -54,6 +55,14 @@ public class BoardView implements BoardObserver {
 	private Button amountButton;
 	private Label amountLabel;
 	private Label beurtLabel;
+	private Label spelerNaam1;
+	private Label spelerNaam2;
+	private Label spelerNaam3;
+	private Label spelerNaam4;
+	private Label spelerPunten1;
+	private Label spelerPunten2;
+	private Label spelerPunten3;
+	private Label spelerPunten4;
 	private int location;
 	private List<ImageView> imageViews;
 	private List<Label> labels;
@@ -167,7 +176,6 @@ public class BoardView implements BoardObserver {
 				}
 			}
 		}
-
 	}
 
 	// dit kan gebruikt worden als de kaarten worden gekocht in een actie fase
@@ -343,6 +351,7 @@ public class BoardView implements BoardObserver {
 		String style = "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 10px;";
 
 		String textStyle = "-fx-font-size: 25px; -fx-text-fill: #f6e5b6; -fx-background-color: #dfa231; ";
+
 		// invoeren aantal stamleden
 		amountLabel = new Label("Hoeveel: ");
 		amountLabel.setStyle(textStyle);
@@ -359,6 +368,42 @@ public class BoardView implements BoardObserver {
 		amountButton.setVisible(false);
 		GridPane.setConstraints(amountButton, 30, 18, 5, 3);
 
+		String spelerNaamLabels = "-fx-font-size: 20px; -fx-font-weight: 700;";
+
+		//Speler Namem
+		spelerNaam1 = new Label(controller.getPlayers().get(0).getNaam());
+		spelerNaam1.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerNaam1, 44 ,3, 3, 1);
+
+		spelerNaam2 = new Label(controller.getPlayers().get(1).getNaam());
+		spelerNaam2.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerNaam2, 44 ,5, 3, 1);
+
+		spelerNaam3 = new Label(controller.getPlayers().get(2).getNaam());
+		spelerNaam3.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerNaam3, 44 ,7, 3, 1);
+
+		spelerNaam4 = new Label(controller.getPlayers().get(3).getNaam());
+		spelerNaam4.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerNaam4, 44 ,9, 3, 1);
+
+		//Speler Punten
+		spelerPunten1 = new Label("" + controller.getPlayers().get(0).getPunten());
+		spelerPunten1.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerPunten1, 47, 3, 3, 1);
+
+		spelerPunten2 = new Label("" + controller.getPlayers().get(1).getPunten());
+		spelerPunten2.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerPunten2, 47, 5, 3, 1);
+
+		spelerPunten3 = new Label("" + controller.getPlayers().get(2).getPunten());
+		spelerPunten3.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerPunten3, 47, 7, 3, 1);
+
+		spelerPunten4 = new Label("" + controller.getPlayers().get(3).getPunten());
+		spelerPunten4.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerPunten4, 47, 9, 3, 1);
+
 		// laten zijn welke speler aan de beurt is.
 		beurtLabel = new Label(controller.getPlayer().getNaam() + " is aan de beurt.");
 		beurtLabel.setStyle(textStyle);
@@ -370,7 +415,6 @@ public class BoardView implements BoardObserver {
 		this.createToolButton(1);
 
 		// Buttons
-
 		GridPane.setConstraints(this.beschavingsKaartButtons.get(0), 42, 40, 1, 1);
 		GridPane.setConstraints(this.beschavingsKaartButtons.get(1), 37, 40, 1, 1);
 		GridPane.setConstraints(this.beschavingsKaartButtons.get(2), 31, 40, 1, 1);
@@ -388,27 +432,27 @@ public class BoardView implements BoardObserver {
 		hutButton.setStyle(style);
 		GridPane.setConstraints(hutButton, 18, 32, 5, 1);
 
-		Button akkerbouwButton = new Button("akkerbouw");
+		Button akkerbouwButton = new Button("Akkerbouw");
 		akkerbouwButton.setStyle(style);
 		GridPane.setConstraints(akkerbouwButton, 15, 25, 5, 1);
 
-		Button jachtButton = new Button("stamlid jachtvlakte");
+		Button jachtButton = new Button("Stamlid jachtvlakte");
 		jachtButton.setStyle(style);
 		GridPane.setConstraints(jachtButton, 5, 7, 5, 1);
 
-		Button bosButton = new Button("stamlid bos");
+		Button bosButton = new Button("Stamlid bos");
 		bosButton.setStyle(style);
 		GridPane.setConstraints(bosButton, 21, 15, 5, 1);
 
-		Button leemGroeveButton = new Button("stamlid leem");
+		Button leemGroeveButton = new Button("Stamlid leem");
 		leemGroeveButton.setStyle(style);
 		GridPane.setConstraints(leemGroeveButton, 28, 15, 5, 1);
 
-		Button steenGroeveButton = new Button("stamlid steen");
+		Button steenGroeveButton = new Button("Stamlid steen");
 		steenGroeveButton.setStyle(style);
 		GridPane.setConstraints(steenGroeveButton, 40, 15, 5, 1);
 
-		Button rivierButton = new Button("stamlid rivier");
+		Button rivierButton = new Button("Stamlid rivier");
 		rivierButton.setStyle(style);
 		GridPane.setConstraints(rivierButton, 41, 25, 5, 1);
 
@@ -538,8 +582,9 @@ public class BoardView implements BoardObserver {
 				beschavingsKaartButtons.get(1), beschavingsKaartButtons.get(2), beschavingsKaartButtons.get(3),
 				hutButton, toolStapel1, toolStapel2, akkerbouwButton, jachtButton, bosButton, leemGroeveButton,
 				steenGroeveButton, rivierButton, endTurn, speler1Image, speler2Image, speler3Image, speler4Image,
-				speler1Label, speler2Label, speler3Label, speler4Label, speler1Token, speler2Token, speler3Token,
-				speler4Token, amountField, amountLabel, amountButton, beurtLabel);
+				speler1Label, speler2Label, speler3Label, speler4Label, speler1Token, speler2Token, speler3Token, speler4Token,
+				amountField, amountLabel, amountButton, beurtLabel, spelerNaam1, spelerNaam2, spelerNaam3, spelerNaam4, spelerPunten1,
+				spelerPunten2, spelerPunten3, spelerPunten4);
 	}
 
 	private void labelsSetter(int location) {
@@ -551,7 +596,6 @@ public class BoardView implements BoardObserver {
 			controller.onButtonClick(location);
 		}
 		checkStamleden(location);
-
 	}
 
 	private void playerColor(boolean seen) {
@@ -560,10 +604,8 @@ public class BoardView implements BoardObserver {
 			if (player.equals(controller.getPlayer())) {
 				GridPane.setConstraints(imageViews.get(i), 2, 6, 1, 1);
 				imageViews.get(i).setVisible(seen);
-
 			}
 			i += 2;
-
 		}
 	}
 
@@ -650,7 +692,6 @@ public class BoardView implements BoardObserver {
 			imageview.setFitWidth(30);
 			imageview.setVisible(false);
 		}
-
 	}
 
 	@Override
