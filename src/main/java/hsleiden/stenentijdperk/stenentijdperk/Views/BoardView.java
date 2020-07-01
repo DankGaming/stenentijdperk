@@ -68,16 +68,11 @@ public class BoardView implements BoardObserver {
 	private List<ImageView> imageViews;
 	private List<Label> labels;
 
-<<<<<<< HEAD
 	public BoardView(ArrayList<PlayerModel> players) {
 		this.controller = new BoardController(players);
-=======
-	public BoardView() {
-		this.controller = new BoardController();
 		this.controller.registerObserver(this);
 		this.view = new GridPane();
 		this.beschavingsKaartButtons = new ArrayList<>();
->>>>>>> master
 		this.imageViews = new ArrayList<>();
 		this.hutKaartButtons = new ArrayList<Button>();
 		this.labels = new ArrayList<>();
