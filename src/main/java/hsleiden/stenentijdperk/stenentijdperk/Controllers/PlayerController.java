@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerController {
-	private PlayerModel playermodel;
 
 	public PlayerController() {
 	}
