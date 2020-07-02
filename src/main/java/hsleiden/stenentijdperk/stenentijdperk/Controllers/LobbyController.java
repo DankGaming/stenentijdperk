@@ -25,7 +25,7 @@ public class LobbyController {
 
     public void joinLobby() {
         if (this.lobbyId != 0)
-            if (FirebaseController.getAmountofPlayersInLobby(this.lobbyId) < 4 && !FirebaseController.getGamestatus(this.lobbyId) && !FirebaseController.getPlayers().contains(p)) {
+            if (FirebaseController.getAmountofPlayersInLobby(this.lobbyId) < 4 && !FirebaseController.getGamestatus(this.lobbyId) && !FirebaseController.getPlayersInLobby(this.lobbyId).contains(p)) {
                 this.p.setPlayerNumber(setPlayerNumber());
                 if (FirebaseController.getAmountofPlayersInLobby(this.lobbyId) == 0) {
                     FirebaseController.setLobbyLeader(this.lobbyId, this.p);
