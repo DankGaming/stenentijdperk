@@ -6,6 +6,7 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
+import com.google.firebase.database.core.view.View;
 import hsleiden.stenentijdperk.stenentijdperk.App;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Resource;
@@ -46,17 +47,22 @@ public class FirebaseController {
     }
 
     public static void listenForLobbyUpdates(String lobby, PlayerModel pl){
+        System.out.println("Lobby " + lobby);
         DocumentReference docRef = db.collection("stenentijdperk").document(lobby);
         docRef.addSnapshotListener((snapshot, e) -> {
+            System.out.println("Lobby listening" + lobby);
             if (e != null) {
                 System.err.println("Listen failed: " + e);
                 return;
             }
 
             if (snapshot != null && snapshot.exists()) {
-                Object data = snapshot.get("isActive");
-                if (data.toString().equals("true")){
-                    ViewManager.loadBoardView(FirebaseController.getPlayersInLobby(Integer.parseInt(lobby)), pl);
+                Boolean data = snapshot.getBoolean("isActive");
+                System.out.println(data);
+                if (data){
+                    System.out.println("arive");
+                    ViewManager.loadLoginView();
+                    //ViewManager.loadBoardView(getPlayersInLobby(Integer.parseInt(lobby)), pl);
                 };
             } else {
                 System.out.print("Current data: null");

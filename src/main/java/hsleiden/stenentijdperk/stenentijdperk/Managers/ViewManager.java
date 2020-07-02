@@ -53,9 +53,13 @@ public class ViewManager {
     public static void loadBoardView(ArrayList<PlayerModel> players, PlayerModel localPlayer) {
         closeView();
         isRunning = true;
+        System.out.println("1");
         BoardView boardView = new BoardView(players, localPlayer);
+        System.out.println("2");
         currentView = boardView.setScene();
+        System.out.println("3");
         showView(1200, 800, "Board", boardView.getPlayers());
+        System.out.println("4");
     }
 
     public static void loadGameOverView(ArrayList<PlayerModel> playerModels) {
@@ -154,8 +158,16 @@ public class ViewManager {
     }
 
     public static void closeView() {
-        if (currentStage != null)
-            currentStage.close();
+        if (currentStage != null) {
+            System.out.println(" hiii " + currentStage.getTitle());
+            try {
+                currentStage.close();
+            }
+            catch (Exception e){
+                System.out.println(e);
+            }
+            System.out.println(currentStage);
+        }
     }
 
     // Picker view
