@@ -34,8 +34,7 @@ public class BoardModel implements BoardObservable {
     private ArrayList<StaticHut> hutjes = new ArrayList<>();
     private ArrayList<Resource> locaties = new ArrayList<>();
     private boolean wincondition;
-
-
+    
     public BoardModel() {
         this.isPlaceable = true;
         this.turn = 1;
