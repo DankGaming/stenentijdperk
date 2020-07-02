@@ -35,13 +35,27 @@ public class ViewManager {
         firebaseController = f;
     }
 
-    // The load view functions. Call these in your controllers and views.
+    /**
+     * Load the login view.
+     * This function loads the login view.
+     *
+     * @see LoginView
+     * @author Joost de Jager
+     */
     public static void loadLoginView() {
         closeView();
         currentView = new LoginView().setScene();
         showView(800, 800, "Login");
     }
 
+    /**
+     * Load the lobby view.
+     * This function loads the lobby view.
+     *
+     * @param playerModel We use the playerModel to display the name of the player
+     * @see LobbyView
+     * @author Joost de Jager
+     */
     public static void loadLobbyView(PlayerModel playerModel) {
         closeView();
         currentView = new LobbyView(playerModel).setScene();
@@ -49,6 +63,13 @@ public class ViewManager {
         showView(800, 800, "Lobby");
     }
 
+    /**
+     * Load the board view.
+     * This function loads the board view.
+     *
+     * @see BoardView
+     * @author Joost de Jager, Bob van Velzen
+     */
     public static void loadBoardView() {
         closeView();
         isRunning = true;
@@ -57,6 +78,14 @@ public class ViewManager {
         showView(1200, 800, "Board", boardView.getPlayers());
     }
 
+    /**
+     * Load the GameOver view.
+     * This function loads the GameOver view.
+     *
+     * @param playerModels We use the playerModels to generate a list of who won the game
+     * @see GameOverView
+     * @author Joost de Jager
+     */
     public static void loadGameOverView(ArrayList<PlayerModel> playerModels) {
         // Close the main view
         closeView();
@@ -71,10 +100,24 @@ public class ViewManager {
         showView(650, 400, "Game over");
     }
 
+    /**
+     * Load the spelregels view.
+     * This function loads the spelregels view.
+     *
+     * @see SpelregelView
+     * @author Joost de Jager
+     */
     public static void loadSpelregelView() {
         ViewManager.loadPopupWindow(new SpelregelView().setScene());
     }
 
+    /**
+     * Load the picker view.
+     * This function loads the picker view.
+     *
+     * @see PickerView
+     * @author Joost de Jager
+     */
     public static void loadPickerView(ArrayList<PlayerModel> playerModels) {
         closePickerView();
         PickerView pickerView = new PickerView(playerModels);
@@ -84,23 +127,38 @@ public class ViewManager {
         }
     }
 
-    // Popup window functions
+    /**
+     * Load a popup window.
+     * This function loads a popup window.
+     *
+     * @param tableauView the gridpane is rendered
+     * @author Joost de Jager
+     */
     public static void loadPopupWindow(GridPane tableauView) {
         closePopupWindow();
         currentPopupView = tableauView;
         openPopupWindow();
     }
 
+    /**
+     * Load a popup window.
+     * This function loads a popup window.
+     *
+     * @param vBox The vbox is being rendered
+     * @author Joost de Jager
+     */
     public static void loadPopupWindow(VBox vBox) {
         closePopupWindow();
         currentPopupVbox = vBox;
         openPopupVbox(800, 600, "Spelregels");
     }
+
     public static void loadPopupWindow(ResourceView resourceView){
         closeResourceWindow();
         resourcePopupView = resourceView.setScene();
         openResourceWindow();
     }
+
     public static void closeResourceWindow(){
         if(resourcePopupStage != null)
             resourcePopupStage.close();
@@ -119,7 +177,15 @@ public class ViewManager {
         resourcePopupStage.setResizable(false);
     }
 
-    // This function creates a stage from a gridpane.
+    /**
+     * Creates a stage
+     * This function creates a stage from a view.
+     *
+     * @param width the width of the window
+     * @param height the height of the window
+     * @param title the title of the window
+     * @author Joost de Jager
+     */
     public static void createStageFromView(int width, int height, String title) {
         currentStage = new Stage();
         if (currentView != null)
@@ -127,7 +193,15 @@ public class ViewManager {
         currentStage.setTitle(title);
     }
 
-    // This function shows a view.
+    /**
+     * Shows a stage.
+     * This function shows a stage.
+     *
+     * @param width the width of the window
+     * @param height the height of the window
+     * @param title the title of the window
+     * @author Joost de Jager
+     */
     public static void showView(int width, int height, String title) {
         createStageFromView(width, height, title);
         currentStage.setOnCloseRequest(event -> {
@@ -138,7 +212,16 @@ public class ViewManager {
             currentStage.show();
     }
 
-    // And this function closes a view.
+    /**
+     * Shows a stage.
+     * This function shows a stage.
+     *
+     * @param width the width of the window
+     * @param height the height of the window
+     * @param title the title of the window
+     * @param playerModels the playerModels are used for generating the tableaus
+     * @author Joost de Jager
+     */
     public static void showView(int width, int height, String title, ArrayList<PlayerModel> playerModels) {
         createStageFromView(width, height, title);
         currentStage.setOnCloseRequest(event -> {
@@ -152,23 +235,48 @@ public class ViewManager {
         ViewManager.loadPickerView(playerModels);
     }
 
+    /**
+     * Closes a stage.
+     * This function closes a stage.
+     *
+     * @author Joost de Jager
+     */
     public static void closeView() {
         if (currentStage != null)
             currentStage.close();
     }
 
-    // Picker view
+    /**
+     * Closes a stage.
+     * This function closes the pickerview.
+     *
+     * @author Joost de Jager
+     */
     public static void closePickerView() {
         if (pickerStage != null)
             pickerStage.close();
     }
 
+    /**
+     * Shows a stage.
+     * This function shows the pickerview.
+     *
+     * @author Joost de Jager
+     */
     public static void showPickerView() {
         if (pickerStage != null)
             pickerStage.show();
     }
 
-    // This function creates a stage from a gridpane.
+    /**
+     * Creates a stage.
+     * This function creates a stage from a gridpane.
+     *
+     * @param width the width of the window
+     * @param height the height of the window
+     * @param title the title of the window
+     * @author Joost de Jager
+     */
     public static void createPopupFromView(int width, int height, String title) {
         currentPopupStage = new Stage();
         if (currentPopupView != null)
@@ -177,13 +285,27 @@ public class ViewManager {
         currentPopupStage.setResizable(false);
     }
 
-    // Function that opens popup window
+    /**
+     * Shows a stage.
+     * This function shows a popup window.
+     *
+     * @author Joost de Jager
+     */
     public static void openPopupWindow() {
         createPopupFromView(680, 460, "tableau");
         if (currentPopupStage != null)
             currentPopupStage.show();
     }
 
+    /**
+     * Creates a stage.
+     * This function creates a stage from a vbox.
+     *
+     * @param width the width of the window
+     * @param height the height of the window
+     * @param title the title of the window
+     * @author Joost de Jager
+     */
     public static void createPopupFromVbox(int width, int height, String title) {
         currentPopupStage = new Stage();
         ScrollPane scrollPane = new ScrollPane();
@@ -194,13 +316,24 @@ public class ViewManager {
         currentPopupStage.setResizable(false);
     }
 
+    /**
+     * Shows a stage.
+     * This function shows a popup window.
+     *
+     * @author Joost de Jager
+     */
     public static void openPopupVbox(int width, int height, String title) {
         createPopupFromVbox(width, height, title);
         if (currentPopupStage != null)
             currentPopupStage.show();
     }
 
-    // Function that closes popup window
+    /**
+     * Closes a stage.
+     * This function closes a popup window.
+     *
+     * @author Joost de Jager
+     */
     public static void closePopupWindow() {
         if (currentPopupStage != null)
             currentPopupStage.close();
