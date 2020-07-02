@@ -5,7 +5,10 @@ import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 public class BeschavingskaartPunten extends Kaart {
     private int waarde;
 
+<<<<<<< HEAD
     public BeschavingskaartPunten(){}
+=======
+>>>>>>> master
     public BeschavingskaartPunten(int kosten, String path, int waarde) {
         super(kosten, path);
         this.waarde = waarde;
@@ -20,7 +23,11 @@ public class BeschavingskaartPunten extends Kaart {
     }
 
     public int getPunten() {
+<<<<<<< HEAD
         return super.getKosten();
+=======
+        return super.getPunten();
+>>>>>>> master
     }
 
     public void uitvoerenActie(PlayerModel player) {

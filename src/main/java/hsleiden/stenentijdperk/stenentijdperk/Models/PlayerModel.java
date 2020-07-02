@@ -56,7 +56,7 @@ public class PlayerModel implements PlayerObservable, Comparable {
         if (this.getPlayerNumber() != null)
             FirebaseController.updateDocument(String.valueOf(this.getLobby()), this.getPlayerNumber(), "punten", this.punten);
     }
-    
+
     public int getToolLevel(int index) {
         return this.tools.get(index).getLevel();
     }
@@ -175,10 +175,6 @@ public class PlayerModel implements PlayerObservable, Comparable {
         if (this.getPlayerNumber() != null)
             FirebaseController.updateDocumentList(String.valueOf(this.getLobby()), this.getPlayerNumber(), "multiplier", this.multiplier);
         notifyAllObservers();
-    }
-
-    public void addMultiplier(int index, int multiplier) {
-        this.resources.set(index, this.resources.get(index) + multiplier);
     }
 
     public int getLobby() {

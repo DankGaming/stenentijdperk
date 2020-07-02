@@ -49,8 +49,8 @@ public class TableauView implements PlayerObserver {
     private ArrayList<Label> multipliers;
 
     // Standard constructor
-    public TableauView(PlayerModel playerModel) {
-        standardConstructorFunction(playerModel);
+    public TableauView(PlayerModel playermodel) {
+        standardConstructorFunction(playermodel);
     }
 
     // Constructor for the boardcontroller
@@ -158,6 +158,7 @@ public class TableauView implements PlayerObserver {
         multiplier4.setStyle("-fx-font-size: 25px;");
         GridPane.setConstraints(multiplier4, 42, 25, 2, 1);
 
+        
         gegooid = new Label("");
         gegooid.setStyle("-fx-font-size: 25px;");
         GridPane.setConstraints(gegooid, 9, 12, 22, 1);
@@ -167,7 +168,7 @@ public class TableauView implements PlayerObserver {
             gegooid.setText("De worp was " + worp + ":");
             gegooid.setVisible(true);
         }
-
+        
         this.multipliers.add(multiplier1);
         this.multipliers.add(multiplier2);
         this.multipliers.add(multiplier3);
@@ -194,15 +195,13 @@ public class TableauView implements PlayerObserver {
         // Initial constraints for the point
         GridPane.setConstraints(this.punt, 37, 6, 5, 5);
 
-        this.view.getChildren().addAll(tableau, stamleden, voedsel, hout, leem, steen, goud, imageviewhutkaart1,
-                imageviewhutkaart2, imageviewhutkaart3, imageviewhutkaart4, imageviewhutkaart5, punt,
-                this.multipliers.get(0), this.multipliers.get(1), this.multipliers.get(2), this.multipliers.get(3),
-                gegooid);
+        this.view.getChildren().addAll(tableau, stamleden, voedsel, hout, leem, steen, goud, imageviewhutkaart1, imageviewhutkaart2,
+                imageviewhutkaart3, imageviewhutkaart4, imageviewhutkaart5, punt, this.multipliers.get(0), this.multipliers.get(1), this.multipliers.get(2), this.multipliers.get(3), gegooid);
     }
 
     public void setPoint(int height) {
-        int[] rows = new int[] { 6, 9, 12, 14, 17, 19, 22, 25 };
-        if (height > 0) {
+        int[] rows = new int[]{6, 9, 12, 14, 17, 19, 22, 25};
+        if(height > 0) {
             this.punt.setVisible(true);
             GridPane.setConstraints(this.punt, 37, rows[height - 1], 5, 5);
         } else {
@@ -211,7 +210,7 @@ public class TableauView implements PlayerObserver {
     }
 
     public void addImageViewToView(int positie, ImageView imageView) {
-        int[][] allConstraints = new int[][] { { 2, 1 }, { 2, 11 }, { 2, 21 } };
+        int[][] allConstraints = new int[][]{{2, 1}, {2, 11}, {2, 21}};
 
         int[] constraints = allConstraints[positie - 1];
 
@@ -248,32 +247,32 @@ public class TableauView implements PlayerObserver {
     }
 
     private void updateStamleden(PlayerObservable po) {
-        if (this.stamleden != null)
+        if(this.stamleden != null)
             this.stamleden.setText("Aantal stamleden: " + po.getVillagers());
     }
 
     private void updateVoedsel() {
-        if (this.voedsel != null)
+        if(this.voedsel != null)
             this.voedsel.setText(String.valueOf(this.recources.get(0)));
     }
 
     private void updateHout() {
-        if (this.hout != null)
+        if(this.hout != null)
             this.hout.setText(String.valueOf(this.recources.get(1)));
     }
 
     private void updateLeem() {
-        if (this.leem != null)
+        if(this.leem != null)
             this.leem.setText(String.valueOf(this.recources.get(2)));
     }
 
     private void updateSteen() {
-        if (this.steen != null)
+        if(this.steen != null)
             this.steen.setText(String.valueOf(this.recources.get(3)));
     }
 
     private void updateGoud() {
-        if (this.goud != null)
+        if(this.goud != null)
             this.goud.setText(String.valueOf(this.recources.get(4)));
     }
 
@@ -282,7 +281,7 @@ public class TableauView implements PlayerObserver {
     }
 
     private void updateMultipliers(PlayerObservable po) {
-        for (int i = 0; i < multipliers.size(); i++) {
+        for(int i = 0; i < multipliers.size(); i++) {
             this.multipliers.get(i).setText(String.valueOf(po.getMultiplier().get(i)));
         }
     }
