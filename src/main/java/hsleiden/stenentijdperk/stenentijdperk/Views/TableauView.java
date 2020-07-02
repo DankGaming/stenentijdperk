@@ -124,39 +124,39 @@ public class TableauView implements PlayerObserver {
 
         voedsel = new Label("0");
         voedsel.setStyle("-fx-font-size: 25px;");
-        GridPane.setConstraints(voedsel, 12, 18, 1, 1);
+        GridPane.setConstraints(voedsel, 12, 18, 2, 1);
 
         hout = new Label("0");
         hout.setStyle("-fx-font-size: 25px;");
-        GridPane.setConstraints(hout, 17, 18, 1, 1);
+        GridPane.setConstraints(hout, 17, 18, 2, 1);
 
         leem = new Label("0");
         leem.setStyle("-fx-font-size: 25px;");
-        GridPane.setConstraints(leem, 21, 18, 1, 1);
+        GridPane.setConstraints(leem, 21, 18, 2, 1);
 
         steen = new Label("0");
         steen.setStyle("-fx-font-size: 25px;");
-        GridPane.setConstraints(steen, 25, 18, 1, 1);
+        GridPane.setConstraints(steen, 25, 18, 2, 1);
 
         goud = new Label("0");
         goud.setStyle("-fx-font-size: 25px;");
-        GridPane.setConstraints(goud, 30, 18, 1, 1);
+        GridPane.setConstraints(goud, 30, 18, 2, 1);
 
         multiplier1 = new Label("0");
         multiplier1.setStyle("-fx-font-size: 25px;");
-        GridPane.setConstraints(multiplier1, 42, 7, 1, 1);
+        GridPane.setConstraints(multiplier1, 42, 7, 2, 1);
 
         multiplier2 = new Label("0");
         multiplier2.setStyle("-fx-font-size: 25px;");
-        GridPane.setConstraints(multiplier2, 42, 13, 1, 1);
+        GridPane.setConstraints(multiplier2, 42, 13, 2, 1);
 
         multiplier3 = new Label("0");
         multiplier3.setStyle("-fx-font-size: 25px;");
-        GridPane.setConstraints(multiplier3, 42, 19, 1, 1);
+        GridPane.setConstraints(multiplier3, 42, 19, 2, 1);
 
         multiplier4 = new Label("0");
         multiplier4.setStyle("-fx-font-size: 25px;");
-        GridPane.setConstraints(multiplier4, 42, 25, 1, 1);
+        GridPane.setConstraints(multiplier4, 42, 25, 2, 1);
 
         
         gegooid = new Label("");
