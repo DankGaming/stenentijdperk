@@ -7,7 +7,7 @@ import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
-import hsleiden.stenentijdperk.stenentijdperk.Views.BoardView;
+import hsleiden.stenentijdperk.stenentijdperk.Views.ResourceView;
 import hsleiden.stenentijdperk.stenentijdperk.Views.TableauView;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
 
@@ -17,21 +17,24 @@ import java.util.List;
 public class BoardController {
     private PlayerController playercontroller;
     private BoardModel boardmodel;
-    private PlayerModel localPlayer;
     // TODO naar boardmodel en dan firebase
     private ArrayList<PlayerModel> players = new ArrayList<PlayerModel>();
     private int[] gegooideWorp;
 
-    public BoardController(ArrayList<PlayerModel> playerlist, PlayerModel me) {
-        localPlayer = me;
-        players = playerlist;
+    public BoardController() {
+        // TODO all references naar temp players moet naar firebase vragen.
+        PlayerModel matt = new PlayerModel("Matt");
+        PlayerModel jake = new PlayerModel("Jake");
+        PlayerModel lucas = new PlayerModel("Lucas");
+        PlayerModel carlos = new PlayerModel("Carlos");
+        players.add(matt);
+        players.add(jake);
+        players.add(lucas);
+        players.add(carlos);
         playercontroller = new PlayerController();
         boardmodel = new BoardModel();
-        boardmodel.setInitialPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
-        System.out.println("test " + boardmodel.getPlayer());
+        boardmodel.setPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
         gegooideWorp = new int[3];
-        FirebaseController.listenForBoardUpdates(String.valueOf(players.get(0).getLobby()));
-        FirebaseController.updateBoard(String.valueOf(players.get(0).getLobby()), boardmodel);
     }
 
     public void registerObserver(BoardObserver boardobserver) {
@@ -40,6 +43,10 @@ public class BoardController {
 
     public Kaart getKaart(int index) {
         return this.boardmodel.getKaart(index);
+    }
+
+    public List<Kaart> getKaarten() {
+        return this.boardmodel.getKaarten();
     }
 
     public StaticHut getHut(int stapel) {
@@ -51,25 +58,17 @@ public class BoardController {
     }
 
     public void onResourceButtonClick(int index, int input) {
-        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
-            if (!boardmodel.getPlaced() && boardmodel.requestCap(index) - boardmodel.requestVillagers(index) != 0
-                    && playercontroller.getPositie(boardmodel.getPlayer(), index) == 0) {
-                // Dit veranderd de hoeveelheid stamleden van een speler
-                boardmodel.decreaseVillagers(index, input);
-                plaatsenStamleden(index, input);
-            }
+        if (!boardmodel.getPlaced() && boardmodel.requestCap(index) - boardmodel.requestVillagers(index) != 0
+                && playercontroller.getPositie(boardmodel.getPlayer(), index) == 0) {
+            // Dit veranderd de hoeveelheid stamleden van een speler
+            boardmodel.decreaseVillagers(index, input);
+            plaatsenStamleden(index, input);
         }
     }
 
     public boolean stamledenCheck(int index, int input) {
         return (input > 0 && input <= playercontroller.getVillagers(boardmodel.getPlayer())
                 && input <= (boardmodel.requestCap(index) - boardmodel.requestVillagers(index)));
-    }
-
-    // methode om de onderste buttons af te handelen. maakt de kaart/hut bezet en
-    // zorgt dat je niet meer kan plaatsen.
-    public List<Kaart> onKaartButtonClick(int index) {
-        return (boardmodel.removeKaart(index)); // TODO dit moet naar acties verplaatst worden
     }
 
     public void onButtonClick(int index) {
@@ -82,7 +81,6 @@ public class BoardController {
 
     // Hier is het rollen voor resources.
     public void resolveResource(int index) {
-        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
         gegooideWorp[0] = index;
         int stamleden = playercontroller.getPositie(boardmodel.getPlayer(), index);
         if (stamleden != 0) {
@@ -96,7 +94,6 @@ public class BoardController {
             } else {
                 toolsGebruiken(0);
             }
-        }
         }
     }
 
@@ -125,7 +122,6 @@ public class BoardController {
     }
 
     private void gainTools(int index) {
-        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
         if ((playercontroller.getPositie(boardmodel.getPlayer(), index) != 0)) {
             ArrayList<Tool> tools = playercontroller.getTools(boardmodel.getPlayer());
             if (tools.size() < 3) {
@@ -140,7 +136,6 @@ public class BoardController {
                     }
                 }
             }
-        }
         }
     }
 
@@ -166,7 +161,6 @@ public class BoardController {
 
             if (!villagersLeft) {
                 boardmodel.setPhase(2);
-                FirebaseController.updateBoardFieldInt(String.valueOf(this.players.get(0).getLobby()), "phase", boardmodel.getPhase());
                 int turnCheck = (boardmodel.getTurn() - 1) % 4;
                 boardmodel.setPlayer(players.get(turnCheck));
                 // TODO Dit moet een soort pop up worden.
@@ -191,7 +185,6 @@ public class BoardController {
         if (posities.stream().allMatch(n -> n == 0)) {
             System.out.println("Einde Ronde");
             boardmodel.setPhase(1);
-            FirebaseController.updateBoardFieldInt(String.valueOf(this.players.get(0).getLobby()), "phase", boardmodel.getPhase());
             for (PlayerModel player : players) {
                 List<Integer> resources = playercontroller.vraagResources(player);
                 int remaining = voedselBetalen(player);
@@ -215,34 +208,30 @@ public class BoardController {
                 }
                 playercontroller.setVillagers(player, playercontroller.getMaxVillagers(player));
             }
+            boardmodel.notifyAllObservers();
             if (checkWincondition()) {
                 endGame();
-            }  
+            }
         }
     }
 
     public int vraagPhase() {
-        int phase = boardmodel.getPhase();
         return boardmodel.getPhase();
     }
 
     private void moreAgriculture(int index) {
-        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
-            if (playercontroller.getPositie(boardmodel.getPlayer(), index) != 0
-                    && playercontroller.vraagGraan(boardmodel.getPlayer()) != 10) {
-                playercontroller.addGraan(boardmodel.getPlayer());
-                playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
-            }
+        if (playercontroller.getPositie(boardmodel.getPlayer(), index) != 0
+                && playercontroller.vraagGraan(boardmodel.getPlayer()) != 10) {
+            playercontroller.addGraan(boardmodel.getPlayer());
+            playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
         }
     }
 
     private void moreVillagerHut(int index) {
-        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
-            if (playercontroller.getPositie(boardmodel.getPlayer(), index) != 0
-                    && playercontroller.getMaxVillagers(boardmodel.getPlayer()) != 10) {
-                playercontroller.addMaxVillagers(boardmodel.getPlayer());
-                playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
-            }
+        if (playercontroller.getPositie(boardmodel.getPlayer(), index) != 0
+                && playercontroller.getMaxVillagers(boardmodel.getPlayer()) != 10) {
+            playercontroller.addMaxVillagers(boardmodel.getPlayer());
+            playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
         }
     }
 
@@ -257,46 +246,91 @@ public class BoardController {
     }
 
     private void buttonCheckPhase2(int index) {
-        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
-            switch (index) {
-                case 5:
-                    moreAgriculture(index);
-                    break;
-                case 6:
-                    moreVillagerHut(index);
-                    break;
-                case 7:
-                    gainTools(index);
-                    break;
-                case 8:
-                case 9:
-                case 10:
-                case 11:
-                    hutActie(index - 8);
-                    break;
-                case 12:
-                case 13:
-                case 14:
-                case 15:
-                    // TODO kaarten actie logica
-                    break;
+        switch (index) {
+            case 5:
+                moreAgriculture(index);
+                break;
+            case 6:
+                moreVillagerHut(index);
+                break;
+            case 7:
+                gainTools(index);
+                break;
+            case 8:
+            case 9:
+            case 10:
+            case 11:
+                hutActie(index - 8);
+                break;
+            case 12:
+            case 13:
+            case 14:
+            case 15:
+                beschavingsKaarActie(index - 12);
+                break;
+        }
+    }
+
+    private void beschavingsKaarActie(int index) {
+        if ((playercontroller.getPositie(boardmodel.getPlayer(), (index + 12)) != 0)) {
+            ViewManager.loadPopupWindow(new ResourceView(boardmodel.getPlayer(), this.playercontroller, this,
+                    (index + 1), 0, index, "beschavingskaart"));
+        }
+    }
+
+    public void kaartGekocht(int index, List<Integer> resources, String type) {
+        if (type.equals("beschavingskaart")) {
+            if (resourcesBetalen(resources)) {
+                this.boardmodel.getPlayer().addKaarten(this.boardmodel.getKaart(index));
+                this.boardmodel.getKaart(index).uitvoerenActie(this.boardmodel.getPlayer());
+                this.boardmodel.updatePunten();
+                this.boardmodel.removeKaart(index);
+            } else {
+                System.out.println("niet genoeg resources");
+                // TODO deze else verbeteren
             }
+            this.playercontroller.setPositie(this.boardmodel.getPlayer(), (index + 12), 0);
+        } else {
+            if (resourcesBetalen(resources)) {
+                int punten = (resources.get(0) * 3) + (resources.get(1) * 4) + (resources.get(2) * 5)
+                        + (resources.get(3) * 6);
+                this.boardmodel.getPlayer().increasePunten(punten);
+                this.boardmodel.getPlayer().addHutjes(this.boardmodel.getHut(index));
+                this.boardmodel.updatePunten();
+                this.boardmodel.removeHut(index);
+            } else {
+                System.out.println("niet genoeg resources");
+                // TODO deze else verbeteren
+            }
+            this.playercontroller.setPositie(this.boardmodel.getPlayer(), (index + 8), 0);
+        }
+    }
+
+    public void kaartAnnuleer(int index, String type) {
+        if (type.equals("beschavingskaart")) {
+            this.playercontroller.setPositie(this.boardmodel.getPlayer(), (index + 12), 0);
+        } else {
+            this.playercontroller.setPositie(this.boardmodel.getPlayer(), (index + 8), 0);
         }
     }
 
     private void hutActie(int index) {
-        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
-            if ((playercontroller.getPositie(boardmodel.getPlayer(), (index + 8)) != 0)) {
-                playercontroller.setPositie(boardmodel.getPlayer(), (index + 8), 0);
+        if ((this.playercontroller.getPositie(this.boardmodel.getPlayer(), (index + 8)) != 0)) {
+            if (this.boardmodel.getHut(index).getPunten() == 0) {
+                ViewManager.loadPopupWindow(new ResourceView(this.boardmodel.getPlayer(), this.playercontroller, this,
+                        this.boardmodel.getHut(index).getKosten().get(0),
+                        this.boardmodel.getHut(index).getKosten().get(1), index, "hutkaart"));
+            } else {
                 if (resourcesBetalen(this.boardmodel.getHut(index).getKosten())) {
-                    this.boardmodel.getPlayer()
-                            .setPunten(this.boardmodel.getPlayer().getPunten() + this.boardmodel.getHut(index).getPunten());
+                    this.boardmodel.getPlayer().increasePunten(this.boardmodel.getHut(index).getPunten());
                     this.boardmodel.getPlayer().addHutjes(this.boardmodel.getHut(index));
-                    boardmodel.removeHut(index);
+                    this.boardmodel.updatePunten();
+                    this.boardmodel.removeHut(index);
                 } else {
                     System.out.println("niet genoeg resources");
                     // TODO deze else verbeteren
                 }
+                playercontroller.setPositie(this.boardmodel.getPlayer(), (index + 8), 0);
             }
         }
     }
@@ -334,11 +368,7 @@ public class BoardController {
         for (int j = 0; j < 4; j++) {
             if (boardmodel.getPlayer().equals(players.get(j))) { // Bepaling welke player aan de beurt is
                 i = j;
-                FirebaseController.updateBoardField(String.valueOf(this.players.get(i).getLobby()), "player", this.players.get(i));
                 break;
-            }
-            else{
-                FirebaseController.getBoard();
             }
         }
         return i;
@@ -359,12 +389,10 @@ public class BoardController {
     }
 
     private void plaatsenStamleden(int index, int stamleden) {
-        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
-            boardmodel.setPlaced(true);
-            playercontroller.setVillagers(boardmodel.getPlayer(),
-                    (playercontroller.getVillagers(boardmodel.getPlayer()) - stamleden));
-            playercontroller.setPositie(boardmodel.getPlayer(), index, stamleden);
-        }
+        boardmodel.setPlaced(true);
+        playercontroller.setVillagers(boardmodel.getPlayer(),
+                (playercontroller.getVillagers(boardmodel.getPlayer()) - stamleden));
+        playercontroller.setPositie(boardmodel.getPlayer(), index, stamleden);
     }
 
     private boolean resourcesBetalen(List<Integer> kost) {
@@ -386,10 +414,10 @@ public class BoardController {
         for (PlayerModel player : players) {
             finalPuntenCount(player);
         }
-        
+
     }
 
-    private boolean checkWincondition(){
+    private boolean checkWincondition() {
         boolean endGame = false;
         for (int i = 0; i < 4; i++) {
             if (boardmodel.getHutStapel(i).size() == 0) {
@@ -406,13 +434,16 @@ public class BoardController {
     private void finalPuntenCount(PlayerModel player) {
         List<Integer> multipliers = playercontroller.getMultiplier(player);
         for (Tool tool : playercontroller.getTools(player)) {
-            playercontroller.increasePunten(player, multipliers.get(0) * tool.getLevel());
+            this.playercontroller.increasePunten(player, multipliers.get(0) * tool.getLevel());
         }
-        playercontroller.increasePunten(player, multipliers.get(1) * playercontroller.getHutjes(player).size());
-        playercontroller.increasePunten(player, multipliers.get(2) * playercontroller.getMaxVillagers(player));
-        playercontroller.increasePunten(player, multipliers.get(3) *playercontroller.vraagGraan(player));
-        playercontroller.increasePunten(player, 
-            playercontroller.getTreasures(player).size() * playercontroller.getTreasures(player).size());
+        this.playercontroller.increasePunten(player,
+                multipliers.get(1) * this.playercontroller.getHutjes(player).size());
+        this.playercontroller.increasePunten(player,
+                multipliers.get(2) * this.playercontroller.getMaxVillagers(player));
+        this.playercontroller.increasePunten(player, multipliers.get(3) * this.playercontroller.vraagGraan(player));
+        this.playercontroller.increasePunten(player,
+                this.playercontroller.getTreasures(player).size() * this.playercontroller.getTreasures(player).size());
+        this.boardmodel.updatePunten();
     }
 
     // TODO tijdelijk

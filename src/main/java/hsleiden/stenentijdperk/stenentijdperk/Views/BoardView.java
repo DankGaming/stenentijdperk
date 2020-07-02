@@ -1,10 +1,8 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
-import hsleiden.stenentijdperk.stenentijdperk.Controllers.FirebaseController;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
-import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
@@ -66,11 +64,9 @@ public class BoardView implements BoardObserver {
 	private int location;
 	private List<ImageView> imageViews;
 	private List<Label> labels;
-	private PlayerModel localPlayer;
 
-	public BoardView(ArrayList<PlayerModel> players, PlayerModel localPlayer) {
-		this.localPlayer = localPlayer;
-		this.controller = new BoardController(players, localPlayer);
+	public BoardView() {
+		this.controller = new BoardController();
 		this.controller.registerObserver(this);
 		this.view = new GridPane();
 		this.beschavingsKaartButtons = new ArrayList<>();
@@ -117,8 +113,6 @@ public class BoardView implements BoardObserver {
 			}
 		}
 	}
-
-
 
 	private void createKaartButtons() {
 		for (int i = 0; i < 4; i++) { // maakt 4 beschavingskaart buttons
@@ -180,12 +174,16 @@ public class BoardView implements BoardObserver {
 		}
 	}
 
-	// dit kan gebruikt worden als de kaarten worden gekocht in een actie fase
 	private void removeKaartButton(int index) {
 		this.beschavingsKaartButtons.get(index).setVisible(false);
 	}
 
-	private void renderNewKaarten(List<Kaart> array) {
+	private void removeHutButton(int index) {
+		this.hutKaartButtons.get(index).setVisible(false);
+	}
+
+	private void renderNewKaarten() {
+		List<Kaart> array = controller.getKaarten();
 		int kaartAmount = 4;
 		if (array.size() < 4) {
 			kaartAmount = array.size();
@@ -226,7 +224,14 @@ public class BoardView implements BoardObserver {
 		}
 	}
 
-	private void closeFileStream (FileInputStream input){
+	private void renderPunten() {
+		this.spelerPunten1.setText("" + controller.getPlayers().get(0).getPunten());
+		this.spelerPunten2.setText("" + controller.getPlayers().get(1).getPunten());
+		this.spelerPunten3.setText("" + controller.getPlayers().get(2).getPunten());
+		this.spelerPunten4.setText("" + controller.getPlayers().get(3).getPunten());
+	}
+
+	private void closeFileStream(FileInputStream input) {
 		if (input != null) {
 			try {
 				input.close();
@@ -280,7 +285,7 @@ public class BoardView implements BoardObserver {
 			System.out.println(fileNotFoundException);
 		} finally {
 			closeFileStream(input);
-		}	
+		}
 
 		FileInputStream speler2 = null;
 		try {
@@ -308,7 +313,7 @@ public class BoardView implements BoardObserver {
 			System.out.println(fileNotFoundException);
 		} finally {
 			closeFileStream(input);
-		}		
+		}
 
 		FileInputStream speler4 = null;
 		try {
@@ -323,7 +328,6 @@ public class BoardView implements BoardObserver {
 		} finally {
 			closeFileStream(input);
 		}
-		
 
 		String styleLabel = "-fx-font-size: 20px; -fx-font-weight: bold";
 
@@ -372,61 +376,39 @@ public class BoardView implements BoardObserver {
 
 		String spelerNaamLabels = "-fx-font-size: 20px; -fx-font-weight: 700;";
 
-		//Speler Namem
-		try {
-			spelerNaam1 = new Label(controller.getPlayers().get(0).getNaam());
-			spelerNaam1.setStyle(spelerNaamLabels);
-			GridPane.setConstraints(spelerNaam1, 44 ,3, 3, 1);
-			labels.add(spelerNaam1);
+		// Speler Namen
+		spelerNaam1 = new Label(controller.getPlayers().get(0).getNaam());
+		spelerNaam1.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerNaam1, 44, 3, 3, 1);
 
-			spelerPunten1 = new Label("" + controller.getPlayers().get(0).getPunten());
-			spelerPunten1.setStyle(spelerNaamLabels);
-			GridPane.setConstraints(spelerPunten1, 47, 3, 3, 1);
-			labels.add(spelerPunten1);
-		} catch (Exception ignored){}		
+		spelerNaam2 = new Label(controller.getPlayers().get(1).getNaam());
+		spelerNaam2.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerNaam2, 44, 5, 3, 1);
 
-		try {
-			spelerNaam2 = new Label(controller.getPlayers().get(1).getNaam());
-			spelerNaam2.setStyle(spelerNaamLabels);
-			GridPane.setConstraints(spelerNaam2, 44 ,5, 3, 1);
-			labels.add(spelerNaam2);
+		spelerNaam3 = new Label(controller.getPlayers().get(2).getNaam());
+		spelerNaam3.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerNaam3, 44, 7, 3, 1);
 
-			spelerPunten2 = new Label("" + controller.getPlayers().get(1).getPunten());
-			spelerPunten2.setStyle(spelerNaamLabels);
-			GridPane.setConstraints(spelerPunten2, 47, 5, 3, 1);
-			labels.add(spelerPunten2);
-		} catch (Exception ignored){}
+		spelerNaam4 = new Label(controller.getPlayers().get(3).getNaam());
+		spelerNaam4.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerNaam4, 44, 9, 3, 1);
 
-		try {
-			spelerNaam3 = new Label(controller.getPlayers().get(2).getNaam());
-			spelerNaam3.setStyle(spelerNaamLabels);
-			GridPane.setConstraints(spelerNaam3, 44 ,7, 3, 1);
-			labels.add(spelerNaam3);
+		// Speler Punten
+		spelerPunten1 = new Label("" + controller.getPlayers().get(0).getPunten());
+		spelerPunten1.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerPunten1, 47, 3, 3, 1);
 
-			spelerPunten3 = new Label("" + controller.getPlayers().get(2).getPunten());
-			spelerPunten3.setStyle(spelerNaamLabels);
-			GridPane.setConstraints(spelerPunten3, 47, 7, 3, 1);
-			labels.add(spelerPunten3);
-		} catch (Exception ignored) {}
+		spelerPunten2 = new Label("" + controller.getPlayers().get(1).getPunten());
+		spelerPunten2.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerPunten2, 47, 5, 3, 1);
 
-		try {
-			spelerNaam4 = new Label(controller.getPlayers().get(3).getNaam());
-			spelerNaam4.setStyle(spelerNaamLabels);
-			GridPane.setConstraints(spelerNaam4, 44 ,9, 3, 1);
-			labels.add(spelerNaam4);
+		spelerPunten3 = new Label("" + controller.getPlayers().get(2).getPunten());
+		spelerPunten3.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerPunten3, 47, 7, 3, 1);
 
-			spelerPunten4 = new Label("" + controller.getPlayers().get(3).getPunten());
-			spelerPunten4.setStyle(spelerNaamLabels);
-			GridPane.setConstraints(spelerPunten4, 47, 9, 3, 1);
-			labels.add(spelerPunten4);
-		} catch (Exception ignored) {}
-		//Speler Punten
-		
-
-		
-	
-
-		
+		spelerPunten4 = new Label("" + controller.getPlayers().get(3).getPunten());
+		spelerPunten4.setStyle(spelerNaamLabels);
+		GridPane.setConstraints(spelerPunten4, 47, 9, 3, 1);
 
 		// laten zijn welke speler aan de beurt is.
 		beurtLabel = new Label(controller.getPlayer().getNaam() + " is aan de beurt.");
@@ -490,7 +472,7 @@ public class BoardView implements BoardObserver {
 			@Override
 			public void handle(ActionEvent actionEvent) {
 				if (actionEvent.getSource() == hutKaartButtons.get(0)) {
-					makeConstraints(20, 40, 2);	
+					makeConstraints(20, 40, 2);
 					labelsSetter(8);
 				} else if (actionEvent.getSource() == hutKaartButtons.get(1)) {
 					makeConstraints(15, 40, 2);
@@ -502,27 +484,15 @@ public class BoardView implements BoardObserver {
 					makeConstraints(5, 40, 2);
 					labelsSetter(11);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(0)) {
-					List<Kaart> array = controller.onKaartButtonClick(0); // TODO verplaatsen naar acties
-					renderNewKaarten(array);
-					ViewManager.loadPopupWindow(new ResourceView());
 					makeConstraints(43, 36, 2);
 					labelsSetter(12);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(1)) {
-					List<Kaart> array = controller.onKaartButtonClick(1); // TODO verplaatsen naar acties
-					renderNewKaarten(array);
-					ViewManager.loadPopupWindow(new ResourceView());
 					makeConstraints(38, 36, 2);
 					labelsSetter(13);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(2)) {
-					List<Kaart> array = controller.onKaartButtonClick(2); // TODO verplaatsen naar acties
-					renderNewKaarten(array);
-					ViewManager.loadPopupWindow(new ResourceView());
 					makeConstraints(32, 36, 2);
 					labelsSetter(14);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(3)) {
-					List<Kaart> array = controller.onKaartButtonClick(3); // TODO verplaatsen naar acties
-					renderNewKaarten(array);
-					ViewManager.loadPopupWindow(new ResourceView());
 					makeConstraints(27, 36, 2);
 					labelsSetter(15);
 				} else if (actionEvent.getSource() == hutButton) {
@@ -571,9 +541,9 @@ public class BoardView implements BoardObserver {
 					try {
 						aantalStamleden = Integer.parseInt(amountField.getText());
 						if (controller.stamledenCheck(location, aantalStamleden)) {
-								controller.onResourceButtonClick(location, aantalStamleden);
-								setInputVisable(false);
-								checkStamleden(location);
+							controller.onResourceButtonClick(location, aantalStamleden);
+							setInputVisable(false);
+							checkStamleden(location);
 						}
 					} catch (Exception e) {
 						System.out.println(e);
@@ -607,11 +577,9 @@ public class BoardView implements BoardObserver {
 				beschavingsKaartButtons.get(1), beschavingsKaartButtons.get(2), beschavingsKaartButtons.get(3),
 				hutButton, toolStapel1, toolStapel2, akkerbouwButton, jachtButton, bosButton, leemGroeveButton,
 				steenGroeveButton, rivierButton, endTurn, speler1Image, speler2Image, speler3Image, speler4Image,
-				speler1Token, speler2Token, speler3Token, speler4Token,amountField, amountLabel, amountButton, beurtLabel);
-
-		for (Label label: labels) {
-			this.view.getChildren().add(label);
-		}
+				speler1Label, speler2Label, speler3Label, speler4Label, speler1Token, speler2Token, speler3Token,
+				speler4Token, amountField, amountLabel, amountButton, beurtLabel, spelerNaam1, spelerNaam2, spelerNaam3,
+				spelerNaam4, spelerPunten1, spelerPunten2, spelerPunten3, spelerPunten4);
 	}
 
 	private void labelsSetter(int location) {
@@ -620,9 +588,7 @@ public class BoardView implements BoardObserver {
 		if (location < 5) {
 			phaseCheck(location);
 		} else {
-			if(FirebaseController.getBoard().getPlayer() == localPlayer) {
-				controller.onButtonClick(location);
-			}
+			controller.onButtonClick(location);
 		}
 		checkStamleden(location);
 	}
@@ -664,21 +630,21 @@ public class BoardView implements BoardObserver {
 	private void makeConstraints(int x, int y, int buttontype) {
 		GridPane.setConstraints(imageViews.get(0), x, y, 2, 2);
 		GridPane.setConstraints(labels.get(0), x, y, 1, 1);
-		GridPane.setConstraints(imageViews.get(2), x+2, y, 2, 2);
-		GridPane.setConstraints(labels.get(1), x+2, y, 1, 1);
+		GridPane.setConstraints(imageViews.get(2), x + 2, y, 2, 2);
+		GridPane.setConstraints(labels.get(1), x + 2, y, 1, 1);
 		if (buttontype != 2) {
-			GridPane.setConstraints(imageViews.get(4), x+4, y, 2, 2);
-			GridPane.setConstraints(labels.get(2), x+4, y, 1, 1);
+			GridPane.setConstraints(imageViews.get(4), x + 4, y, 2, 2);
+			GridPane.setConstraints(labels.get(2), x + 4, y, 1, 1);
 		} else {
-			GridPane.setConstraints(imageViews.get(4), x, y+2, 2, 2);
-			GridPane.setConstraints(labels.get(2), x, y+2, 1, 1);
+			GridPane.setConstraints(imageViews.get(4), x, y + 2, 2, 2);
+			GridPane.setConstraints(labels.get(2), x, y + 2, 1, 1);
 		}
 		if (buttontype != 1) {
-			GridPane.setConstraints(imageViews.get(6), x+2, y+2, 2, 2);
-			GridPane.setConstraints(labels.get(3), x+2, y+2, 1, 1);
+			GridPane.setConstraints(imageViews.get(6), x + 2, y + 2, 2, 2);
+			GridPane.setConstraints(labels.get(3), x + 2, y + 2, 1, 1);
 		} else {
-			GridPane.setConstraints(imageViews.get(6), x+6, y, 2, 2);
-			GridPane.setConstraints(labels.get(3), x+6, y, 1, 1);
+			GridPane.setConstraints(imageViews.get(6), x + 6, y, 2, 2);
+			GridPane.setConstraints(labels.get(3), x + 6, y, 1, 1);
 		}
 	}
 
@@ -725,8 +691,24 @@ public class BoardView implements BoardObserver {
 
 	@Override
 	public void update(BoardObservable boardobserver) {
-		System.out.println("render new hutten");
 		renderNewHutten();
+		renderNewKaarten();
+		renderPunten();
+	}
+
+	@Override
+	public void updatePunten(BoardObservable boardobserver) {
+		renderPunten();
+	}
+
+	@Override
+	public void removeKaart(BoardObservable boardobserver, int index) {
+		removeKaartButton(index);
+	}
+
+	@Override
+	public void removeHut(BoardObservable boardobserver, int index) {
+		removeHutButton(index);
 	}
 
 	// Voor de ViewManager.

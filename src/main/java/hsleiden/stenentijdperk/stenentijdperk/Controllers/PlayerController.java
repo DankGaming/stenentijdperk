@@ -1,6 +1,7 @@
 package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 
@@ -12,13 +13,17 @@ public class PlayerController {
 	public PlayerController() {
 	}
 
-	public int getVillagers(PlayerModel playermodel) {
-		return playermodel.getVillagers();
-	}
+    public void addKaarten(PlayerModel playerModel, Kaart kaart) {
+        playerModel.addKaarten(kaart);
+    }
 
-	public void setVillagers(PlayerModel playermodel, int villagers) {
-		playermodel.setVillagers(villagers);
-	}
+    public int getVillagers(PlayerModel playerModel) {
+        return playerModel.getVillagers();
+    }
+
+    public void setVillagers(PlayerModel playerModel, int villagers) {
+        playerModel.setVillagers(villagers);
+    }
 
 	public int getMaxVillagers(PlayerModel playerModel) {
 		return playerModel.getMaxVillagers();
@@ -28,9 +33,9 @@ public class PlayerController {
 		playerModel.addMaxVillagers();
 	}
 
-	public ArrayList<Tool> getTools(PlayerModel playermodel) {
-		return playermodel.getTools();
-	}
+    public ArrayList<Tool> getTools(PlayerModel playerModel) {
+        return playerModel.getTools();
+    }
 
 	public int getPositie(PlayerModel playerModel, int index) {
 		return playerModel.getPositie(index);

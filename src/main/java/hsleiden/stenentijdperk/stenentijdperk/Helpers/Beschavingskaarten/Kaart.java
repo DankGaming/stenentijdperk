@@ -1,44 +1,53 @@
 package hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten;
 
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Dobbelsteen;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Resource;
 import hsleiden.stenentijdperk.stenentijdperk.Interfaces.Status;
+import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 
 public class Kaart implements Status {
-    //wat kost de kaart
-    private int kosten;
-    private Resource tool;
-    private Resource graan;
+    private String type;
     private String treasure;
+    private int multiplier;
+    private int waarde;
+    private int middel;
     private boolean status;
     private String path;
 
-    public Kaart(){}
-
-    public Kaart(int kosten, String path) {
+    public Kaart(String type,String path, String treasure, int multiplier, int waarde, int middel) {
+        this.type = type;
+        this.treasure = treasure;
+        this.multiplier = multiplier;
+        this.waarde = waarde;
+        this.middel = middel;
         this.path = path;
-        this.kosten = kosten;
-        this.status = false;
     }
 
     public String getPath() {
         return this.path;
     }
 
-    public void setKosten(int kosten){this.kosten = kosten;};
-    public int getKosten() {
-        return this.kosten;
-    }
+    public void uitvoerenActie(PlayerModel player) {
+        if(type.equals("middelen")){
+            player.addResources(middel, waarde);
+        }
+        else if(type.equals("worp")){
+            Dobbelsteen dobbel = new Dobbelsteen(2);
+            dobbel.worp();
+            dobbel.berekenTotaal();
+            player.addResources(middel, dobbel.getTotaal() / waarde);
+        }
+        else if(type.equals("punten")){
+            player.increasePunten(waarde);
+        }
 
-    public Resource getTool() {
-        return this.tool;
-    }
-
-    public Resource getGraan() {
-        return this.graan;
-    }
-
-    public String getTreasure() {
-        return this.treasure;
+        if(!treasure.isEmpty()){
+            player.addTreasure(treasure);
+        }else{
+            player.addMultiplier(multiplier, 1);
+        }
+        // ontvang beschavingskaart
+        player.addKaarten(this);
     }
 
     @Override
