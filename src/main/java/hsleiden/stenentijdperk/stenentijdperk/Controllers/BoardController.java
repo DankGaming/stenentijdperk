@@ -75,6 +75,7 @@ public class BoardController {
 
     /**
      * Deze functie controleert of het ingevuld aantal stamleden wel een geldige hoeveelheid is
+     * 
      * @param index de button, dus posities, waarop op de speler stamleden wil plaatsen
      * @param input de hoeveelheid stamleden die de speler heeft ingevoerd
      * @return true of false bepaald door te controleren of er nog ruimte is, en of de speler wel genoeg stamleden over heeft
@@ -94,6 +95,7 @@ public class BoardController {
 
     /**
      * Deze functie controleert in welke phase van het spel we zitten.
+     * 
      * @param index de button, dus positie,waarop op de speler heeft geklikt.
      * @see BoardModel
      * @author Damien Hofman
@@ -112,6 +114,7 @@ public class BoardController {
      * Eerste controllert het of de speler wel stamleden op die positie heeft.
      * Daarna wordt er een dobbelsteen object gemaakt om te rollen.
      * Dan wordt het tabbleau geopened als de speler tools beschikbaar heeft en kan ze dan gebruiken.
+     * 
      * @param index welke resource het was.
      * @see Dobbelsteen
      * @see TableauView
@@ -141,6 +144,7 @@ public class BoardController {
      * De tools worden opgeteld bij de roll.
      * Vervolgens wordt het totaal gedeeld door de waarde van de de resource.
      * Dit wordt dan aan de speler gegevenen.
+     * 
      * @param waarde de waarde van de gebruikte tools.
      * @see Tool
      * @author Damien Hofman
@@ -162,6 +166,7 @@ public class BoardController {
 
     /**
      * Deze functie loop door de tools van een speler en controleerd of deze nog te gebruiken is.
+     * 
      * @return dit returned of de speler nog tools kan gebruiken.
      * @see Tool
      * @author Damien Hofman
@@ -180,6 +185,7 @@ public class BoardController {
      * Dit geeft de speler tools.
      * Als de speler minder dan 3 tools heeft dan krijgt de speler een nieuwe.
      * Anders wordt het niveau van de laagste level tool met 1 verhoogd.
+     * 
      * @param index de locatie van de button.
      * @see BoardModel
      * @see Tool
