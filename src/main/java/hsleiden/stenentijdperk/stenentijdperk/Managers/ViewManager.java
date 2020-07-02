@@ -52,7 +52,7 @@ public class ViewManager {
      * Load the lobby view.
      * This function loads the lobby view.
      *
-     * @param playerModel We use the playermodel to display the name of the player
+     * @param playerModel We use the playerModel to display the name of the player
      * @see LobbyView
      * @author Joost de Jager
      */
@@ -82,7 +82,7 @@ public class ViewManager {
      * Load the GameOver view.
      * This function loads the GameOver view.
      *
-     * @param playerModels We use the playermodels to generate a list of who won the game
+     * @param playerModels We use the playerModels to generate a list of who won the game
      * @see GameOverView
      * @author Joost de Jager
      */
@@ -219,7 +219,7 @@ public class ViewManager {
      * @param width the width of the window
      * @param height the height of the window
      * @param title the title of the window
-     * @param playerModels for generating the tableaus
+     * @param playerModels the playerModels are used for generating the tableaus
      * @author Joost de Jager
      */
     public static void showView(int width, int height, String title, ArrayList<PlayerModel> playerModels) {
