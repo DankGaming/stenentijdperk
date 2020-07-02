@@ -11,6 +11,7 @@ import hsleiden.stenentijdperk.stenentijdperk.App;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Resource;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Test;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
@@ -26,7 +27,10 @@ public class FirebaseController {
     static Firestore db;
     static BoardModel board;
     static ArrayList<PlayerModel> players;
-    public static void initializeFirebaseApp() {
+    static Test test;
+
+    public static void initializeFirebaseApp(Test test) {
+        test = test;
         GoogleCredentials credentials = null;
 
         try {
@@ -61,9 +65,8 @@ public class FirebaseController {
                 System.out.println(data);
                 if (data){
                     System.out.println("arive");
-                    ViewManager.loadLoginView();
-                    //ViewManager.loadBoardView(getPlayersInLobby(Integer.parseInt(lobby)), pl);
-                };
+                    ViewManager.loadBoardView(getPlayersInLobby(Integer.parseInt(lobby)), pl);
+                }
             } else {
                 System.out.print("Current data: null");
             }

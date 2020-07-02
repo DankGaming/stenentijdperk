@@ -1,6 +1,7 @@
 package hsleiden.stenentijdperk.stenentijdperk;
 
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.FirebaseController;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Test;
 import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -13,7 +14,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        FirebaseController.initializeFirebaseApp();
+        Test test = new Test();
+        FirebaseController.initializeFirebaseApp(test);
         ViewManager.loadLoginView();
     }
 
