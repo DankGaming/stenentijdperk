@@ -49,8 +49,8 @@ public class TableauView implements PlayerObserver {
     private ArrayList<Label> multipliers;
 
     // Standard constructor
-    public TableauView(PlayerModel playerModel) {
-        standardConstructorFunction(playerModel);
+    public TableauView(PlayerModel playermodel) {
+        standardConstructorFunction(playermodel);
     }
 
     // Constructor for the boardcontroller
@@ -211,7 +211,7 @@ public class TableauView implements PlayerObserver {
     }
 
     public void addImageViewToView(int positie, ImageView imageView) {
-        int[][] allConstraints = new int[][] { { 2, 1 }, { 2, 11 }, { 2, 21 } };
+        int[][] allConstraints = new int[][]{{2, 1}, {2, 11}, {2, 21}};
 
         int[] constraints = allConstraints[positie - 1];
 

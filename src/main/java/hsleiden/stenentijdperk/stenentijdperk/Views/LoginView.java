@@ -18,7 +18,7 @@ import java.io.FileNotFoundException;
 
 public class LoginView {
     private LoginController controller;
-    private PlayerModel playerModel;
+    private PlayerModel playermodel;
     private GridPane view;
     private String loginImage = "src/main/Resources/Backgrounds/menu2.jpg";
     private ImageView imageView;
@@ -73,8 +73,7 @@ public class LoginView {
         Button verderButton = new Button("Verder");
         verderButton.setMinSize(150, 60);
         verderButton.setMaxSize(150, 60);
-        verderButton.setStyle(
-                "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
+        verderButton.setStyle("-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
         GridPane.setConstraints(verderButton, 26, 23, 10, 10);
 
         EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
