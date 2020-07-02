@@ -7,6 +7,7 @@ import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
+import hsleiden.stenentijdperk.stenentijdperk.Views.BoardView;
 import hsleiden.stenentijdperk.stenentijdperk.Views.TableauView;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
 
@@ -91,7 +92,7 @@ public class BoardController {
             gegooideWorp[1] = roll.getTotaal();
             gegooideWorp[2] = stamleden;
             if (playercontroller.getTools(boardmodel.getPlayer()).size() != 0 && checkTools()) {
-                ViewManager.loadPopupWindow(new TableauView(boardmodel.getPlayer(), this).setScene());
+                ViewManager.loadPopupWindow(new TableauView(boardmodel.getPlayer(), this, gegooideWorp[1]).setScene());
             } else {
                 toolsGebruiken(0);
             }
@@ -209,6 +210,9 @@ public class BoardController {
                 }
                 playercontroller.setVillagers(player, playercontroller.getMaxVillagers(player));
             }
+            if (checkWincondition()) {
+                endGame();
+            }  
         }
     }
 
@@ -358,6 +362,40 @@ public class BoardController {
         }
     }
 
+    private void endGame() {
+        for (PlayerModel player : players) {
+            finalPuntenCount(player);
+        }
+        
+    }
+
+    private boolean checkWincondition(){
+        boolean endGame = false;
+        for (int i = 0; i < 4; i++) {
+            if (boardmodel.getHutStapel(i).size() == 0) {
+                endGame = true;
+            }
+        }
+        if (boardmodel.getKaarten().size() > 4) {
+            endGame = true;
+        }
+
+        return endGame;
+    }
+
+    private void finalPuntenCount(PlayerModel player) {
+        List<Integer> multipliers = playercontroller.getMultiplier(player);
+        for (Tool tool : playercontroller.getTools(player)) {
+            playercontroller.increasePunten(player, multipliers.get(0) * tool.getLevel());
+        }
+        playercontroller.increasePunten(player, multipliers.get(1) * playercontroller.getHutjes(player).size());
+        playercontroller.increasePunten(player, multipliers.get(2) * playercontroller.getMaxVillagers(player));
+        playercontroller.increasePunten(player, multipliers.get(3) *playercontroller.vraagGraan(player));
+        playercontroller.increasePunten(player, 
+            playercontroller.getTreasures(player).size() * playercontroller.getTreasures(player).size());
+    }
+
+    // TODO tijdelijk
     public ArrayList<PlayerModel> getPlayers() {
         return this.players;
     }

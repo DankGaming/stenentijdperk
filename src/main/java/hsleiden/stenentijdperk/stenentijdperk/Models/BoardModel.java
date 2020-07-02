@@ -33,12 +33,14 @@ public class BoardModel implements BoardObservable {
     private int phase;
     private ArrayList<StaticHut> hutjes = new ArrayList<>();
     private ArrayList<Resource> locaties = new ArrayList<>();
-
+    private boolean wincondition;
+    
     public BoardModel() {
         this.isPlaceable = true;
         this.turn = 1;
         this.placed = false;
         this.phase = 1;
+        this.wincondition = false;
         Resource food = new Resource("Food", 500, 2, 40);
         Resource wood = new Resource("Wood", 28, 3, 7);
         Resource leem = new Resource("Leem", 18, 4, 7);
@@ -294,4 +296,14 @@ public class BoardModel implements BoardObservable {
     public void setPlayer(PlayerModel player) {
         this.player = player;
     }
+
+    public boolean getWincondition() {
+        return wincondition;
+    }
+
+    public void setWincondition(boolean wincondition) {
+        this.wincondition = wincondition;
+    }
+
+    
 }
