@@ -374,40 +374,48 @@ public class BoardView implements BoardObserver {
 			spelerNaam1 = new Label(controller.getPlayers().get(0).getNaam());
 			spelerNaam1.setStyle(spelerNaamLabels);
 			GridPane.setConstraints(spelerNaam1, 44 ,3, 3, 1);
+			labels.add(spelerNaam1);
 
 			spelerPunten1 = new Label("" + controller.getPlayers().get(0).getPunten());
 			spelerPunten1.setStyle(spelerNaamLabels);
 			GridPane.setConstraints(spelerPunten1, 47, 3, 3, 1);
+			labels.add(spelerPunten1);
 		} catch (Exception ignored){}		
 
 		try {
 			spelerNaam2 = new Label(controller.getPlayers().get(1).getNaam());
 			spelerNaam2.setStyle(spelerNaamLabels);
 			GridPane.setConstraints(spelerNaam2, 44 ,5, 3, 1);
+			labels.add(spelerNaam2);
 
 			spelerPunten2 = new Label("" + controller.getPlayers().get(1).getPunten());
 			spelerPunten2.setStyle(spelerNaamLabels);
 			GridPane.setConstraints(spelerPunten2, 47, 5, 3, 1);
+			labels.add(spelerPunten2);
 		} catch (Exception ignored){}
 
 		try {
 			spelerNaam3 = new Label(controller.getPlayers().get(2).getNaam());
 			spelerNaam3.setStyle(spelerNaamLabels);
 			GridPane.setConstraints(spelerNaam3, 44 ,7, 3, 1);
+			labels.add(spelerNaam3);
 
 			spelerPunten3 = new Label("" + controller.getPlayers().get(2).getPunten());
 			spelerPunten3.setStyle(spelerNaamLabels);
 			GridPane.setConstraints(spelerPunten3, 47, 7, 3, 1);
+			labels.add(spelerPunten3);
 		} catch (Exception ignored) {}
 
 		try {
 			spelerNaam4 = new Label(controller.getPlayers().get(3).getNaam());
 			spelerNaam4.setStyle(spelerNaamLabels);
 			GridPane.setConstraints(spelerNaam4, 44 ,9, 3, 1);
+			labels.add(spelerNaam4);
 
 			spelerPunten4 = new Label("" + controller.getPlayers().get(3).getPunten());
 			spelerPunten4.setStyle(spelerNaamLabels);
 			GridPane.setConstraints(spelerPunten4, 47, 9, 3, 1);
+			labels.add(spelerPunten4);
 		} catch (Exception ignored) {}
 		//Speler Punten
 		
@@ -596,9 +604,11 @@ public class BoardView implements BoardObserver {
 				beschavingsKaartButtons.get(1), beschavingsKaartButtons.get(2), beschavingsKaartButtons.get(3),
 				hutButton, toolStapel1, toolStapel2, akkerbouwButton, jachtButton, bosButton, leemGroeveButton,
 				steenGroeveButton, rivierButton, endTurn, speler1Image, speler2Image, speler3Image, speler4Image,
-				speler1Label, speler2Label, speler3Label, speler4Label, speler1Token, speler2Token, speler3Token, speler4Token,
-				amountField, amountLabel, amountButton, beurtLabel, spelerNaam1, spelerNaam2, spelerNaam3, spelerNaam4, spelerPunten1,
-				spelerPunten2, spelerPunten3, spelerPunten4);
+				speler1Token, speler2Token, speler3Token, speler4Token,amountField, amountLabel, amountButton, beurtLabel);
+
+		for (Label label: labels) {
+			this.view.getChildren().add(label);
+		}
 	}
 
 	private void labelsSetter(int location) {
