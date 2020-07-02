@@ -30,20 +30,18 @@ public class Kaart implements Status {
     public void uitvoerenActie(PlayerModel player) {
         if(type.equals("middelen")){
             player.addResources(middel, waarde);
-        }
-        else if(type.equals("worp")){
+        } else if(type.equals("worp")){
             Dobbelsteen dobbel = new Dobbelsteen(2);
             dobbel.worp();
             dobbel.berekenTotaal();
             player.addResources(middel, dobbel.getTotaal() / waarde);
-        }
-        else if(type.equals("punten")){
+        } else if(type.equals("punten")){
             player.increasePunten(waarde);
         }
 
-        if(!treasure.isEmpty()){
+        if (!treasure.isEmpty()) {
             player.addTreasure(treasure);
-        }else{
+        } else{
             player.addMultiplier(multiplier, 1);
         }
         // ontvang beschavingskaart
