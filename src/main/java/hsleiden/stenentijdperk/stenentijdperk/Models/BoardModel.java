@@ -1,10 +1,5 @@
 package hsleiden.stenentijdperk.stenentijdperk.Models;
 
-import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
-import hsleiden.stenentijdperk.stenentijdperk.Controllers.PlayerController;
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.BeschavingskaartMiddelen;
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.BeschavingskaartPunten;
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.BeschavingskaartWorpMiddelen;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Resource;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
@@ -34,7 +29,7 @@ public class BoardModel implements BoardObservable {
     private ArrayList<StaticHut> hutjes = new ArrayList<>();
     private ArrayList<Resource> locaties = new ArrayList<>();
     private boolean wincondition;
-    
+
     public BoardModel() {
         this.isPlaceable = true;
         this.turn = 1;
@@ -81,7 +76,7 @@ public class BoardModel implements BoardObservable {
                 for (int kost : kosten) {
                     resourceKost.add(kost);
                 }
-              
+                
                 punten = 0;
             }
 
@@ -100,28 +95,28 @@ public class BoardModel implements BoardObservable {
         this.hutKaarten.clear();
     }
 
-    public List<Kaart> removeKaart(int index) {
+    public void removeKaart(int index) {
         this.kaarten.remove(index);
-        return this.kaarten;
+        removeKaarten(index);
     }
 
     public void removeHut(int stapel) {
         switch (stapel) {
             case 0:
                 this.hutStapel1.remove(0);
-                notifyAllObservers();
+                removeHutten(stapel);
                 break;
             case 1:
                 this.hutStapel2.remove(0);
-                notifyAllObservers();
+                removeHutten(stapel);
                 break;
             case 2:
                 this.hutStapel3.remove(0);
-                notifyAllObservers();
+                removeHutten(stapel);
                 break;
             case 3:
                 this.hutStapel4.remove(0);
-                notifyAllObservers();
+                removeHutten(stapel);
                 break;
         }
     }
@@ -248,6 +243,7 @@ public class BoardModel implements BoardObservable {
     }
 
     public void maakKaarten() {
+      
         this.kaarten.add(0, new Kaart("middellen", "src/main/Resources/Kaarten/Food_Gpoint.png", "", 4, 3, 0));
         this.kaarten.add(1, new Kaart("middellen", "src/main/Resources/Kaarten/Food_Hpoint.png", "", 2, 2, 0));
         this.kaarten.add(2, new Kaart("middellen", "src/main/Resources/Kaarten/Food_Kruid.jpg", "kruid", 0, 5, 0));
@@ -329,5 +325,4 @@ public class BoardModel implements BoardObservable {
         this.wincondition = wincondition;
     }
 
-    
 }

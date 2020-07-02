@@ -1,21 +1,26 @@
 package hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten;
 
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Dobbelsteen;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Resource;
 import hsleiden.stenentijdperk.stenentijdperk.Interfaces.Status;
+import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 
 public class Kaart implements Status {
-    //wat kost de kaart
-    private int kosten;
-    private Resource tool;
-    private Resource graan;
+    private String type;
     private String treasure;
+    private int multiplier;
+    private int waarde;
+    private int middel;
     private boolean status;
-    private final String path;
+    private String path;
 
-    public Kaart(int kosten, String path) {
+    public Kaart(String type,String path, String treasure, int multiplier, int waarde, int middel) {
+        this.type = type;
+        this.treasure = treasure;
+        this.multiplier = multiplier;
+        this.waarde = waarde;
+        this.middel = middel;
         this.path = path;
-        this.kosten = kosten;
-        this.status = false;
     }
 
     public String getPath() {
@@ -43,22 +48,6 @@ public class Kaart implements Status {
         }
         // ontvang beschavingskaart
         player.addKaarten(this);
-    }
-  
-    public int getPunten() {
-        return this.kosten;
-    }
-
-    public Resource getTool() {
-        return this.tool;
-    }
-
-    public Resource getGraan() {
-        return this.graan;
-    }
-
-    public String getTreasure() {
-        return this.treasure;
     }
 
     @Override
