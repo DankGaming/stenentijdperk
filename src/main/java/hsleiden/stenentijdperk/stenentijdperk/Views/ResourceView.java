@@ -26,7 +26,6 @@ public class ResourceView {
     private List<Label> amounts;
     private List<TextField> fields;
     private List<String> labelTexts;
-    private List<Integer> resources;
     private Label header;
     private Button resourceButton;
     private Button cancelButton;
@@ -47,7 +46,6 @@ public class ResourceView {
         this.boardController = boardController;
         this.playerModel = playerModel;
         this.playerController = playerController;
-        this.resources = new ArrayList<Integer>();
         this.labels = new ArrayList<Label>();
         this.amounts = new ArrayList<Label>();
         this.fields = new ArrayList<TextField>();
@@ -84,7 +82,7 @@ public class ResourceView {
 
         header = new Label("U moet " + price + " resources betalen:");
         header.setStyle(textFont);
-        GridPane.setConstraints(header, 5, 1, 20, 2);
+        GridPane.setConstraints(header, 5, 1, 30, 2);
 
         int n = 4;
         for (int i = 0; i < 4; i++) {
@@ -123,6 +121,7 @@ public class ResourceView {
             @Override
             public void handle(ActionEvent event) {
                 if (event.getSource() == resourceButton) {
+                    List<Integer> resources = new ArrayList<Integer>();
                     int amount = 0;
                     int i = 0;
                     for (TextField field : fields) {
@@ -145,23 +144,25 @@ public class ResourceView {
                             resources.add(0);
                         }
                     }
-                    int var = 0;
-                    for (Integer resource : resources) {
-                        if (resource > 0) {
-                            var++;
+                    if (i != 0) {
+                        int var = 0;
+                        for (Integer resource : resources) {
+                            if (resource > 0) {
+                                var++;
+                            }
                         }
-                    }
-                    if (var > variation) {
-                        if (amount == price) {
-                            boardController.kaartGekocht(index, resources, type);
-                            ViewManager.closeResourceWindow();
-                        } else if (amount < price) {
-                            header.setText("Te weinig grondstoffen! (" + amount + "/" + price + ")");
-                        } else if (amount > price) {
-                            header.setText("Te veel grondstoffen. (" + amount + "/" + price + ")");
+                        if (var >= variation) {
+                            if (amount == price) {
+                                boardController.kaartGekocht(index, resources, type);
+                                ViewManager.closeResourceWindow();
+                            } else if (amount < price) {
+                                header.setText("Te weinig grondstoffen! (" + amount + "/" + price + ")");
+                            } else if (amount > price) {
+                                header.setText("Te veel grondstoffen. (" + amount + "/" + price + ")");
+                            }
+                        } else {
+                            header.setText("Je moet " + variation + " verschillende soorten grondstoffen betalen");
                         }
-                    } else {
-                        header.setText("Je moet " + variation + " verschillende soorten grondstoffen betalen");
                     }
                 } else if (event.getSource() == cancelButton) {
                     boardController.kaartAnnuleer(index, type);

@@ -3,8 +3,6 @@ package hsleiden.stenentijdperk.stenentijdperk.Views;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
-import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
-import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
@@ -116,8 +114,6 @@ public class BoardView implements BoardObserver {
 		}
 	}
 
-
-
 	private void createKaartButtons() {
 		for (int i = 0; i < 4; i++) { // maakt 4 beschavingskaart buttons
 			FileInputStream input = null;
@@ -178,12 +174,16 @@ public class BoardView implements BoardObserver {
 		}
 	}
 
-	// dit kan gebruikt worden als de kaarten worden gekocht in een actie fase
 	private void removeKaartButton(int index) {
 		this.beschavingsKaartButtons.get(index).setVisible(false);
 	}
 
-	private void renderNewKaarten(List<Kaart> array) {
+	private void removeHutButton(int index) {
+		this.hutKaartButtons.get(index).setVisible(false);
+	}
+
+	private void renderNewKaarten() {
+		List<Kaart> array = controller.getKaarten();
 		int kaartAmount = 4;
 		if (array.size() < 4) {
 			kaartAmount = array.size();
@@ -224,7 +224,14 @@ public class BoardView implements BoardObserver {
 		}
 	}
 
-	private void closeFileStream (FileInputStream input){
+	private void renderPunten() {
+		this.spelerPunten1.setText("" + controller.getPlayers().get(0).getPunten());
+		this.spelerPunten2.setText("" + controller.getPlayers().get(1).getPunten());
+		this.spelerPunten3.setText("" + controller.getPlayers().get(2).getPunten());
+		this.spelerPunten4.setText("" + controller.getPlayers().get(3).getPunten());
+	}
+
+	private void closeFileStream(FileInputStream input) {
 		if (input != null) {
 			try {
 				input.close();
@@ -278,7 +285,7 @@ public class BoardView implements BoardObserver {
 			System.out.println(fileNotFoundException);
 		} finally {
 			closeFileStream(input);
-		}	
+		}
 
 		FileInputStream speler2 = null;
 		try {
@@ -306,7 +313,7 @@ public class BoardView implements BoardObserver {
 			System.out.println(fileNotFoundException);
 		} finally {
 			closeFileStream(input);
-		}		
+		}
 
 		FileInputStream speler4 = null;
 		try {
@@ -321,7 +328,6 @@ public class BoardView implements BoardObserver {
 		} finally {
 			closeFileStream(input);
 		}
-		
 
 		String styleLabel = "-fx-font-size: 20px; -fx-font-weight: bold";
 
@@ -478,27 +484,15 @@ public class BoardView implements BoardObserver {
 					makeConstraints(5, 40, 2);
 					labelsSetter(11);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(0)) {
-					// List<Kaart> array = controller.onKaartButtonClick(0);
-					// renderNewKaarten(array);
-					// ViewManager.loadPopupWindow(new ResourceView());
 					makeConstraints(43, 36, 2);
 					labelsSetter(12);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(1)) {
-					// List<Kaart> array = controller.onKaartButtonClick(1);
-					// renderNewKaarten(array);
-					// ViewManager.loadPopupWindow(new ResourceView());
 					makeConstraints(38, 36, 2);
 					labelsSetter(13);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(2)) {
-					// List<Kaart> array = controller.onKaartButtonClick(2);
-					// renderNewKaarten(array);
-					// ViewManager.loadPopupWindow(new ResourceView());
 					makeConstraints(32, 36, 2);
 					labelsSetter(14);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(3)) {
-					// List<Kaart> array = controller.onKaartButtonClick(3);
-					// renderNewKaarten(array);
-					// ViewManager.loadPopupWindow(new ResourceView());
 					makeConstraints(27, 36, 2);
 					labelsSetter(15);
 				} else if (actionEvent.getSource() == hutButton) {
@@ -697,8 +691,24 @@ public class BoardView implements BoardObserver {
 
 	@Override
 	public void update(BoardObservable boardobserver) {
-		System.out.println("render new hutten");
 		renderNewHutten();
+		renderNewKaarten();
+		renderPunten();
+	}
+
+	@Override
+	public void updatePunten(BoardObservable boardobserver) {
+		renderPunten();
+	}
+
+	@Override
+	public void removeKaart(BoardObservable boardobserver, int index) {
+		removeKaartButton(index);
+	}
+
+	@Override
+	public void removeHut(BoardObservable boardobserver, int index) {
+		removeHutButton(index);
 	}
 
 	// Voor de ViewManager.

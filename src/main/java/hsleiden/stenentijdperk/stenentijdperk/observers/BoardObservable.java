@@ -5,5 +5,11 @@ public interface BoardObservable {
 
     void notifyAllObservers();
 
+    void updatePunten();
+
+    void removeKaarten(int index);
+
+    void removeHutten(int index);
+
     int getTurn();
 }
