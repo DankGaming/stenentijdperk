@@ -27,7 +27,7 @@ public class LobbyController {
                 if (FirebaseController.getAmountofPlayersInLobby(this.lobbyId) == 0) {
                     FirebaseController.setLobbyLeader(this.lobbyId, this.p);
                 }
-                FirebaseController.addPlayers(this.lobbyId, setPlayerNumber(), this.p.getNaam());
+                FirebaseController.addPlayers(this.lobbyId, this.p, setPlayerNumber());
                 FirebaseController.getPlayersInLobby(this.lobbyId);
                 System.out.println("Player selected lobby " + this.lobbyId);
             }

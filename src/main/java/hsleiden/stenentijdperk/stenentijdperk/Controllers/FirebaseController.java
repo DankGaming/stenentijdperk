@@ -206,10 +206,9 @@ public class FirebaseController {
         }
     }
 
-    public static void addPlayers(int lobby, String speler, String naam) {
-        PlayerModel player = new PlayerModel(naam);
+    public static void addPlayers(int lobby, PlayerModel player, String naam) {
         player.setLobby(lobby);
-        ApiFuture<WriteResult> future = db.collection("stenentijdperk").document(String.valueOf(lobby)).collection("players").document(speler).set(player);
+        ApiFuture<WriteResult> future = db.collection("stenentijdperk").document(String.valueOf(lobby)).collection("players").document(player.getNaam()).set(player);
         try {
             System.out.println("Update time : " + future.get().getUpdateTime());
         } catch (Exception e) {
