@@ -28,13 +28,16 @@ public class FirebaseController {
     static BoardModel board;
     static ArrayList<PlayerModel> players;
     static Test test;
+    static ListenerRegistration lobbylisterner;
+    static ListenerRegistration playerlistener;
+    static ListenerRegistration boardlistener;
 
     public static void initializeFirebaseApp(Test test) {
         test = test;
         GoogleCredentials credentials = null;
 
         try {
-            InputStream serviceAccount = App.class.getResourceAsStream("/stenentijdperk-b6e84-firebase-adminsdk-61qf1-d8b6f1f665.json");
+            InputStream serviceAccount = App.class.getResourceAsStream("/stenentijdperk-e434d-firebase-adminsdk-6dbks-4a59a80afe.json");
             credentials = GoogleCredentials.fromStream(serviceAccount);
         } catch (IOException e) {
             System.out.println("File couldn't be read");
@@ -53,7 +56,7 @@ public class FirebaseController {
     public static void listenForLobbyUpdates(String lobby, PlayerModel pl){
         System.out.println("Lobby " + lobby);
         DocumentReference docRef = db.collection("stenentijdperk").document(lobby);
-        docRef.addSnapshotListener((snapshot, e) -> {
+        lobbylisterner = docRef.addSnapshotListener((snapshot, e) -> {
             System.out.println("Lobby listening" + lobby);
             if (e != null) {
                 System.err.println("Listen failed: " + e);
@@ -77,7 +80,7 @@ public class FirebaseController {
         CollectionReference colRef = db.collection("stenentijdperk")
                 .document(lobby)
                 .collection("players");
-        colRef.addSnapshotListener((queryDocumentSnapshots, e) -> {
+        playerlistener = colRef.addSnapshotListener((queryDocumentSnapshots, e) -> {
             ArrayList<PlayerModel> updatedPlayers = new ArrayList<>();
             for(DocumentSnapshot s : Objects.requireNonNull(queryDocumentSnapshots)){
                 updatedPlayers.add(s.toObject(PlayerModel.class));
@@ -97,7 +100,7 @@ public class FirebaseController {
 
     public static void listenForBoardUpdates(String lobby){
         DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("boardData").document("board");
-        docRef.addSnapshotListener((snapshot, e) -> {
+        boardlistener = docRef.addSnapshotListener((snapshot, e) -> {
             if (e != null) {
                 System.err.println("Listen failed: " + e);
                 return;
@@ -111,6 +114,21 @@ public class FirebaseController {
                 System.out.print("Current data: null");
             }
         });
+    }
+
+    public static void cancelPlayerListener(){
+        if (playerlistener != null)
+            playerlistener.remove();
+    }
+
+    public static void cancelLobbyListener(){
+        if (lobbylisterner != null)
+            lobbylisterner.remove();
+    }
+
+    public static void cancelBoardListener(){
+        if (boardlistener != null)
+            boardlistener.remove();
     }
 
     public static void setBoard(BoardModel newBoard){

@@ -15,6 +15,8 @@ public class LobbyModel implements LobbyObservable {
     }
 
     public void changeLobbyId(int id) {
+        FirebaseController.cancelLobbyListener();
+        FirebaseController.cancelPlayerListener();
         this.lobbyId = id;
         notifyAllObservers();
     }
