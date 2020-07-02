@@ -1,5 +1,10 @@
 package hsleiden.stenentijdperk.stenentijdperk.Models;
 
+import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
+import hsleiden.stenentijdperk.stenentijdperk.Controllers.PlayerController;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.BeschavingskaartMiddelen;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.BeschavingskaartPunten;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.BeschavingskaartWorpMiddelen;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Resource;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
@@ -29,7 +34,7 @@ public class BoardModel implements BoardObservable {
     private ArrayList<StaticHut> hutjes = new ArrayList<>();
     private ArrayList<Resource> locaties = new ArrayList<>();
     private boolean wincondition;
-
+    
     public BoardModel() {
         this.isPlaceable = true;
         this.turn = 1;
@@ -72,11 +77,9 @@ public class BoardModel implements BoardObservable {
                 punten = (resourceKost.get(0) * 3) + (resourceKost.get(1) * 4) + (resourceKost.get(2) * 5)
                         + (resourceKost.get(3) * 6);
             } else {
-                String kosten[] = s[0].split("_");
-                for (String kost : kosten) {
-                    resourceKost.add(Integer.parseInt(kost));
-                }
                 punten = 0;
+                resourceKost.add(0);
+
             }
 
             this.hutKaarten.add(i,
@@ -94,28 +97,28 @@ public class BoardModel implements BoardObservable {
         this.hutKaarten.clear();
     }
 
-    public void removeKaart(int index) {
+    public List<Kaart> removeKaart(int index) {
         this.kaarten.remove(index);
-        removeKaarten(index);
+        return this.kaarten;
     }
 
     public void removeHut(int stapel) {
         switch (stapel) {
             case 0:
                 this.hutStapel1.remove(0);
-                removeHutten(stapel);
+                notifyAllObservers();
                 break;
             case 1:
                 this.hutStapel2.remove(0);
-                removeHutten(stapel);
+                notifyAllObservers();
                 break;
             case 2:
                 this.hutStapel3.remove(0);
-                removeHutten(stapel);
+                notifyAllObservers();
                 break;
             case 3:
                 this.hutStapel4.remove(0);
-                removeHutten(stapel);
+                notifyAllObservers();
                 break;
         }
     }
@@ -188,27 +191,6 @@ public class BoardModel implements BoardObservable {
         }
     }
 
-    @Override
-    public void updatePunten() {
-        for (BoardObserver boardobserver : observers) {
-            boardobserver.updatePunten(this);
-        }
-    }
-
-    @Override
-    public void removeKaarten(int index) {
-        for (BoardObserver boardobserver : observers) {
-            boardobserver.removeKaart(this, index);
-        }
-    }
-
-    @Override
-    public void removeHutten(int index) {
-        for (BoardObserver boardobserver : observers) {
-            boardobserver.removeHut(this, index);
-        }
-    }
-
     public void addTurn() {
         this.turn += 1;
     }
@@ -242,26 +224,26 @@ public class BoardModel implements BoardObservable {
     }
 
     public void maakKaarten() {
-        this.kaarten.add(0, new Kaart("middellen", "src/main/Resources/Kaarten/Food_Gpoint.png", "", 4, 3, 0));
-        this.kaarten.add(1, new Kaart("middellen", "src/main/Resources/Kaarten/Food_Hpoint.png", "", 2, 2, 0));
-        this.kaarten.add(2, new Kaart("middellen", "src/main/Resources/Kaarten/Food_Kruid.jpg", "kruid", 0, 5, 0));
-        this.kaarten.add(3, new Kaart("middellen", "src/main/Resources/Kaarten/Food_pot.png", "pot", 0, 7, 0));
-        this.kaarten.add(4, new Kaart("middellen", "src/main/Resources/Kaarten/Food_Raam.jpg", "raam", 0, 1, 0));
-        this.kaarten.add(5, new Kaart("middellen", "src/main/Resources/Kaarten/3Food_Raam.jpg", "raam", 0, 3, 0));
-        this.kaarten.add(6, new Kaart("middellen", "src/main/Resources/Kaarten/Food_Hpoint.png", "", 2, 4, 0));
+        this.kaarten.add(0, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Food_Gpoint.png", 3, 0));
+        this.kaarten.add(1, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Food_Hpoint.png", 2, 0));
+        this.kaarten.add(2, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Food_Kruid.jpg", 5, 0));
+        this.kaarten.add(3, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Food_pot.png", 7, 0));
+        this.kaarten.add(4, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Food_Raam.jpg", 1, 0));
+        this.kaarten.add(5, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/3Food_Raam.jpg", 3, 0));
+        this.kaarten.add(6, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Food_Hpoint.png", 4, 0));
 
-        this.kaarten.add(7, new Kaart("middellen", "src/main/Resources/Kaarten/Leem_Bpoint.jpg", "", 3, 1, 2));
-        this.kaarten.add(8, new Kaart("middellen", "src/main/Resources/Kaarten/Steen_Bpoint.png", "", 3, 1, 3));
-        this.kaarten.add(9, new Kaart("middellen", "src/main/Resources/Kaarten/Steen_Gpoint.png", "", 4, 1, 3));
-        this.kaarten.add(10, new Kaart("middellen", "src/main/Resources/Kaarten/Steen_Wagen.png", "wagen", 0, 2, 3));
-        this.kaarten.add(11, new Kaart("middellen", "src/main/Resources/Kaarten/Goud_Bpoint.png", "", 3, 1, 4));
+        this.kaarten.add(7, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Leem_Bpoint.jpg", 1, 2));
+        this.kaarten.add(8, new BeschavingskaartMiddelen(2, "src/main/Resources/Kaarten/Steen_Bpoint.png", 1, 3));
+        this.kaarten.add(9, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Steen_Gpoint.png", 1, 3));
+        this.kaarten.add(10, new BeschavingskaartMiddelen(1, "src/main/Resources/Kaarten/Steen_Wagen.png", 2, 3));
+        this.kaarten.add(11, new BeschavingskaartMiddelen(3, "src/main/Resources/Kaarten/Goud_Bpoint.png", 1, 4));
 
-        this.kaarten.add(12, new Kaart("worp", "src/main/Resources/Kaarten/xGoud_Idol.png", "idol", 0, 6, 4));
-        this.kaarten.add(13, new Kaart("worp", "src/main/Resources/Kaarten/xSteen_Bpoint.png", "", 3, 5, 3));
-        this.kaarten.add(14, new Kaart("worp", "src/main/Resources/Kaarten/xHout_Hpoint.png", "", 2, 3, 3));
+        this.kaarten.add(12, new BeschavingskaartWorpMiddelen(4, "src/main/Resources/Kaarten/xGoud_Idol.png", 6, 4));
+        this.kaarten.add(13, new BeschavingskaartWorpMiddelen(4, "src/main/Resources/Kaarten/xSteen_Bpoint.png", 5, 3));
+        this.kaarten.add(14, new BeschavingskaartWorpMiddelen(4, "src/main/Resources/Kaarten/xHout_Hpoint.png", 3, 3));
 
-        this.kaarten.add(15, new Kaart("punten", "src/main/Resources/Kaarten/Point_Fluit.jpg", "fluit", 0, 3, 0));
-        this.kaarten.add(16, new Kaart("punten", "src/main/Resources/Kaarten/Point_Hpoint.png", "", 2, 3, 0));
+        this.kaarten.add(15, new BeschavingskaartPunten(2, "src/main/Resources/Kaarten/Point_Fluit.jpg", 3));
+        this.kaarten.add(16, new BeschavingskaartPunten(2, "src/main/Resources/Kaarten/Point_Hpoint.png", 3));
     }
 
     public List<Kaart> getKaarten() {
@@ -323,4 +305,5 @@ public class BoardModel implements BoardObservable {
         this.wincondition = wincondition;
     }
 
+    
 }
