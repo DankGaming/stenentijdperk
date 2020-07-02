@@ -92,7 +92,7 @@ public class BoardController {
             gegooideWorp[1] = roll.getTotaal();
             gegooideWorp[2] = stamleden;
             if (playercontroller.getTools(boardmodel.getPlayer()).size() != 0 && checkTools()) {
-                ViewManager.loadPopupWindow(new TableauView(boardmodel.getPlayer(), this).setScene());
+                ViewManager.loadPopupWindow(new TableauView(boardmodel.getPlayer(), this, gegooideWorp[1]).setScene());
             } else {
                 toolsGebruiken(0);
             }
@@ -363,12 +363,10 @@ public class BoardController {
     }
 
     private void endGame() {
-        // Did gaat denk ik crashen maar ach
-        boardmodel.setPlayer(null);
         for (PlayerModel player : players) {
             finalPuntenCount(player);
         }
-        // TODO roep hier de endgame view aan.
+        
     }
 
     private boolean checkWincondition(){

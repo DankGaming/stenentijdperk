@@ -45,6 +45,8 @@ public class TableauView implements PlayerObserver {
     private Label multiplier2;
     private Label multiplier3;
     private Label multiplier4;
+    private Label gegooid;
+    private int worp = 0;
 
     // Standard constructor
     public TableauView(PlayerModel playermodel) {
@@ -52,7 +54,8 @@ public class TableauView implements PlayerObserver {
     }
 
     // Constructor for the boardcontroller
-    public TableauView(PlayerModel playermodel, BoardController boardController) {
+    public TableauView(PlayerModel playermodel, BoardController boardController, int worp) {
+        this.worp = worp;
         standardConstructorFunction(playermodel);
         showConfirmButton(boardController);
     }
@@ -149,6 +152,18 @@ public class TableauView implements PlayerObserver {
         multiplier4.setStyle("-fx-font-size: 25px;");
         GridPane.setConstraints(multiplier4, 42, 25, 1, 1);
 
+        
+        gegooid = new Label("");
+        gegooid.setStyle("-fx-font-size: 25px;");
+        GridPane.setConstraints(gegooid, 9, 12, 22, 1);
+        gegooid.setVisible(false);
+
+        if (worp != 0) {
+            gegooid.setText("De worp was " + worp + ":");
+            gegooid.setVisible(true);
+        }
+        
+
         ImageView imageviewhutkaart1 = hutview1.setScene();
         GridPane.setConstraints(imageviewhutkaart1, 2, 36, 10, 10);
 
@@ -172,7 +187,7 @@ public class TableauView implements PlayerObserver {
 
         this.view.getChildren().addAll(tableau, stamleden, voedsel, hout, leem, steen, goud, imageviewhutkaart1, imageviewhutkaart2,
                 imageviewhutkaart3, imageviewhutkaart4, imageviewhutkaart5, punt, multiplier1, multiplier2, multiplier3,
-                multiplier4);
+                multiplier4, gegooid);
     }
 
     public void setPoint(int height) {
