@@ -1,11 +1,9 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
-import hsleiden.stenentijdperk.stenentijdperk.Controllers.FirebaseController;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
-import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
@@ -374,44 +372,52 @@ public class BoardView implements BoardObserver {
 		String spelerNaamLabels = "-fx-font-size: 20px; -fx-font-weight: 700;";
 
 		//Speler Namem
-		spelerNaam1 = new Label(controller.getPlayers().get(0).getNaam());
-		spelerNaam1.setStyle(spelerNaamLabels);
-		GridPane.setConstraints(spelerNaam1, 44 ,3, 3, 1);
+		try {
+			spelerNaam1 = new Label(controller.getPlayers().get(0).getNaam());
+			spelerNaam1.setStyle(spelerNaamLabels);
+			GridPane.setConstraints(spelerNaam1, 44 ,3, 3, 1);
 
-		if(controller.getPlayers().get(1) != null ) {
+			spelerPunten1 = new Label("" + controller.getPlayers().get(0).getPunten());
+			spelerPunten1.setStyle(spelerNaamLabels);
+			GridPane.setConstraints(spelerPunten1, 47, 3, 3, 1);
+		} catch (Exception ignored){}		
+
+		try {
 			spelerNaam2 = new Label(controller.getPlayers().get(1).getNaam());
 			spelerNaam2.setStyle(spelerNaamLabels);
-			GridPane.setConstraints(spelerNaam2, 44, 5, 3, 1);
-		}
+			GridPane.setConstraints(spelerNaam2, 44 ,5, 3, 1);
 
-		if(controller.getPlayers().get(2) != null ) {
+			spelerPunten2 = new Label("" + controller.getPlayers().get(1).getPunten());
+			spelerPunten2.setStyle(spelerNaamLabels);
+			GridPane.setConstraints(spelerPunten2, 47, 5, 3, 1);
+		} catch (Exception ignored){}
+
+		try {
 			spelerNaam3 = new Label(controller.getPlayers().get(2).getNaam());
 			spelerNaam3.setStyle(spelerNaamLabels);
-			GridPane.setConstraints(spelerNaam3, 44, 7, 3, 1);
-		}
+			GridPane.setConstraints(spelerNaam3, 44 ,7, 3, 1);
 
-		if(controller.getPlayers().get(3) != null ) {
+			spelerPunten3 = new Label("" + controller.getPlayers().get(2).getPunten());
+			spelerPunten3.setStyle(spelerNaamLabels);
+			GridPane.setConstraints(spelerPunten3, 47, 7, 3, 1);
+		} catch (Exception ignored) {}
+
+		try {
 			spelerNaam4 = new Label(controller.getPlayers().get(3).getNaam());
 			spelerNaam4.setStyle(spelerNaamLabels);
-			GridPane.setConstraints(spelerNaam4, 44, 9, 3, 1);
-		}
+			GridPane.setConstraints(spelerNaam4, 44 ,9, 3, 1);
 
+			spelerPunten4 = new Label("" + controller.getPlayers().get(3).getPunten());
+			spelerPunten4.setStyle(spelerNaamLabels);
+			GridPane.setConstraints(spelerPunten4, 47, 9, 3, 1);
+		} catch (Exception ignored) {}
 		//Speler Punten
-		spelerPunten1 = new Label("" + controller.getPlayers().get(0).getPunten());
-		spelerPunten1.setStyle(spelerNaamLabels);
-		GridPane.setConstraints(spelerPunten1, 47, 3, 3, 1);
+		
 
-		spelerPunten2 = new Label("" + controller.getPlayers().get(1).getPunten());
-		spelerPunten2.setStyle(spelerNaamLabels);
-		GridPane.setConstraints(spelerPunten2, 47, 5, 3, 1);
+		
+	
 
-		spelerPunten3 = new Label("" + controller.getPlayers().get(2).getPunten());
-		spelerPunten3.setStyle(spelerNaamLabels);
-		GridPane.setConstraints(spelerPunten3, 47, 7, 3, 1);
-
-		spelerPunten4 = new Label("" + controller.getPlayers().get(3).getPunten());
-		spelerPunten4.setStyle(spelerNaamLabels);
-		GridPane.setConstraints(spelerPunten4, 47, 9, 3, 1);
+		
 
 		// laten zijn welke speler aan de beurt is.
 		beurtLabel = new Label(controller.getPlayer().getNaam() + " is aan de beurt.");
