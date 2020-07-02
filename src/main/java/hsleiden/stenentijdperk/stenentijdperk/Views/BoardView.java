@@ -66,8 +66,12 @@ public class BoardView implements BoardObserver {
 	private int location;
 	private List<ImageView> imageViews;
 	private List<Label> labels;
+	private PlayerModel localPlayer;
+	private List<PlayerModel> playerList;
 
-	public BoardView() {
+	public BoardView(ArrayList<PlayerModel> players, PlayerModel localPlayer) {
+		this.localPlayer = localPlayer;
+		this.playerList = players;
 		this.controller = new BoardController();
 		this.controller.registerObserver(this);
 		this.view = new GridPane();

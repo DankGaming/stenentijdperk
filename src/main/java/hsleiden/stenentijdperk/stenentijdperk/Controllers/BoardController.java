@@ -19,22 +19,18 @@ public class BoardController {
     private BoardModel boardmodel;
     // TODO naar boardmodel en dan firebase
     private ArrayList<PlayerModel> players = new ArrayList<PlayerModel>();
+    private PlayerModel localPlayer;
     private int[] gegooideWorp;
 
-    public BoardController() {
-        // TODO all references naar temp players moet naar firebase vragen.
-        PlayerModel matt = new PlayerModel("Matt");
-        PlayerModel jake = new PlayerModel("Jake");
-        PlayerModel lucas = new PlayerModel("Lucas");
-        PlayerModel carlos = new PlayerModel("Carlos");
-        players.add(matt);
-        players.add(jake);
-        players.add(lucas);
-        players.add(carlos);
+    public BoardController(ArrayList<PlayerModel> players, PlayerModel localPlayer) {
+        this.players = players;
+        this.localPlayer = localPlayer;
         playercontroller = new PlayerController();
         boardmodel = new BoardModel();
-        boardmodel.setPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
+        boardmodel.setInitialPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
         gegooideWorp = new int[3];
+        FirebaseController.listenForBoardUpdates(String.valueOf(players.get(0).getLobby()));
+        FirebaseController.updateBoard(String.valueOf(players.get(0).getLobby()), boardmodel);
     }
 
     public void registerObserver(BoardObserver boardobserver) {
@@ -54,11 +50,13 @@ public class BoardController {
     }
 
     public void onResourceButtonClick(int index, int input) {
-        if (!boardmodel.getPlaced() && boardmodel.requestCap(index) - boardmodel.requestVillagers(index) != 0
-                && playercontroller.getPositie(boardmodel.getPlayer(), index) == 0) {
-            // Dit veranderd de hoeveelheid stamleden van een speler
-            boardmodel.decreaseVillagers(index, input);
-            plaatsenStamleden(index, input);
+        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
+            if (!boardmodel.getPlaced() && boardmodel.requestCap(index) - boardmodel.requestVillagers(index) != 0
+                    && playercontroller.getPositie(boardmodel.getPlayer(), index) == 0) {
+                // Dit veranderd de hoeveelheid stamleden van een speler
+                boardmodel.decreaseVillagers(index, input);
+                plaatsenStamleden(index, input);
+            }
         }
     }
 
@@ -83,18 +81,20 @@ public class BoardController {
 
     // Hier is het rollen voor resources.
     public void resolveResource(int index) {
-        gegooideWorp[0] = index;
-        int stamleden = playercontroller.getPositie(boardmodel.getPlayer(), index);
-        if (stamleden != 0) {
-            Dobbelsteen roll = new Dobbelsteen(stamleden);
-            roll.worp();
-            roll.berekenTotaal();
-            gegooideWorp[1] = roll.getTotaal();
-            gegooideWorp[2] = stamleden;
-            if (playercontroller.getTools(boardmodel.getPlayer()).size() != 0 && checkTools()) {
-                ViewManager.loadPopupWindow(new TableauView(boardmodel.getPlayer(), this, gegooideWorp[1]).setScene());
-            } else {
-                toolsGebruiken(0);
+        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
+            gegooideWorp[0] = index;
+            int stamleden = playercontroller.getPositie(boardmodel.getPlayer(), index);
+            if (stamleden != 0) {
+                Dobbelsteen roll = new Dobbelsteen(stamleden);
+                roll.worp();
+                roll.berekenTotaal();
+                gegooideWorp[1] = roll.getTotaal();
+                gegooideWorp[2] = stamleden;
+                if (playercontroller.getTools(boardmodel.getPlayer()).size() != 0 && checkTools()) {
+                    ViewManager.loadPopupWindow(new TableauView(boardmodel.getPlayer(), this, gegooideWorp[1]).setScene());
+                } else {
+                    toolsGebruiken(0);
+                }
             }
         }
     }
@@ -163,8 +163,10 @@ public class BoardController {
 
             if (!villagersLeft) {
                 boardmodel.setPhase(2);
+                FirebaseController.updateBoardFieldInt(String.valueOf(this.players.get(0).getLobby()), "phase", boardmodel.getPhase());
                 int turnCheck = (boardmodel.getTurn() - 1) % 4;
                 boardmodel.setPlayer(players.get(turnCheck));
+                FirebaseController.updateBoard(String.valueOf(this.getPlayer().getLobby()), this.boardmodel);
                 // TODO Dit moet een soort pop up worden.
                 System.out.println("Nu komen de acties");
             }
@@ -187,6 +189,7 @@ public class BoardController {
         if (posities.stream().allMatch(n -> n == 0)) {
             System.out.println("Einde Ronde");
             boardmodel.setPhase(1);
+            FirebaseController.updateBoardFieldInt(String.valueOf(this.players.get(0).getLobby()), "phase", boardmodel.getPhase());
             for (PlayerModel player : players) {
                 List<Integer> resources = playercontroller.vraagResources(player);
                 int remaining = voedselBetalen(player);
@@ -237,52 +240,59 @@ public class BoardController {
     }
 
     private void buttonCheckPhase1(int index) {
-        if (locatieVrij(index) && !boardmodel.getPlaced()) {
-            if (index == 6 && playercontroller.getVillagers(boardmodel.getPlayer()) >= 2) {
-                plaatsenStamleden(index, 2);
-            } else if (index != 6) {
-                plaatsenStamleden(index, 1);
+        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
+            if (locatieVrij(index) && !boardmodel.getPlaced()) {
+                if (index == 6 && playercontroller.getVillagers(boardmodel.getPlayer()) >= 2) {
+                    plaatsenStamleden(index, 2);
+                } else if (index != 6) {
+                    plaatsenStamleden(index, 1);
+                }
             }
         }
     }
 
     private void buttonCheckPhase2(int index) {
-        switch (index) {
-            case 5:
-                moreAgriculture(index);
-                break;
-            case 6:
-                moreVillagerHut(index);
-                break;
-            case 7:
-                gainTools(index);
-                break;
-            case 8:
-            case 9:
-            case 10:
-            case 11:
-                hutActie(index-8);
-                break;
-            case 12:
-            case 13:
-            case 14:
-            case 15:
-                // TODO kaarten actie logica
-                break;
+        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
+            switch (index) {
+                case 5:
+                    moreAgriculture(index);
+                    break;
+                case 6:
+                    moreVillagerHut(index);
+                    break;
+                case 7:
+                    gainTools(index);
+                    break;
+                case 8:
+                case 9:
+                case 10:
+                case 11:
+                    hutActie(index - 8);
+                    break;
+                case 12:
+                case 13:
+                case 14:
+                case 15:
+                    // TODO kaarten actie logica
+                    break;
+            }
         }
     }
 
     private void hutActie(int index) {
-        if ((playercontroller.getPositie(boardmodel.getPlayer(), (index + 8)) != 0)) {
-            playercontroller.setPositie(boardmodel.getPlayer(), (index + 8), 0);
-            if (resourcesBetalen(this.boardmodel.getHut(index).getKosten())) {
-                this.boardmodel.getPlayer()
-                        .setPunten(this.boardmodel.getPlayer().getPunten() + this.boardmodel.getHut(index).getPunten());
-                this.boardmodel.getPlayer().addHutjes(this.boardmodel.getHut(index));
-                boardmodel.removeHut(index);
-            } else {
-                System.out.println("niet genoeg resources");
-                // TODO deze else verbeteren
+        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
+
+            if ((playercontroller.getPositie(boardmodel.getPlayer(), (index + 8)) != 0)) {
+                playercontroller.setPositie(boardmodel.getPlayer(), (index + 8), 0);
+                if (resourcesBetalen(this.boardmodel.getHut(index).getKosten())) {
+                    this.boardmodel.getPlayer()
+                            .setPunten(this.boardmodel.getPlayer().getPunten() + this.boardmodel.getHut(index).getPunten());
+                    this.boardmodel.getPlayer().addHutjes(this.boardmodel.getHut(index));
+                    boardmodel.removeHut(index);
+                } else {
+                    System.out.println("niet genoeg resources");
+                    // TODO deze else verbeteren
+                }
             }
         }
     }
@@ -320,7 +330,11 @@ public class BoardController {
         for (int j = 0; j < 4; j++) {
             if (boardmodel.getPlayer().equals(players.get(j))) { // Bepaling welke player aan de beurt is
                 i = j;
+                FirebaseController.updateBoardField(String.valueOf(this.players.get(i).getLobby()), "player", this.players.get(i));
                 break;
+            }
+            else{
+                FirebaseController.getBoard();
             }
         }
         return i;
@@ -341,10 +355,12 @@ public class BoardController {
     }
 
     private void plaatsenStamleden(int index, int stamleden) {
-        boardmodel.setPlaced(true);
-        playercontroller.setVillagers(boardmodel.getPlayer(),
-                (playercontroller.getVillagers(boardmodel.getPlayer()) - stamleden));
-        playercontroller.setPositie(boardmodel.getPlayer(), index, stamleden);
+        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
+            boardmodel.setPlaced(true);
+            playercontroller.setVillagers(boardmodel.getPlayer(),
+                    (playercontroller.getVillagers(boardmodel.getPlayer()) - stamleden));
+            playercontroller.setPositie(boardmodel.getPlayer(), index, stamleden);
+        }
     }
 
     private boolean resourcesBetalen(List<Integer> kost) {

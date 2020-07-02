@@ -1,6 +1,7 @@
 package hsleiden.stenentijdperk.stenentijdperk.Models;
 
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
+import hsleiden.stenentijdperk.stenentijdperk.Controllers.FirebaseController;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.PlayerController;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.BeschavingskaartMiddelen;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.BeschavingskaartPunten;
@@ -294,7 +295,9 @@ public class BoardModel implements BoardObservable {
 
     // Dit verandered wie er aan de beurt is.
     public void setPlayer(PlayerModel player) {
+        FirebaseController.updateBoard(String.valueOf(player.getLobby()), this);
         this.player = player;
+        FirebaseController.updateBoardField(String.valueOf(player.getLobby()), "player", player);
     }
 
     public boolean getWincondition() {
@@ -305,5 +308,8 @@ public class BoardModel implements BoardObservable {
         this.wincondition = wincondition;
     }
 
-    
+    public void setInitialPlayer(PlayerModel player){
+        this.player = player;
+    }
+
 }
