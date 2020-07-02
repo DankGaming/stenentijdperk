@@ -207,6 +207,9 @@ public class BoardController {
                     }
                 }
                 playercontroller.setVillagers(player, playercontroller.getMaxVillagers(player));
+                for (Tool tool : playercontroller.getTools(player)) {
+                    tool.setStatus(true);
+                }
             }
             boardmodel.notifyAllObservers();
             if (checkWincondition()) {
