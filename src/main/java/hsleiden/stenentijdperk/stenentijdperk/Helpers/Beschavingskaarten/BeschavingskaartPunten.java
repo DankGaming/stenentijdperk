@@ -28,9 +28,9 @@ public class BeschavingskaartPunten extends Kaart {
 
     public void uitvoerenActie(PlayerModel player) {
         // ontvang punten op de kaart
-        player.setPunten(waarde);
+        player.increasePunten(waarde);
 
-        if(treasure != ""){
+        if(!treasure.isEmpty()){
             player.addTreasure(treasure);
         }else{
             player.addMultiplier(multiplier, 1);

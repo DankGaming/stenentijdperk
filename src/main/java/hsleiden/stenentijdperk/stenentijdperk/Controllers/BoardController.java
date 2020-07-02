@@ -282,7 +282,7 @@ public class BoardController {
     }
 
     public void kaartGekocht(Kaart kaart) {
-
+        
     }
 
     private void hutActie(int index) {

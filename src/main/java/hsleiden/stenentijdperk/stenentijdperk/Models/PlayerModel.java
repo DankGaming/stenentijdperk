@@ -52,19 +52,7 @@ public class PlayerModel implements PlayerObservable, Comparable {
     public void setPunten(int punten) {
         this.punten = punten;
     }
-
-    public List<String> getTreasures() {
-        return treasures;
-    }
-
-    public void setTreasures(List<String> treasures) {
-        this.treasures = treasures;
-    }
-
-    public void addTreasure(String treasure) {
-        this.treasures.add(treasure);
-    }
-
+    
     public int getToolLevel(int index) {
         return this.tools.get(index).getLevel();
     }

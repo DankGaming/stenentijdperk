@@ -109,13 +109,19 @@ public class ResourceView {
         EventHandler<ActionEvent> buttonEvent = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                boolean genoegResources = false;
                 if (event.getSource() == resourceButton) {
                     int amount = 0;
+                    int i = 0;
                     for (TextField field : fields) {
                         System.out.println(!field.getText().isEmpty());
                         if (!field.getText().isEmpty()) {
                             try {
-                                amount += Integer.parseInt(field.getText());
+                                int betaald = Integer.parseInt(field.getText());
+                                if (betaald < playerController.vraagResources(playerModel).get(i+1)) {
+                                    amount += betaald;
+                                }
+                                i ++;
                             } catch (Exception e) {
                                 System.out.println("Invoer mag geen letters bevatten. " + field.getText());
                             }

@@ -37,7 +37,7 @@ public class BeschavingskaartWorpMiddelen extends Kaart {
 
         player.addResources(middel, dobbel.getTotaal() / waarde);
 
-        if(treasure != ""){
+        if(!treasure.isEmpty()){
             player.addTreasure(treasure);
         }else{
             player.addMultiplier(multiplier, 1);
