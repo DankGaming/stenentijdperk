@@ -376,17 +376,23 @@ public class BoardView implements BoardObserver {
 		spelerNaam1.setStyle(spelerNaamLabels);
 		GridPane.setConstraints(spelerNaam1, 44 ,3, 3, 1);
 
-		spelerNaam2 = new Label(controller.getPlayers().get(1).getNaam());
-		spelerNaam2.setStyle(spelerNaamLabels);
-		GridPane.setConstraints(spelerNaam2, 44 ,5, 3, 1);
+		if(controller.getPlayers().get(1) != null ) {
+			spelerNaam2 = new Label(controller.getPlayers().get(1).getNaam());
+			spelerNaam2.setStyle(spelerNaamLabels);
+			GridPane.setConstraints(spelerNaam2, 44, 5, 3, 1);
+		}
 
-		spelerNaam3 = new Label(controller.getPlayers().get(2).getNaam());
-		spelerNaam3.setStyle(spelerNaamLabels);
-		GridPane.setConstraints(spelerNaam3, 44 ,7, 3, 1);
+		if(controller.getPlayers().get(2) != null ) {
+			spelerNaam3 = new Label(controller.getPlayers().get(2).getNaam());
+			spelerNaam3.setStyle(spelerNaamLabels);
+			GridPane.setConstraints(spelerNaam3, 44, 7, 3, 1);
+		}
 
-		spelerNaam4 = new Label(controller.getPlayers().get(3).getNaam());
-		spelerNaam4.setStyle(spelerNaamLabels);
-		GridPane.setConstraints(spelerNaam4, 44 ,9, 3, 1);
+		if(controller.getPlayers().get(3) != null ) {
+			spelerNaam4 = new Label(controller.getPlayers().get(3).getNaam());
+			spelerNaam4.setStyle(spelerNaamLabels);
+			GridPane.setConstraints(spelerNaam4, 44, 9, 3, 1);
+		}
 
 		//Speler Punten
 		spelerPunten1 = new Label("" + controller.getPlayers().get(0).getPunten());
