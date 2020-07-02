@@ -28,16 +28,16 @@ public class Kaart implements Status {
     }
 
     public void uitvoerenActie(PlayerModel player) {
-        if(type == "middelen"){
+        if(type.equals("middelen")){
             player.addResources(middel, waarde);
         }
-        else if(type == "worp"){
+        else if(type.equals("worp")){
             Dobbelsteen dobbel = new Dobbelsteen(2);
             dobbel.worp();
             dobbel.berekenTotaal();
             player.addResources(middel, dobbel.getTotaal() / waarde);
         }
-        else if(type == "punten"){
+        else if(type.equals("punten")){
             player.increasePunten(waarde);
         }
 

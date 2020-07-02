@@ -280,9 +280,15 @@ public class BoardController {
 
     public void kaartGekocht(int index, List<Integer> resources, String type) {
         if (type.equals("beschavingskaart")) {
-
-            this.boardmodel.getPlayer().addKaarten(this.boardmodel.getKaart(index));
-            this.boardmodel.removeKaart(index);
+            if (resourcesBetalen(resources)) {
+                this.boardmodel.getPlayer().addKaarten(this.boardmodel.getKaart(index));
+                this.boardmodel.getKaart(index).uitvoerenActie(this.boardmodel.getPlayer());
+                this.boardmodel.updatePunten();
+                this.boardmodel.removeKaart(index);
+            } else {
+                System.out.println("niet genoeg resources");
+                // TODO deze else verbeteren
+            }
             this.playercontroller.setPositie(this.boardmodel.getPlayer(), (index + 12), 0);
         } else {
             if (resourcesBetalen(resources)) {
