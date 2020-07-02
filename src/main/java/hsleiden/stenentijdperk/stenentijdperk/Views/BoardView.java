@@ -1,6 +1,7 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
+import hsleiden.stenentijdperk.stenentijdperk.Controllers.FirebaseController;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
@@ -493,37 +494,29 @@ public class BoardView implements BoardObserver {
 					makeConstraints(5, 40, 2);
 					labelsSetter(11);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(0)) {
-					if(FirebaseController.getBoard().getPlayer() == localPlayer) {
-						List<Kaart> array = controller.onKaartButtonClick(0); // TODO verplaatsen naar acties
-						renderNewKaarten(array);
-						ViewManager.loadPopupWindow(new ResourceView());
-						makeConstraints(43, 36, 2);
-						labelsSetter(12);
-					}
+					List<Kaart> array = controller.onKaartButtonClick(0); // TODO verplaatsen naar acties
+					renderNewKaarten(array);
+					ViewManager.loadPopupWindow(new ResourceView());
+					makeConstraints(43, 36, 2);
+					labelsSetter(12);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(1)) {
-					if(FirebaseController.getBoard().getPlayer() == localPlayer) {
-						List<Kaart> array = controller.onKaartButtonClick(1); // TODO verplaatsen naar acties
-						renderNewKaarten(array);
-						ViewManager.loadPopupWindow(new ResourceView());
-						makeConstraints(38, 36, 2);
-						labelsSetter(13);
-					}
+					List<Kaart> array = controller.onKaartButtonClick(1); // TODO verplaatsen naar acties
+					renderNewKaarten(array);
+					ViewManager.loadPopupWindow(new ResourceView());
+					makeConstraints(38, 36, 2);
+					labelsSetter(13);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(2)) {
-					if(FirebaseController.getBoard().getPlayer() == localPlayer) {
-						List<Kaart> array = controller.onKaartButtonClick(2); // TODO verplaatsen naar acties
-						renderNewKaarten(array);
-						ViewManager.loadPopupWindow(new ResourceView());
-						makeConstraints(32, 36, 2);
-						labelsSetter(14);
-					}
+					List<Kaart> array = controller.onKaartButtonClick(2); // TODO verplaatsen naar acties
+					renderNewKaarten(array);
+					ViewManager.loadPopupWindow(new ResourceView());
+					makeConstraints(32, 36, 2);
+					labelsSetter(14);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(3)) {
-					if(FirebaseController.getBoard().getPlayer() == localPlayer) {
-						List<Kaart> array = controller.onKaartButtonClick(3); // TODO verplaatsen naar acties
-						renderNewKaarten(array);
-						ViewManager.loadPopupWindow(new ResourceView());
-						makeConstraints(27, 36, 2);
-						labelsSetter(15);
-					}
+					List<Kaart> array = controller.onKaartButtonClick(3); // TODO verplaatsen naar acties
+					renderNewKaarten(array);
+					ViewManager.loadPopupWindow(new ResourceView());
+					makeConstraints(27, 36, 2);
+					labelsSetter(15);
 				} else if (actionEvent.getSource() == hutButton) {
 					makeConstraints(16, 34, 1);
 					labelsSetter(6);
@@ -570,11 +563,9 @@ public class BoardView implements BoardObserver {
 					try {
 						aantalStamleden = Integer.parseInt(amountField.getText());
 						if (controller.stamledenCheck(location, aantalStamleden)) {
-							if(FirebaseController.getBoard().getPlayer() == localPlayer) {
 								controller.onResourceButtonClick(location, aantalStamleden);
 								setInputVisable(false);
 								checkStamleden(location);
-							}
 						}
 					} catch (Exception e) {
 						System.out.println(e);

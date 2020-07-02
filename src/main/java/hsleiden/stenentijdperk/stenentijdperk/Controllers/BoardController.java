@@ -28,7 +28,7 @@ public class BoardController {
         playercontroller = new PlayerController();
         boardmodel = new BoardModel();
         boardmodel.setInitialPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
-        System.out.println(boardmodel.getPlayer());
+        System.out.println("test " + boardmodel.getPlayer());
         gegooideWorp = new int[3];
         FirebaseController.listenForBoardUpdates(String.valueOf(players.get(0).getLobby()));
         FirebaseController.updateBoard(String.valueOf(players.get(0).getLobby()), boardmodel);
@@ -82,6 +82,7 @@ public class BoardController {
 
     // Hier is het rollen voor resources.
     public void resolveResource(int index) {
+        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
         gegooideWorp[0] = index;
         int stamleden = playercontroller.getPositie(boardmodel.getPlayer(), index);
         if (stamleden != 0) {
@@ -95,6 +96,7 @@ public class BoardController {
             } else {
                 toolsGebruiken(0);
             }
+        }
         }
     }
 
@@ -123,6 +125,7 @@ public class BoardController {
     }
 
     private void gainTools(int index) {
+        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
         if ((playercontroller.getPositie(boardmodel.getPlayer(), index) != 0)) {
             ArrayList<Tool> tools = playercontroller.getTools(boardmodel.getPlayer());
             if (tools.size() < 3) {
@@ -137,6 +140,7 @@ public class BoardController {
                     }
                 }
             }
+        }
         }
     }
 
@@ -223,18 +227,22 @@ public class BoardController {
     }
 
     private void moreAgriculture(int index) {
-        if (playercontroller.getPositie(boardmodel.getPlayer(), index) != 0
-                && playercontroller.vraagGraan(boardmodel.getPlayer()) != 10) {
-            playercontroller.addGraan(boardmodel.getPlayer());
-            playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
+        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
+            if (playercontroller.getPositie(boardmodel.getPlayer(), index) != 0
+                    && playercontroller.vraagGraan(boardmodel.getPlayer()) != 10) {
+                playercontroller.addGraan(boardmodel.getPlayer());
+                playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
+            }
         }
     }
 
     private void moreVillagerHut(int index) {
-        if (playercontroller.getPositie(boardmodel.getPlayer(), index) != 0
-                && playercontroller.getMaxVillagers(boardmodel.getPlayer()) != 10) {
-            playercontroller.addMaxVillagers(boardmodel.getPlayer());
-            playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
+        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
+            if (playercontroller.getPositie(boardmodel.getPlayer(), index) != 0
+                    && playercontroller.getMaxVillagers(boardmodel.getPlayer()) != 10) {
+                playercontroller.addMaxVillagers(boardmodel.getPlayer());
+                playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
+            }
         }
     }
 
@@ -249,42 +257,46 @@ public class BoardController {
     }
 
     private void buttonCheckPhase2(int index) {
-        switch (index) {
-            case 5:
-                moreAgriculture(index);
-                break;
-            case 6:
-                moreVillagerHut(index);
-                break;
-            case 7:
-                gainTools(index);
-                break;
-            case 8:
-            case 9:
-            case 10:
-            case 11:
-                hutActie(index-8);
-                break;
-            case 12:
-            case 13:
-            case 14:
-            case 15:
-                // TODO kaarten actie logica
-                break;
+        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
+            switch (index) {
+                case 5:
+                    moreAgriculture(index);
+                    break;
+                case 6:
+                    moreVillagerHut(index);
+                    break;
+                case 7:
+                    gainTools(index);
+                    break;
+                case 8:
+                case 9:
+                case 10:
+                case 11:
+                    hutActie(index - 8);
+                    break;
+                case 12:
+                case 13:
+                case 14:
+                case 15:
+                    // TODO kaarten actie logica
+                    break;
+            }
         }
     }
 
     private void hutActie(int index) {
-        if ((playercontroller.getPositie(boardmodel.getPlayer(), (index + 8)) != 0)) {
-            playercontroller.setPositie(boardmodel.getPlayer(), (index + 8), 0);
-            if (resourcesBetalen(this.boardmodel.getHut(index).getKosten())) {
-                this.boardmodel.getPlayer()
-                        .setPunten(this.boardmodel.getPlayer().getPunten() + this.boardmodel.getHut(index).getPunten());
-                this.boardmodel.getPlayer().addHutjes(this.boardmodel.getHut(index));
-                boardmodel.removeHut(index);
-            } else {
-                System.out.println("niet genoeg resources");
-                // TODO deze else verbeteren
+        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
+            if ((playercontroller.getPositie(boardmodel.getPlayer(), (index + 8)) != 0)) {
+                playercontroller.setPositie(boardmodel.getPlayer(), (index + 8), 0);
+                if (resourcesBetalen(this.boardmodel.getHut(index).getKosten())) {
+                    this.boardmodel.getPlayer()
+                            .setPunten(this.boardmodel.getPlayer().getPunten() + this.boardmodel.getHut(index).getPunten());
+                    this.boardmodel.getPlayer().addHutjes(this.boardmodel.getHut(index));
+                    boardmodel.removeHut(index);
+                } else {
+                    System.out.println("niet genoeg resources");
+                    // TODO deze else verbeteren
+                }
             }
         }
     }
@@ -347,10 +359,12 @@ public class BoardController {
     }
 
     private void plaatsenStamleden(int index, int stamleden) {
-        boardmodel.setPlaced(true);
-        playercontroller.setVillagers(boardmodel.getPlayer(),
-                (playercontroller.getVillagers(boardmodel.getPlayer()) - stamleden));
-        playercontroller.setPositie(boardmodel.getPlayer(), index, stamleden);
+        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
+            boardmodel.setPlaced(true);
+            playercontroller.setVillagers(boardmodel.getPlayer(),
+                    (playercontroller.getVillagers(boardmodel.getPlayer()) - stamleden));
+            playercontroller.setPositie(boardmodel.getPlayer(), index, stamleden);
+        }
     }
 
     private boolean resourcesBetalen(List<Integer> kost) {

@@ -19,6 +19,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class LobbyView implements LobbyObserver {
     private LobbyController controller;
@@ -119,21 +120,16 @@ public class LobbyView implements LobbyObserver {
         lobbyButton5.setOnAction(event);
         joinLobbyButton.setOnAction(event);
 
-            Button startGame = new Button("Start game");
-            if (FirebaseController.getLobbyLeader(playerModel.getLobby()) == playerModel.getNaam()) {
-                startGame.setVisible(true);
-            }
-            else{
-                startGame.setVisible(false);
-            }
-            startGame.setOnMouseClicked(event1 -> {
-                controller.handleGameStart();
-            });
-            startGame.setMinSize(280, 120);
-            startGame.setMaxSize(280, 120);
-            startGame.setStyle(
-                    "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
-            GridPane.setConstraints(startGame, 30, 36, 10, 10);
+        Button startGame = new Button("Start game");
+        startGame.setVisible(true);
+        startGame.setOnMouseClicked(event1 -> {
+            controller.handleGameStart();
+        });
+        startGame.setMinSize(280, 120);
+        startGame.setMaxSize(280, 120);
+        startGame.setStyle(
+                "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
+        GridPane.setConstraints(startGame, 30, 36, 10, 10);
 
 
         VBox lobbyVbox = new VBox(lobbyButton1, lobbyButton2, lobbyButton3, lobbyButton4, lobbyButton5);

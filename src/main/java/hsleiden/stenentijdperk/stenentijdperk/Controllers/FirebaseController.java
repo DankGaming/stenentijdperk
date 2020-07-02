@@ -26,7 +26,7 @@ public class FirebaseController {
         GoogleCredentials credentials = null;
 
         try {
-            credentials = GoogleCredentials.fromStream(new FileInputStream("./iipsene-stenentijdperk-firebase-adminsdk-9kdre-d4805147e1.json"));
+            credentials = GoogleCredentials.fromStream(new FileInputStream("./stenentijdperk-b6e84-firebase-adminsdk-61qf1-d8b6f1f665.json"));
         } catch (IOException e) {
             System.out.println("File couldn't be read");
         }
