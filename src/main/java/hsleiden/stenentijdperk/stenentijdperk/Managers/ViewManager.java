@@ -36,9 +36,10 @@ public class ViewManager {
     }
 
     /**
-     * Load the login view
-     * This function loads the login view
+     * Load the login view.
+     * This function loads the login view.
      *
+     * @see LoginView
      * @author Joost de Jager
      */
     public static void loadLoginView() {
@@ -48,10 +49,11 @@ public class ViewManager {
     }
 
     /**
-     * Load the lobby view
-     * This function loads the lobby view
+     * Load the lobby view.
+     * This function loads the lobby view.
      *
-     * @param playerModel
+     * @param playerModel //TODO beschrijving waar de param voor wordt gebruikt
+     * @see LobbyView
      * @author Joost de Jager
      */
     public static void loadLobbyView(PlayerModel playerModel) {
@@ -62,9 +64,10 @@ public class ViewManager {
     }
 
     /**
-     * Load the board view
-     * This function loads the board view
+     * Load the board view.
+     * This function loads the board view.
      *
+     * @see BoardView
      * @author Joost de Jager, Bob van Velzen
      */
     public static void loadBoardView() {
@@ -76,10 +79,11 @@ public class ViewManager {
     }
 
     /**
-     * Load the GameOver view
-     * This function loads the GameOver view
+     * Load the GameOver view.
+     * This function loads the GameOver view.
      *
-     * @param playerModels
+     * @param playerModels //TODO beschrijving waar de param voor wordt gebruikt
+     * @see GameOverView
      * @author Joost de Jager
      */
     public static void loadGameOverView(ArrayList<PlayerModel> playerModels) {
@@ -97,9 +101,10 @@ public class ViewManager {
     }
 
     /**
-     * Load the spelregels view
-     * This function loads the spelregels view
+     * Load the spelregels view.
+     * This function loads the spelregels view.
      *
+     * @see SpelregelView
      * @author Joost de Jager
      */
     public static void loadSpelregelView() {
@@ -107,9 +112,10 @@ public class ViewManager {
     }
 
     /**
-     * Load the picker view
-     * This function loads the picker view
+     * Load the picker view.
+     * This function loads the picker view.
      *
+     * @see PickerView
      * @author Joost de Jager
      */
     public static void loadPickerView(ArrayList<PlayerModel> playerModels) {
@@ -122,10 +128,10 @@ public class ViewManager {
     }
 
     /**
-     * Load a popup window
+     * Load a popup window.
      * This function loads a popup window.
      *
-     * @param tableauView
+     * @param tableauView //TODO beschrijving waar de param voor wordt gebruikt
      * @author Joost de Jager
      */
     public static void loadPopupWindow(GridPane tableauView) {
@@ -135,10 +141,10 @@ public class ViewManager {
     }
 
     /**
-     * Load a popup window
+     * Load a popup window.
      * This function loads a popup window.
      *
-     * @param vBox
+     * @param vBox //TODO beschrijving waar de param voor wordt gebruikt
      * @author Joost de Jager
      */
     public static void loadPopupWindow(VBox vBox) {
@@ -175,9 +181,9 @@ public class ViewManager {
      * Creates a stage
      * This function creates a stage from a view.
      *
-     * @param width
-     * @param height
-     * @param title
+     * @param width //TODO beschrijving waar de param voor wordt gebruikt
+     * @param height //TODO beschrijving waar de param voor wordt gebruikt
+     * @param title //TODO beschrijving waar de param voor wordt gebruikt
      * @author Joost de Jager
      */
     public static void createStageFromView(int width, int height, String title) {
@@ -188,12 +194,12 @@ public class ViewManager {
     }
 
     /**
-     * Shows a stage
+     * Shows a stage.
      * This function shows a stage.
      *
-     * @param width
-     * @param height
-     * @param title
+     * @param width //TODO beschrijving waar de param voor wordt gebruikt
+     * @param height //TODO beschrijving waar de param voor wordt gebruikt
+     * @param title //TODO beschrijving waar de param voor wordt gebruikt
      * @author Joost de Jager
      */
     public static void showView(int width, int height, String title) {
@@ -207,12 +213,13 @@ public class ViewManager {
     }
 
     /**
-     * Shows a stage
+     * Shows a stage.
      * This function shows a stage.
+     * //TODO uitleggen warom deze anders is.
      *
-     * @param width
-     * @param height
-     * @param title
+     * @param width //TODO beschrijving waar de param voor wordt gebruikt
+     * @param height //TODO beschrijving waar de param voor wordt gebruikt
+     * @param title //TODO beschrijving waar de param voor wordt gebruikt
      * @author Joost de Jager
      */
     public static void showView(int width, int height, String title, ArrayList<PlayerModel> playerModels) {
@@ -229,7 +236,7 @@ public class ViewManager {
     }
 
     /**
-     * Closes a stage
+     * Closes a stage.
      * This function closes a stage.
      *
      * @author Joost de Jager
@@ -240,7 +247,7 @@ public class ViewManager {
     }
 
     /**
-     * Closes a stage
+     * Closes a stage.
      * This function closes the pickerview.
      *
      * @author Joost de Jager
@@ -251,7 +258,7 @@ public class ViewManager {
     }
 
     /**
-     * Shows a stage
+     * Shows a stage.
      * This function shows the pickerview.
      *
      * @author Joost de Jager
@@ -262,12 +269,12 @@ public class ViewManager {
     }
 
     /**
-     * Creates a stage
-     * This function creates a stage from a gridpane
+     * Creates a stage.
+     * This function creates a stage from a gridpane.
      *
-     * @param width
-     * @param height
-     * @param title
+     * @param width //TODO beschrijving waar de param voor wordt gebruikt
+     * @param height //TODO beschrijving waar de param voor wordt gebruikt
+     * @param title //TODO beschrijving waar de param voor wordt gebruikt
      * @author Joost de Jager
      */
     public static void createPopupFromView(int width, int height, String title) {
@@ -279,8 +286,8 @@ public class ViewManager {
     }
 
     /**
-     * Shows a stage
-     * This function shows a popup window
+     * Shows a stage.
+     * This function shows a popup window.
      *
      * @author Joost de Jager
      */
@@ -291,12 +298,12 @@ public class ViewManager {
     }
 
     /**
-     * Creates a stage
-     * This function creates a stage from a vbox
+     * Creates a stage.
+     * This function creates a stage from a vbox.
      *
-     * @param width
-     * @param height
-     * @param title
+     * @param width //TODO beschrijving waar de param voor wordt gebruikt
+     * @param height //TODO beschrijving waar de param voor wordt gebruikt
+     * @param title //TODO beschrijving waar de param voor wordt gebruikt
      * @author Joost de Jager
      */
     public static void createPopupFromVbox(int width, int height, String title) {
@@ -310,8 +317,8 @@ public class ViewManager {
     }
 
     /**
-     * Shows a stage
-     * This function shows a popup window
+     * Shows a stage.
+     * This function shows a popup window.
      *
      * @author Joost de Jager
      */
@@ -322,8 +329,8 @@ public class ViewManager {
     }
 
     /**
-     * Closes a stage
-     * This function closes a popup window
+     * Closes a stage.
+     * This function closes a popup window.
      *
      * @author Joost de Jager
      */
