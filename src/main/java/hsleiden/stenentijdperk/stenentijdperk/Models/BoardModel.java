@@ -78,9 +78,13 @@ public class BoardModel implements BoardObservable {
                 punten = (resourceKost.get(0) * 3) + (resourceKost.get(1) * 4) + (resourceKost.get(2) * 5)
                         + (resourceKost.get(3) * 6);
             } else {
+                int[] kosten = Arrays.stream(s[0].split("_")).mapToInt(Integer::parseInt).toArray();
+                for (int kost : kosten) {
+                    resourceKost.add(kost);
+                }
+              
                 punten = 0;
                 resourceKost.add(0);
-
             }
 
             this.hutKaarten.add(i,
