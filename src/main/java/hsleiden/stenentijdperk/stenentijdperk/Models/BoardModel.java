@@ -191,7 +191,7 @@ public class BoardModel implements BoardObservable {
     @Override
     public void updatePunten() {
         for (BoardObserver boardobserver : observers) {
-            boardobserver.update(this);
+            boardobserver.updatePunten(this);
         }
     }
 
@@ -242,26 +242,27 @@ public class BoardModel implements BoardObservable {
     }
 
     public void maakKaarten() {
-        this.kaarten.add(0, new Kaart("middellen", "src/main/Resources/Kaarten/Food_Gpoint.png","", 4, 3, 0));
-        this.kaarten.add(1, new Kaart("middellen", "src/main/Resources/Kaarten/Food_Hpoint.png","",2, 2, 0));
-        this.kaarten.add(2, new Kaart("middellen", "src/main/Resources/Kaarten/Food_Kruid.jpg", "kruid",0, 5, 0));
-        this.kaarten.add(3, new Kaart("middellen", "src/main/Resources/Kaarten/Food_pot.png","pot" ,0, 7, 0));
-        this.kaarten.add(4, new Kaart("middellen", "src/main/Resources/Kaarten/Food_Raam.jpg", "raam",0, 1, 0));
-        this.kaarten.add(5, new Kaart("middellen", "src/main/Resources/Kaarten/3Food_Raam.jpg","raam",0, 3, 0));
+      
+        this.kaarten.add(0, new Kaart("middellen", "src/main/Resources/Kaarten/Food_Gpoint.png", "", 4, 3, 0));
+        this.kaarten.add(1, new Kaart("middellen", "src/main/Resources/Kaarten/Food_Hpoint.png", "", 2, 2, 0));
+        this.kaarten.add(2, new Kaart("middellen", "src/main/Resources/Kaarten/Food_Kruid.jpg", "kruid", 0, 5, 0));
+        this.kaarten.add(3, new Kaart("middellen", "src/main/Resources/Kaarten/Food_pot.png", "pot", 0, 7, 0));
+        this.kaarten.add(4, new Kaart("middellen", "src/main/Resources/Kaarten/Food_Raam.jpg", "raam", 0, 1, 0));
+        this.kaarten.add(5, new Kaart("middellen", "src/main/Resources/Kaarten/3Food_Raam.jpg", "raam", 0, 3, 0));
         this.kaarten.add(6, new Kaart("middellen", "src/main/Resources/Kaarten/Food_Hpoint.png", "", 2, 4, 0));
 
-        this.kaarten.add(7, new Kaart("middellen", "src/main/Resources/Kaarten/Leem_Bpoint.jpg","", 3, 1, 2));
-        this.kaarten.add(8, new Kaart("middellen", "src/main/Resources/Kaarten/Steen_Bpoint.png","",3, 1, 3));
-        this.kaarten.add(9, new Kaart("middellen", "src/main/Resources/Kaarten/Steen_Gpoint.png", "",4, 1, 3));
-        this.kaarten.add(10, new Kaart("middellen", "src/main/Resources/Kaarten/Steen_Wagen.png", "wagen",0, 2, 3));
-        this.kaarten.add(11, new Kaart("middellen", "src/main/Resources/Kaarten/Goud_Bpoint.png", "",3, 1, 4));
+        this.kaarten.add(7, new Kaart("middellen", "src/main/Resources/Kaarten/Leem_Bpoint.jpg", "", 3, 1, 2));
+        this.kaarten.add(8, new Kaart("middellen", "src/main/Resources/Kaarten/Steen_Bpoint.png", "", 3, 1, 3));
+        this.kaarten.add(9, new Kaart("middellen", "src/main/Resources/Kaarten/Steen_Gpoint.png", "", 4, 1, 3));
+        this.kaarten.add(10, new Kaart("middellen", "src/main/Resources/Kaarten/Steen_Wagen.png", "wagen", 0, 2, 3));
+        this.kaarten.add(11, new Kaart("middellen", "src/main/Resources/Kaarten/Goud_Bpoint.png", "", 3, 1, 4));
 
-        this.kaarten.add(12, new Kaart("worp", "src/main/Resources/Kaarten/xGoud_Idol.png","idol", 0, 6, 4));
-        this.kaarten.add(13, new Kaart("worp", "src/main/Resources/Kaarten/xSteen_Bpoint.png","" ,3, 5, 3));
-        this.kaarten.add(14, new Kaart("worp", "src/main/Resources/Kaarten/xHout_Hpoint.png", "",2, 3, 3));
+        this.kaarten.add(12, new Kaart("worp", "src/main/Resources/Kaarten/xGoud_Idol.png", "idol", 0, 6, 4));
+        this.kaarten.add(13, new Kaart("worp", "src/main/Resources/Kaarten/xSteen_Bpoint.png", "", 3, 5, 3));
+        this.kaarten.add(14, new Kaart("worp", "src/main/Resources/Kaarten/xHout_Hpoint.png", "", 2, 3, 3));
 
-        this.kaarten.add(15, new Kaart("punten", "src/main/Resources/Kaarten/Point_Fluit.jpg", "fluit", 0, 3,0));
-        this.kaarten.add(16, new Kaart("punten", "src/main/Resources/Kaarten/Point_Hpoint.png", "",2, 3,0));
+        this.kaarten.add(15, new Kaart("punten", "src/main/Resources/Kaarten/Point_Fluit.jpg", "fluit", 0, 3, 0));
+        this.kaarten.add(16, new Kaart("punten", "src/main/Resources/Kaarten/Point_Hpoint.png", "", 2, 3, 0)); 
     }
 
     public List<Kaart> getKaarten() {
