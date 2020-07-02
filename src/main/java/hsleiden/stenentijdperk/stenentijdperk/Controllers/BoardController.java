@@ -50,7 +50,7 @@ public class BoardController {
     }
 
     public void onResourceButtonClick(int index, int input) {
-        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
+        if(FirebaseController.getBoard(String.valueOf(localPlayer.getLobby())).getPlayer() == localPlayer) {
             if (!boardmodel.getPlaced() && boardmodel.requestCap(index) - boardmodel.requestVillagers(index) != 0
                     && playercontroller.getPositie(boardmodel.getPlayer(), index) == 0) {
                 // Dit veranderd de hoeveelheid stamleden van een speler
@@ -81,7 +81,7 @@ public class BoardController {
 
     // Hier is het rollen voor resources.
     public void resolveResource(int index) {
-        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
+        if(FirebaseController.getBoard(String.valueOf(localPlayer.getLobby())).getPlayer() == localPlayer) {
             gegooideWorp[0] = index;
             int stamleden = playercontroller.getPositie(boardmodel.getPlayer(), index);
             if (stamleden != 0) {
@@ -240,7 +240,7 @@ public class BoardController {
     }
 
     private void buttonCheckPhase1(int index) {
-        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
+        if(FirebaseController.getBoard(String.valueOf(localPlayer.getLobby())).getPlayer().getPlayerNumber().equals(localPlayer.getPlayerNumber())) {
             if (locatieVrij(index) && !boardmodel.getPlaced()) {
                 if (index == 6 && playercontroller.getVillagers(boardmodel.getPlayer()) >= 2) {
                     plaatsenStamleden(index, 2);
@@ -252,7 +252,7 @@ public class BoardController {
     }
 
     private void buttonCheckPhase2(int index) {
-        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
+        if(FirebaseController.getBoard(String.valueOf(localPlayer.getLobby())).getPlayer().getPlayerNumber().equals(localPlayer.getPlayerNumber())) {
             switch (index) {
                 case 5:
                     moreAgriculture(index);
@@ -280,7 +280,7 @@ public class BoardController {
     }
 
     private void hutActie(int index) {
-        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
+        if(FirebaseController.getBoard(String.valueOf(localPlayer.getLobby())).getPlayer() == localPlayer) {
 
             if ((playercontroller.getPositie(boardmodel.getPlayer(), (index + 8)) != 0)) {
                 playercontroller.setPositie(boardmodel.getPlayer(), (index + 8), 0);
@@ -334,7 +334,7 @@ public class BoardController {
                 break;
             }
             else{
-                FirebaseController.getBoard();
+                FirebaseController.getBoard(String.valueOf(localPlayer.getLobby()));
             }
         }
         return i;
@@ -355,12 +355,10 @@ public class BoardController {
     }
 
     private void plaatsenStamleden(int index, int stamleden) {
-        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
-            boardmodel.setPlaced(true);
-            playercontroller.setVillagers(boardmodel.getPlayer(),
-                    (playercontroller.getVillagers(boardmodel.getPlayer()) - stamleden));
-            playercontroller.setPositie(boardmodel.getPlayer(), index, stamleden);
-        }
+        boardmodel.setPlaced(true);
+        playercontroller.setVillagers(boardmodel.getPlayer(),
+                (playercontroller.getVillagers(boardmodel.getPlayer()) - stamleden));
+        playercontroller.setPositie(boardmodel.getPlayer(), index, stamleden);
     }
 
     private boolean resourcesBetalen(List<Integer> kost) {
@@ -382,6 +380,7 @@ public class BoardController {
         for (PlayerModel player : players) {
             finalPuntenCount(player);
         }
+        FirebaseController.resetLobby(this.localPlayer.getLobby());
         
     }
 

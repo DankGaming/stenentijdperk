@@ -17,6 +17,7 @@ import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 public class FirebaseController {
     static Firestore db;
@@ -104,8 +105,24 @@ public class FirebaseController {
         board = newBoard;
     }
 
-    public static BoardModel getBoard(){
-        return board;
+    public static BoardModel getBoard(String lobby){
+        DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("boardData").document("board");
+        ApiFuture<DocumentSnapshot> future = docRef.get();
+        DocumentSnapshot document = null;
+        try {
+            document = future.get();
+        } catch (Exception e) {
+            System.out.println("ERROR IS HERE");
+            e.printStackTrace();
+        }
+        BoardModel model = null;
+        if (document.exists()) {
+            model = document.toObject(BoardModel.class);
+            System.out.println(model);
+        } else {
+            System.out.println("No such document!");
+        }
+        return model;
     }
 
     public static void setSpeler(String spelerNummer, PlayerModel player){
@@ -415,8 +432,9 @@ public class FirebaseController {
         db.collection("stenentijdperk").document(String.valueOf(lobby)).collection("players").document("speler2").delete();
         db.collection("stenentijdperk").document(String.valueOf(lobby)).collection("players").document("speler3").delete();
         db.collection("stenentijdperk").document(String.valueOf(lobby)).collection("players").document("speler4").delete();
-
+        db.collection("stenentijdperk").document(String.valueOf(lobby)).collection("boardData").document("board").delete();
         setGamestatus(lobby, false);
+        setLobbyLeader(lobby, new PlayerModel(""));
     }
 
     public static void switchLobby(int oldLobby, PlayerModel player){

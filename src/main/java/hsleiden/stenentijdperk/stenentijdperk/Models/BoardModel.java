@@ -290,6 +290,7 @@ public class BoardModel implements BoardObservable {
     }
 
     public PlayerModel getPlayer() {
+        System.out.println(this.player.getPlayerNumber() + this.player.getNaam());
         return this.player;
     }
 
