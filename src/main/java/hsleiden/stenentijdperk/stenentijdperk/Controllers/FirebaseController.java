@@ -6,6 +6,7 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
+import hsleiden.stenentijdperk.stenentijdperk.App;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Resource;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
@@ -16,6 +17,7 @@ import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
@@ -27,7 +29,8 @@ public class FirebaseController {
         GoogleCredentials credentials = null;
 
         try {
-            credentials = GoogleCredentials.fromStream(new FileInputStream("src/main/Resources/stenentijdperk-b6e84-firebase-adminsdk-61qf1-d8b6f1f665.json"));
+            InputStream serviceAccount = App.class.getResourceAsStream("/stenentijdperk-b6e84-firebase-adminsdk-61qf1-d8b6f1f665.json");
+            credentials = GoogleCredentials.fromStream(serviceAccount);
         } catch (IOException e) {
             System.out.println("File couldn't be read");
         }
