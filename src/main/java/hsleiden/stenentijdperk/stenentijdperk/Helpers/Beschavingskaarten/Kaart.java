@@ -24,7 +24,8 @@ public class Kaart implements Status {
         return this.path;
     }
 
-    public int getPunten() {
+    public void setKosten(int kosten){this.kosten = kosten;};
+    public int getKosten() {
         return this.kosten;
     }
 

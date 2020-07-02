@@ -22,7 +22,7 @@ public class BeschavingskaartMiddelen extends Kaart {
     }
 
     public int getPunten() {
-        return super.getPunten();
+        return super.getKosten();
     }
 
     public void uitvoerenActie(PlayerModel player) {

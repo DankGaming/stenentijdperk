@@ -1,5 +1,6 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
+import hsleiden.stenentijdperk.stenentijdperk.Controllers.FirebaseController;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.LobbyController;
 import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
@@ -119,7 +120,12 @@ public class LobbyView implements LobbyObserver {
         joinLobbyButton.setOnAction(event);
 
             Button startGame = new Button("Start game");
-            startGame.setVisible(true);
+            if (FirebaseController.getLobbyLeader(playerModel.getLobby()) == playerModel.getNaam()) {
+                startGame.setVisible(true);
+            }
+            else{
+                startGame.setVisible(false);
+            }
             startGame.setOnMouseClicked(event1 -> {
                 controller.handleGameStart();
             });

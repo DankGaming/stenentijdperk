@@ -19,7 +19,7 @@ public class LobbyController {
         this.p = player;
         this.p.setPlayerNumber("temp");
         lobbyModel.changeLobbyId(id);
-        FirebaseController.listenForLobbyUpdates(String.valueOf(id));
+        FirebaseController.listenForLobbyUpdates(String.valueOf(id), player);
         FirebaseController.listenForPlayerUpdates(String.valueOf(id));
     }
 
@@ -61,6 +61,7 @@ public class LobbyController {
     }
 
     public void handleGameStart() {
-        ViewManager.loadBoardView(FirebaseController.getPlayersInLobby(this.lobbyId));
+        FirebaseController.setGamestatus(this.lobbyId, true);
+        ViewManager.loadBoardView(FirebaseController.getPlayersInLobby(this.lobbyId), this.p);
     }
 }

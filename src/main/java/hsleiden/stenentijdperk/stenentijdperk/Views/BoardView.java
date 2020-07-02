@@ -67,9 +67,11 @@ public class BoardView implements BoardObserver {
 	private int location;
 	private List<ImageView> imageViews;
 	private List<Label> labels;
+	private PlayerModel localPlayer;
 
-	public BoardView(ArrayList<PlayerModel> players) {
-		this.controller = new BoardController(players);
+	public BoardView(ArrayList<PlayerModel> players, PlayerModel localPlayer) {
+		this.localPlayer = localPlayer;
+		this.controller = new BoardController(players, localPlayer);
 		this.controller.registerObserver(this);
 		this.view = new GridPane();
 		this.beschavingsKaartButtons = new ArrayList<>();
@@ -485,29 +487,37 @@ public class BoardView implements BoardObserver {
 					makeConstraints(5, 40, 2);
 					labelsSetter(11);
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(0)) {
-					List<Kaart> array = controller.onKaartButtonClick(0); // TODO verplaatsen naar acties
-					renderNewKaarten(array);
-					ViewManager.loadPopupWindow(new ResourceView());
-					makeConstraints(43, 36, 2);
-					labelsSetter(12);
+					if(FirebaseController.getBoard().getPlayer() == localPlayer) {
+						List<Kaart> array = controller.onKaartButtonClick(0); // TODO verplaatsen naar acties
+						renderNewKaarten(array);
+						ViewManager.loadPopupWindow(new ResourceView());
+						makeConstraints(43, 36, 2);
+						labelsSetter(12);
+					}
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(1)) {
-					List<Kaart> array = controller.onKaartButtonClick(1); // TODO verplaatsen naar acties
-					renderNewKaarten(array);
-					ViewManager.loadPopupWindow(new ResourceView());
-					makeConstraints(38, 36, 2);
-					labelsSetter(13);
+					if(FirebaseController.getBoard().getPlayer() == localPlayer) {
+						List<Kaart> array = controller.onKaartButtonClick(1); // TODO verplaatsen naar acties
+						renderNewKaarten(array);
+						ViewManager.loadPopupWindow(new ResourceView());
+						makeConstraints(38, 36, 2);
+						labelsSetter(13);
+					}
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(2)) {
-					List<Kaart> array = controller.onKaartButtonClick(2); // TODO verplaatsen naar acties
-					renderNewKaarten(array);
-					ViewManager.loadPopupWindow(new ResourceView());
-					makeConstraints(32, 36, 2);
-					labelsSetter(14);
+					if(FirebaseController.getBoard().getPlayer() == localPlayer) {
+						List<Kaart> array = controller.onKaartButtonClick(2); // TODO verplaatsen naar acties
+						renderNewKaarten(array);
+						ViewManager.loadPopupWindow(new ResourceView());
+						makeConstraints(32, 36, 2);
+						labelsSetter(14);
+					}
 				} else if (actionEvent.getSource() == beschavingsKaartButtons.get(3)) {
-					List<Kaart> array = controller.onKaartButtonClick(3); // TODO verplaatsen naar acties
-					renderNewKaarten(array);
-					ViewManager.loadPopupWindow(new ResourceView());
-					makeConstraints(27, 36, 2);
-					labelsSetter(15);
+					if(FirebaseController.getBoard().getPlayer() == localPlayer) {
+						List<Kaart> array = controller.onKaartButtonClick(3); // TODO verplaatsen naar acties
+						renderNewKaarten(array);
+						ViewManager.loadPopupWindow(new ResourceView());
+						makeConstraints(27, 36, 2);
+						labelsSetter(15);
+					}
 				} else if (actionEvent.getSource() == hutButton) {
 					makeConstraints(16, 34, 1);
 					labelsSetter(6);
@@ -554,9 +564,11 @@ public class BoardView implements BoardObserver {
 					try {
 						aantalStamleden = Integer.parseInt(amountField.getText());
 						if (controller.stamledenCheck(location, aantalStamleden)) {
-							controller.onResourceButtonClick(location, aantalStamleden);
-							setInputVisable(false);
-							checkStamleden(location);
+							if(FirebaseController.getBoard().getPlayer() == localPlayer) {
+								controller.onResourceButtonClick(location, aantalStamleden);
+								setInputVisable(false);
+								checkStamleden(location);
+							}
 						}
 					} catch (Exception e) {
 						System.out.println(e);
@@ -601,7 +613,9 @@ public class BoardView implements BoardObserver {
 		if (location < 5) {
 			phaseCheck(location);
 		} else {
-			controller.onButtonClick(location);
+			if(FirebaseController.getBoard().getPlayer() == localPlayer) {
+				controller.onButtonClick(location);
+			}
 		}
 		checkStamleden(location);
 	}
