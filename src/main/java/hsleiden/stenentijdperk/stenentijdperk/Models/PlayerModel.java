@@ -1,6 +1,5 @@
 package hsleiden.stenentijdperk.stenentijdperk.Models;
 
-import hsleiden.stenentijdperk.stenentijdperk.Controllers.FirebaseController;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
@@ -11,10 +10,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class PlayerModel implements PlayerObservable {
+public class PlayerModel implements PlayerObservable, Comparable {
     ArrayList<PlayerObserver> observers = new ArrayList<PlayerObserver>();
     private int lobby;
-    private String playerNumber;
     private String naam;
     private int maxVillagers;
     private int villagers;
@@ -26,6 +24,7 @@ public class PlayerModel implements PlayerObservable {
     private int graan;
     private List<Integer> multiplier = new ArrayList<>();
     private int punten;
+    private List<String> treasures = new ArrayList<>();
 
     public PlayerModel() {
     }
@@ -52,8 +51,6 @@ public class PlayerModel implements PlayerObservable {
 
     public void setPunten(int punten) {
         this.punten = punten;
-        if(this.getPlayerNumber() != null)
-        FirebaseController.updateDocument(String.valueOf(this.getLobby()), this.getPlayerNumber(), "punten", this.punten);
     }
 
     public int getToolLevel(int index) {
@@ -62,50 +59,47 @@ public class PlayerModel implements PlayerObservable {
 
     public void increaseToolLevel(int index) {
         this.tools.get(index).increaseLevel();
-        if(this.getPlayerNumber() != null) {
-            FirebaseController.updateDocument(String.valueOf(this.getLobby()), this.getPlayerNumber(), "tools", this.tools);
-        }
+        notifyAllObservers();
     }
 
     public int getResource(int index) {
         return resources.get(index);
     }
 
-    public void setResource(int index, int resources) {
-        this.resources.set(index, resources);
-        if(this.getPlayerNumber() != null)
-        FirebaseController.updateDocumentList(String.valueOf(this.getLobby()), this.getPlayerNumber(), "resources", this.resources);
+    public void setResource(int index, int amount) {
+        this.resources.set(index, amount);
+        notifyAllObservers();
     }
 
-    public void addResources(int index, int resources) {
-        this.resources.set(index, this.resources.get(index) + resources);
-        if(this.getPlayerNumber() != null)
-        FirebaseController.updateDocumentList(String.valueOf(this.getLobby()), this.getPlayerNumber(), "resources", this.resources);
+    public void addResources(int index, int amount) {
+        this.resources.set(index, this.resources.get(index) + amount);
+        notifyAllObservers();
     }
 
-    public void reduceResources(int index, int resources) {
-        this.resources.set(index, this.resources.get(index) - resources);
-        if(this.getPlayerNumber() != null)
-        FirebaseController.updateDocumentList(String.valueOf(this.getLobby()), this.getPlayerNumber(), "resources", this.resources);
+    public void reduceResources(int index, int amount) {
+        this.resources.set(index, this.resources.get(index) - amount);
+        notifyAllObservers();
     }
 
     public void addMaxVillagers() {
         this.maxVillagers += 1;
-        if(this.getPlayerNumber() != null)
-        FirebaseController.updateDocument(String.valueOf(this.getLobby()), this.getPlayerNumber(), "maxVillagers", this.maxVillagers);
     }
 
     public void increaseGraan() {
         this.graan += 1;
-        if(this.getPlayerNumber() != null)
-        FirebaseController.updateDocument(String.valueOf(this.getLobby()), this.getPlayerNumber(), "graan", this.graan);
     }
 
     public void addTool() {
         Tool tool = new Tool();
         tools.add(tool);
-        if(this.getPlayerNumber() != null)
-        FirebaseController.updateDocument(String.valueOf(this.getLobby()), this.getPlayerNumber(), "tools", this.tools);
+    }
+
+    public void increasePunten(int punten) {
+        this.punten += punten;
+    }
+
+    public void decreasePunten(int punten) {
+        this.punten -= punten;
     }
 
     public List<Integer> getPosities() {
@@ -114,8 +108,6 @@ public class PlayerModel implements PlayerObservable {
 
     public void setPosities(List<Integer> pos) {
         this.posities = pos;
-        if(this.getPlayerNumber() != null)
-        FirebaseController.updateDocumentList(String.valueOf(this.getLobby()), this.getPlayerNumber(), "posities", this.posities);
     }
 
     public ArrayList<Kaart> getKaarten() {
@@ -124,31 +116,31 @@ public class PlayerModel implements PlayerObservable {
 
     public void setKaarten(ArrayList<Kaart> kaarten) {
         this.kaarten = kaarten;
-        if(this.getPlayerNumber() != null)
-        FirebaseController.setPlayerKaarten(String.valueOf(this.getLobby()), this.getPlayerNumber(), "kaarten", this.kaarten);
     }
-    public void addKaarten(Kaart kaart){
+
+    public void addKaarten(Kaart kaart) {
         kaarten.add(kaart);
     }
+
     public ArrayList<StaticHut> getHutjes() {
         return hutjes;
     }
 
     public void setHutjes(ArrayList<StaticHut> hutjes) {
         this.hutjes = hutjes;
-        if(this.getPlayerNumber() != null)
-        FirebaseController.updateDocumentList(String.valueOf(this.getLobby()), this.getPlayerNumber(), "hutjes", this.hutjes);
+    }
+
+    public void addHutjes(StaticHut hut) {
+        this.hutjes.add(hut);
     }
 
     public List<Integer> getMultiplier() {
         return multiplier;
     }
 
-    public void setMultiplier(List<Integer> multiplier) {
-        this.multiplier = multiplier;
-        System.out.println("Mtp: " + String.valueOf(this.getLobby()) + " " + this.getPlayerNumber() + " " + this.multiplier);
-        if(this.getPlayerNumber() != null)
-        FirebaseController.updateDocumentList(String.valueOf(this.getLobby()), this.getPlayerNumber(), "multiplier", this.multiplier);
+    public void setMulitplier(List<Integer> mulitplier) {
+        this.multiplier = mulitplier;
+        notifyAllObservers();
     }
 
     public int getLobby() {
@@ -173,8 +165,7 @@ public class PlayerModel implements PlayerObservable {
 
     public void setVillagers(int villagers) {
         this.villagers = villagers;
-        if(this.getPlayerNumber() != null)
-        FirebaseController.updateDocument(String.valueOf(this.getLobby()), this.getPlayerNumber(), "villagers", this.villagers);
+        notifyAllObservers();
     }
 
     @Override
@@ -196,8 +187,7 @@ public class PlayerModel implements PlayerObservable {
 
     public void setTools(ArrayList<Tool> tools) {
         this.tools = tools;
-        if(this.getPlayerNumber() != null)
-        FirebaseController.updateDocument(String.valueOf(this.getLobby()), this.getPlayerNumber(), "tools", this.tools);
+        notifyAllObservers();
     }
 
     public List<Integer> getResources() {
@@ -206,8 +196,7 @@ public class PlayerModel implements PlayerObservable {
 
     public void setResource(List<Integer> resources) {
         this.resources = resources;
-        if(this.getPlayerNumber() != null)
-        FirebaseController.updateDocumentList(String.valueOf(this.getLobby()), this.getPlayerNumber(), "resources", this.resources);
+        notifyAllObservers();
     }
 
     public int getPositie(int index) {
@@ -216,8 +205,6 @@ public class PlayerModel implements PlayerObservable {
 
     public void setPositie(int index, int posities) {
         this.posities.set(index, posities);
-        if(this.getPlayerNumber() != null)
-        FirebaseController.updateDocumentList(String.valueOf(this.getLobby()), this.getPlayerNumber(), "posities", this.posities);
     }
 
     public int getMaxVillagers() {
@@ -230,18 +217,25 @@ public class PlayerModel implements PlayerObservable {
 
     public void setGraan(int graan) {
         this.graan = graan;
-        System.out.println(String.valueOf(this.getLobby()) + " " + this.getPlayerNumber() + " " + this.graan);
-        if(this.getPlayerNumber() != null) {
-            FirebaseController.updateDocument(String.valueOf(this.getLobby()), this.getPlayerNumber(), "graan", this.graan);
-        }
     }
 
-    public String getPlayerNumber() {
-        return playerNumber;
+    public List<String> getTreasures() {
+        return treasures;
     }
 
-    public void setPlayerNumber(String playerNumber) {
-        this.playerNumber = playerNumber;
-        FirebaseController.updateDocument(String.valueOf(this.getLobby()), this.playerNumber, "playerNumber", this.playerNumber);
+    public void setTreasures(List<String> treasures) {
+        this.treasures = treasures;
+        notifyAllObservers();
+    }
+
+    public void addTreasure(String treasure) {
+        this.treasures.add(treasure);
+        notifyAllObservers();
+    }
+    
+    @Override
+    public int compareTo(Object o) {
+        int comparePunten = ((PlayerModel) o).getPunten();
+        return comparePunten - this.getPunten();
     }
 }

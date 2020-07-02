@@ -532,6 +532,7 @@ public class BoardView implements BoardObserver {
 						controller.endTurn();
 					} else {
 						controller.EndTurnPhase2();
+						// TODO einde spel stuf
 					}
 					beurtLabel.setText(controller.getPlayer().getNaam() + " is aan de beurt.");
 					playerColor(true);
