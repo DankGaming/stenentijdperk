@@ -213,7 +213,6 @@ public class BoardController {
 
     public int vraagPhase() {
         int phase = boardmodel.getPhase();
-        boardmodel = FirebaseController.getBoard();
         return boardmodel.getPhase();
     }
 
