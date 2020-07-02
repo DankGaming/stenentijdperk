@@ -318,12 +318,16 @@ public class BoardModel implements BoardObservable {
         FirebaseController.updateBoardField(String.valueOf(this.player.getLobby()), "player", this.player);
     }
 
+    public void setInitialPlayer(PlayerModel player){
+        this.player = player;
+    }
     public boolean getWincondition() {
         return wincondition;
     }
 
     public void setWincondition(boolean wincondition) {
         this.wincondition = wincondition;
+        FirebaseController.updateBoardField(String.valueOf(this.player.getLobby()), "winconditie", wincondition);
     }
 
     

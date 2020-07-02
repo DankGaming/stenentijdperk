@@ -25,7 +25,7 @@ public class BoardController {
         players = playerlist;
         playercontroller = new PlayerController();
         boardmodel = new BoardModel();
-        boardmodel.setPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
+        boardmodel.setInitialPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
         gegooideWorp = new int[3];
         FirebaseController.listenForBoardUpdates(String.valueOf(players.get(0).getLobby()));
         FirebaseController.updateBoard(String.valueOf(players.get(0).getLobby()), boardmodel);
