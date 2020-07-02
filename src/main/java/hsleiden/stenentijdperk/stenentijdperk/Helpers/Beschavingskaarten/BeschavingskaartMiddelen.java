@@ -6,6 +6,7 @@ public class BeschavingskaartMiddelen extends Kaart {
     private int waarde;
     private int middel;
 
+    public BeschavingskaartMiddelen(){}
     public BeschavingskaartMiddelen(int kosten, String path, int waarde, int middel) {
         super(kosten, path);
         this.waarde = waarde;

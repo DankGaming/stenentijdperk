@@ -8,6 +8,7 @@ public class Resource {
     private int villagers;
 
 
+    public Resource(){}
     public Resource(String naam, int hoeveelheid, int waarde, int maxCap) {
         this.naam = naam;
         this.hoeveelheid = hoeveelheid;

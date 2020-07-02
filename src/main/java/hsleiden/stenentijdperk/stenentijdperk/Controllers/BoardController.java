@@ -303,7 +303,7 @@ public class BoardController {
         boolean found = false;
         for (int j = start + 1; j < player.size(); j++) {
             if (playercontroller.getVillagers(player.get(j)) != 0) {
-                boardmodel.setPlayer(player.get(j)); // Veranderd de huidige speler
+                boardmodel.setInitialPlayer(player.get(j)); // Veranderd de huidige speler
                 found = true;
                 break;
             }
