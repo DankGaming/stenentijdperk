@@ -224,7 +224,14 @@ public class BoardView implements BoardObserver {
 		}
 	}
 
-	private void closeFileStream (FileInputStream input){
+	private void renderPunten() {
+		this.spelerPunten1.setText(String.valueOf(controller.getPlayers().get(0).getPunten()));
+		this.spelerPunten2.setText(String.valueOf(controller.getPlayers().get(1).getPunten()));
+		this.spelerPunten3.setText(String.valueOf(controller.getPlayers().get(2).getPunten()));
+		this.spelerPunten4.setText(String.valueOf(controller.getPlayers().get(3).getPunten()));
+	}
+
+	private void closeFileStream(FileInputStream input) {
 		if (input != null) {
 			try {
 				input.close();
