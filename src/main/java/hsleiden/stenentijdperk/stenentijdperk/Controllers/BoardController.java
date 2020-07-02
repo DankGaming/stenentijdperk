@@ -117,7 +117,6 @@ public class BoardController {
      * 
      * @param index welke resource het was.
      * @see Dobbelsteen
-     * @see TableauView
      * @author Damien Hofman
      */
      
@@ -146,7 +145,6 @@ public class BoardController {
      * Dit wordt dan aan de speler gegevenen.
      * 
      * @param waarde de waarde van de gebruikte tools.
-     * @see Tool
      * @author Damien Hofman
      */
 
@@ -187,8 +185,6 @@ public class BoardController {
      * Anders wordt het niveau van de laagste level tool met 1 verhoogd.
      * 
      * @param index de locatie van de button.
-     * @see BoardModel
-     * @see Tool
      * @author Damien Hofman
      */
 
@@ -210,6 +206,16 @@ public class BoardController {
         }
     }
 
+
+    /**
+     * Deze functie wordt gebruikt aan het einde van een beurt en  doet een paar checks en veranderd dan de actieve speler.
+     * Eerste wordt gekeken of de speler iets heeft neergezet tijdens de beurt.
+     * Als dat zo is dan wordt bepaald wat de huidige actieve speler is.
+     * Vervolgens gaat de functie naarvoren in de lijst speler opzoek naar een speler die nog stamleden heeft.
+     * Als niks wordt gevonden zoekt het vanaf het begin. 
+     * Stel niemand heeft stamleden over dan wordt de phase gezet op 2 en wordt de rondeleider weer aan de beurt gezet
+     * @author Damien Hofman
+     */
     public void endTurn() {
         if (boardmodel.getPlaced()) { // checkt of de speler stamleden heeft geplaast.
             boolean villagersLeft = true;
@@ -239,7 +245,18 @@ public class BoardController {
             }
         }
     }
-    
+    /**
+     * Deze functie wordt gebruikt aan het einde van een beurt in phase 2 en veranderd dan de actieve speler en begint een nieuwe ronde.
+     * Eerste wordt gekeken of de speler nog stamleden op het bord heeft
+     * Als alle stamleden zijn afgehandeld dan wordt de actieve speler naar de volgende speler in de lijst gezet.
+     * Dan wordt gekeken of deze nieuwe speler ook geen stamleden meer op het bord heeft.
+     * Als dit zo is dan wordt een ronde begonnen.
+     * Voordat deze nieuwe ronde begint moet elke speler eerst zijn stamleden voeden, met voedsel, grondstoffen of punten.
+     * Dan wordt per speler de stamleden teruggezet in hun dorp/
+     * Vervolgens worden alle tools weer op niet gebruikt gezet.
+     * Als laatste word gecheckt of het spel afgelopen is
+     * @author Damien Hofman
+     */
 
     public void EndTurnPhase2() {
         List<Integer> posities = playercontroller.vraagPosities(boardmodel.getPlayer());
