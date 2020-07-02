@@ -1,5 +1,12 @@
 package hsleiden.stenentijdperk.stenentijdperk.Views;
 
+import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import hsleiden.stenentijdperk.stenentijdperk.Controllers.PlayerController;
+import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -7,29 +14,34 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 
 public class ResourceView {
 
     private GridPane view;
-    private Label hout;
-    private Label houtHoeveelheid;
-    private TextField houtField;
-    private Label goud;
-    private Label goudHoeveelheid;
-    private TextField goudField;
-    private Label leem;
-    private Label leemHoeveelheid;
-    private TextField leemField;
-    private Label steen;
-    private Label steenHoeveelheid;
-    private TextField steenField;
-    private Label voedsel;
-    private Label voedselHoeveelheid;
-    private TextField voedselField;
+    private List<Label> labels;
+    private List<Label> amounts;
+    private List<TextField> fields;
+    private List<String> labelTexts;
+    private Label header;
     private Button resourceButton;
+    private PlayerModel playerModel;
+    private PlayerController playerController;
+    private int price;
 
-
-    public ResourceView(){
+    public ResourceView(PlayerModel playerModel, PlayerController playerController, int price) {
+        this.playerModel = playerModel;
+        this.playerController = playerController;
+        this.price = price;
+        this.labels = new ArrayList<Label>();
+        this.amounts = new ArrayList<Label>();
+        this.fields = new ArrayList<TextField>();
+        this.labelTexts = new ArrayList<String>();
+        this.labelTexts.add("Hout");
+        this.labelTexts.add("Leem");
+        this.labelTexts.add("Steen");
+        this.labelTexts.add("Goud");
         setupPane();
     }
 
@@ -56,71 +68,71 @@ public class ResourceView {
 
         String textFont = "-fx-font-size: 15px;";
 
-        //Labels
-        hout = new Label("Hout");
-        hout.setStyle(textFont);
-        GridPane.setConstraints(hout, 3, 4, 5, 2);
+        header = new Label("U moet " + price + " resources betalen:");
+        header.setStyle(textFont);
+        GridPane.setConstraints(header, 5, 1, 20, 2);
 
-        leem = new Label("Leem");
-        leem.setStyle(textFont);
-        GridPane.setConstraints(leem, 3, 6, 5, 2);
+        int n = 4;
+        for (int i = 0; i < 4; i++) {
 
-        steen = new Label("Steen");
-        steen.setStyle(textFont);
-        GridPane.setConstraints(steen, 3, 8, 5,2);
+            // Labels
+            this.labels.add(new Label(this.labelTexts.get(i)));
+            this.labels.get(i).setStyle(textFont);
+            GridPane.setConstraints(this.labels.get(i), 3, n, 5, 2);
 
-        goud = new Label("Goud");
-        goud.setStyle(textFont);
-        GridPane.setConstraints(goud, 3, 10, 5, 2);
+            // Hoeveelheden
+            this.amounts.add(
+                    new Label(Integer.toString(this.playerController.vraagResources(this.playerModel).get(i + 1))));
+            this.amounts.get(i).setStyle(textFont);
+            GridPane.setConstraints(this.amounts.get(i), 10, n, 2, 2);
 
-        voedsel = new Label("Voedsel");
-        voedsel.setStyle(textFont);
-        GridPane.setConstraints(voedsel, 3, 12, 5,2);
+            // Text field
+            this.fields.add(i, new TextField());
+            GridPane.setConstraints(this.fields.get(i), 15, n, 5, 1);
+            n += 2;
+        }
 
-        //Hoeveelheden
-        houtHoeveelheid = new Label("0");
-        houtHoeveelheid.setStyle(textFont);
-        GridPane.setConstraints(houtHoeveelheid, 10, 4, 2, 2);
-
-        leemHoeveelheid = new Label("0");
-        leemHoeveelheid.setStyle(textFont);
-        GridPane.setConstraints(leemHoeveelheid, 10, 6, 2, 2);
-
-        steenHoeveelheid = new Label("0");
-        steenHoeveelheid.setStyle(textFont);
-        GridPane.setConstraints(steenHoeveelheid, 10, 8, 2, 2);
-
-        goudHoeveelheid = new Label("0");
-        goudHoeveelheid.setStyle(textFont);
-        GridPane.setConstraints(goudHoeveelheid, 10, 10, 2, 2);
-
-        voedselHoeveelheid = new Label("0");
-        voedselHoeveelheid.setStyle(textFont);
-        GridPane.setConstraints(voedselHoeveelheid, 10, 12, 2, 2);
-
-        //Text field
-        houtField = new TextField();
-        GridPane.setConstraints(houtField, 15, 4, 5, 1);
-
-        leemField = new TextField();
-        GridPane.setConstraints(leemField, 15, 6, 5, 1);
-
-        steenField = new TextField();
-        GridPane.setConstraints(steenField, 15, 8, 5, 1);
-
-        goudField = new TextField();
-        GridPane.setConstraints(goudField, 15, 10, 5, 1);
-
-        voedselField= new TextField();
-        GridPane.setConstraints(voedselField, 15, 12, 5, 1);
-
-        //button
+        // button
         resourceButton = new Button("Confirm");
         resourceButton.setMinSize(220, 50);
-        resourceButton.setStyle("-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 20px;");
-        GridPane.setConstraints(resourceButton, 3 ,15, 5, 5);
+        resourceButton.setStyle(
+                "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 20px;");
+        GridPane.setConstraints(resourceButton, 3, 15, 5, 5);
 
-        this.view.getChildren().addAll(hout, leem, steen, goud, voedsel, houtHoeveelheid, leemHoeveelheid, steenHoeveelheid, goudHoeveelheid, voedselHoeveelheid,
-                houtField, leemField, steenField, goudField, voedselField, resourceButton);
+        EventHandler<ActionEvent> buttonEvent = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (event.getSource() == resourceButton) {
+                    int amount = 0;
+                    for (TextField field : fields) {
+                        System.out.println(!field.getText().isEmpty());
+                        if (!field.getText().isEmpty()) {
+                            try {
+                                amount += Integer.parseInt(field.getText());
+                            } catch (Exception e) {
+                                System.out.println("Invoer mag geen letters bevatten. " + field.getText());
+                            }
+
+                        }
+                        System.out.println("amount: " + amount);
+
+                    }
+                    System.out.println("price: " + price);
+                    if (amount == price) {
+                        ViewManager.closeResourceWindow();
+                    } else if (amount < price) {
+                        header.setText("Te weinig grondstoffen! (" + amount + "/" + price + ")");
+                    } else if (amount > price) {
+                        header.setText("Te veel grondstoffen. (" + amount + "/" + price + ")");
+                    }
+                }
+            }
+        };
+
+        resourceButton.setOnAction(buttonEvent);
+
+        this.view.getChildren().addAll(header, this.labels.get(0), this.amounts.get(0), this.fields.get(0),
+                this.labels.get(1), this.amounts.get(1), this.fields.get(1), this.labels.get(2), this.amounts.get(2),
+                this.fields.get(2), this.labels.get(3), this.amounts.get(3), this.fields.get(3), resourceButton);
     }
 }

@@ -7,6 +7,7 @@ import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
 import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
+import hsleiden.stenentijdperk.stenentijdperk.Views.ResourceView;
 import hsleiden.stenentijdperk.stenentijdperk.Views.TableauView;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
 
@@ -257,14 +258,31 @@ public class BoardController {
             case 9:
             case 10:
             case 11:
-                hutActie(index-8);
+                hutActie(index - 8);
                 break;
             case 12:
             case 13:
             case 14:
             case 15:
-                // TODO kaarten actie logica
+                beschavingsKaarActie(index - 12);
                 break;
+        }
+    }
+
+    private void beschavingsKaarActie(int index) {
+        if ((playercontroller.getPositie(boardmodel.getPlayer(), (index + 12)) != 0)) {
+
+            ViewManager.loadPopupWindow(new ResourceView(boardmodel.getPlayer(), this.playercontroller, (index + 1)));
+            playercontroller.setPositie(boardmodel.getPlayer(), (index + 12), 0);
+            /*if (resourcesBetalen(this.boardmodel.getHut(index).getKosten())) {
+                this.boardmodel.getPlayer()
+                        .setPunten(this.boardmodel.getPlayer().getPunten() + this.boardmodel.getHut(index).getPunten());
+                this.boardmodel.getPlayer().addHutjes(this.boardmodel.getHut(index));
+                boardmodel.removeHut(index);
+            } else {
+                System.out.println("niet genoeg resources");
+                // TODO deze else verbeteren
+            }*/
         }
     }
 
