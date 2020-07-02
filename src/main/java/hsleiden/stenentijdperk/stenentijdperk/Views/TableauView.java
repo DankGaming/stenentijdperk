@@ -18,9 +18,11 @@ import javafx.scene.layout.RowConstraints;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TableauView implements PlayerObserver {
     public int waarde;
+    List<Integer> recources;
     Hutview hutview1 = new Hutview(1);
     Hutview hutview2 = new Hutview(2);
     Hutview hutview3 = new Hutview(3);
@@ -41,10 +43,10 @@ public class TableauView implements PlayerObserver {
     private Label stamleden;
     private Label punt;
     private PlayerModel playerModel;
-    private Label multiplier1;
-    private Label multiplier2;
-    private Label multiplier3;
-    private Label multiplier4;
+    private Label gegooid;
+    private int worp = 0;
+
+    private ArrayList<Label> multipliers;
 
     // Standard constructor
     public TableauView(PlayerModel playerModel) {
@@ -52,15 +54,16 @@ public class TableauView implements PlayerObserver {
     }
 
     // Constructor for the boardcontroller
-    public TableauView(PlayerModel playerModel, BoardController boardController) {
-        standardConstructorFunction(playerModel);
+    public TableauView(PlayerModel playermodel, BoardController boardController, int worp) {
+        this.worp = worp;
+        standardConstructorFunction(playermodel);
         showConfirmButton(boardController);
     }
 
     // The statements that are called every time
-    public void standardConstructorFunction(PlayerModel playerModel) {
+    public void standardConstructorFunction(PlayerModel playermodel) {
+        this.multipliers = new ArrayList<Label>();
         setupPane();
-        this.playerModel = playerModel;
         this.playerModel.registerObserver(this);
     }
 
@@ -97,6 +100,11 @@ public class TableauView implements PlayerObserver {
             this.view.getRowConstraints().add(rowConstraints);
         }
 
+        Label multiplier1;
+        Label multiplier2;
+        Label multiplier3;
+        Label multiplier4;
+
         Image image = null;
 
         try {
@@ -115,39 +123,55 @@ public class TableauView implements PlayerObserver {
 
         voedsel = new Label("0");
         voedsel.setStyle("-fx-font-size: 25px;");
-        GridPane.setConstraints(voedsel, 12, 18, 1, 1);
+        GridPane.setConstraints(voedsel, 12, 18, 2, 1);
 
         hout = new Label("0");
         hout.setStyle("-fx-font-size: 25px;");
-        GridPane.setConstraints(hout, 17, 18, 1, 1);
+        GridPane.setConstraints(hout, 17, 18, 2, 1);
 
         leem = new Label("0");
         leem.setStyle("-fx-font-size: 25px;");
-        GridPane.setConstraints(leem, 21, 18, 1, 1);
+        GridPane.setConstraints(leem, 21, 18, 2, 1);
 
         steen = new Label("0");
         steen.setStyle("-fx-font-size: 25px;");
-        GridPane.setConstraints(steen, 25, 18, 1, 1);
+        GridPane.setConstraints(steen, 25, 18, 2, 1);
 
         goud = new Label("0");
         goud.setStyle("-fx-font-size: 25px;");
-        GridPane.setConstraints(goud, 30, 18, 1, 1);
+        GridPane.setConstraints(goud, 30, 18, 2, 1);
 
         multiplier1 = new Label("0");
         multiplier1.setStyle("-fx-font-size: 25px;");
-        GridPane.setConstraints(multiplier1, 42, 7, 1, 1);
+        GridPane.setConstraints(multiplier1, 42, 7, 2, 1);
 
         multiplier2 = new Label("0");
         multiplier2.setStyle("-fx-font-size: 25px;");
-        GridPane.setConstraints(multiplier2, 42, 13, 1, 1);
+        GridPane.setConstraints(multiplier2, 42, 13, 2, 1);
 
         multiplier3 = new Label("0");
         multiplier3.setStyle("-fx-font-size: 25px;");
-        GridPane.setConstraints(multiplier3, 42, 19, 1, 1);
+        GridPane.setConstraints(multiplier3, 42, 19, 2, 1);
 
         multiplier4 = new Label("0");
         multiplier4.setStyle("-fx-font-size: 25px;");
-        GridPane.setConstraints(multiplier4, 42, 25, 1, 1);
+        GridPane.setConstraints(multiplier4, 42, 25, 2, 1);
+
+        
+        gegooid = new Label("");
+        gegooid.setStyle("-fx-font-size: 25px;");
+        GridPane.setConstraints(gegooid, 9, 12, 22, 1);
+        gegooid.setVisible(false);
+
+        if (worp != 0) {
+            gegooid.setText("De worp was " + worp + ":");
+            gegooid.setVisible(true);
+        }
+        
+        this.multipliers.add(multiplier1);
+        this.multipliers.add(multiplier2);
+        this.multipliers.add(multiplier3);
+        this.multipliers.add(multiplier4);
 
         ImageView imageviewhutkaart1 = hutview1.setScene();
         GridPane.setConstraints(imageviewhutkaart1, 2, 36, 10, 10);
@@ -170,14 +194,18 @@ public class TableauView implements PlayerObserver {
         // Initial constraints for the point
         GridPane.setConstraints(this.punt, 37, 6, 5, 5);
 
-        this.view.getChildren().addAll(tableau, stamleden, voedsel, hout, leem, steen, goud, imageviewhutkaart1,
-                imageviewhutkaart2, imageviewhutkaart3, imageviewhutkaart4, imageviewhutkaart5, punt, multiplier1,
-                multiplier2, multiplier3, multiplier4);
+        this.view.getChildren().addAll(tableau, stamleden, voedsel, hout, leem, steen, goud, imageviewhutkaart1, imageviewhutkaart2,
+                imageviewhutkaart3, imageviewhutkaart4, imageviewhutkaart5, punt, this.multipliers.get(0), this.multipliers.get(1), this.multipliers.get(2), this.multipliers.get(3), gegooid);
     }
 
     public void setPoint(int height) {
-        int[] rows = new int[] { 6, 9, 12, 14, 17, 19, 22, 25 };
-        GridPane.setConstraints(this.punt, 37, rows[height - 1], 5, 5);
+        int[] rows = new int[]{6, 9, 12, 14, 17, 19, 22, 25};
+        if(height > 0) {
+            this.punt.setVisible(true);
+            GridPane.setConstraints(this.punt, 37, rows[height - 1], 5, 5);
+        } else {
+            this.punt.setVisible(false);
+        }
     }
 
     public void addImageViewToView(int positie, ImageView imageView) {
@@ -208,13 +236,67 @@ public class TableauView implements PlayerObserver {
         addImageViewToView(positie, imageView);
     }
 
-    @Override
-    public void update(PlayerObservable po) {
+    private void updateTools(PlayerObservable po) {
         ArrayList<Tool> tools = po.getTools();
         int i = 1;
         for (Tool tool : tools) {
             createGereedschap(i, tool);
             i++;
         }
+    }
+
+    private void updateStamleden(PlayerObservable po) {
+        if(this.stamleden != null)
+            this.stamleden.setText("Aantal stamleden: " + po.getVillagers());
+    }
+
+    private void updateVoedsel() {
+        if(this.voedsel != null)
+            this.voedsel.setText(String.valueOf(this.recources.get(0)));
+    }
+
+    private void updateHout() {
+        if(this.hout != null)
+            this.hout.setText(String.valueOf(this.recources.get(1)));
+    }
+
+    private void updateLeem() {
+        if(this.leem != null)
+            this.leem.setText(String.valueOf(this.recources.get(2)));
+    }
+
+    private void updateSteen() {
+        if(this.steen != null)
+            this.steen.setText(String.valueOf(this.recources.get(3)));
+    }
+
+    private void updateGoud() {
+        if(this.goud != null)
+            this.goud.setText(String.valueOf(this.recources.get(4)));
+    }
+
+    private void updateTreasures(PlayerObservable po) {
+        setPoint(po.getTreasures().size());
+    }
+
+    private void updateMultipliers(PlayerObservable po) {
+        for(int i = 0; i < multipliers.size(); i++) {
+            this.multipliers.get(i).setText(String.valueOf(po.getMultiplier().get(i)));
+        }
+    }
+
+    @Override
+    public void update(PlayerObservable po) {
+        this.recources = po.getResources();
+
+        updateTools(po);
+        updateStamleden(po);
+        updateVoedsel();
+        updateHout();
+        updateLeem();
+        updateSteen();
+        updateGoud();
+        updateTreasures(po);
+        updateMultipliers(po);
     }
 }

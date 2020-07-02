@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class PlayerModel implements PlayerObservable {
+public class PlayerModel implements PlayerObservable, Comparable {
     ArrayList<PlayerObserver> observers = new ArrayList<PlayerObserver>();
     private int lobby;
     private String naam;
@@ -71,6 +71,7 @@ public class PlayerModel implements PlayerObservable {
 
     public void increaseToolLevel(int index) {
         this.tools.get(index).increaseLevel();
+        notifyAllObservers();
     }
 
     public int getResource(int index) {
@@ -79,14 +80,17 @@ public class PlayerModel implements PlayerObservable {
 
     public void setResource(int index, int amount) {
         this.resources.set(index, amount);
+        notifyAllObservers();
     }
 
     public void addResources(int index, int amount) {
         this.resources.set(index, this.resources.get(index) + amount);
+        notifyAllObservers();
     }
 
     public void reduceResources(int index, int amount) {
         this.resources.set(index, this.resources.get(index) - amount);
+        notifyAllObservers();
     }
 
     public void addMaxVillagers() {
@@ -100,6 +104,14 @@ public class PlayerModel implements PlayerObservable {
     public void addTool() {
         Tool tool = new Tool();
         tools.add(tool);
+    }
+
+    public void increasePunten(int punten) {
+        this.punten += punten;
+    }
+
+    public void decreasePunten(int punten) {
+        this.punten -= punten;
     }
 
     public List<Integer> getPosities() {
@@ -134,12 +146,13 @@ public class PlayerModel implements PlayerObservable {
         this.hutjes.add(hut);
     }
 
-    public List<Integer> getMulitplier() {
+    public List<Integer> getMultiplier() {
         return multiplier;
     }
 
     public void setMulitplier(List<Integer> mulitplier) {
         this.multiplier = mulitplier;
+        notifyAllObservers();
     }
 
     public void addMultiplier(int index, int multiplier) {
@@ -168,6 +181,7 @@ public class PlayerModel implements PlayerObservable {
 
     public void setVillagers(int villagers) {
         this.villagers = villagers;
+        notifyAllObservers();
     }
 
     @Override
@@ -189,6 +203,7 @@ public class PlayerModel implements PlayerObservable {
 
     public void setTools(ArrayList<Tool> tools) {
         this.tools = tools;
+        notifyAllObservers();
     }
 
     public List<Integer> getResources() {
@@ -197,6 +212,7 @@ public class PlayerModel implements PlayerObservable {
 
     public void setResource(List<Integer> resources) {
         this.resources = resources;
+        notifyAllObservers();
     }
 
     public int getPositie(int index) {
@@ -217,5 +233,25 @@ public class PlayerModel implements PlayerObservable {
 
     public void setGraan(int graan) {
         this.graan = graan;
+    }
+
+    public List<String> getTreasures() {
+        return treasures;
+    }
+
+    public void setTreasures(List<String> treasures) {
+        this.treasures = treasures;
+        notifyAllObservers();
+    }
+
+    public void addTreasure(String treasure) {
+        this.treasures.add(treasure);
+        notifyAllObservers();
+    }
+    
+    @Override
+    public int compareTo(Object o) {
+        int comparePunten = ((PlayerModel) o).getPunten();
+        return comparePunten - this.getPunten();
     }
 }
