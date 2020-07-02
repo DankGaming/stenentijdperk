@@ -52,7 +52,7 @@ public class PlayerModel implements PlayerObservable, Comparable {
     public void setPunten(int punten) {
         this.punten = punten;
     }
-    
+
     public int getToolLevel(int index) {
         return this.tools.get(index).getLevel();
     }
@@ -141,10 +141,6 @@ public class PlayerModel implements PlayerObservable, Comparable {
     public void setMulitplier(List<Integer> mulitplier) {
         this.multiplier = mulitplier;
         notifyAllObservers();
-    }
-
-    public void addMultiplier(int index, int multiplier) {
-        this.resources.set(index, this.resources.get(index) + multiplier);
     }
 
     public int getLobby() {
