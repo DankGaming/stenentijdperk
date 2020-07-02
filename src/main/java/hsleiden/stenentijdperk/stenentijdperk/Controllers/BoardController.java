@@ -212,7 +212,7 @@ public class BoardController {
             }
             if (checkWincondition()) {
                 endGame();
-            }  
+            }
         }
     }
 
@@ -276,26 +276,40 @@ public class BoardController {
         if ((playercontroller.getPositie(boardmodel.getPlayer(), (index + 12)) != 0)) {
 
             ViewManager.loadPopupWindow(new ResourceView(boardmodel.getPlayer(), this.playercontroller, this,
-                    (index + 1), this.boardmodel.getKaart(index)));
-            playercontroller.setPositie(boardmodel.getPlayer(), (index + 12), 0);
+                    (index + 1), 0, index, "beschavingskaart"));
         }
     }
 
-    public void kaartGekocht(Kaart kaart) {
-        
+    public void kaartGekocht(int index, List<Integer> resources, String type) {
+
+        playercontroller.setPositie(boardmodel.getPlayer(), (index + 12), 0);
+    }
+
+    public void kaartAnnuleer(int index, String type) {
+        if (type.equals("beschavingskaart")) {
+            playercontroller.setPositie(boardmodel.getPlayer(), (index + 12), 0);
+        } else {
+            playercontroller.setPositie(boardmodel.getPlayer(), (index + 8), 0);
+        }
     }
 
     private void hutActie(int index) {
         if ((playercontroller.getPositie(boardmodel.getPlayer(), (index + 8)) != 0)) {
-            playercontroller.setPositie(boardmodel.getPlayer(), (index + 8), 0);
-            if (resourcesBetalen(this.boardmodel.getHut(index).getKosten())) {
-                this.boardmodel.getPlayer()
-                        .setPunten(this.boardmodel.getPlayer().getPunten() + this.boardmodel.getHut(index).getPunten());
-                this.boardmodel.getPlayer().addHutjes(this.boardmodel.getHut(index));
-                boardmodel.removeHut(index);
+            if (this.boardmodel.getHut(index).getPunten() == 0) {
+                ViewManager.loadPopupWindow(new ResourceView(boardmodel.getPlayer(), this.playercontroller, this,
+                        this.boardmodel.getHut(index).getKosten().get(0),
+                        this.boardmodel.getHut(index).getKosten().get(1), index, "hutkaart"));
             } else {
-                System.out.println("niet genoeg resources");
-                // TODO deze else verbeteren
+                if (resourcesBetalen(this.boardmodel.getHut(index).getKosten())) {
+                    this.boardmodel.getPlayer().setPunten(
+                            this.boardmodel.getPlayer().getPunten() + this.boardmodel.getHut(index).getPunten());
+                    this.boardmodel.getPlayer().addHutjes(this.boardmodel.getHut(index));
+                    boardmodel.removeHut(index);
+                } else {
+                    System.out.println("niet genoeg resources");
+                    // TODO deze else verbeteren
+                }
+                playercontroller.setPositie(boardmodel.getPlayer(), (index + 8), 0);
             }
         }
     }
@@ -379,10 +393,10 @@ public class BoardController {
         for (PlayerModel player : players) {
             finalPuntenCount(player);
         }
-        
+
     }
 
-    private boolean checkWincondition(){
+    private boolean checkWincondition() {
         boolean endGame = false;
         for (int i = 0; i < 4; i++) {
             if (boardmodel.getHutStapel(i).size() == 0) {
@@ -403,9 +417,9 @@ public class BoardController {
         }
         playercontroller.increasePunten(player, multipliers.get(1) * playercontroller.getHutjes(player).size());
         playercontroller.increasePunten(player, multipliers.get(2) * playercontroller.getMaxVillagers(player));
-        playercontroller.increasePunten(player, multipliers.get(3) *playercontroller.vraagGraan(player));
-        playercontroller.increasePunten(player, 
-            playercontroller.getTreasures(player).size() * playercontroller.getTreasures(player).size());
+        playercontroller.increasePunten(player, multipliers.get(3) * playercontroller.vraagGraan(player));
+        playercontroller.increasePunten(player,
+                playercontroller.getTreasures(player).size() * playercontroller.getTreasures(player).size());
     }
 
     // TODO tijdelijk

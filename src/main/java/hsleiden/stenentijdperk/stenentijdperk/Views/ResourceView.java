@@ -26,21 +26,28 @@ public class ResourceView {
     private List<Label> amounts;
     private List<TextField> fields;
     private List<String> labelTexts;
+    private List<Integer> resources;
     private Label header;
     private Button resourceButton;
+    private Button cancelButton;
     private PlayerModel playerModel;
     private PlayerController playerController;
-    private int price;
     private BoardController boardController;
-    private Kaart kaart;
+    private int price;
+    private int index;
+    private int variation;
+    private String type;
 
     public ResourceView(PlayerModel playerModel, PlayerController playerController, BoardController boardController,
-            int price, Kaart kaart) {
-        this.kaart = kaart;
+            int price, int variation, int index, String type) {
+        this.type = type;
+        this.variation = variation;
+        this.index = index;
+        this.price = price;
         this.boardController = boardController;
         this.playerModel = playerModel;
         this.playerController = playerController;
-        this.price = price;
+        this.resources = new ArrayList<Integer>();
         this.labels = new ArrayList<Label>();
         this.amounts = new ArrayList<Label>();
         this.fields = new ArrayList<TextField>();
@@ -100,53 +107,76 @@ public class ResourceView {
         }
 
         // button
-        resourceButton = new Button("Confirm");
+        resourceButton = new Button("Bevestig");
         resourceButton.setMinSize(220, 50);
         resourceButton.setStyle(
                 "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 20px;");
         GridPane.setConstraints(resourceButton, 3, 15, 5, 5);
 
+        cancelButton = new Button("Annuleer");
+        cancelButton.setMinSize(220, 50);
+        cancelButton.setStyle(
+                "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 20px;");
+        GridPane.setConstraints(cancelButton, 3, 20, 5, 5);
+
         EventHandler<ActionEvent> buttonEvent = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                boolean genoegResources = false;
                 if (event.getSource() == resourceButton) {
                     int amount = 0;
                     int i = 0;
                     for (TextField field : fields) {
-                        System.out.println(!field.getText().isEmpty());
                         if (!field.getText().isEmpty()) {
                             try {
                                 int betaald = Integer.parseInt(field.getText());
-                                if (betaald < playerController.vraagResources(playerModel).get(i+1)) {
+                                if (betaald < playerController.vraagResources(playerModel).get(i + 1)) {
                                     amount += betaald;
+                                    resources.add(betaald);
+                                } else {
+                                    header.setText("Je hebt niet zoveel grondstoffen.");
+                                    break;
                                 }
-                                i ++;
+                                i++;
                             } catch (Exception e) {
                                 System.out.println("Invoer mag geen letters bevatten. " + field.getText());
                             }
 
+                        } else {
+                            resources.add(0);
                         }
-                        System.out.println("amount: " + amount);
-
                     }
-                    System.out.println("price: " + price);
-                    if (amount == price) {
-                        boardController.kaartGekocht(kaart);
-                        ViewManager.closeResourceWindow();
-                    } else if (amount < price) {
-                        header.setText("Te weinig grondstoffen! (" + amount + "/" + price + ")");
-                    } else if (amount > price) {
-                        header.setText("Te veel grondstoffen. (" + amount + "/" + price + ")");
+                    int var = 0;
+                    for (Integer resource : resources) {
+                        if (resource > 0) {
+                            var++;
+                        }
                     }
+                    if (var > variation) {
+                        if (amount == price) {
+                            boardController.kaartGekocht(index, resources, type);
+                            ViewManager.closeResourceWindow();
+                        } else if (amount < price) {
+                            header.setText("Te weinig grondstoffen! (" + amount + "/" + price + ")");
+                        } else if (amount > price) {
+                            header.setText("Te veel grondstoffen. (" + amount + "/" + price + ")");
+                        }
+                    } else {
+                        header.setText("Je moet " + variation + " verschillende soorten grondstoffen betalen");
+                    }
+                } else if (event.getSource() == cancelButton) {
+                    boardController.kaartAnnuleer(index, type);
+                    ViewManager.closeResourceWindow();
                 }
             }
+
         };
 
         resourceButton.setOnAction(buttonEvent);
+        cancelButton.setOnAction(buttonEvent);
 
         this.view.getChildren().addAll(header, this.labels.get(0), this.amounts.get(0), this.fields.get(0),
                 this.labels.get(1), this.amounts.get(1), this.fields.get(1), this.labels.get(2), this.amounts.get(2),
-                this.fields.get(2), this.labels.get(3), this.amounts.get(3), this.fields.get(3), resourceButton);
+                this.fields.get(2), this.labels.get(3), this.amounts.get(3), this.fields.get(3), resourceButton,
+                cancelButton);
     }
 }
