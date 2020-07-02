@@ -72,10 +72,11 @@ public class BoardModel implements BoardObservable {
                 punten = (resourceKost.get(0) * 3) + (resourceKost.get(1) * 4) + (resourceKost.get(2) * 5)
                         + (resourceKost.get(3) * 6);
             } else {
-                String kosten[] = s[0].split("_");
-                for (String kost : kosten) {
-                    resourceKost.add(Integer.parseInt(kost));
+                int[] kosten = Arrays.stream(s[0].split("_")).mapToInt(Integer::parseInt).toArray();
+                for (int kost : kosten) {
+                    resourceKost.add(kost);
                 }
+                
                 punten = 0;
             }
 
