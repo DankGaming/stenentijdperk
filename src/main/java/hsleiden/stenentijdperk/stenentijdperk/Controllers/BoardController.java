@@ -17,15 +17,18 @@ import java.util.List;
 public class BoardController {
     private PlayerController playercontroller;
     private BoardModel boardmodel;
+    private PlayerModel localPlayer;
     // TODO naar boardmodel en dan firebase
     private ArrayList<PlayerModel> players = new ArrayList<PlayerModel>();
     private int[] gegooideWorp;
 
-    public BoardController(ArrayList<PlayerModel> playerlist) {
+    public BoardController(ArrayList<PlayerModel> playerlist, PlayerModel me) {
+        localPlayer = me;
         players = playerlist;
         playercontroller = new PlayerController();
         boardmodel = new BoardModel();
         boardmodel.setInitialPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
+        System.out.println(boardmodel.getPlayer());
         gegooideWorp = new int[3];
         FirebaseController.listenForBoardUpdates(String.valueOf(players.get(0).getLobby()));
         FirebaseController.updateBoard(String.valueOf(players.get(0).getLobby()), boardmodel);
@@ -48,11 +51,13 @@ public class BoardController {
     }
 
     public void onResourceButtonClick(int index, int input) {
-        if (!boardmodel.getPlaced() && boardmodel.requestCap(index) - boardmodel.requestVillagers(index) != 0
-                && playercontroller.getPositie(boardmodel.getPlayer(), index) == 0) {
-            // Dit veranderd de hoeveelheid stamleden van een speler
-            boardmodel.decreaseVillagers(index, input);
-            plaatsenStamleden(index, input);
+        if(FirebaseController.getBoard().getPlayer() == localPlayer) {
+            if (!boardmodel.getPlaced() && boardmodel.requestCap(index) - boardmodel.requestVillagers(index) != 0
+                    && playercontroller.getPositie(boardmodel.getPlayer(), index) == 0) {
+                // Dit veranderd de hoeveelheid stamleden van een speler
+                boardmodel.decreaseVillagers(index, input);
+                plaatsenStamleden(index, input);
+            }
         }
     }
 
@@ -157,9 +162,9 @@ public class BoardController {
 
             if (!villagersLeft) {
                 boardmodel.setPhase(2);
+                FirebaseController.updateBoardFieldInt(String.valueOf(this.players.get(0).getLobby()), "phase", boardmodel.getPhase());
                 int turnCheck = (boardmodel.getTurn() - 1) % 4;
                 boardmodel.setPlayer(players.get(turnCheck));
-                FirebaseController.updateBoard(String.valueOf(this.players.get(0).getLobby()), boardmodel);
                 // TODO Dit moet een soort pop up worden.
                 System.out.println("Nu komen de acties");
             }
@@ -182,6 +187,7 @@ public class BoardController {
         if (posities.stream().allMatch(n -> n == 0)) {
             System.out.println("Einde Ronde");
             boardmodel.setPhase(1);
+            FirebaseController.updateBoardFieldInt(String.valueOf(this.players.get(0).getLobby()), "phase", boardmodel.getPhase());
             for (PlayerModel player : players) {
                 List<Integer> resources = playercontroller.vraagResources(player);
                 int remaining = voedselBetalen(player);
@@ -316,6 +322,7 @@ public class BoardController {
         for (int j = 0; j < 4; j++) {
             if (boardmodel.getPlayer().equals(players.get(j))) { // Bepaling welke player aan de beurt is
                 i = j;
+                FirebaseController.updateBoardField(String.valueOf(this.players.get(i).getLobby()), "player", this.players.get(i));
                 break;
             }
             else{

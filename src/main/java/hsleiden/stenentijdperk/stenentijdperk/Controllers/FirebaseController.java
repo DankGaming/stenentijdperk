@@ -10,6 +10,7 @@ import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Resource;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Tool;
+import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import hsleiden.stenentijdperk.stenentijdperk.Models.BoardModel;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 
@@ -25,7 +26,7 @@ public class FirebaseController {
         GoogleCredentials credentials = null;
 
         try {
-            credentials = GoogleCredentials.fromStream(new FileInputStream("./src/main/Resources/iipsene-stenentijdperk-firebase-adminsdk-9kdre-d4805147e1.json"));
+            credentials = GoogleCredentials.fromStream(new FileInputStream("./iipsene-stenentijdperk-firebase-adminsdk-9kdre-d4805147e1.json"));
         } catch (IOException e) {
             System.out.println("File couldn't be read");
         }
@@ -40,7 +41,7 @@ public class FirebaseController {
         db = FirestoreClient.getFirestore();
     }
 
-    public static void listenForLobbyUpdates(String lobby){
+    public static void listenForLobbyUpdates(String lobby, PlayerModel pl){
         DocumentReference docRef = db.collection("stenentijdperk").document(lobby);
         docRef.addSnapshotListener((snapshot, e) -> {
             if (e != null) {
@@ -49,7 +50,10 @@ public class FirebaseController {
             }
 
             if (snapshot != null && snapshot.exists()) {
-                System.out.println("Current data: " + snapshot.getData());
+                Object data = snapshot.get("isActive");
+                if (data.toString().equals("true")){
+                    ViewManager.loadBoardView(FirebaseController.getPlayersInLobby(Integer.parseInt(lobby)), pl);
+                };
             } else {
                 System.out.print("Current data: null");
             }
@@ -287,7 +291,7 @@ public class FirebaseController {
             e.printStackTrace();
         }
         DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("board").document("boardData");
-
+        System.out.println(value);
         ApiFuture<WriteResult> future = docRef.update(field, value);
     }
 
@@ -348,10 +352,14 @@ public class FirebaseController {
 
     public static void addPlayers(int lobby, String speler, PlayerModel player){
         player.setLobby(lobby);
+        System.out.println(player.getPlayerNumber());
+        System.out.println(lobby);
+        System.out.println(player.toString());
         ApiFuture<WriteResult> future = db.collection("stenentijdperk").document(String.valueOf(lobby)).collection("players").document(speler).set(player);
         try {
             System.out.println("Update time : " + future.get().getUpdateTime());
         } catch (Exception e) {
+            System.out.println(future);
             e.printStackTrace();
         }
     }

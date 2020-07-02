@@ -50,10 +50,10 @@ public class ViewManager {
         showView(800, 800, "Lobby");
     }
 
-    public static void loadBoardView(ArrayList<PlayerModel> players) {
+    public static void loadBoardView(ArrayList<PlayerModel> players, PlayerModel localPlayer) {
         closeView();
         isRunning = true;
-        BoardView boardView = new BoardView(players);
+        BoardView boardView = new BoardView(players, localPlayer);
         currentView = boardView.setScene();
         showView(1200, 800, "Board", boardView.getPlayers());
     }

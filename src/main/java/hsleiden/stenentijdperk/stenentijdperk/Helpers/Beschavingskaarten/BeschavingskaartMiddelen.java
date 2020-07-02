@@ -6,6 +6,7 @@ public class BeschavingskaartMiddelen extends Kaart {
     private int waarde;
     private int middel;
 
+    public BeschavingskaartMiddelen(){}
     public BeschavingskaartMiddelen(int kosten, String path, int waarde, int middel) {
         super(kosten, path);
         this.waarde = waarde;
@@ -21,7 +22,7 @@ public class BeschavingskaartMiddelen extends Kaart {
     }
 
     public int getPunten() {
-        return super.getPunten();
+        return super.getKosten();
     }
 
     public void uitvoerenActie(PlayerModel player) {

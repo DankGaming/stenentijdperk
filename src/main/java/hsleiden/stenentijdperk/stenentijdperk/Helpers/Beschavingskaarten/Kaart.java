@@ -10,7 +10,9 @@ public class Kaart implements Status {
     private Resource graan;
     private String treasure;
     private boolean status;
-    private final String path;
+    private String path;
+
+    public Kaart(){}
 
     public Kaart(int kosten, String path) {
         this.path = path;
@@ -22,7 +24,8 @@ public class Kaart implements Status {
         return this.path;
     }
 
-    public int getPunten() {
+    public void setKosten(int kosten){this.kosten = kosten;};
+    public int getKosten() {
         return this.kosten;
     }
 
