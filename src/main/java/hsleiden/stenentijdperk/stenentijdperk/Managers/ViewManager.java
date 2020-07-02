@@ -52,7 +52,7 @@ public class ViewManager {
      * Load the lobby view.
      * This function loads the lobby view.
      *
-     * @param playerModel //TODO beschrijving waar de param voor wordt gebruikt
+     * @param playerModel We use the playermodel to display the name of the player
      * @see LobbyView
      * @author Joost de Jager
      */
@@ -82,7 +82,7 @@ public class ViewManager {
      * Load the GameOver view.
      * This function loads the GameOver view.
      *
-     * @param playerModels //TODO beschrijving waar de param voor wordt gebruikt
+     * @param playerModels We use the playermodels to generate a list of who won the game
      * @see GameOverView
      * @author Joost de Jager
      */
@@ -131,7 +131,7 @@ public class ViewManager {
      * Load a popup window.
      * This function loads a popup window.
      *
-     * @param tableauView //TODO beschrijving waar de param voor wordt gebruikt
+     * @param tableauView the gridpane is rendered
      * @author Joost de Jager
      */
     public static void loadPopupWindow(GridPane tableauView) {
@@ -144,7 +144,7 @@ public class ViewManager {
      * Load a popup window.
      * This function loads a popup window.
      *
-     * @param vBox //TODO beschrijving waar de param voor wordt gebruikt
+     * @param vBox The vbox is being rendered
      * @author Joost de Jager
      */
     public static void loadPopupWindow(VBox vBox) {
@@ -181,9 +181,9 @@ public class ViewManager {
      * Creates a stage
      * This function creates a stage from a view.
      *
-     * @param width //TODO beschrijving waar de param voor wordt gebruikt
-     * @param height //TODO beschrijving waar de param voor wordt gebruikt
-     * @param title //TODO beschrijving waar de param voor wordt gebruikt
+     * @param width the width of the window
+     * @param height the height of the window
+     * @param title the title of the window
      * @author Joost de Jager
      */
     public static void createStageFromView(int width, int height, String title) {
@@ -197,9 +197,9 @@ public class ViewManager {
      * Shows a stage.
      * This function shows a stage.
      *
-     * @param width //TODO beschrijving waar de param voor wordt gebruikt
-     * @param height //TODO beschrijving waar de param voor wordt gebruikt
-     * @param title //TODO beschrijving waar de param voor wordt gebruikt
+     * @param width the width of the window
+     * @param height the height of the window
+     * @param title the title of the window
      * @author Joost de Jager
      */
     public static void showView(int width, int height, String title) {
@@ -215,11 +215,11 @@ public class ViewManager {
     /**
      * Shows a stage.
      * This function shows a stage.
-     * //TODO uitleggen warom deze anders is.
      *
-     * @param width //TODO beschrijving waar de param voor wordt gebruikt
-     * @param height //TODO beschrijving waar de param voor wordt gebruikt
-     * @param title //TODO beschrijving waar de param voor wordt gebruikt
+     * @param width the width of the window
+     * @param height the height of the window
+     * @param title the title of the window
+     * @param playerModels for generating the tableaus
      * @author Joost de Jager
      */
     public static void showView(int width, int height, String title, ArrayList<PlayerModel> playerModels) {
@@ -272,9 +272,9 @@ public class ViewManager {
      * Creates a stage.
      * This function creates a stage from a gridpane.
      *
-     * @param width //TODO beschrijving waar de param voor wordt gebruikt
-     * @param height //TODO beschrijving waar de param voor wordt gebruikt
-     * @param title //TODO beschrijving waar de param voor wordt gebruikt
+     * @param width the width of the window
+     * @param height the height of the window
+     * @param title the title of the window
      * @author Joost de Jager
      */
     public static void createPopupFromView(int width, int height, String title) {
@@ -301,9 +301,9 @@ public class ViewManager {
      * Creates a stage.
      * This function creates a stage from a vbox.
      *
-     * @param width //TODO beschrijving waar de param voor wordt gebruikt
-     * @param height //TODO beschrijving waar de param voor wordt gebruikt
-     * @param title //TODO beschrijving waar de param voor wordt gebruikt
+     * @param width the width of the window
+     * @param height the height of the window
+     * @param title the title of the window
      * @author Joost de Jager
      */
     public static void createPopupFromVbox(int width, int height, String title) {
