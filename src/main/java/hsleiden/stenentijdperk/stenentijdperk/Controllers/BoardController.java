@@ -258,7 +258,8 @@ public class BoardController {
      * @author Damien Hofman
      */
 
-    public void EndTurnPhase2() {
+    public boolean EndTurnPhase2() {
+        boolean eindeSpel = false;
         List<Integer> posities = playercontroller.vraagPosities(boardmodel.getPlayer());
         if (posities.stream().allMatch(n -> n == 0)) {
             int i = checkPlayer();
@@ -298,15 +299,26 @@ public class BoardController {
                 playercontroller.setVillagers(player, playercontroller.getMaxVillagers(player));
             }
             if (checkWincondition()) {
+                System.out.println("Ik zit in deze win");
                 endGame();
+                eindeSpel = true;
             }  
         }
+        return eindeSpel;
     }
 
     public int vraagPhase() {
         return boardmodel.getPhase();
     }
 
+    /**
+     * De functie verhoogd het graanniveau van een speler.
+     * Controleert eerst of er stamleden op de locatie staat.
+     * Dan wordt het graanniveau van de speler verhoogd.
+     * Vervolgens wordt de positie weggehaald.
+     * @param index de locatie op het bord
+     * @author Damien Hofman
+     */
     private void moreAgriculture(int index) {
         if (playercontroller.getPositie(boardmodel.getPlayer(), index) != 0
                 && playercontroller.vraagGraan(boardmodel.getPlayer()) != 10) {
@@ -315,6 +327,14 @@ public class BoardController {
         }
     }
 
+     /**
+     * De functie verhoogd het aantal villagers van een speler.
+     * Controleert eerst of er stamleden op de locatie staat.
+     * Dan wordt het extra toegevoegd bij de speler.
+     * Vervolgens wordt de positie weggehaald.
+     * @param index de locatie op het bord
+     * @author Damien Hofman
+     */
     private void moreVillagerHut(int index) {
         if (playercontroller.getPositie(boardmodel.getPlayer(), index) != 0
                 && playercontroller.getMaxVillagers(boardmodel.getPlayer()) != 10) {
@@ -323,6 +343,13 @@ public class BoardController {
         }
     }
 
+    /**
+     * De functie bepaald op welke button was geklikt.
+     * Controleert eerst of de locatie vrij is en of de speler nog niks heeft geplaatst
+     * Dan wordt op basis van de locatie 1 of 2 stamleden op die positie plaatst
+     * @param index de locatie op het bord
+     * @author Damien Hofman
+     */
     private void buttonCheckPhase1(int index) {
         if (locatieVrij(index) && !boardmodel.getPlaced()) {
             if (index == 6 && playercontroller.getVillagers(boardmodel.getPlayer()) >= 2) {
@@ -333,6 +360,12 @@ public class BoardController {
         }
     }
 
+    /**
+     * De functie bepaald op welke button was geklikt maar nu in phase 2.
+     * Op basis van de locatie worden de verschillende functie voor de acties aangeroepen.
+     * @param index de locatie op het bord
+     * @author Damien Hofman
+     */
     private void buttonCheckPhase2(int index) {
         switch (index) {
             case 5:
@@ -374,6 +407,16 @@ public class BoardController {
         }
     }
 
+    /**
+     * De functie regelt het betalen van voedsel per speler.
+     * Eerste wordt berekend hoeveel voedsel nodig is per speler.
+     * Dan wordt bepaald hoeveel voedsel een speler heeft.
+     * Als hoeveelheid voedsel genoeg is wordt dat betaald.
+     * Anders wordt al het voedsel gebruikt en de remainder wordt gereturnd.
+     * @param player de speler die op dit moment moet betalen.
+     * @return overgebleven ongevoede stamleden wordt returned.
+     * @author Damien Hofman
+     */
     private int voedselBetalen(PlayerModel player) {
         int remaining = 0;
         int voedselNodig = playercontroller.getMaxVillagers(player) - playercontroller.vraagGraan(player);
@@ -389,12 +432,18 @@ public class BoardController {
         return remaining;
     }
 
-    // Methode om door lijsten spelers te loopen.
-    private boolean loopPlayers(int start, List<PlayerModel> player) {
+    /**
+     * Deze functie loopt door de spelers heen en veranderd de speler.
+     * @param start Tijd bepaald voor de functie moet beginnen met zoeken.
+     * @param players Dit is een lijst van de spelers in het spel
+     * @return true of false op basis of er een speler is gevonden die nog stamleden heeft.
+     * @author Damien Hofman
+     */
+    private boolean loopPlayers(int start, List<PlayerModel> players) {
         boolean found = false;
-        for (int j = start + 1; j < player.size(); j++) {
-            if (playercontroller.getVillagers(player.get(j)) != 0) {
-                boardmodel.setPlayer(player.get(j)); // Veranderd de huidige speler
+        for (int j = start + 1; j < players.size(); j++) {
+            if (playercontroller.getVillagers(players.get(j)) != 0) {
+                boardmodel.setPlayer(players.get(j)); // Veranderd de huidige speler
                 found = true;
                 break;
             }
@@ -427,6 +476,12 @@ public class BoardController {
         return status;
     }
 
+    /**
+     * Deze functie plaatst de stamleden die speler willen neerzetten op de juiste plek.
+     * @param index De locatie waar de stamleden moeten neer gezet.
+     * @param stamleden De hoeveel stamleden die de speler wou neerzetten.
+     * @author Damien Hofman
+     */
     private void plaatsenStamleden(int index, int stamleden) {
         boardmodel.setPlaced(true);
         playercontroller.setVillagers(boardmodel.getPlayer(),
@@ -470,6 +525,14 @@ public class BoardController {
         return endGame;
     }
 
+    /**
+     * Deze functie wordt aan het einde van het spel aangeroepen en telt dan de bonus punten op.
+     * Eerst worden alle mulitiplier opgehaald uit een player.
+     * Per multiplier worden dan een bepaald aantal punten toegekend.
+     * Dan worden er per treasure punten gegeven.
+     * @param player De speler waar de punten moeten worden opgeteld.
+     * @author Damien Hofman
+     */
     private void finalPuntenCount(PlayerModel player) {
         List<Integer> multipliers = playercontroller.getMultiplier(player);
         for (Tool tool : playercontroller.getTools(player)) {
