@@ -47,20 +47,20 @@ public class TableauView implements PlayerObserver {
     private Label multiplier4;
 
     // Standard constructor
-    public TableauView(PlayerModel playermodel) {
-        standardConstructorFunction(playermodel);
+    public TableauView(PlayerModel playerModel) {
+        standardConstructorFunction(playerModel);
     }
 
     // Constructor for the boardcontroller
-    public TableauView(PlayerModel playermodel, BoardController boardController) {
-        standardConstructorFunction(playermodel);
+    public TableauView(PlayerModel playerModel, BoardController boardController) {
+        standardConstructorFunction(playerModel);
         showConfirmButton(boardController);
     }
 
     // The statements that are called every time
-    public void standardConstructorFunction(PlayerModel playermodel) {
+    public void standardConstructorFunction(PlayerModel playerModel) {
         setupPane();
-        this.playerModel = playermodel;
+        this.playerModel = playerModel;
         this.playerModel.registerObserver(this);
     }
 
@@ -170,18 +170,18 @@ public class TableauView implements PlayerObserver {
         // Initial constraints for the point
         GridPane.setConstraints(this.punt, 37, 6, 5, 5);
 
-        this.view.getChildren().addAll(tableau, stamleden, voedsel, hout, leem, steen, goud, imageviewhutkaart1, imageviewhutkaart2,
-                imageviewhutkaart3, imageviewhutkaart4, imageviewhutkaart5, punt, multiplier1, multiplier2, multiplier3,
-                multiplier4);
+        this.view.getChildren().addAll(tableau, stamleden, voedsel, hout, leem, steen, goud, imageviewhutkaart1,
+                imageviewhutkaart2, imageviewhutkaart3, imageviewhutkaart4, imageviewhutkaart5, punt, multiplier1,
+                multiplier2, multiplier3, multiplier4);
     }
 
     public void setPoint(int height) {
-        int[] rows = new int[]{6, 9, 12, 14, 17, 19, 22, 25};
+        int[] rows = new int[] { 6, 9, 12, 14, 17, 19, 22, 25 };
         GridPane.setConstraints(this.punt, 37, rows[height - 1], 5, 5);
     }
 
     public void addImageViewToView(int positie, ImageView imageView) {
-        int[][] allConstraints = new int[][]{{2, 1}, {2, 11}, {2, 21}};
+        int[][] allConstraints = new int[][] { { 2, 1 }, { 2, 11 }, { 2, 21 } };
 
         int[] constraints = allConstraints[positie - 1];
 

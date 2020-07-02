@@ -272,18 +272,14 @@ public class BoardController {
     private void beschavingsKaarActie(int index) {
         if ((playercontroller.getPositie(boardmodel.getPlayer(), (index + 12)) != 0)) {
 
-            ViewManager.loadPopupWindow(new ResourceView(boardmodel.getPlayer(), this.playercontroller, (index + 1)));
+            ViewManager.loadPopupWindow(new ResourceView(boardmodel.getPlayer(), this.playercontroller, this,
+                    (index + 1), this.boardmodel.getKaart(index)));
             playercontroller.setPositie(boardmodel.getPlayer(), (index + 12), 0);
-            /*if (resourcesBetalen(this.boardmodel.getHut(index).getKosten())) {
-                this.boardmodel.getPlayer()
-                        .setPunten(this.boardmodel.getPlayer().getPunten() + this.boardmodel.getHut(index).getPunten());
-                this.boardmodel.getPlayer().addHutjes(this.boardmodel.getHut(index));
-                boardmodel.removeHut(index);
-            } else {
-                System.out.println("niet genoeg resources");
-                // TODO deze else verbeteren
-            }*/
         }
+    }
+
+    public void kaartGekocht(Kaart kaart) {
+
     }
 
     private void hutActie(int index) {

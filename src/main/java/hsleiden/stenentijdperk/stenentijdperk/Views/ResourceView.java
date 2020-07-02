@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.PlayerController;
+import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
 import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
+import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -29,8 +31,13 @@ public class ResourceView {
     private PlayerModel playerModel;
     private PlayerController playerController;
     private int price;
+    private BoardController boardController;
+    private Kaart kaart;
 
-    public ResourceView(PlayerModel playerModel, PlayerController playerController, int price) {
+    public ResourceView(PlayerModel playerModel, PlayerController playerController, BoardController boardController,
+            int price, Kaart kaart) {
+        this.kaart = kaart;
+        this.boardController = boardController;
         this.playerModel = playerModel;
         this.playerController = playerController;
         this.price = price;
@@ -119,6 +126,7 @@ public class ResourceView {
                     }
                     System.out.println("price: " + price);
                     if (amount == price) {
+                        boardController.kaartGekocht(kaart);
                         ViewManager.closeResourceWindow();
                     } else if (amount < price) {
                         header.setText("Te weinig grondstoffen! (" + amount + "/" + price + ")");

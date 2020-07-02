@@ -15,10 +15,10 @@ public class TableauModel implements TableauObservable {
     private int[] gereedschap;
     private boolean[] gereedschapGebruikt;
 
-    // TODO alle info moet uit playermodel
+    // TODO alle info moet uit playerModel
     public TableauModel() {
         stamleden = new LinkedList<>();
-        gereedschap = new int[]{0, 0, 0};
+        gereedschap = new int[] { 0, 0, 0 };
     }
 
     public void ontvangStamlid(Stamlid stamlid) {

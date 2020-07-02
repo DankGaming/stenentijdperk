@@ -32,9 +32,9 @@ public class BeschavingskaartMiddelen extends Kaart {
         // ontvang resource wat op de kaart staat
         player.addResources(middel, waarde);
 
-        if(treasure != ""){
+        if (!treasure.isEmpty()) {
             player.addTreasure(treasure);
-        }else{
+        } else {
             player.addMultiplier(multiplier, 1);
         }
         // Ontvang beschavingskaart
