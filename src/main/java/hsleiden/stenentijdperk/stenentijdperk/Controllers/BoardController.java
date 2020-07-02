@@ -53,6 +53,17 @@ public class BoardController {
         return this.boardmodel.getHutStapel(stapel);
     }
 
+
+    /**
+     * De functie handelt af op welke was geklikt en behandeld de stamleden.
+     * 
+     * @param index de button, dus positie, van de stamleden.
+     * @param input de hoeveelheid stamleden die de speler wil plaatsen.
+     * @see Resource
+     * @see PlayerModel
+     * @author Damien Hofman.
+     */
+
     public void onResourceButtonClick(int index, int input) {
         if (!boardmodel.getPlaced() && boardmodel.requestCap(index) - boardmodel.requestVillagers(index) != 0
                 && playercontroller.getPositie(boardmodel.getPlayer(), index) == 0) {
@@ -61,6 +72,14 @@ public class BoardController {
             plaatsenStamleden(index, input);
         }
     }
+
+    /**
+     * Deze functie controleert of het ingevuld aantal stamleden wel een geldige hoeveelheid is
+     * @param index de button, dus posities, waarop op de speler stamleden wil plaatsen
+     * @param input de hoeveelheid stamleden die de speler heeft ingevoerd
+     * @return true of false bepaald door te controleren of er nog ruimte is, en of de speler wel genoeg stamleden over heeft
+     * @author Damien Hofman
+     */
 
     public boolean stamledenCheck(int index, int input) {
         return (input > 0 && input <= playercontroller.getVillagers(boardmodel.getPlayer())
@@ -73,6 +92,13 @@ public class BoardController {
         return (boardmodel.removeKaart(index)); // TODO dit moet naar acties verplaatst worden
     }
 
+    /**
+     * Deze functie controleert in welke phase van het spel we zitten.
+     * @param index de button, dus positie,waarop op de speler heeft geklikt.
+     * @see BoardModel
+     * @author Damien Hofman
+     */
+
     public void onButtonClick(int index) {
         if (vraagPhase() == 1) {
             buttonCheckPhase1(index);
@@ -81,7 +107,18 @@ public class BoardController {
         }
     }
 
-    // Hier is het rollen voor resources.
+    /**
+     * De functie handeld af het rollen voor resources.
+     * Eerste controllert het of de speler wel stamleden op die positie heeft.
+     * Daarna wordt er een dobbelsteen object gemaakt om te rollen.
+     * Dan wordt het tabbleau geopened als de speler tools beschikbaar heeft en kan ze dan gebruiken.
+     * @param index welke resource het was.
+     * @see Dobbelsteen
+     * @see TableauView
+     * @author Damien Hofman
+     */
+     
+
     public void resolveResource(int index) {
         gegooideWorp[0] = index;
         int stamleden = playercontroller.getPositie(boardmodel.getPlayer(), index);
@@ -98,6 +135,16 @@ public class BoardController {
             }
         }
     }
+    
+    /**
+     * Deze functie handeld af het gebruik van tools en het geven van resources.
+     * De tools worden opgeteld bij de roll.
+     * Vervolgens wordt het totaal gedeeld door de waarde van de de resource.
+     * Dit wordt dan aan de speler gegevenen.
+     * @param waarde de waarde van de gebruikte tools.
+     * @see Tool
+     * @author Damien Hofman
+     */
 
     public void toolsGebruiken(int waarde) {
         int index = gegooideWorp[0];
@@ -113,6 +160,12 @@ public class BoardController {
         boardmodel.getLocaties().get(index).reduceVillager(stamleden);
     }
 
+    /**
+     * Deze functie loop door de tools van een speler en controleerd of deze nog te gebruiken is.
+     * @return dit returned of de speler nog tools kan gebruiken.
+     * @see Tool
+     * @author Damien Hofman
+     */
     private boolean checkTools() {
         boolean toolsLeft = false;
         for (Tool tool : playercontroller.getTools(boardmodel.getPlayer())) {
@@ -123,8 +176,19 @@ public class BoardController {
         return toolsLeft;
     }
 
+    /**
+     * Dit geeft de speler tools.
+     * Als de speler minder dan 3 tools heeft dan krijgt de speler een nieuwe.
+     * Anders wordt het niveau van de laagste level tool met 1 verhoogd.
+     * @param index de locatie van de button.
+     * @see BoardModel
+     * @see Tool
+     * @author Damien Hofman
+     */
+
     private void gainTools(int index) {
         if ((playercontroller.getPositie(boardmodel.getPlayer(), index) != 0)) {
+            playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
             ArrayList<Tool> tools = playercontroller.getTools(boardmodel.getPlayer());
             if (tools.size() < 3) {
                 playercontroller.addTool(boardmodel.getPlayer());
@@ -133,7 +197,6 @@ public class BoardController {
                 for (int i = 0; i < 3; i++) {
                     if (tools.get(i).getLevel() == tools.get(2).getLevel()) {
                         tools.get(i).increaseLevel();
-                        playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
                         break;
                     }
                 }
@@ -170,6 +233,7 @@ public class BoardController {
             }
         }
     }
+    
 
     public void EndTurnPhase2() {
         List<Integer> posities = playercontroller.vraagPosities(boardmodel.getPlayer());
