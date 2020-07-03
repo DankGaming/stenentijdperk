@@ -38,7 +38,7 @@ public class FirebaseController {
         GoogleCredentials credentials = null;
 
         try {
-            InputStream serviceAccount = App.class.getResourceAsStream("/trump123-5eb5e-firebase-adminsdk-n7z18-bb9eee0739.json");
+            InputStream serviceAccount = App.class.getResourceAsStream("/stenentijdperk-3f715-firebase-adminsdk-hjfx0-f294e2f894.json");
             credentials = GoogleCredentials.fromStream(serviceAccount);
         } catch (IOException e) {
             System.out.println("File couldn't be read");
