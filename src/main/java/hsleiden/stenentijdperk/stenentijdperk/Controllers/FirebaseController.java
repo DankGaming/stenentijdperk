@@ -36,9 +36,8 @@ public class FirebaseController {
     public static void initializeFirebaseApp(Test test) {
         test = test;
         GoogleCredentials credentials = null;
-
         try {
-            InputStream serviceAccount = App.class.getResourceAsStream("/stenentijdperk-3f715-firebase-adminsdk-hjfx0-f294e2f894.json");
+            InputStream serviceAccount = App.class.getResourceAsStream("/gert-6a8f5-firebase-adminsdk-vfn1r-02c5ac681f.json");
             credentials = GoogleCredentials.fromStream(serviceAccount);
         } catch (IOException e) {
             System.out.println("File couldn't be read");
@@ -99,6 +98,10 @@ public class FirebaseController {
         players = newPlayers;
     }
 
+    public static DocumentReference getdocRef(String lobby){
+        return db.collection("stenentijdperk").document(lobby).collection("boardData").document("board");
+    }
+
     public static void listenForBoardUpdates(String lobby){
         DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("boardData").document("board");
         boardlistener = docRef.addSnapshotListener((snapshot, e) -> {
@@ -110,8 +113,6 @@ public class FirebaseController {
             if (snapshot != null && snapshot.exists()) {
                 BoardModel newModel = snapshot.toObject(BoardModel.class);
                 setBoard(newModel);
-                BoardModel b = BoardModel.getInstance();
-                b = newModel;
                 System.out.println("updated model");
             } else {
                 System.out.print("Current data: null");
@@ -122,6 +123,7 @@ public class FirebaseController {
     public static BoardModel getBoardLive(){
         return board;
     }
+
     public static void cancelPlayerListener(){
         if (playerlistener != null)
             playerlistener.remove();

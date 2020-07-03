@@ -1,5 +1,6 @@
 package hsleiden.stenentijdperk.stenentijdperk.Controllers;
 
+import com.google.cloud.firestore.DocumentReference;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Dobbelsteen;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
@@ -13,11 +14,12 @@ import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObserver;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class BoardController {
     private PlayerController playercontroller;
     private BoardModel boardmodel;
-    // TODO naar boardmodel en dan firebase
     private ArrayList<PlayerModel> players = new ArrayList<PlayerModel>();
     private PlayerModel localPlayer;
     private int[] gegooideWorp;
@@ -29,8 +31,27 @@ public class BoardController {
         boardmodel = new BoardModel();
         boardmodel.setInitialPlayer(players.get(0)); // Begin van het spel turn eerste speler bepalen.
         gegooideWorp = new int[3];
-        FirebaseController.listenForBoardUpdates(String.valueOf(players.get(0).getLobby()));
+        listenForBoardUpdates(String.valueOf(players.get(0).getLobby()));
         FirebaseController.updateBoard(String.valueOf(players.get(0).getLobby()), boardmodel);
+    }
+
+    public void listenForBoardUpdates(String lobby){
+        System.out.println("hi");
+          FirebaseController.getdocRef(lobby).addSnapshotListener((snapshot, e) -> {
+              System.out.println("im listenning");
+            if (e != null) {
+                System.err.println("Listen failed: " + e);
+                return;
+            }
+
+            if (snapshot != null && snapshot.exists()) {
+                BoardModel newModel = snapshot.toObject(BoardModel.class);
+                this.boardmodel = newModel;
+                System.out.println("updated model");
+            } else {
+                System.out.print("Current data: null");
+            }
+        });
     }
 
     public void registerObserver(BoardObserver boardobserver) {
@@ -157,7 +178,6 @@ public class BoardController {
 
             if (!villagersLeft) {
                 boardmodel.setPhase(2);
-                FirebaseController.updateBoardFieldInt(String.valueOf(this.players.get(0).getLobby()), "phase", boardmodel.getPhase());
                 int turnCheck = (boardmodel.getTurn() - 1) % 4;
                 boardmodel.setPlayer(players.get(turnCheck));
                 FirebaseController.updateBoard(String.valueOf(this.getPlayer().getLobby()), this.boardmodel);
@@ -234,6 +254,7 @@ public class BoardController {
     }
 
     private void buttonCheckPhase1(int index) {
+        if(boardmodel.getPlayer().getPlayerNumber().equals(localPlayer.getPlayerNumber())) {
             if (locatieVrij(index) && !boardmodel.getPlaced()) {
                 if (index == 6 && playercontroller.getVillagers(boardmodel.getPlayer()) >= 2) {
                     plaatsenStamleden(index, 2);
@@ -241,10 +262,11 @@ public class BoardController {
                     plaatsenStamleden(index, 1);
                 }
             }
+        }
     }
 
     private void buttonCheckPhase2(int index) {
-        if(FirebaseController.getBoard(String.valueOf(localPlayer.getLobby())).getPlayer().getPlayerNumber().equals(localPlayer.getPlayerNumber())) {
+        if(boardmodel.getPlayer().getPlayerNumber().equals(localPlayer.getPlayerNumber())) {
             switch (index) {
                 case 5:
                     moreAgriculture(index);
