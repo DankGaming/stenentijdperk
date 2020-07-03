@@ -54,14 +54,12 @@ public class BoardController {
     }
 
     public void onResourceButtonClick(int index, int input) {
-        if(FirebaseController.getBoard(String.valueOf(localPlayer.getLobby())).getPlayer() == localPlayer) {
             if (!boardmodel.getPlaced() && boardmodel.requestCap(index) - boardmodel.requestVillagers(index) != 0
                     && playercontroller.getPositie(boardmodel.getPlayer(), index) == 0) {
                 // Dit veranderd de hoeveelheid stamleden van een speler
                 boardmodel.decreaseVillagers(index, input);
                 plaatsenStamleden(index, input);
             }
-        }
     }
 
     public boolean stamledenCheck(int index, int input) {
@@ -79,7 +77,6 @@ public class BoardController {
 
     // Hier is het rollen voor resources.
     public void resolveResource(int index) {
-        if(FirebaseController.getBoard(String.valueOf(localPlayer.getLobby())).getPlayer() == localPlayer) {
             gegooideWorp[0] = index;
             int stamleden = playercontroller.getPositie(boardmodel.getPlayer(), index);
             if (stamleden != 0) {
@@ -94,7 +91,6 @@ public class BoardController {
                     toolsGebruiken(0);
                 }
             }
-        }
     }
 
     public void toolsGebruiken(int waarde) {
@@ -400,7 +396,7 @@ public class BoardController {
         for (int j = start + 1; j < player.size(); j++) {
             if (playercontroller.getVillagers(player.get(j)) != 0) {
                 boardmodel.setPlayer(player.get(j)); // Veranderd de huidige speler
-                FirebaseController.updateBoardField(String.valueOf(this.players.get(j).getLobby()), "player", this.players.get(j));
+                FirebaseController.updateBoard(String.valueOf(this.getPlayer().getLobby()), this.boardmodel);
                 found = true;
                 break;
             }

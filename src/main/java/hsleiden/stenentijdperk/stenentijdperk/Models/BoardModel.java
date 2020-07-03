@@ -3,9 +3,6 @@ package hsleiden.stenentijdperk.stenentijdperk.Models;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.FirebaseController;
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.PlayerController;
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.BeschavingskaartMiddelen;
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.BeschavingskaartPunten;
-import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.BeschavingskaartWorpMiddelen;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Resource;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
@@ -35,6 +32,7 @@ public class BoardModel implements BoardObservable {
     private ArrayList<StaticHut> hutjes = new ArrayList<>();
     private ArrayList<Resource> locaties = new ArrayList<>();
     private boolean wincondition;
+    private static BoardModel instance;
 
     public BoardModel() {
         this.isPlaceable = true;
@@ -99,6 +97,12 @@ public class BoardModel implements BoardObservable {
         this.hutStapel5.add(new StaticHut(0, new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0)), ""));
 
         this.hutKaarten.clear();
+    }
+
+    public static synchronized BoardModel getInstance( ) {
+        if (instance == null)
+            instance=new BoardModel();
+        return instance;
     }
 
     public void removeKaart(int index) {

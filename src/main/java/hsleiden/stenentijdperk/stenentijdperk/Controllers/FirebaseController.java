@@ -26,6 +26,7 @@ import java.util.concurrent.ExecutionException;
 public class FirebaseController {
     static Firestore db;
     static BoardModel board;
+    static BoardModel usedBoard;
     static ArrayList<PlayerModel> players;
     static Test test;
     static ListenerRegistration lobbylisterner;
@@ -37,7 +38,7 @@ public class FirebaseController {
         GoogleCredentials credentials = null;
 
         try {
-            InputStream serviceAccount = App.class.getResourceAsStream("/hallobenikweer-83056-firebase-adminsdk-semhd-0056bc1ef5.json");
+            InputStream serviceAccount = App.class.getResourceAsStream("/trump123-5eb5e-firebase-adminsdk-n7z18-bb9eee0739.json");
             credentials = GoogleCredentials.fromStream(serviceAccount);
         } catch (IOException e) {
             System.out.println("File couldn't be read");
@@ -109,6 +110,8 @@ public class FirebaseController {
             if (snapshot != null && snapshot.exists()) {
                 BoardModel newModel = snapshot.toObject(BoardModel.class);
                 setBoard(newModel);
+                BoardModel b = BoardModel.getInstance();
+                b = newModel;
                 System.out.println("updated model");
             } else {
                 System.out.print("Current data: null");
@@ -116,6 +119,9 @@ public class FirebaseController {
         });
     }
 
+    public static BoardModel getBoardLive(){
+        return board;
+    }
     public static void cancelPlayerListener(){
         if (playerlistener != null)
             playerlistener.remove();
@@ -282,10 +288,6 @@ public class FirebaseController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        DocumentReference docRef = db.collection("stenentijdperk").document(lobby).collection("boardData").document("board");
-        Map<String, Object> updates = new HashMap<>();
-        updates.put("player", value);
-        ApiFuture<WriteResult> future = docRef.update(updates);
     }
 
     public static void updateBoardResource(String lobby, String field, ArrayList<Resource> value) {
