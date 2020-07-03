@@ -258,8 +258,7 @@ public class BoardController {
      * @author Damien Hofman
      */
 
-    public boolean EndTurnPhase2() {
-        boolean eindeSpel = false;
+    public void EndTurnPhase2() {
         List<Integer> posities = playercontroller.vraagPosities(boardmodel.getPlayer());
         if (posities.stream().allMatch(n -> n == 0)) {
             int i = checkPlayer();
@@ -301,10 +300,8 @@ public class BoardController {
             if (checkWincondition()) {
                 System.out.println("Ik zit in deze win");
                 endGame();
-                eindeSpel = true;
             }  
         }
-        return eindeSpel;
     }
 
     public int vraagPhase() {
