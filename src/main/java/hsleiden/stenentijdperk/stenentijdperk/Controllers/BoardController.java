@@ -169,7 +169,8 @@ public class BoardController {
         }
     }
 
-    public void EndTurnPhase2() {
+    public boolean EndTurnPhase2() {
+        boolean eindeSpel = false;
         List<Integer> posities = playercontroller.vraagPosities(boardmodel.getPlayer());
         if (posities.stream().allMatch(n -> n == 0)) {
             int i = checkPlayer();
@@ -213,9 +214,11 @@ public class BoardController {
             }
             boardmodel.notifyAllObservers();
             if (checkWincondition()) {
+                eindeSpel = true;
                 endGame();
             }
         }
+        return eindeSpel;
     }
 
     public int vraagPhase() {
@@ -427,7 +430,7 @@ public class BoardController {
                 endGame = true;
             }
         }
-        if (boardmodel.getKaarten().size() > 4) {
+        if (boardmodel.getKaarten().size() < 4) {
             endGame = true;
         }
 

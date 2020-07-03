@@ -2,6 +2,7 @@ package hsleiden.stenentijdperk.stenentijdperk.Views;
 
 import hsleiden.stenentijdperk.stenentijdperk.Controllers.BoardController;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten.Kaart;
+import hsleiden.stenentijdperk.stenentijdperk.Managers.ViewManager;
 import hsleiden.stenentijdperk.stenentijdperk.Helpers.StaticHut;
 import hsleiden.stenentijdperk.stenentijdperk.Models.PlayerModel;
 import hsleiden.stenentijdperk.stenentijdperk.observers.BoardObservable;
@@ -524,8 +525,10 @@ public class BoardView implements BoardObserver {
 					if (controller.vraagPhase() == 1) {
 						controller.endTurn();
 					} else {
-						controller.EndTurnPhase2();
-						// TODO einde spel stuf
+						boolean einde = controller.EndTurnPhase2();
+						if (einde) {
+							ViewManager.loadGameOverView(controller.getPlayers());
+						};
 					}
 					beurtLabel.setText(controller.getPlayer().getNaam() + " is aan de beurt.");
 					playerColor(true);
