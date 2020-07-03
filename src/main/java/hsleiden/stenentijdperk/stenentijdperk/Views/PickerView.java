@@ -50,21 +50,23 @@ public class PickerView {
         this.vBox = new VBox();
     }
 
-    // Functions that create buttons based on playermodels
+    // Functions that create buttons based on playerModels
     public void generateButtons(ArrayList<PlayerModel> playerModels) {
         Button button = new Button("Spelregels");
         button.setMinSize(237, 43);
         button.setMaxSize(237, 43);
-        button.setStyle("-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
+        button.setStyle(
+                "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
         button.setOnMouseClicked(event -> {
             ViewManager.loadSpelregelView();
         });
         this.vBox.getChildren().add(button);
-        for(PlayerModel playerModel : playerModels) {
+        for (PlayerModel playerModel : playerModels) {
             Button playerButton = new Button(playerModel.getNaam());
             playerButton.setMinSize(237, 43);
             playerButton.setMaxSize(237, 43);
-            playerButton.setStyle("-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
+            playerButton.setStyle(
+                    "-fx-background-color: #dfa231; -fx-text-fill: #f6e5b6; -fx-border-color:#453b1b; -fx-border-width: 1px; -fx-border-radius: 1px; -fx-font-size: 2em;");
             playerButton.setOnMouseClicked(event -> {
                 ViewManager.loadPopupWindow(new TableauView(playerModel).setScene());
             });
