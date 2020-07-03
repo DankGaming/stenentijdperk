@@ -226,7 +226,6 @@ public class BoardController {
     private void moreAgriculture(int index) {
         if (playercontroller.getPositie(boardmodel.getPlayer(), index) != 0
                 && playercontroller.vraagGraan(boardmodel.getPlayer()) != 10) {
-            playercontroller.addGraan(boardmodel.getPlayer());
             playercontroller.setPositie(boardmodel.getPlayer(), index, 0);
         }
     }
@@ -240,7 +239,6 @@ public class BoardController {
     }
 
     private void buttonCheckPhase1(int index) {
-        if(FirebaseController.getBoard(String.valueOf(localPlayer.getLobby())).getPlayer().getPlayerNumber().equals(localPlayer.getPlayerNumber())) {
             if (locatieVrij(index) && !boardmodel.getPlaced()) {
                 if (index == 6 && playercontroller.getVillagers(boardmodel.getPlayer()) >= 2) {
                     plaatsenStamleden(index, 2);
@@ -248,7 +246,6 @@ public class BoardController {
                     plaatsenStamleden(index, 1);
                 }
             }
-        }
     }
 
     private void buttonCheckPhase2(int index) {
