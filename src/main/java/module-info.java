@@ -11,7 +11,7 @@ module hsleiden.stenentijdperk.stenentijdperk {
     requires google.cloud.core;
     exports hsleiden.stenentijdperk.stenentijdperk;
     exports hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten;
-
+    exports hsleiden.stenentijdperk.stenentijdperk.Views to google.cloud.firestore;
     opens hsleiden.stenentijdperk.stenentijdperk.Models to google.cloud.firestore;
     opens hsleiden.stenentijdperk.stenentijdperk.Helpers to google.cloud.firestore;
     opens hsleiden.stenentijdperk.stenentijdperk.Helpers.Beschavingskaarten to google.cloud.firestore;
