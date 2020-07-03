@@ -413,15 +413,10 @@ public class BoardController {
 
     private int checkPlayer() {
         int i = 0;
-        for (int j = 0; j < 4; j++) {
         for (int j = 0; j < players.size(); j++) {
             if (boardmodel.getPlayer().equals(players.get(j))) { // Bepaling welke player aan de beurt is
                 i = j;
-                FirebaseController.updateBoardField(String.valueOf(this.players.get(i).getLobby()), "player", this.players.get(i));
                 break;
-            }
-            else{
-                FirebaseController.getBoard(String.valueOf(localPlayer.getLobby()));
             }
         }
         return i;
